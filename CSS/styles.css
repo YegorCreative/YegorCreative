@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+    font-size: 14px;
+    background-color: #0000;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+}
+.mainLogo{
+    width: 320px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 15px;
+}
+.mainLogo a {
+    text-decoration: none;
+    color: black;
+}
+.section1{
+    box-sizing: border-box;
+    max-width: 1440px;
+    width: 100%;
+    color: black;
+    position: inherit;
+}
+.asset26 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+.asset5 {
+    position: absolute;
+    right:25%;
+    width: 150px;
+
+    .asset28 {
+    width: 50%;
+    position: absolute;
+    top: 15px;
+    right: -50px;
+}
+.asset2 {
+    position: absolute;
+    top: 55%;
+    right: 10%;
+}
+.head1, .head2 {
+    position:inherit;
+    z-index: 5;
+}
