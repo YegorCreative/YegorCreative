@@ -9,8 +9,18 @@ body {
     
     font-size: 14px;
     background-color: #0000;
-    color: #fff;
+    color:black;
     font-family: 'Roboto', sans-serif;
+}
+
+.mainHeading {
+    width: 100%;  
+    box-sizing: border-box;
+    position: relative;
+}
+.design1{
+    width: 100%;
+    box-sizing: border-box;
 }
 .mainLogo{
     width: 320px;
@@ -18,41 +28,72 @@ body {
     align-items: center;
     box-sizing: border-box;
     padding: 15px;
+    position: absolute;
+    top: 20px;
 }
 .mainLogo a {
     text-decoration: none;
     color: black;
+   
 }
-.section1{
+.goodWebsite {
+    min-width: 320px;
+    max-width: 550px;
     box-sizing: border-box;
-    max-width: 1440px;
-    width: 100%;
-    color: black;
-    position: inherit;
-}
-.asset26 {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    top: 200px;
+    left: 160px;
 }
-.asset5 {
-    position: absolute;
-    right:25%;
-    width: 150px;
+.head1 {
+    font-size: 75px;
+    line-height: 20px;
+}
+.head2{
+    font-size: 25px;
+}
 
-    .asset28 {
-    width: 50%;
-    position: absolute;
-    top: 15px;
-    right: -50px;
+.backTwo {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
 }
-.asset2 {
+.aboutMe {
     position: absolute;
-    top: 55%;
-    right: 10%;
+    width: 100%;
+    top: -500px;
 }
-.head1, .head2 {
-    position:inherit;
-    z-index: 5;
+.aboutMe2 {
+    width: 60%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    margin-top: -350px;
+}
+.myPicture{
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    z-index: 2;
+}
+.myPicture img{
+width: 100%;
+border-radius: 50%;
+}
+
+.myInfo {
+    width: 60%; 
+    margin: 25px;
+    box-sizing: border-box;
+    pad: 20px;
+}
+.myInfo h1{
+    font-size: 70px;
+    line-height: 2px;
+}
+.myInfo h2 {
+    font-size: 30px;
+    line-height: 29px;
+}
+.myInfo p{
+    font-size: 18px;
 }
