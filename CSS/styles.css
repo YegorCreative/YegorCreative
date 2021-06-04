@@ -197,6 +197,11 @@ iframe {
 .socialMI {
     width: 110px;
     margin: 10px;
+    transition: transform .6s; /* Animation */
+}
+.socialMI:hover {
+    transform: scale(1.1);
+    opacity: .6;
 }
 .lastQuote {
     width: 100%;
@@ -205,4 +210,33 @@ iframe {
     text-align: center;
     font-size: 18px;
     color: white;
+}
+
+.badgeSchool {
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.badgeSchool img {
+    width: 120px;
+}
+.accomplish{
+    position: absolute;
+bottom: 100px;
+}
+span {
+    font-size: 45px;
+    text-align: center;
+}
+.badG {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 45px;
+}
+.plusI {
+    width: 120px;
+    text-align: center;
 }
