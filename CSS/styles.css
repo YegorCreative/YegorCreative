@@ -97,3 +97,25 @@ border-radius: 50%;
 .myInfo p{
     font-size: 18px;
 }
+
+.youtube {
+    margin-top: 150px;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+}
+.youtube::before {
+    content: url(../Assets/Asset2.png);
+    padding: 25px;
+}
+.youtube::after{
+    content: url(../Assets/Asset2.png);
+    padding: 25px;
+   
+}
+iframe {
+    -webkit-box-shadow: 1px 1px 23px 2px rgba(0,0,0,0.79); 
+    box-shadow: 1px 1px 23px 2px rgba(0,0,0,0.79);
+}
