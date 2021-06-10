@@ -35,7 +35,7 @@ body {
 .design1{
     width: 100%;
     box-sizing: border-box;
-    z-index: -2;
+    z-index: 0;
 }
 .mainLogo{
     width: 320px;
@@ -72,10 +72,16 @@ body {
     position: relative;
     width: 100%;
     box-sizing: border-box;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .aboutMe {
     position: absolute;
     width: 100%;
+    height: 100%;
     top: -500px;
     z-index: -1;
 }
@@ -234,6 +240,7 @@ iframe {
     text-align: center;
     font-size: 18px;
     color: white;
+    position: relative;
 }
 
 .badgeSchool {

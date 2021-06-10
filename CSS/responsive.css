@@ -1,0 +1,99 @@
+@media screen and (max-width: 1065px){
+    .goodWebsite{
+        left: 120px;
+        top: 180px;
+    }
+    .head1{
+       font-size: 55px;
+   } 
+   .head2 {
+       font-size: 20px;
+   }
+   .aboutMe {
+    top: -200px;
+   }
+   .aboutMe2 {
+    margin-top: -250px;
+    width: 80%;
+   }
+   .footFooter h1 {
+    top: 50px;
+   }
+   .socialMedia{
+    top: 160px;
+   }
+   .accomplish{
+    top: 300px;
+    }
+    .portBack {
+    width: 100%;
+    padding-left: 25px;
+    padding-right: 25px;
+    }
+    .informationP{
+        width: 100%;
+        top: 220px;
+    }
+    .newBut {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 960px){
+    .goodWebsite{
+       top: 160px;
+    }
+    .informationP{
+        
+        top: 160px;
+    }
+    .footFooter h1 {
+        top: 20px;
+    }
+    .socialMedia{
+        top:120px;
+       }
+}
+@media screen and (max-width: 905px){
+    .emailMe {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    } 
+    .emailMe img {
+        width: 50px;
+    }
+    .goodWebsite {
+        top: 220px;
+        left: 60px;
+    }
+    .head1 {
+        font-size: 35px;
+        line-height: 20px;
+    }
+    .head2{
+        font-size: 18px;
+    }
+    .aboutMe {
+        position: relative;
+        width: 100%;
+        margin-top: 0;
+    }
+    .myPicture img {
+        position:absolute;
+        top: 0;
+        width: 200px;
+        display: flex;
+        justify-content: center;
+    }
+    .aboutMe2{
+        width: 100%;
+        flex-flow: wrap column;
+        text-align: center;
+    }
+    .socialMedia {
+        flex-wrap: wrap;
+    }
+    .youtube::before, .youtube::after{
+        content: none;
+    }
+}
