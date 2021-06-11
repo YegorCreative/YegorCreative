@@ -193,11 +193,11 @@ iframe{
     justify-content: center;
 }
 .plusI{
-    width: 110px;
+    width: 150px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+    justify-content: flex-start;
+    align-items: center;
     box-sizing: border-box;
     text-align: center;
     padding: 10px;
