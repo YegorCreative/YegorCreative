@@ -110,8 +110,13 @@ iframe{
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    background-size: 450px;
+    background-size: 320px;
     text-align: center;
+    background-color: #6805F2;
+    color: white;
+    box-sizing: border-box;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 .portfolioYC h1{
     font-family: 'Righteous', cursive;
@@ -119,7 +124,7 @@ iframe{
 .portfolioYC p{
     padding-left: 15px;
     padding-right: 15px;
-    color:black;
+    color: white;
 }
 .newBut{
     width: 100%;
@@ -131,10 +136,11 @@ iframe{
     margin:5px;
     width: 200px;
     text-decoration: none;
-    border: 1px solid purple;
+    border: 2px solid white;
     padding: 5px;
     border-radius: 15px;
     transition: transform .9s; /* Animation */
+    color: white;
 }
 .newButton:hover{
     transform: scale(1.1);
