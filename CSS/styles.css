@@ -3,272 +3,101 @@
 }
 
 body {
+    width: 320px;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
-    font-size: 14px;
+    font-size: 16px;
     background-color: #0000;
     color:black;
     font-family: 'Righteous', cursive;
     font-family: 'Roboto', sans-serif;
-}
-
-.mainHeading {
-    width: 100%;  
-    box-sizing: border-box;
     position: relative;
 }
-.emailMe {
-    position: absolute;
-    right: 100px;
-    top: 20px;
-}
-.emailMe img {
-    width: 70px;
-    transition: transform .6s; /* Animation */
-}
-.emailMe img:hover {
-    opacity: .6;
-    transform: scale(1.1);
-}
-.design1{
-    width: 100%;
-    box-sizing: border-box;
-    z-index: 0;
-}
-.mainLogo{
+.emailMe{
     width: 320px;
     display: flex;
-    align-items: center;
+    align-items: right;
     box-sizing: border-box;
-    padding: 15px;
+}
+
+.emailMe img {
+    width: 50px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index: 5;
+}
+
+.mainHeading,.mainLogo,.goodWebsite,.portfolioYC,.portBack,.desFoot,.plusI,.myInfo, .aboutMe,.aboutMe2, .backTwo, .design1{
+    min-width: 320px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.mainHeading{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;position: relative;
+   
+}
+.mainLogo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     position: absolute;
     top: 20px;
+    z-index: inherit;4
 }
-.mainLogo a {
-    text-decoration: none;
-    color: black;
-   
+.mainLogo h1 {
+    font-size: 18px;
 }
-.goodWebsite {
-    min-width: 320px;
-    max-width: 550px;
-    box-sizing: border-box;
+.goodWebsite{
     position: absolute;
-    top: 200px;
-    left: 160px;
+    top: 130px;
+    padding-left: 35px;
+    padding-right: 35px;
+    line-height: 15px;
 }
 .head1 {
-    font-size: 75px;
-    line-height: 20px;
     font-family: 'Righteous', cursive;
 }
-.head2{
-    font-size: 25px;
-}
-
 .backTwo {
     position: relative;
-    width: 100%;
-    box-sizing: border-box;
-    margin-top: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.aboutMe {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: -500px;
-    z-index: -1;
+    background-image: url(../Assets/background2.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 .aboutMe2 {
-    width: 60%;
-    margin: 0 auto;
     display: flex;
-    align-items: center;
-    margin-top: -350px;
-}
-.myPicture{
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    
-}
-.myPicture img{
-width: 100%;
-border-radius: 50%;
-}
-
-.myInfo {
-    width: 60%; 
-    margin: 25px;
-    box-sizing: border-box;
-    pad: 20px;
-}
-.myInfo h1{
-    font-size: 70px;
-    line-height: 2px;
-    font-family: 'Righteous', cursive;
-}
-.myInfo h2 {
-    font-size: 30px;
-    line-height: 29px;
-}
-.myInfo p{
-    font-size: 18px;
-}
-
-.youtube {
-    margin-top: 150px;
-    box-sizing: border-box;
-    max-width:1000px;
-    height: 400px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    
-}
-.youtube::before {
-    content: url(../Assets/Asset2.png);
-    padding: 25px;
-}
-.youtube::after{
-    content: url(../Assets/Asset2.png);
-    padding: 25px;
    
 }
-iframe {
-    -webkit-box-shadow: 1px 1px 23px 2px rgba(0,0,0,0.79); 
-    box-shadow: 1px 1px 23px 2px rgba(0,0,0,0.79);
+.myPic {
+    border-radius: 50%;
+    top: 5px;
+    
+   
+}
+.myInfo {
+    padding-left: 25px;
+    padding-right: 25px;
+    text-align: center;
+}
+.myInfo h1 {
+    font-family: 'Righteous', cursive;
+}
+.youtube {
+    padding: 25px;
+    
 }
 .portfolioYC {
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    position: relative;
-}
-.portBack {
-    margin-top: 120px;
-    max-width: 1000px;
-}
-.informationP {
-    max-width: 700px;
-    position: absolute;
-    top: 250px;
+    background-image: url(../Assets/portfolio.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding: 15px;
     text-align: center;
-    color: white;
-}
-.informationP h1{
-    font-size: 45px;
-    font-family: 'Righteous', cursive;
-}
-.informationP p {
-    font-size: 18px;
-}
-.newBut {
-    width: 800px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-.newButton {
-    width: 225px;
-    box-sizing: border-box;
-    padding: 10px;
-    border: white 2px solid;
-    margin: 10px;
-    font-size: 16px;
-    font-weight: 300;
-    border-radius: 25px;
-    transition: transform .6s; /* Animation */
-    text-decoration: none;
-    color: white;
-}
-.newButton:hover {
-    color: blueviolet;
-    background-color: white;
-    transform: scale(1.1);
-}
-.footFooter {
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    position: relative;
-    flex-direction: column;
-}
-.desFoot {
-    max-width: 1150px;
-    width: 100%;
-}
-.footFooter h1 {
-    position: absolute;
-    top: 100px;
-    font-size: 45px;
-    font-family: 'Righteous', cursive;
-}
-.socialMedia {
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    top: 210px;
-}
 
-.socialMI {
-    width: 90px;
-    margin: 10px;
-    transition: transform .6s; /* Animation */
-}
-.socialMI:hover {
-    transform: scale(1.1);
-    opacity: .6;
-}
-.lastQuote {
-    width: 100%;
-    background-color: blueviolet;
-    padding: 20px;
-    text-align: center;
-    font-size: 18px;
-    color: white;
-    position: relative;
-}
-
-.badgeSchool {
-    width: 100%;
-    display: flex;
-    box-sizing: border-box;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-.badgeSchool img {
-    width: 120px;
-}
-.accomplish{
-    position: absolute;
-    top: 400px;
-}
-span {
-    font-size: 45px;
-    text-align: center;
-}
-.badG {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    font-size: 45px;
-    font-family: 'Righteous', cursive;gmail.
-}
-.plusI {
-    width: 120px;
-    text-align: center;
 }
