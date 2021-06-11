@@ -141,3 +141,65 @@ iframe{
     background-color: #00EDFF;
 
 }
+.footFooter{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-image: url(../Assets/footer.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-size: 450px;
+}
+.footFooter h1{
+    text-align: center;
+    font-family: 'Righteous', cursive;
+}
+.socialMedia{
+    width: 100%;
+    display: flex;
+   flex-wrap: wrap;
+    justify-content: center;
+}
+.socialMedia a{
+    margin: 5px;
+}
+.accomplish{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+.badG{
+    width: 100%;
+    text-align: center;
+    font-family: 'Righteous', cursive;
+    font-size: 25px;
+}
+.badgeSchool{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.plusI{
+    width: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 10px;
+}
+.lastQuote{
+    width: 100%;
+    background-color: purple;
+    color: white;
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: center;
+    font-family: 'Righteous', cursive;
+}
