@@ -96,6 +96,7 @@ body {
 }
 .youtube{
     width: 100%;
+    
     display: flex;
     justify-content: center;
     padding: 15px;
@@ -145,7 +146,7 @@ iframe{
 }
 .newButton:hover{
     transform: scale(1.1);
-    background-color: #00EDFF;
+    background-color: #4443aa;
 
 }
 .footFooter{
@@ -203,7 +204,7 @@ iframe{
 }
 .lastQuote{
     width: 100%;
-    background-color: purple;
+    background-color: #6805F2;
     color: white;
     box-sizing: border-box;
     padding: 10px;
