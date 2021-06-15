@@ -1,3 +1,4 @@
+
 @media screen and (min-width: 498px){
     .head1{
         font-size: 45px;
@@ -15,5 +16,34 @@
     }
     .goodWebsite{
         padding-left: 60px;
+    }
+}
+@media screen and (min-width: 769px){
+    .mainHeading{
+        height: 1000px;
+    }
+    .mainLogo h1{
+        font-size: 25px;
+    }
+    .head1{
+        font-size: 65px;
+    }
+    .head2{
+        font-size: 45px;
+        line-height: 45px;
+        width: 750px;
+    }
+    .backTwo{
+        background-size: 1440px;
+        height: 760px;
+    }
+    .myInfo h1 {
+        font-size: 65px;
+    }
+    .myInfo h2 {
+        font-size: 35px;
+    }
+    .myInfo p {
+        font-size: 25px;
     }
 }
