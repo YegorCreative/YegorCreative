@@ -17,6 +17,16 @@
     .goodWebsite{
         padding-left: 60px;
     }
+    .portfolioYC {
+        height: 500px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px;
+        background-size: cover;
+        background-size: 90%;  
+    }
+   
 }
 @media screen and (min-width: 769px){
     .mainHeading{
@@ -45,5 +55,40 @@
     }
     .myInfo p {
         font-size: 25px;
+    }
+    .iframe-container{
+        height: 510px;
+    }
+    .iframe-container iframe {
+        width:560px;
+        height:315px; 
+    }
+    .portfolioYC{
+        background-size: cover;
+        background-size: 95%;  
+        height: 700px;
+        background-color: white;
+    }
+    .informationP{
+        width: 700px;
+    }
+}
+@media screen and (min-width: 920px){
+    .portfolioYC{
+        background-size: cover;
+        background-size: 800px;  
+
+    }
+    .footFooter{
+        height: 750px;
+        background-size: cover;
+        background-size: 900px;
+    }
+    .footFooter h1,.badG {
+        font-size: 65px;
+
+    }
+    .lastQuote{
+        font-size: 20px;
     }
 }
