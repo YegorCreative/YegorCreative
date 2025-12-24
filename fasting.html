@@ -281,6 +281,12 @@
             </div>
         </section>
 
+        <!-- Health & Safety Disclaimer -->
+        <section class="note fasting-disclaimer" id="fasting-disclaimer" role="doc-note">
+            <strong>Health & Safety Note:</strong> This content is for spiritual encouragement and personal planning, not medical advice.
+            If food fasting is unsafe for you, media/comfort fasting is a valid option. Consult a healthcare professional when needed.
+        </section>
+
         <section class="fasting-section" id="fasting-wisdom">
             <h2>Wisdom and Health (Read This)</h2>
             <ul>
@@ -350,6 +356,18 @@
 
                 <!-- Milestone banner for claim codes -->
                 <div id="milestoneBanner" class="milestone-banner" hidden aria-live="polite" aria-atomic="true"></div>
+
+                <!-- Export / Import Progress (Optional sync for cross-device continuity) -->
+                <div class="tracker-sync card" id="trackerSync" role="region" aria-labelledby="syncHeading">
+                    <h3 id="syncHeading">Sync Progress (Optional)</h3>
+                    <p>Use this to move your tracker progress to another device. Your data stays private and local.</p>
+                    <div class="sync-actions">
+                        <button type="button" class="btn fasting-button" id="exportProgressBtn">Export Progress</button>
+                        <label class="btn fasting-button" for="importProgressFile" style="cursor:pointer; margin: 0;">Import Progress</label>
+                        <input type="file" id="importProgressFile" accept="application/json" hidden aria-label="Import progress JSON file" />
+                    </div>
+                    <p class="sync-status" id="syncStatus" aria-live="polite" aria-atomic="true" role="status"></p>
+                </div>
 
                 <div class="tracker-actions">
                     <button id="trackerResetBtn" type="button" class="fasting-button secondary reset-btn">Reset Tracker</button>

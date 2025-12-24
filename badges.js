@@ -1,5 +1,8 @@
 /* ===================================
    BADGES PAGE - CLAIM CODE VALIDATION & BADGE GENERATION
+   Maintainability: Full doc comments explain trust/a11y/logic
+   Trust: Deterministic code validation, no backend required
+   A11y: All interactive elements keyboard accessible, status updates announced
    =================================== */
 
 (function initBadgesPage() {
@@ -16,6 +19,12 @@
     const downloadBtn = document.getElementById('downloadPngBtn');
     const certificateSection = document.getElementById('certificateSection');
     const openCertBtn = document.getElementById('openCertBtn');
+    
+    // Share block elements
+    const shareBlock = document.getElementById('shareBlock');
+    const shareCaption = document.getElementById('shareCaption');
+    const copyCaptionBtn = document.getElementById('copyCaptionBtn');
+    const shareTags = document.getElementById('shareTags');
 
     let currentValidation = null;
 
@@ -196,8 +205,19 @@
     // ============================================
     // 7. GENERATE & OPEN 40-DAY CERTIFICATE
     // ============================================
+    /**
+     * openCertificate - Generate printable 40-day mega certificate
+     * Features: Premium design with milestone stamp strip, certificate ID, verify link
+     * Maintainability: Print-friendly CSS ensures PDF output works correctly
+     * A11y: Semantic HTML for certificate content
+     */
     function openCertificate(milestone, name, dateStr) {
         const formattedDate = formatDate(dateStr);
+        
+        // Generate claim code for this certificate (used as Certificate ID)
+        const hashInput = `${milestone}|${dateStr}|${CLAIM_SECRET}`;
+        const hash = fnv1a(hashInput);
+        const certificateCode = `FAST-${milestone}-${dateStr}-${hash}`;
         
         const certHtml = `
 <!DOCTYPE html>
@@ -272,11 +292,16 @@
             background: #6805F2;
             color: #FFD700;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             font-size: 24px;
             border: 4px solid #FFD700;
+        }
+        .badge-circle-label {
+            font-size: 11px;
+            margin-top: 4px;
         }
         .verse {
             font-style: italic;
@@ -284,10 +309,61 @@
             margin: 30px 0;
             font-size: 16px;
         }
+        .stamp-strip {
+            border: 2px dashed #B45309;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            background: rgba(180, 83, 9, 0.05);
+        }
+        .stamp-strip-title {
+            font-size: 12px;
+            color: #B45309;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .stamp-row {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .small-stamp {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #B45309;
+            color: #FFD700;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            border: 2px solid #FFD700;
+        }
+        .small-stamp-label {
+            font-size: 9px;
+            margin-top: 2px;
+        }
         .date {
             font-size: 16px;
             color: #999;
             margin-top: 40px;
+        }
+        .cert-id {
+            font-size: 12px;
+            color: #999;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+        }
+        .verify-link {
+            font-size: 13px;
+            color: #0066cc;
+            margin: 10px 0;
         }
         .footer {
             margin-top: 60px;
@@ -344,19 +420,38 @@
             <p class="cert-text">demonstrating discipline, commitment, and faith in pursuing spiritual growth and deeper connection with God.</p>
 
             <div class="milestone-badges">
-                <div class="badge-circle">5</div>
-                <div class="badge-circle">10</div>
-                <div class="badge-circle">15</div>
-                <div class="badge-circle">20</div>
-                <div class="badge-circle">25</div>
-                <div class="badge-circle">30</div>
-                <div class="badge-circle">35</div>
-                <div class="badge-circle">40</div>
+                <div class="badge-circle">5<div class="badge-circle-label">Days</div></div>
+                <div class="badge-circle">10<div class="badge-circle-label">Days</div></div>
+                <div class="badge-circle">15<div class="badge-circle-label">Days</div></div>
+                <div class="badge-circle">20<div class="badge-circle-label">Days</div></div>
+                <div class="badge-circle">25<div class="badge-circle-label">Days</div></div>
+                <div class="badge-circle">30<div class="badge-circle-label">Days</div></div>
+                <div class="badge-circle">35<div class="badge-circle-label">Days</div></div>
+                <div class="badge-circle">40<div class="badge-circle-label">Days</div></div>
             </div>
 
             <div class="verse">"Draw near to God, and He will draw near to you." — James 4:8</div>
 
+            <!-- Premium Stamp Strip -->
+            <div class="stamp-strip">
+                <div class="stamp-strip-title">Milestone Achievements</div>
+                <div class="stamp-row">
+                    <div class="small-stamp">5<div class="small-stamp-label">Days</div></div>
+                    <div class="small-stamp">10<div class="small-stamp-label">Days</div></div>
+                    <div class="small-stamp">15<div class="small-stamp-label">Days</div></div>
+                    <div class="small-stamp">20<div class="small-stamp-label">Days</div></div>
+                    <div class="small-stamp">25<div class="small-stamp-label">Days</div></div>
+                    <div class="small-stamp">30<div class="small-stamp-label">Days</div></div>
+                    <div class="small-stamp">35<div class="small-stamp-label">Days</div></div>
+                    <div class="small-stamp">40<div class="small-stamp-label">Days</div></div>
+                </div>
+            </div>
+
             <p class="cert-text">Earned on: <strong>${formattedDate}</strong></p>
+
+            <!-- Certificate ID & Verification -->
+            <div class="cert-id">Certificate ID: ${certificateCode}</div>
+            <div class="verify-link">Verify this certificate: yegorcreative.com/verify</div>
         </div>
 
         <div class="footer">
@@ -445,8 +540,100 @@
     downloadBtn.addEventListener('click', () => {
         if (currentValidation) {
             downloadBadgePNG(currentValidation.milestone, currentValidation.name);
+            // Show share block after download
+            showShareBlock(currentValidation.milestone, currentValidation.name, currentValidation.dateStr, currentValidation.code);
         }
     });
+
+    // ============================================
+    // SHARE FUNCTIONALITY
+    // ============================================
+    
+    /**
+     * showShareBlock - Display share section with customized caption and hashtags
+     * A11y: Share block is unhidden, enabling screen reader discovery
+     * Logic: Generate faith-centered caption with site URL and standard hashtags
+     */
+    function showShareBlock(milestone, name, dateStr, code) {
+        // Generate caption
+        const captions = {
+            5: `I just completed 5 days of prayer & fasting. God is opening my eyes to deeper faith. yegorcreative.com/fasting`,
+            10: `I just completed 10 days of prayer & fasting. God is building something new in me. yegorcreative.com/fasting`,
+            15: `I've reached 15 days of prayer & fasting. God's strength sustains me. yegorcreative.com/fasting`,
+            20: `20 days of prayer & fasting complete. I can feel God's presence and freedom. yegorcreative.com/fasting`,
+            25: `25 days down! Prayer & fasting have transformed my perspective. Grateful for God's grace. yegorcreative.com/fasting`,
+            30: `30 days of prayer & fasting! Home stretch ahead. God's faithfulness never fails. yegorcreative.com/fasting`,
+            35: `Almost there! 35 days of prayer & fasting. The final stretch brings deeper victory. yegorcreative.com/fasting`,
+            40: `I completed 40 days of prayer & fasting! Transformed by faith, emboldened by grace. This journey changed me. yegorcreative.com/fasting`
+        };
+
+        const caption = captions[milestone] || `I completed ${milestone} days of prayer & fasting. yegorcreative.com/fasting`;
+        shareCaption.textContent = caption;
+
+        // Hashtags (faith-centered, inclusive)
+        const hashtags = '#PrayerAndFasting #ChristianDiscipline #SpiritualGrowth #FaithJourney #SeekGod';
+        shareTags.textContent = hashtags;
+
+        shareBlock.hidden = false;
+
+        // Announce via aria-live
+        const statusEl = document.querySelector('[aria-live="polite"]');
+        if (statusEl) {
+            statusEl.textContent = 'Share section ready. Copy caption to share your achievement.';
+        }
+    }
+
+    // Copy caption button
+    copyCaptionBtn.addEventListener('click', () => {
+        const fullText = shareCaption.textContent + '\n' + shareTags.textContent;
+        
+        // Use Clipboard API with fallback
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(fullText).then(() => {
+                // A11y: Announce success
+                const statusEl = document.querySelector('[aria-live="polite"]');
+                if (statusEl) {
+                    const originalText = statusEl.textContent;
+                    statusEl.textContent = '✓ Caption copied to clipboard!';
+                    setTimeout(() => {
+                        statusEl.textContent = originalText;
+                    }, 3000);
+                }
+                // Visual feedback
+                copyCaptionBtn.textContent = '✓ Copied!';
+                setTimeout(() => {
+                    copyCaptionBtn.textContent = 'Copy Caption';
+                }, 2000);
+            }).catch(() => {
+                fallbackCopy(fullText);
+            });
+        } else {
+            fallbackCopy(fullText);
+        }
+    });
+
+    /**
+     * fallbackCopy - Fallback copy mechanism for older browsers
+     * Logic: Create temporary textarea, select, copy, clean up
+     */
+    function fallbackCopy(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+            copyCaptionBtn.textContent = '✓ Copied!';
+            setTimeout(() => {
+                copyCaptionBtn.textContent = 'Copy Caption';
+            }, 2000);
+        } catch (err) {
+            copyCaptionBtn.textContent = 'Copy failed';
+        }
+        document.body.removeChild(textarea);
+    }
 
     // Open certificate button
     openCertBtn.addEventListener('click', () => {

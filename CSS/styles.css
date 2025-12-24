@@ -1,4 +1,71 @@
 /* ===================================
+   MINI DESIGN SYSTEM - CSS VARIABLES
+   =================================== */
+:root {
+  /* Color tokens */
+  --fast-accent: #B45309;         /* warm amber for primary actions */
+  --fast-ink: #111827;            /* near-black for text */
+  --fast-muted: #6B7280;          /* muted gray for secondary text */
+  --fast-border: rgba(0,0,0,0.12);
+  --fast-surface: rgba(255,255,255,0.92);
+  --fast-surface-2: #F9FAFB;      /* light background */
+  --fast-shadow: 0 10px 25px rgba(0,0,0,0.10);
+  --fast-radius: 16px;            /* border radius for cards */
+}
+
+/* ===================================
+   REUSABLE COMPONENT CLASSES
+   =================================== */
+
+/* Card component: bordered container with shadow */
+.card {
+  border: 1px solid var(--fast-border);
+  border-radius: var(--fast-radius);
+  background: var(--fast-surface);
+  box-shadow: var(--fast-shadow);
+  padding: 20px;
+}
+
+/* Pill component: compact inline badge */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--fast-border);
+  background: var(--fast-surface);
+  font-size: 14px;
+}
+
+/* Note component: emphasized notice with accent border */
+.note {
+  border-left: 4px solid var(--fast-accent);
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(180, 83, 9, 0.08);
+  color: var(--fast-ink);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.note strong {
+  color: var(--fast-accent);
+  font-weight: 600;
+}
+
+/* Button base styles */
+.btn {
+  min-height: 44px;
+}
+
+/* Enhanced focus styles for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--fast-accent);
+  outline-offset: 3px;
+}
+
+/* ===================================
    ACCESSIBILITY STYLES
    =================================== */
 
@@ -1062,4 +1129,318 @@ canvas {
   canvas {
     max-width: 600px;
   }
+}
+/* ===================================
+   TRACKER SYNC (EXPORT/IMPORT)
+   =================================== */
+
+.tracker-sync {
+  margin: 24px auto;
+  padding: 20px;
+}
+
+.tracker-sync h3 {
+  margin-bottom: 12px;
+  color: var(--fast-ink);
+  font-size: 18px;
+}
+
+.tracker-sync > p {
+  font-size: 14px;
+  color: var(--fast-muted);
+  margin-bottom: 16px;
+}
+
+.sync-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.sync-actions .btn,
+.sync-actions .fasting-button {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.sync-status {
+  font-size: 14px;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 8px;
+}
+
+.sync-status.status-success {
+  background: rgba(34, 197, 94, 0.1);
+  color: #16a34a;
+}
+
+.sync-status.status-error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+}
+
+.sync-status.status-info {
+  background: rgba(59, 130, 246, 0.1);
+  color: #2563eb;
+}
+
+/* ===================================
+   SHARE BLOCK
+   =================================== */
+
+.share-block {
+  margin: 24px auto;
+  padding: 20px;
+  background: var(--fast-surface-2);
+}
+
+.share-block h3 {
+  margin-bottom: 12px;
+  color: var(--fast-ink);
+  font-size: 18px;
+}
+
+.share-caption {
+  padding: 12px;
+  background: var(--fast-surface);
+  border: 1px solid var(--fast-border);
+  border-radius: 8px;
+  margin: 12px 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--fast-ink);
+}
+
+#copyCaptionBtn {
+  margin: 12px 0;
+}
+
+.share-hashtags {
+  font-size: 13px;
+  color: var(--fast-muted);
+  word-break: break-word;
+  font-family: 'Courier New', monospace;
+  padding: 12px;
+  background: var(--fast-surface);
+  border-radius: 8px;
+}
+
+/* ===================================
+   HEALTH DISCLAIMERS
+   =================================== */
+
+.fasting-disclaimer,
+.badge-disclaimer {
+  margin: 20px auto 24px;
+  max-width: 900px;
+}
+
+.fasting-disclaimer strong,
+.badge-disclaimer strong {
+  color: var(--fast-accent);
+}
+
+/* ===================================
+   VERIFY PAGE STYLES
+   =================================== */
+
+.verify-page {
+  /* Uses shared fasting page base styles */
+}
+
+.verify-generator {
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+.verify-card {
+  margin-top: 24px;
+}
+
+.verify-card .form-group {
+  margin-bottom: 16px;
+}
+
+#verifyCode {
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+}
+
+#verifyBtn {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.verify-results {
+  max-width: 600px;
+  margin: 40px auto;
+  background: var(--fast-surface-2);
+}
+
+.verify-results h2 {
+  margin-bottom: 24px;
+  color: var(--fast-ink);
+}
+
+.verify-details {
+  margin: 24px 0;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--fast-border);
+  font-size: 15px;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: var(--fast-ink);
+}
+
+.detail-value {
+  color: var(--fast-muted);
+  font-family: 'Courier New', monospace;
+}
+
+#megaCertIndicator {
+  margin: 20px 0;
+  background: rgba(180, 83, 9, 0.15);
+  border: 1px solid var(--fast-accent);
+  color: var(--fast-accent);
+}
+
+#megaCertIndicator::before {
+  content: '✓ ';
+  font-weight: bold;
+}
+
+.verify-actions {
+  margin-top: 24px;
+}
+
+#claimBadgeLink {
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.verify-note {
+  font-size: 14px;
+  color: var(--fast-muted);
+  margin-top: 12px;
+}
+
+.verify-hint {
+  font-size: 13px;
+  color: var(--fast-muted);
+  margin-top: 8px;
+}
+
+.verify-hint a {
+  color: var(--fast-accent);
+  text-decoration: none;
+}
+
+.verify-hint a:hover {
+  text-decoration: underline;
+}
+
+.verify-hint a:focus-visible {
+  outline: 2px solid var(--fast-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ===================================
+   STATUS MESSAGE ENHANCEMENTS
+   =================================== */
+
+.status-message {
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin: 12px 0;
+  display: block;
+}
+
+.status-success {
+  background: rgba(34, 197, 94, 0.1);
+  color: #16a34a;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.status-error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.status-info {
+  background: rgba(59, 130, 246, 0.1);
+  color: #2563eb;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* ===================================
+   RESPONSIVE ADJUSTMENTS FOR NEW COMPONENTS
+   =================================== */
+
+@media (min-width: 900px) {
+  .sync-actions {
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .sync-actions .btn,
+  .sync-actions .fasting-button {
+    flex: 1;
+    width: auto;
+    max-width: none;
+  }
+
+  .share-hashtags {
+    text-align: center;
+  }
+
+  .detail-row {
+    padding: 16px 0;
+  }
+}
+
+/* ===================================
+   FOOTER LINKS (VERIFY)
+   =================================== */
+
+.footer-links {
+  margin: 16px 0;
+  text-align: center;
+}
+
+.footer-link {
+  display: inline-block;
+  padding: 8px 12px;
+  color: var(--fast-accent);
+  text-decoration: none;
+  font-size: 14px;
+  border: 1px solid var(--fast-border);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.footer-link:hover {
+  background: var(--fast-surface-2);
+  border-color: var(--fast-accent);
+}
+
+.footer-link:focus-visible {
+  outline: 2px solid var(--fast-accent);
+  outline-offset: 2px;
 }
