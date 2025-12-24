@@ -85,6 +85,10 @@
     }
     .site-nav ul {
         justify-content: flex-end;
+        gap: 15px;
+    }
+    .site-nav a {
+        padding: 10px 18px;
     }
     .fasting-page main {
         padding: 30px 40px;
