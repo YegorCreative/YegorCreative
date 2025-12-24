@@ -72,6 +72,22 @@
     .informationP{
         width: 700px;
     }
+    .site-nav {
+        padding: 20px 40px 10px;
+    }
+    .site-nav ul {
+        justify-content: flex-end;
+    }
+    .fasting-page main {
+        padding: 30px 40px;
+    }
+    .fasting-cta-row {
+        flex-direction: row;
+        align-items: center;
+    }
+    .fasting-cta-row .fasting-button {
+        width: auto;
+    }
 }
 @media screen and (min-width: 920px){
     .portfolioYC{
@@ -90,5 +106,32 @@
     }
     .lastQuote{
         font-size: 20px;
+    }
+}
+
+@media screen and (min-width: 900px){
+    .fasting-grid.two-col {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .fasting-plan-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .fasting-page main {
+        padding: 40px 60px;
+    }
+    .fasting-start-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .fasting-themes-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .fasting-prep .prep-checklist {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .tracker-grid {
+        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    }
+    .reset-btn {
+        width: auto;
     }
 }

@@ -22,29 +22,42 @@
 
 
 <body>
+    <!-- Skip link for keyboard navigation -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+
     <!--<div class="emailMe">
        <a href="mailto:aleqsandregor@gmail.com"><img src="Assets/email.png" alt="the icon of email"></a>
     </div>-->
-    <div class="mainHeading">
+    <header role="banner" class="mainHeading">
        <!--<img src="Assets/background11.png" alt="the main backgraound with design assets" class="design1">-->
         <div class="mainLogo">
-            <a href="index.html"><img src="Assets/lionhead.png" the logo of the website  height="110px"></a>
+            <a href="index.html"><img src="Assets/lionhead.png" alt="the logo of the website" height="110px"></a>
             <h1>YegorCreative</h1>
         </div>
+        <nav class="site-nav" aria-label="Primary">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#creative">Creative</a></li>
+                <li><a href="fasting.html">Fasting</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
         <div class="goodWebsite">
             <h1 class="head1">Powerful Website</h1>
-            <h1 class="head1">Productive Business</h1>
-            <h4 class="head2">Creating dynamic websites for exceptional user experience.</h4>
+            <p class="head1" aria-hidden="true">Productive Business</p>
+            <p class="head2">Creating dynamic websites for exceptional user experience.</p>
      </div>
-    </div>
+    </header>
   
-    <div class="backTwo">
+    <main id="main" role="main">
+    <div class="backTwo" id="about">
        <!-- <img src="Assets/background2.png" alt="design assets" class="aboutMe">-->
         <div class="aboutMe2">
-            <div class="myPicture"><img src="Assets/YegorHambaryan.png" alt="Yegor hambaryans Picture" class="myPic" width="200px"></div> 
+            <div class="myPicture"><img src="Assets/YegorHambaryan.png" alt="Portrait of Yegor Hambaryan" class="myPic" width="200px"></div> 
             <div class="myInfo">
-            <h1>About Me</h1>
-            <h2>Front End Web Developer <br>Google & Udacity Certified</h2>
+            <h2>About Me</h2>
+            <h3>Front End Web Developer <br>Google & Udacity Certified</h3>
             <p>My creativity, education, management and leadership skills synthesize to deliver the ultimate web design experience for you. My dedication and desire is to help your business flourish with innovative web solutions. </p>
            </div>
     </div>
@@ -52,12 +65,12 @@
     
     </div>
     <div class="iframe-container">
-        <iframe width="290" height="164px" src="https://www.youtube.com/embed/z3mBYFfY6Wk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe width="290" height="164px" src="https://www.youtube.com/embed/z3mBYFfY6Wk" title="Yegor Creative portfolio video demonstration" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
-    <div class="portfolioYC">
+    <section class="portfolioYC" id="creative" aria-labelledby="portfolio-heading">
        <!-- <img src="Assets/portfolio.png" alt="design element for portfolio" class="portBack">-->
         <div class="informationP">
-        <h1>Portfolio</h1>
+        <h2 id="portfolio-heading">Portfolio</h2>
         <p>Creating optimized websites for enhanced user experience through vibrant designs and practical solutions. Utilizing color psychology in HTML ,CSS, JavaS- cript and
             React platforms I create inspired websites, webpages, and games that increase web traffic and promote your ventures. Take a look at my past designs...</p>
             <div class="newBut">
@@ -71,17 +84,19 @@
             <a href="http://ythclub.org/" target="_blank" class="newButton">Youth Club Riga</a>
         </div>
         </div>
-    </div>
-    <div class="footFooter">
+    </section>
+    </main>
+
+    <footer role="contentinfo" class=\"footFooter\" id="contact">
         <!--<img src="Assets/footer.png" alt="design element for footer" class="desFoot">-->
-        <h1>Contact Yegor</h1>
+        <h2 class="contact-heading"><span class="heading-icon">✉</span>Contact Yegor<span class="heading-underline"></span></h2>
         <div class="socialMedia">
-            <a  href="https://www.facebook.com/hambaryanyegor/" target="_blank" ><img class="socialMI" src="Assets/facebook.png" alt="icon of Facebook" width="90px"></a>
-            <a  href="https://www.instagram.com/yegorcreative/" target="_blank" ><img class="socialMI" src="Assets/instagram.png" alt="icon of instagram" width="90px"></a>
-            <a  href="https://www.youtube.com/yegorcreative" target="_blank" ><img class="socialMI" src="Assets/youtube.png" alt="icon of youtube" width="90px"></a>
-            <a  href="https://www.linkedin.com/in/yegorhambaryan/" target="_blank" ><img class="socialMI" src="Assets/linkedIn.png" alt="icon of linkedIn" width="90px"></a>
-            <a  href="https://github.com/YegorCreative" target="_blank" ><img class="socialMI" src="Assets/github.png" alt="icon of github" width="90px"></a>
-            <a  href="mailto:aleqsandregor@gmail.com"><img src="Assets/email.png" alt="the icon of email" class="socialMI" width="90px"></a>
+            <a  href="https://www.facebook.com/hambaryanyegor/" target="_blank" aria-label="Visit Yegor Creative on Facebook"><img class="socialMI" src="Assets/facebook.png" alt="" width="90px"></a>
+            <a  href="https://www.instagram.com/yegorcreative/" target="_blank" aria-label="Visit Yegor Creative on Instagram"><img class="socialMI" src="Assets/instagram.png" alt="" width="90px"></a>
+            <a  href="https://www.youtube.com/yegorcreative" target="_blank" aria-label="Visit Yegor Creative on YouTube"><img class="socialMI" src="Assets/youtube.png" alt="" width="90px"></a>
+            <a  href="https://www.linkedin.com/in/yegorhambaryan/" target="_blank" aria-label="Visit Yegor Hambaryan on LinkedIn"><img class="socialMI" src="Assets/linkedIn.png" alt="" width="90px"></a>
+            <a  href="https://github.com/YegorCreative" target="_blank" aria-label="Visit Yegor Creative on GitHub"><img class="socialMI" src="Assets/github.png" alt="" width="90px"></a>
+            <a  href="mailto:aleqsandregor@gmail.com" aria-label="Send email to Yegor"><img src="Assets/email.png" alt="" class="socialMI" width="90px"></a>
         </div>
         <div class="accomplish">
         <div class="badG">Badges from Google</div>
@@ -93,7 +108,7 @@
             <div class="plusI"><img src="Assets/b5.svg" alt="Created Google Developer Profile" width="90px">Created Google Developer Profile</div>
         </div>
     </div>
-    </div>
+    </footer>
     <div class="lastQuote">Business is complicated, your web solutions can be  simple. @YegorCreative2021</div>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5945108334593216"
      crossorigin="anonymous"></script>
