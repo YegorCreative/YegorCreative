@@ -424,6 +424,7 @@ body {
 .site-nav {
     width: 100%;
     padding: 10px 20px 0;
+    display: none;
 }
 
 .site-nav ul {
