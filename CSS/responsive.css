@@ -85,6 +85,7 @@
         display: block;
         text-align: right;
         margin: 0 15px;
+        border-radius: 25px;
     }
     .site-nav ul {
         justify-content: flex-end;
