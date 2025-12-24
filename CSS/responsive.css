@@ -82,13 +82,14 @@
     }
     .site-nav {
         padding: 20px 40px 10px;
-        display: flex;
-        justify-content: flex-end;
+        display: block;
+        text-align: right;
     }
     .site-nav ul {
         justify-content: flex-end;
         gap: 15px;
         width: auto;
+        display: inline-flex;
     }
     .site-nav a {
         padding: 10px 18px;
