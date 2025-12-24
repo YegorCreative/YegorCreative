@@ -23,17 +23,31 @@
 <body class="fasting-page">
     <!-- Skip link for keyboard navigation -->
     <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Top anchor for back-to-top functionality -->
+    <div id="top" aria-hidden="true"></div>
 
     <header role="banner" class="mainHeading">
         <div class="mainLogo">
             <a href="index.html"><img src="Assets/lionhead.png" alt="Yegor Creative lion logo" height="110px"></a>
             <h1>YegorCreative</h1>
         </div>
-        <nav class="site-nav" aria-label="Primary">
+        <button type="button"
+                class="nav-toggle"
+                id="navToggle"
+                aria-controls="primaryNav"
+                aria-expanded="false"
+                aria-label="Open menu">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <nav id="primaryNav" class="site-nav primary-nav" aria-label="Primary">
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="index.html#creative">Creative</a></li>
                 <li><a href="fasting.html">Fasting</a></li>
+                <li><a href="badges.html">Badges</a></li>
                 <li><a href="index.html#about">About</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
@@ -334,6 +348,9 @@
                 <!-- Accessibility: Grid role for semantic structure, descriptive ARIA labels added via JavaScript -->
                 <div id="trackerGrid" class="tracker-grid" role="grid" aria-label="40 day fasting tracker"></div>
 
+                <!-- Milestone banner for claim codes -->
+                <div id="milestoneBanner" class="milestone-banner" hidden aria-live="polite" aria-atomic="true"></div>
+
                 <div class="tracker-actions">
                     <button id="trackerResetBtn" type="button" class="fasting-button secondary reset-btn">Reset Tracker</button>
                 </div>
@@ -384,6 +401,10 @@ Give me grace for the next step. Amen.</p>
         const PROGRESS_KEY = 'fasting40_progress';
         const WHY_KEY = 'fasting40_mywhy';
         const START_DATE = new Date(2026, 0, 1);
+        const MILESTONE_DATES_KEY = 'fasting40_milestoneDates';
+        const SHOWN_MILESTONES_KEY = 'fasting40_shownMilestones';
+        const CLAIM_SECRET = 'YEGORCREATIVE_FASTING_2026';
+        const MILESTONES = [5, 10, 15, 20, 25, 30, 35, 40];
         const grid = document.getElementById('trackerGrid');
         const completedText = document.getElementById('trackerCompletedText');
         const unlockedText = document.getElementById('trackerUnlockedText');
@@ -403,6 +424,120 @@ Give me grace for the next step. Amen.</p>
             { name: 'Mission & Purpose', ref: 'Matthew 28:19-20', snippet: 'Go and make disciples.', encouragement: 'Your fast is forming you for impact-carry what God is building into your life.' }
         ];
 
+        // FNV-1a hash function for deterministic claim codes
+        function fnv1a(str) {
+            let hash = 2166136261; // 32-bit offset basis
+            for (let i = 0; i < str.length; i++) {
+                hash ^= str.charCodeAt(i);
+                hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
+                hash = hash >>> 0; // Keep 32-bit unsigned
+            }
+            return Math.abs(hash).toString(36).toUpperCase().slice(0, 6);
+        }
+
+        // Generate claim code for a milestone
+        function generateClaimCode(milestone, dateStr) {
+            const hashInput = `${milestone}|${dateStr}|${CLAIM_SECRET}`;
+            const hash = fnv1a(hashInput);
+            return `FAST-${milestone}-${dateStr}-${hash}`;
+        }
+
+        // Get today's date in YYYYMMDD format (local time)
+        function getTodayString() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}${month}${day}`;
+        }
+
+        // Load milestone dates from localStorage
+        function loadMilestoneDates() {
+            try {
+                return JSON.parse(localStorage.getItem(MILESTONE_DATES_KEY)) || {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        // Save milestone dates to localStorage
+        function saveMilestoneDates(dates) {
+            localStorage.setItem(MILESTONE_DATES_KEY, JSON.stringify(dates));
+        }
+
+        // Load shown milestones from localStorage
+        function loadShownMilestones() {
+            try {
+                const shown = JSON.parse(localStorage.getItem(SHOWN_MILESTONES_KEY)) || [];
+                return Array.isArray(shown) ? shown : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        // Save shown milestones to localStorage
+        function saveShownMilestones(shown) {
+            localStorage.setItem(SHOWN_MILESTONES_KEY, JSON.stringify(shown));
+        }
+
+        // Show milestone banner
+        function showMilestoneBanner(milestone, claimCode) {
+            const banner = document.getElementById('milestoneBanner');
+            if (!banner) return;
+
+            const html = `
+                <h3>🎉 Milestone Unlocked: ${milestone} Days</h3>
+                <p>You've completed <strong>${milestone} days</strong> of prayer and fasting. Great work!</p>
+                <p style="font-weight: 600; margin: 10px 0;">Your Claim Code:</p>
+                <div class="code-row">
+                    <input type="text" class="claim-code-input" value="${claimCode}" readonly aria-label="Your claim code"/>
+                    <button type="button" class="copy-code-btn" aria-label="Copy claim code">Copy</button>
+                </div>
+                <a href="badges.html?code=${encodeURIComponent(claimCode)}" class="btn fasting-button" style="margin-top: 10px; display: inline-block;">Claim Your Badge</a>
+            `;
+            banner.innerHTML = html;
+            banner.hidden = false;
+
+            // Copy button functionality
+            const copyBtn = banner.querySelector('.copy-code-btn');
+            if (copyBtn) {
+                copyBtn.addEventListener('click', () => {
+                    const input = banner.querySelector('.claim-code-input');
+                    if (input) {
+                        input.select();
+                        document.execCommand('copy');
+                        const originalText = copyBtn.textContent;
+                        copyBtn.textContent = 'Copied!';
+                        setTimeout(() => {
+                            copyBtn.textContent = originalText;
+                        }, 2000);
+                    }
+                });
+            }
+        }
+
+        // Check for new milestones and show banner if earned
+        function checkAndShowMilestone(completedCount, milestoneDates, shownMilestones) {
+            const earnedMilestones = MILESTONES.filter(m => completedCount >= m);
+            for (const milestone of earnedMilestones) {
+                if (!shownMilestones.includes(milestone)) {
+                    // First time showing this milestone
+                    let dateStr = milestoneDates[milestone];
+                    if (!dateStr) {
+                        // Milestone newly earned today
+                        dateStr = getTodayString();
+                        milestoneDates[milestone] = dateStr;
+                        saveMilestoneDates(milestoneDates);
+                    }
+                    const claimCode = generateClaimCode(milestone, dateStr);
+                    showMilestoneBanner(milestone, claimCode);
+                    shownMilestones.push(milestone);
+                    saveShownMilestones(shownMilestones);
+                    return; // Show only the latest milestone at a time
+                }
+            }
+        }
+
         function toLocalMidnight(date) {
             return new Date(date.getFullYear(), date.getMonth(), date.getDate());
         }
@@ -421,6 +556,11 @@ Give me grace for the next step. Amen.</p>
 
         function saveProgress() {
             localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+            // Check for milestones after saving
+            const completedCount = progress.filter(Boolean).length;
+            const milestoneDates = loadMilestoneDates();
+            const shownMilestones = loadShownMilestones();
+            checkAndShowMilestone(completedCount, milestoneDates, shownMilestones);
         }
 
         function getActiveCount() {
@@ -562,7 +702,14 @@ Give me grace for the next step. Amen.</p>
         }
     })();
     </script>
+    
+    <!-- Back to top button -->
+    <button type="button" id="backToTopBtn" class="back-to-top" aria-label="Back to top">
+      ↑ Top
+    </button>
+    
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5945108334593216"
      crossorigin="anonymous"></script>
+    <script src="script.js"></script>
 </body>
 </html>

@@ -24,6 +24,9 @@
 <body>
     <!-- Skip link for keyboard navigation -->
     <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Top anchor for back-to-top functionality -->
+    <div id="top" aria-hidden="true"></div>
 
     <!--<div class="emailMe">
        <a href="mailto:aleqsandregor@gmail.com"><img src="Assets/email.png" alt="the icon of email"></a>
@@ -34,11 +37,22 @@
             <a href="index.html"><img src="Assets/lionhead.png" alt="the logo of the website" height="110px"></a>
             <h1>YegorCreative</h1>
         </div>
-        <nav class="site-nav" aria-label="Primary">
+        <button type="button"
+                class="nav-toggle"
+                id="navToggle"
+                aria-controls="primaryNav"
+                aria-expanded="false"
+                aria-label="Open menu">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <nav id="primaryNav" class="site-nav primary-nav" aria-label="Primary">
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="#creative">Creative</a></li>
                 <li><a href="fasting.html">Fasting</a></li>
+                <li><a href="badges.html">Badges</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -110,7 +124,13 @@
     </div>
     </footer>
     <div class="lastQuote">Business is complicated, your web solutions can be  simple. @YegorCreative2021</div>
+    
+    <!-- Back to top button -->
+    <button type="button" id="backToTopBtn" class="back-to-top" aria-label="Back to top">
+      ↑ Top
+    </button>
+    
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5945108334593216"
      crossorigin="anonymous"></script>
-</body>
+    <script src="script.js"></script>
 </html>

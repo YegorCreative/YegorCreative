@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Fasting Badges | Yegor Creative</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Claim your fasting milestone badges">
+    <meta name="keywords" content="badges, fasting, prayer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="CSS/responsive.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <meta property="og:image" content="Assets/YegorCreativeScan.png">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="400">
+    <meta property="og:image:height" content="300">
+    <link rel="icon" type="image/png" href="./Assets/lionheadico.png">
+</head>
+
+<body class="badges-page">
+    <!-- Skip link for keyboard navigation -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Top anchor for back-to-top functionality -->
+    <div id="top" aria-hidden="true"></div>
+
+    <header role="banner" class="mainHeading">
+        <div class="mainLogo">
+            <a href="index.html"><img src="Assets/lionhead.png" alt="Yegor Creative lion logo" height="110px"></a>
+            <h1>YegorCreative</h1>
+        </div>
+        <button type="button"
+                class="nav-toggle"
+                id="navToggle"
+                aria-controls="primaryNav"
+                aria-expanded="false"
+                aria-label="Open menu">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <nav id="primaryNav" class="site-nav primary-nav" aria-label="Primary">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#creative">Creative</a></li>
+                <li><a href="fasting.html">Fasting</a></li>
+                <li><a href="badges.html">Badges</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="goodWebsite">
+            <h1 class="head1">Fasting Badges</h1>
+            <p class="head2">Claim your milestone achievement.</p>
+        </div>
+    </header>
+
+    <main id="main" role="main">
+        <section class="fasting-section badge-generator">
+            <h2>Claim Your Badge</h2>
+            <p>Enter your name and paste your claim code to generate and download your milestone badge.</p>
+
+            <div class="generator-card">
+                <div class="form-group">
+                    <label for="badgeName">Your Name</label>
+                    <input 
+                        type="text" 
+                        id="badgeName" 
+                        class="form-input"
+                        placeholder="Enter your name"
+                        aria-describedby="nameHint"
+                        maxlength="30"
+                    />
+                    <small id="nameHint" class="form-hint">Max 30 characters</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="claimCode">Claim Code</label>
+                    <input 
+                        type="text" 
+                        id="claimCode" 
+                        class="form-input"
+                        placeholder="FAST-10-20260110-ABCDEF"
+                        aria-describedby="codeHint"
+                    />
+                    <small id="codeHint" class="form-hint">Format: FAST-{days}-{date}-{hash}</small>
+                </div>
+
+                <button type="button" id="validateBtn" class="fasting-button">Validate & Generate</button>
+
+                <div id="statusMsg" class="status-message" aria-live="polite" aria-atomic="true" role="status"></div>
+            </div>
+        </section>
+
+        <section class="fasting-section badge-preview" id="previewSection" hidden>
+            <h2>Your Badge</h2>
+            <div class="canvas-container">
+                <canvas id="badgeCanvas" width="1080" height="1080" aria-label="Badge preview image"></canvas>
+            </div>
+            <button type="button" id="downloadPngBtn" class="fasting-button" disabled>Download Badge (PNG)</button>
+        </section>
+
+        <section class="fasting-section certificate-section" id="certificateSection" hidden>
+            <h2>40-Day Mega Certificate</h2>
+            <p>You've completed the full 40-day journey! Download a printable certificate to commemorate your achievement.</p>
+            <button type="button" id="openCertBtn" class="fasting-button">Open Certificate (Print / Save as PDF)</button>
+            <p class="fasting-note">This opens a printable certificate in a new tab. Use your browser's "Save as PDF" feature to save it.</p>
+        </section>
+    </main>
+
+    <footer role="contentinfo" class="footFooter" id="contact">
+        <h2 class="contact-heading"><span class="heading-icon">✉</span>Contact Yegor<span class="heading-underline"></span></h2>
+        <div class="socialMedia">
+            <a href="https://www.facebook.com/hambaryanyegor/" target="_blank" aria-label="Visit Yegor Creative on Facebook"><img class="socialMI" src="Assets/facebook.png" alt="" width="90px"></a>
+            <a href="https://www.instagram.com/yegorcreative/" target="_blank" aria-label="Visit Yegor Creative on Instagram"><img class="socialMI" src="Assets/instagram.png" alt="" width="90px"></a>
+            <a href="https://www.youtube.com/yegorcreative" target="_blank" aria-label="Visit Yegor Creative on YouTube"><img class="socialMI" src="Assets/youtube.png" alt="" width="90px"></a>
+            <a href="https://www.linkedin.com/in/yegorhambaryan/" target="_blank" aria-label="Visit Yegor Hambaryan on LinkedIn"><img class="socialMI" src="Assets/linkedIn.png" alt="" width="90px"></a>
+            <a href="https://github.com/YegorCreative" target="_blank" aria-label="Visit Yegor Creative on GitHub"><img class="socialMI" src="Assets/github.png" alt="" width="90px"></a>
+            <a href="mailto:aleqsandregor@gmail.com" aria-label="Send email to Yegor"><img src="Assets/email.png" alt="" class="socialMI" width="90px"></a>
+        </div>
+        <div class="accomplish">
+            <div class="badG">Badges from Google</div>
+            <div class="badgeSchool">
+                <div class="plusI"><img src="Assets/b1.svg" alt="Android Studio User by Google" width="90px">Android Studio User by Google</div>
+                <div class="plusI"><img src="Assets/b2.png" alt="Attendee I/O by Google" width="90px">Attendee I/O 2020-2021 by Google</div>
+                <div class="plusI"><img src="Assets/b3.svg" alt="2021 Solution Challenge registrant by Google" width="90px">2021 Solution Challenge registrant by Google</div>
+                <div class="plusI"><img src="Assets/b4.svg" alt="Google Developer Profile Beta User" width="90px">Google Developer Profile Beta User</div>
+                <div class="plusI"><img src="Assets/b5.svg" alt="Created Google Developer Profile" width="90px">Created Google Developer Profile</div>
+            </div>
+        </div>
+    </footer>
+    <div class="lastQuote">Business is complicated, your web solutions can be simple. @YegorCreative2021</div>
+    
+    <!-- Back to top button -->
+    <button type="button" id="backToTopBtn" class="back-to-top" aria-label="Back to top">
+      ↑ Top
+    </button>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5945108334593216"
+     crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+    <script src="badges.js"></script>
+</body>
+
+</html>
