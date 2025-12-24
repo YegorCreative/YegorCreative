@@ -84,6 +84,7 @@
         padding: 20px 40px 10px;
         display: block;
         text-align: right;
+        margin: 0 15px;
     }
     .site-nav ul {
         justify-content: flex-end;
