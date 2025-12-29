@@ -9,11 +9,6 @@ YegorCreative is a professional web development portfolio showcasing cutting-edg
 ## ✨ Features
 
 - **Responsive Design**: Mobile-first approach with seamless tablet and desktop experiences
-- **40-Day Fasting Tracker**: Interactive spiritual journey tracker with:
-  - Date-driven auto-unlock (starts January 1, 2026)
-  - Daily encouragement with theme-based verses
-  - LocalStorage persistence for progress tracking
-  - Weekly spiritual themes (Surrender, Repentance, Renewal, Warfare, Mission)
 - **Portfolio Showcase**: Featured client projects and web solutions
 - **Modern UI/UX**: Clean, accessible interface with smooth animations
 - **Google Certified**: Showcasing achievements and certifications
@@ -31,13 +26,13 @@ YegorCreative is a professional web development portfolio showcasing cutting-edg
 ```
 YegorCreative/
 ├── index.html              # Main landing page
-├── fasting.html            # 40-day fasting journey tracker
+├── contact.html            # Contact page
 ├── CSS/
 │   ├── styles.css          # Base styles and mobile-first design
 │   └── responsive.css      # Breakpoint-specific enhancements
 ├── Assets/
 │   ├── Elements/           # Design elements and graphics
-│   └── *.png, *.svg        # Images, icons, and badges
+│   └── *.png, *.svg        # Images, icons, and graphics
 ├── CNAME                   # Custom domain configuration
 └── README.md               # Project documentation
 ```
@@ -89,13 +84,6 @@ YegorCreative/
 - Client project gallery with external links
 - Contact and social media integration
 
-### Fasting Tracker
-- 40-day spiritual journey with automatic date-based unlocking
-- Daily encouragement aligned with weekly themes
-- Progress tracking with localStorage persistence
-- Graceful handling of failures and resets
-- Mobile-optimized touch interactions
-
 ## 🌐 Live Demo
 
 Visit the live site: [yegorcreative.com](https://yegorcreative.com)
@@ -111,7 +99,6 @@ Visit the live site: [yegorcreative.com](https://yegorcreative.com)
 - 2025-12-28 (later)
    - Navigation: Neutral `.site-nav` base; overlay restricted to mobile (<=768px); desktop shows inline nav (>=769px); burger hidden on desktop; stacking order fixed.
    - CSS: Cleaned `CSS/responsive.css` nesting; added desktop nav overrides; removed desktop overlay remnants from `CSS/styles.css`.
-   - Pages: Aligned nav classes (`site-nav primary-nav`) in `fasting.html`; included pending updates for `badges.html` and `badges.js`; added `fasting.js` for tracker logic.
    - Deploy: Committed and pushed to `main`; GitHub Pages will reflect changes shortly.
 
 ## 📫 Contact

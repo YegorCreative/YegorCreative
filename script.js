@@ -149,119 +149,6 @@
 })();
 
 /* ===================================
-   FASTING TRACKER EXPORT/IMPORT
-   =================================== */
-
-/**
- * Export/Import System for Cross-Device Progress Sync
- * Trust: Data remains 100% local; user controls export/import
- * A11y: Status messages announced via aria-live regions
- * Logic: Export to JSON, import with validation
- */
-(function initTrackerSync() {
-  const exportBtn = document.getElementById('exportProgressBtn');
-  const importInput = document.getElementById('importProgressFile');
-  const syncStatus = document.getElementById('syncStatus');
-
-  // Exit if not on fasting page
-  if (!exportBtn) {
-    return;
-  }
-
-  // Export handler
-  exportBtn.addEventListener('click', () => {
-    try {
-      // Gather all tracker data from localStorage
-      const progress = JSON.parse(localStorage.getItem('fasting40_progress') || '[]');
-      const milestoneDates = JSON.parse(localStorage.getItem('fasting40_milestoneDates') || '{}');
-      const shownMilestones = JSON.parse(localStorage.getItem('fasting40_shownMilestones') || '[]');
-
-      // Build export object with version for future compatibility
-      const exportData = {
-        version: 1,
-        exportedAt: new Date().toISOString(),
-        progress: progress,
-        milestoneDates: milestoneDates,
-        shownMilestones: shownMilestones
-      };
-
-      // Convert to JSON and download
-      const json = JSON.stringify(exportData, null, 2);
-      const blob = new Blob([json], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `fasting-progress-${new Date().toISOString().split('T')[0]}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-
-      // A11y: Announce success
-      showSyncStatus('✓ Progress exported successfully.', 'success');
-    } catch (error) {
-      showSyncStatus('Export failed: ' + error.message, 'error');
-    }
-  });
-
-  // Import handler
-  importInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const importData = JSON.parse(event.target.result);
-
-        // Validate structure
-        if (!importData.version || !Array.isArray(importData.progress)) {
-          throw new Error('Invalid file format');
-        }
-
-        // Validate array lengths
-        if (importData.progress.length !== 40) {
-          throw new Error('Progress array must contain exactly 40 days');
-        }
-
-        // Import data to localStorage
-        localStorage.setItem('fasting40_progress', JSON.stringify(importData.progress));
-        localStorage.setItem('fasting40_milestoneDates', JSON.stringify(importData.milestoneDates || {}));
-        localStorage.setItem('fasting40_shownMilestones', JSON.stringify(importData.shownMilestones || []));
-
-        // A11y: Announce success and reload
-        showSyncStatus('✓ Progress imported successfully. Refreshing...', 'success');
-
-        // Reload page to display imported data
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
-      } catch (error) {
-        showSyncStatus('Import failed: ' + error.message, 'error');
-        // Reset file input
-        importInput.value = '';
-      }
-    };
-
-    reader.onerror = () => {
-      showSyncStatus('Failed to read file.', 'error');
-      importInput.value = '';
-    };
-
-    reader.readAsText(file);
-  });
-
-  /**
-   * showSyncStatus - Display sync operation result
-   * A11y: aria-live region announces the message to screen readers
-   */
-  function showSyncStatus(message, type) {
-    syncStatus.textContent = message;
-    syncStatus.className = `sync-status status-${type}`;
-  }
-})();
-
-/* ===================================
    CODE QUOTE TILT INTERACTION
    =================================== */
 
@@ -303,4 +190,65 @@
   
   codeQuote.addEventListener('mousemove', handleMouseMove);
   codeQuote.addEventListener('mouseleave', handleMouseLeave);
+})();
+
+/* ===================================
+   YC CODE BANNER
+   =================================== */
+
+(function initYcCodeBanner() {
+  const banners = document.querySelectorAll('.yc-codebanner');
+
+  if (!banners || banners.length === 0) {
+    return;
+  }
+
+  const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) {
+    return;
+  }
+
+  banners.forEach((banner) => {
+    const lines = Array.from(banner.querySelectorAll('.yc-codebanner__line'));
+    if (lines.length === 0) {
+      return;
+    }
+
+    banner.setAttribute('data-yc-anim', 'true');
+
+    let cursor = banner.querySelector('.yc-codebanner__cursor');
+    if (!cursor) {
+      cursor = document.createElement('span');
+      cursor.className = 'yc-codebanner__cursor';
+      cursor.setAttribute('aria-hidden', 'true');
+    }
+
+    lines.forEach((line) => line.classList.remove('is-revealed'));
+
+    let index = 0;
+
+    const revealNext = () => {
+      const line = lines[index];
+      if (!line) {
+        return;
+      }
+
+      line.classList.add('is-revealed');
+
+      const code = line.querySelector('.yc-codebanner__code');
+      if (code) {
+        code.appendChild(cursor);
+      }
+
+      index += 1;
+      if (index >= lines.length) {
+        return;
+      }
+
+      const delay = 220 + Math.floor(Math.random() * 101);
+      window.setTimeout(revealNext, delay);
+    };
+
+    window.setTimeout(revealNext, 220);
+  });
 })();

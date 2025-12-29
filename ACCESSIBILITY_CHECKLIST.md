@@ -8,7 +8,7 @@ This document outlines the accessibility features implemented across yegorcreati
 
 - **WCAG Level**: AA (targeting 2.1 standards)
 - **Last Updated**: January 2025
-- **Pages Covered**: index.html, fasting.html
+- **Pages Covered**: index.html, contact.html
 - **Testing Status**: ✅ Implemented | 🔄 Ongoing monitoring
 
 ---
@@ -54,13 +54,12 @@ This document outlines the accessibility features implemented across yegorcreati
 - [x] `<footer role="contentinfo">` contains contact and social links
 - [x] All pages use semantic landmarks consistently
 
-**Implementation**: Both index.html and fasting.html use proper landmark structure
+**Implementation**: Both index.html and contact.html use proper landmark structure
 
 ---
 
 ### ✅ ARIA Labels
 - [x] Primary navigation labeled: `aria-label="Primary"`
-- [x] 40-day tracker grid labeled: `aria-label="40 day fasting tracker"`
 - [x] Portfolio section: `aria-labelledby="portfolio-heading"`
 - [x] Social media links: descriptive `aria-label` attributes (e.g., "Visit Yegor Creative on Facebook")
 
@@ -78,11 +77,6 @@ This document outlines the accessibility features implemented across yegorcreati
 - H2: "About Me", "Portfolio", "Contact Yegor" (sections)
 - H3: "Front End Web Developer" (subtitle)
 
-**fasting.html**:
-- H1: "40 Days of Prayer & Fasting" (hero)
-- H2: Section headings (Start Here, Why Fast, etc.)
-- H3: Subsection headings (week themes, fast types)
-
 ---
 
 ## 4. Images & Media
@@ -92,7 +86,7 @@ This document outlines the accessibility features implemented across yegorcreati
 - [x] Profile photo: `alt="Portrait of Yegor Hambaryan"`
 - [x] Decorative images: `alt=""` (empty alt for screen readers to skip)
 - [x] Social icons: empty `alt=""` (links use `aria-label` instead)
-- [x] Badge images: Descriptive text visible next to image (no alt needed)
+- [x] Decorative images: `alt=""` used appropriately (screen readers skip)
 
 ---
 
@@ -105,35 +99,17 @@ This document outlines the accessibility features implemented across yegorcreati
 ## 5. Forms & Inputs
 
 ### ✅ Labels
-- [x] Textarea "My Why" has explicit `<label for="fasting-my-why">`
-- [x] Checkboxes wrapped in `<label>` tags for click target enlargement
-- [x] Placeholders used as examples, not as sole label
+- [x] If/when forms are present, use explicit `<label for>` associations (placeholders are not the sole label)
 
 ---
 
 ### ✅ Input Accessibility
-- [x] All form fields have associated labels
-- [x] Focus indicators applied to all input types
-- [x] Textarea saves to localStorage with proper ARIA communication
+- [x] Focus indicators apply to input controls
+- [x] Form/status messaging uses readable text (not color-only)
 
 ---
 
 ## 6. Interactive Elements
-
-### ✅ 40-Day Tracker (fasting.html)
-- [x] Buttons have semantic `<button type="button">` markup
-- [x] Each day button has descriptive `aria-label` (includes day number, status, unlock date)
-- [x] `aria-pressed` attribute reflects completion state
-- [x] Disabled attribute prevents interaction with locked days
-- [x] `role="gridcell"` provides screen reader context
-- [x] Status badges marked `aria-hidden="true"` (redundant with aria-label)
-- [x] Progress counters wrapped in `aria-live="polite"` region
-- [x] Encouragement block wrapped in `aria-live="polite"` region
-- [x] Reset button includes confirmation dialog
-
-**JavaScript**: Enhanced ARIA attributes in `renderAll()` function
-
----
 
 ### ✅ Buttons & Links
 - [x] All buttons use semantic `<button>` tag with `type` attribute
@@ -147,29 +123,12 @@ This document outlines the accessibility features implemented across yegorcreati
 
 ### ✅ Visual Indicators
 - [x] Not relying on color alone for status communication
-- [x] Tracker days include text labels: "Today", "Done", "Available", "Locked"
 - [x] Focus indicators use high-contrast golden outline
 - [x] Text over backgrounds meets WCAG AA contrast requirements
 
 ---
 
-### ✅ State Communication
-- [x] Multiple indicators for tracker states:
-  - Visual: color gradient (purple for done, warm for active, gray for locked)
-  - Textual: status badge ("Done", "Available", "Locked")
-  - ARIA: aria-label includes full state description
-  - Interactive: disabled attribute prevents locked day interaction
-
----
-
 ## 8. Screen Reader Support
-
-### ✅ Live Regions
-- [x] Tracker progress: `aria-live="polite"` updates count on change
-- [x] Encouragement block: `aria-live="polite"` updates theme-based content
-- [x] Changes announced without interrupting user
-
----
 
 ### ✅ Hidden Content
 - [x] Decorative elements marked with `aria-hidden="true"`
@@ -209,8 +168,8 @@ This document outlines the accessibility features implemented across yegorcreati
 
 ### ✅ Mobile Navigation
 - [x] Navigation is accessible via touch and keyboard
-- [x] No hamburger menu implemented (full nav always visible)
-- [x] Links are easily tappable on mobile devices
+- [x] Mobile menu toggle uses appropriate `aria-controls` / `aria-expanded`
+- [x] Menu supports keyboard interaction (including ESC to close)
 
 ---
 
