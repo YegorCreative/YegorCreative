@@ -197,6 +197,7 @@ body {
     padding: 0 20px;
     box-sizing: border-box;
     gap: 12px;
+    position: relative;
 }
 .mainLogo h1{
     font-size: 20px;
@@ -841,6 +842,10 @@ body {
   flex-direction: column;
   gap: 4px;
   box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 1001;
 }
 
 .nav-toggle:hover {
@@ -867,33 +872,34 @@ body {
 
 .primary-nav {
   display: none;
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  top: 0;
   left: 0;
   right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
   background: var(--fast-surface);
-  border-top: 3px solid var(--fast-accent);
-  padding: 20px;
+  padding: 80px 20px 20px;
   margin: 0;
   z-index: 1000;
-  max-height: calc(100vh - 120px);
   overflow-y: auto;
   box-shadow: 0 8px 24px rgba(124, 58, 237, 0.2);
 }
 
 body.nav-open .primary-nav {
-  display: block;
-  animation: slideDown .3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn .3s ease;
 }
 
-@keyframes slideDown {
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -901,6 +907,12 @@ body.nav-open .primary-nav {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 500px;
+}
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -937,30 +949,10 @@ body.nav-open .primary-nav {
   outline-offset: 3px;
 }
 
-/* Desktop nav - show normally, hide burger */
+/* Desktop nav - keep burger menu on all screen sizes */
 @media (min-width: 900px) {
   .nav-toggle {
-    display: none;
-  }
-
-  .primary-nav {
-    position: static;
-    display: flex;
-    background: transparent;
-    border: none;
-    padding: 10px 20px 0;
-    width: 100%;
-  }
-
-  .primary-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: flex-end;
-    flex-direction: row;
+    display: inline-flex;
   }
 }
 
