@@ -484,6 +484,7 @@
     // ============================================
     // 9. HANDLE VALIDATION & GENERATION
     // ============================================
+    if (validateBtn) {
     validateBtn.addEventListener('click', () => {
         hideStatus();
 
@@ -508,10 +509,12 @@
         }
 
         // Success!
+        const fullClaimCode = codeInput.value.trim().toUpperCase();
         currentValidation = {
             name: nameValidation.value,
             milestone: parsed.milestone,
-            dateStr: parsed.dateStr
+            dateStr: parsed.dateStr,
+            code: fullClaimCode
         };
 
         showStatus(`✓ Code verified! Badge ready for ${currentValidation.name}.`, 'success');
@@ -535,8 +538,10 @@
             previewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 100);
     });
+    }
 
     // Download PNG button
+    if (downloadBtn) {
     downloadBtn.addEventListener('click', () => {
         if (currentValidation) {
             downloadBadgePNG(currentValidation.milestone, currentValidation.name);
@@ -544,6 +549,7 @@
             showShareBlock(currentValidation.milestone, currentValidation.name, currentValidation.dateStr, currentValidation.code);
         }
     });
+    }
 
     // ============================================
     // SHARE FUNCTIONALITY
@@ -576,14 +582,12 @@
 
         shareBlock.hidden = false;
 
-        // Announce via aria-live
-        const statusEl = document.querySelector('[aria-live="polite"]');
-        if (statusEl) {
-            statusEl.textContent = 'Share section ready. Copy caption to share your achievement.';
-        }
+        // Note: Removed aria-live announcement here to avoid overwriting validation status
+        // Share section has its own visual feedback via the copy button
     }
 
     // Copy caption button
+    if (copyCaptionBtn) {
     copyCaptionBtn.addEventListener('click', () => {
         const fullText = shareCaption.textContent + '\n' + shareTags.textContent;
         
@@ -611,6 +615,7 @@
             fallbackCopy(fullText);
         }
     });
+    }
 
     /**
      * fallbackCopy - Fallback copy mechanism for older browsers
@@ -636,11 +641,13 @@
     }
 
     // Open certificate button
+    if (openCertBtn) {
     openCertBtn.addEventListener('click', () => {
         if (currentValidation) {
             openCertificate(currentValidation.milestone, currentValidation.name, currentValidation.dateStr);
         }
     });
+    }
 
     // ============================================
     // 10. POPULATE CODE FROM URL QUERY STRING

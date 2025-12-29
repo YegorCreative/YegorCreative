@@ -108,6 +108,12 @@ Visit the live site: [yegorcreative.com](https://yegorcreative.com)
    - Content: Pricing updated — Starter $499, Growth $1,200, Pro $2,500; removed testimonials note block.
    - HTML: Ensured proper closing tags at the end of `index.html`.
 
+- 2025-12-28 (later)
+   - Navigation: Neutral `.site-nav` base; overlay restricted to mobile (<=768px); desktop shows inline nav (>=769px); burger hidden on desktop; stacking order fixed.
+   - CSS: Cleaned `CSS/responsive.css` nesting; added desktop nav overrides; removed desktop overlay remnants from `CSS/styles.css`.
+   - Pages: Aligned nav classes (`site-nav primary-nav`) in `fasting.html`; included pending updates for `badges.html` and `badges.js`; added `fasting.js` for tracker logic.
+   - Deploy: Committed and pushed to `main`; GitHub Pages will reflect changes shortly.
+
 ## 📫 Contact
 
 - **Email**: aleqsandregor@gmail.com
