@@ -260,3 +260,47 @@
     syncStatus.className = `sync-status status-${type}`;
   }
 })();
+
+/* ===================================
+   CODE QUOTE TILT INTERACTION
+   =================================== */
+
+(function initCodeQuoteTilt() {
+  const codeQuote = document.querySelector('.code-quote');
+  
+  if (!codeQuote) {
+    return;
+  }
+  
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  // Check if touch device
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  
+  // Only enable tilt on non-touch devices with motion enabled
+  if (prefersReducedMotion || isTouchDevice) {
+    return;
+  }
+  
+  const handleMouseMove = (e) => {
+    const rect = codeQuote.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = ((y - centerY) / centerY) * -3;
+    const rotateY = ((x - centerX) / centerX) * 3;
+    
+    codeQuote.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  };
+  
+  const handleMouseLeave = () => {
+    codeQuote.style.transform = '';
+  };
+  
+  codeQuote.addEventListener('mousemove', handleMouseMove);
+  codeQuote.addEventListener('mouseleave', handleMouseLeave);
+})();

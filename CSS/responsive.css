@@ -215,6 +215,20 @@
     padding: 90px 60px;
     background-size: min(1200px, 92vw);
   }
+  
+  .code-quote {
+    max-width: 840px;
+    margin: 36px auto;
+  }
+  
+  .code-quote__pre {
+    padding: 22px 18px;
+    font-size: 14px;
+  }
+  
+  .code-quote__file {
+    font-size: 13px;
+  }
 }
 
 @media screen and (min-width: 1200px){
