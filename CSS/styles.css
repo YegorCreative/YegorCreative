@@ -754,28 +754,54 @@ body {
    border-radius: 15px;
     box-shadow: 2px 2px 10px 2px rgba(0,0,0,0.61);
 }
-.portfolioYC{
-    width: 100%;
-    background-image: url(../Assets/portfolio.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-size: 320px;
-    text-align: center;
-    background-color: #6805F2;
-    color: white;
-    box-sizing: border-box;
-    padding-top: 15px;
-    padding-bottom: 15px;
+/* Portfolio section - modern gradient + glass card */
+.portfolioYC {
+  width: 100%;
+  background: var(--fast-gradient);
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 64px 20px;
+  text-align: center;
 }
-.portfolioYC h1{
-    font-family: 'Righteous', cursive;
+
+.portfolioYC::before {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  background-image: url(../Assets/portfolio.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: min(900px, 90vw);
+  opacity: 0.12;
+  pointer-events: none;
 }
-.portfolioYC p{
-    padding-left: 15px;
-    padding-right: 15px;
-    color: white;
-    font-size: 18px;
+
+.informationP {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 28px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+}
+
+.portfolioYC h2 {
+  font-family: 'Righteous', cursive;
+  color: #fff;
+  margin: 0 0 12px 0;
+}
+
+.portfolioYC p {
+  color: #fff;
+  opacity: 0.92;
+  font-size: 18px;
+  max-width: 720px;
+  margin: 0 auto 18px;
+  padding: 0;
 }
 .newBut{
     width: 100%;
@@ -784,19 +810,39 @@ body {
     justify-content: center;
 }
 .newButton {
-    margin:5px;
+    margin: 5px;
     width: 200px;
     text-decoration: none;
     border: 2px solid white;
-    padding: 5px;
+    padding: 8px 12px;
     border-radius: 15px;
-    transition: transform .9s; /* Animation */
+    transition: transform .2s ease, background-color .2s ease;
     color: white;
 }
 .newButton:hover{
-    transform: scale(1.1);
+    transform: translateY(-2px);
     background-color: #4443aa;
+}
 
+/* Section-specific button overrides (Portfolio) */
+.portfolioYC .newButton {
+  border-color: rgba(255, 255, 255, 0.7);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.portfolioYC .newButton:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+@media (min-width: 769px) {
+  .portfolioYC {
+    padding: 90px 60px;
+  }
+  .informationP {
+    padding: 40px;
+  }
 }
 .footFooter{
     width: 100%;
