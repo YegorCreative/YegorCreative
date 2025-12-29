@@ -256,6 +256,9 @@
     flex: 1;
     min-width: 200px;
   }
+
+    .yc-phone{ max-width: 620px; }
+    .yc-phone__dial{ width: 250px; height: 250px; }
 }
 
 @media screen and (min-width: 900px) {
@@ -273,5 +276,27 @@
   .contact-checklist,
   .contact-form-section {
     padding: 90px 0;
+  }
+  
+  /* Rotary Phone Banner */
+  .phone-banner-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+  }
+  
+  .phone-svg {
+    max-width: 350px;
+  }
+  
+  .phone-keyboard {
+    max-width: 400px;
+  }
+  
+  .code-phone-banner {
+    padding: 80px 0;
+  }
+  
+  .terminal-title {
+    text-align: left;
   }
 }
