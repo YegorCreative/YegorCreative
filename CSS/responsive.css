@@ -20,15 +20,7 @@
     .goodWebsite{
         padding: 80px 30px 100px;
     }
-    .portfolioYC {
-        height: 500px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 30px;
-        background-size: cover;
-        background-size: 90%;  
-    }
+
    
 }
 
@@ -118,22 +110,6 @@
         margin: 0;
         padding: 0;
     }
-            font-size: 40px;
-            margin-bottom: 50px;
-        }
-    
-        .cta-card {
-            padding: 60px 48px;
-        }
-    
-        .cta-card h2 {
-            font-size: 36px;
-        }
-    
-        .cta-card > p {
-            font-size: 18px;
-        }
-    }
     .backTwo{
         background-size: 1440px;
         height: 760px;
@@ -154,15 +130,7 @@
         width:560px;
         height:315px; 
     }
-    .portfolioYC{
-        background-size: cover;
-        background-size: 95%;  
-        height: 700px;
-        background-color: white;
-    }
-    .informationP{
-        width: 700px;
-    }
+
     .site-nav {
         padding: 20px 40px 10px;
         text-align: right;
@@ -189,11 +157,6 @@
     }
 }
 @media screen and (min-width: 920px){
-    .portfolioYC{
-        background-size: cover;
-        background-size: 800px;  
-
-    }
     .footFooter{
         height: 750px;
         background-size: cover;
