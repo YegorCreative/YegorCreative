@@ -1441,29 +1441,7 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
   }
 }
 
-/* Desktop overlay support when menu is open */
-body.nav-open .site-nav.primary-nav {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  background: var(--fast-surface);
-  padding: 140px 20px 20px;
-  margin: 0;
-  z-index: 1000;
-  overflow-y: auto;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-body.nav-open .site-nav.primary-nav ul {
-  flex-direction: column;
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 0;
-}
+/* Desktop behavior handled in responsive.css */
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
