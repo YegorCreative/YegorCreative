@@ -176,14 +176,15 @@ body {
 }
 
 .mainHeading::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(104, 5, 242, 0.08), rgba(255,255,255,0.05));
-    pointer-events: none;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(104, 5, 242, 0.08), rgba(255,255,255,0.05));
+  pointer-events: none;
+  z-index: 0;
 }
 .mainLogo {
     width: 100%;
@@ -197,6 +198,7 @@ body {
     gap: 12px;
     position: relative;
     padding-right: 70px; /* Make room for burger menu */
+  z-index: 1;
 }
 .mainLogo h1{
     font-size: 20px;
@@ -906,28 +908,25 @@ body {
     font-family: 'Righteous', cursive;
 }
 
-/* Global navigation */
+/* Global navigation - neutral base */
 .site-nav {
-    position: static;
-    display: block;
-    width: auto;
-    height: auto;
-    background: transparent;
-    padding: 10px 20px 0;
-    margin: 0;
-    z-index: auto;
-    box-shadow: none;
-    overflow-y: visible;
+  position: static;
+  display: block;
+  width: auto;
+  height: auto;
+  background: transparent;
+  padding: 10px 20px 0;
+  margin: 0;
+  z-index: 1;
+  box-shadow: none;
+  overflow: visible;
 }
 
 .site-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: block; /* No flex in base; desktop flex added in media */
 }
 
 .site-nav a {
@@ -1383,27 +1382,27 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
 
 /* Mobile overlay - only on small screens */
 @media (max-width: 768px) {
-  .site-nav {
-    display: none;
+  .nav-toggle { display: inline-flex; }
+  .site-nav { display: none; }
+
+  body.nav-open .site-nav {
+    display: flex;
     position: fixed;
     inset: 0;
     width: 100vw;
     height: 100vh;
     background: var(--fast-surface);
-    padding: 120px 20px 20px;
+    padding: 120px 20px 20px; /* avoid header collision */
     margin: 0;
     z-index: 1000;
     overflow-y: auto;
-  }
-
-  body.nav-open .site-nav {
-    display: flex;
     justify-content: center;
     align-items: flex-start;
     animation: fadeIn .3s ease;
   }
 
   body.nav-open .site-nav ul {
+    display: flex;
     flex-direction: column;
     width: 100%;
     max-width: 500px;
@@ -1441,7 +1440,28 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
   }
 }
 
-/* Desktop behavior handled in responsive.css */
+/* Desktop nav - inline, burger hidden */
+@media (min-width: 769px) {
+  .nav-toggle { display: none !important; }
+
+  .site-nav.primary-nav {
+    display: block;
+    position: static;
+    background: transparent;
+    height: auto;
+    width: auto;
+  }
+
+  .site-nav { padding: 20px 40px 10px; text-align: right; margin: 0 15px; border-radius: 25px; }
+
+  .site-nav ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+}
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
