@@ -209,3 +209,16 @@
         width: auto;
     }
 }
+
+@media screen and (min-width: 769px){
+  .portfolioYC{
+    padding: 90px 60px;
+    background-size: min(1200px, 92vw);
+  }
+}
+
+@media screen and (min-width: 1200px){
+  .portfolioYC{
+    background-size: 1300px;
+  }
+}
