@@ -4,17 +4,15 @@
 <head>
     <title>Yegor Creative</title>
     <meta charset="UTF-8">
-    <meta name="description" content="Yegor Creative">
-    <meta name="keywords" content="HTML, CSS, JavaScript">
-    <meta name="keywords" content="Yegor Creative">
-    <meta name="descript" content="YegorCreative">
+    <meta name="description" content="Yegor Creative - Professional web development and design services">
+    <meta name="keywords" content="HTML, CSS, JavaScript, Yegor Creative, web development">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CSS/styles.css">
     <link rel="stylesheet" href="CSS/responsive.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@300&display=swap" rel="stylesheet">
         <meta property="og:image" content="Assets/YegorCreativeScan.png">
-        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:type" content="image/png">
         <meta property="og:image:width" content="400">
         <meta property="og:image:height" content="300">
         <link rel="icon" type="image/png" href="./Assets/lionheadico.png">
@@ -33,6 +31,7 @@
     </div>-->
     <header role="banner" class="mainHeading">
        <!--<img src="Assets/background11.png" alt="the main backgraound with design assets" class="design1">-->
+       <div class="container">
         <div class="mainLogo">
             <a href="index.html"><img src="Assets/lionhead.png" alt="the logo of the website" height="110px"></a>
             <h1>YegorCreative</h1>
@@ -58,13 +57,239 @@
             </ul>
         </nav>
         <div class="goodWebsite">
-            <h1 class="head1">Powerful Website</h1>
-            <p class="head1" aria-hidden="true">Productive Business</p>
-            <p class="head2">Creating dynamic websites for exceptional user experience.</p>
-     </div>
+            <div class="hero-content">
+                <h1 class="head1">Your Website Is Your First Impression.<br>Make It Count.</h1>
+                <p class="head2">I design fast, modern websites that help businesses earn trust, attract customers, and grow.</p>
+                <div class="hero-cta">
+                    <a href="#contact" class="btn-primary">Build My Website</a>
+                    <a href="#creative" class="btn-secondary">See My Work</a>
+                </div>
+            </div>
+        </div>
+       </div>
     </header>
   
     <main id="main" role="main">
+    
+        <!-- Value Section -->
+        <section class="value-section" id="value" aria-labelledby="valueHeading">
+            <div class="container">
+                <!-- Quote Strip -->
+                <div class="value-quote-strip">
+                    <p class="value-quote">"A great website isn't an expense — it's your best employee."</p>
+                    <p class="value-sub">It builds trust, answers questions, and helps customers choose you.</p>
+                </div>
+
+                <!-- Services Grid -->
+                <h2 id="valueHeading" class="section-heading">What I Can Build For You</h2>
+                <div class="services-grid">
+                    <article class="service-card">
+                        <h3>Business Websites</h3>
+                        <p>Fast, modern, mobile-first websites that represent your brand professionally and convert visitors into customers.</p>
+                    </article>
+                    <article class="service-card">
+                        <h3>Landing Pages</h3>
+                        <p>Focused pages built to convert — clear messaging, strong calls to action, and optimized for results.</p>
+                    </article>
+                    <article class="service-card">
+                        <h3>Website Redesign</h3>
+                        <p>Transform your outdated site into a cleaner, faster, more trustworthy experience that reflects your current business.</p>
+                    </article>
+                    <article class="service-card">
+                        <h3>Performance + SEO Basics</h3>
+                        <p>Speed optimization and structural improvements that help your site load faster and rank better.</p>
+                    </article>
+                    <article class="service-card">
+                        <h3>Maintenance + Updates</h3>
+                        <p>Keep your site fresh, secure, and running smoothly with ongoing support and content updates.</p>
+                    </article>
+                </div>
+
+                <!-- Process Row -->
+                <h2 class="process-title">How We'll Work</h2>
+                <div class="process-row">
+                    <article class="process-step">
+                        <div class="step-number">1</div>
+                        <h3>Discover</h3>
+                        <p>Understand your goals, audience, and what success looks like for your business.</p>
+                    </article>
+                    <article class="process-step">
+                        <div class="step-number">2</div>
+                        <h3>Design + Build</h3>
+                        <p>Create a responsive, fast website that looks great and works perfectly on every device.</p>
+                    </article>
+                    <article class="process-step">
+                        <div class="step-number">3</div>
+                        <h3>Launch + Improve</h3>
+                        <p>Deploy your site and provide ongoing support to iterate and optimize performance.</p>
+                    </article>
+                </div>
+
+                <!-- CTA Block -->
+                <div class="cta-card">
+                    <h2>Ready to upgrade your online presence?</h2>
+                    <p>Tell me what you're building — I'll help you make it clear, fast, and professional.</p>
+                    <div class="cta-buttons">
+                        <a href="mailto:aleqsandregor@gmail.com" class="btn-primary">Request a Quote</a>
+                        <a href="#creative" class="btn-secondary">View Portfolio</a>
+                    </div>
+                    <p class="trust-line">Mobile-first • Accessible • Clean code • Built for speed</p>
+                </div>
+            </div>
+        </section>
+
+                <!-- Testimonials Section -->
+                <section class="testimonials-section" id="testimonials" aria-labelledby="testimonialsHeading">
+                    <div class="container">
+                        <header class="section-header">
+                            <h2 id="testimonialsHeading">What Clients Say</h2>
+                            <p class="section-subtitle">Clear communication. Clean design. Websites that feel trustworthy.</p>
+                        </header>
+
+                        <div class="testimonials-grid" role="list">
+                            <article class="testimonial-card" role="listitem">
+                                <p class="testimonial-quote">“The site looks premium and loads fast. Customers finally take us seriously online.”</p>
+                                <p class="testimonial-name">Alex M.</p>
+                                <p class="testimonial-meta">Local Business Owner</p>
+                            </article>
+                            <article class="testimonial-card" role="listitem">
+                                <p class="testimonial-quote">“Clean design, quick turnaround, and great communication. Exactly what I needed.”</p>
+                                <p class="testimonial-name">Sarah K.</p>
+                                <p class="testimonial-meta">Small Brand Founder</p>
+                            </article>
+                            <article class="testimonial-card" role="listitem">
+                                <p class="testimonial-quote">“He improved our layout, clarity, and mobile experience. The difference is night and day.”</p>
+                                <p class="testimonial-name">Daniel P.</p>
+                                <p class="testimonial-meta">Service Company</p>
+                            </article>
+                            <article class="testimonial-card" role="listitem">
+                                <p class="testimonial-quote">“Simple, modern, and professional. The website finally matches our quality.”</p>
+                                <p class="testimonial-name">Maria L.</p>
+                                <p class="testimonial-meta">Studio Manager</p>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Pricing Section -->
+                <section class="pricing-section" id="pricing" aria-labelledby="pricingHeading">
+                    <div class="container">
+                        <header class="section-header">
+                            <h2 id="pricingHeading">Simple Pricing</h2>
+                            <p class="section-subtitle">Choose a package. I’ll tailor it to your goals.</p>
+                        </header>
+
+                        <div class="pricing-grid">
+                            <article class="pricing-card">
+                                <h3 class="pricing-name">Starter</h3>
+                                <p class="pricing-price">$499</p>
+                                <p class="pricing-desc">Launch a focused presence with essentials done right.</p>
+                                <ul class="pricing-features">
+                                    <li>1-page website (landing page)</li>
+                                    <li>Mobile-first responsive design</li>
+                                    <li>Basic SEO structure</li>
+                                    <li>Contact CTA section</li>
+                                </ul>
+                                <a href="mailto:aleqsandregor@gmail.com" class="btn-primary pricing-btn">Request This Package</a>
+                            </article>
+
+                            <article class="pricing-card popular">
+                                <div class="popular-badge" aria-label="Most Popular">Most Popular</div>
+                                <h3 class="pricing-name">Growth</h3>
+                                <p class="pricing-price">$1,200</p>
+                                <p class="pricing-desc">Conversion-focused layout with performance and clarity.</p>
+                                <ul class="pricing-features">
+                                    <li>Up to 5 sections or 3 pages</li>
+                                    <li>Strong hero + conversion layout</li>
+                                    <li>Speed + performance improvements</li>
+                                    <li>Basic on-page SEO + metadata</li>
+                                    <li>One revision round</li>
+                                </ul>
+                                <a href="mailto:aleqsandregor@gmail.com" class="btn-primary pricing-btn">Request This Package</a>
+                            </article>
+
+                            <article class="pricing-card">
+                                <h3 class="pricing-name">Pro</h3>
+                                <p class="pricing-price">$2,500</p>
+                                <p class="pricing-desc">Advanced polish and multi-page structure for growing brands.</p>
+                                <ul class="pricing-features">
+                                    <li>Multi-page site (5–8 pages)</li>
+                                    <li>Advanced polish (animations optional)</li>
+                                    <li>Content structure + strategy help</li>
+                                    <li>Performance + accessibility checks</li>
+                                    <li>Two revision rounds</li>
+                                </ul>
+                                <a href="mailto:aleqsandregor@gmail.com" class="btn-primary pricing-btn">Request This Package</a>
+                            </article>
+                        </div>
+
+                        <p class="pricing-disclaimer">Final pricing depends on scope, pages, and content readiness.</p>
+                    </div>
+                </section>
+
+                <!-- Contact Form Section -->
+                <section class="contact-section" id="contact-form" aria-labelledby="contactHeading">
+                    <div class="container">
+                        <header class="section-header">
+                            <h2 id="contactHeading">Contact</h2>
+                            <p class="section-subtitle">Tell me what you’re building. I’ll respond as soon as possible.</p>
+                        </header>
+
+                        <form class="contact-card" action="mailto:aleqsandregor@gmail.com" method="post" enctype="text/plain">
+                            <div class="form-row">
+                                <label for="contactName">Name</label>
+                                <input type="text" id="contactName" name="Name" required>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="contactEmail">Email</label>
+                                <input type="email" id="contactEmail" name="Email" required>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="contactProject">Business / Project</label>
+                                <input type="text" id="contactProject" name="Project" required>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="contactMessage">Message</label>
+                                <textarea id="contactMessage" name="Message" rows="6" required></textarea>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-row">
+                                    <label for="contactBudget">Budget range (optional)</label>
+                                    <select id="contactBudget" name="Budget">
+                                        <option>Not sure</option>
+                                        <option>Starter</option>
+                                        <option>Growth</option>
+                                        <option>Pro</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="contactTimeline">Timeline (optional)</label>
+                                    <select id="contactTimeline" name="Timeline">
+                                        <option>ASAP</option>
+                                        <option>This month</option>
+                                        <option>Next month</option>
+                                        <option>Flexible</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-primary submit-btn">Send Message</button>
+                            <p class="form-note">This uses your email app to send the message (no data stored on the site).</p>
+                        </form>
+
+                        <div class="direct-contact">
+                            <a class="direct-link" href="mailto:aleqsandregor@gmail.com">Email Me Directly</a>
+                            <a class="direct-link" href="#creative">View Portfolio</a>
+                            <a class="direct-link" href="#contact">Footer Contact</a>
+                        </div>
+                    </div>
+                </section>
+
     <div class="backTwo" id="about">
        <!-- <img src="Assets/background2.png" alt="design assets" class="aboutMe">-->
         <div class="aboutMe2">
@@ -101,7 +326,7 @@
     </section>
     </main>
 
-    <footer role="contentinfo" class=\"footFooter\" id="contact">
+    <footer role="contentinfo" class="footFooter" id="contact">
         <!--<img src="Assets/footer.png" alt="design element for footer" class="desFoot">-->
         <h2 class="contact-heading"><span class="heading-icon">✉</span>Contact Yegor<span class="heading-underline"></span></h2>
         <div class="socialMedia">
@@ -135,5 +360,6 @@
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5945108334593216"
      crossorigin="anonymous"></script>
-    <script src="script.js"></script>
+        <script src="script.js"></script>
+    </body>
 </html>
