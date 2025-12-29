@@ -100,6 +100,14 @@ YegorCreative/
 
 Visit the live site: [yegorcreative.com](https://yegorcreative.com)
 
+## 🚢 Deployment Log
+
+- 2025-12-28
+   - Navigation: `#primaryNav` now uses `site-nav primary-nav`; full-screen overlay enabled on mobile and desktop; burger remains visible.
+   - Layout: Full-bleed hero by removing boxed `body` layout; added reusable `.container` to center inner content.
+   - Content: Pricing updated — Starter $499, Growth $1,200, Pro $2,500; removed testimonials note block.
+   - HTML: Ensured proper closing tags at the end of `index.html`.
+
 ## 📫 Contact
 
 - **Email**: aleqsandregor@gmail.com
