@@ -268,3 +268,53 @@
     window.setTimeout(revealNext, 220);
   });
 })();
+
+/* ===================================
+   PORTFOLIO FILTERS (portfolio.html)
+   =================================== */
+
+(function initPortfolioFilters() {
+  const filterBar = document.querySelector('.pf-filterbar');
+  if (!filterBar) {
+    return;
+  }
+
+  const filterButtons = Array.from(filterBar.querySelectorAll('.pf-filter'));
+  const cards = Array.from(document.querySelectorAll('.pf-card'));
+
+  if (filterButtons.length === 0 || cards.length === 0) {
+    return;
+  }
+
+  const setActiveButton = (activeButton) => {
+    filterButtons.forEach((btn) => {
+      const isActive = btn === activeButton;
+      btn.classList.toggle('is-active', isActive);
+      btn.setAttribute('aria-pressed', String(isActive));
+    });
+  };
+
+  const applyFilter = (filterValue) => {
+    const normalized = (filterValue || 'all').toLowerCase();
+    cards.forEach((card) => {
+      const category = (card.getAttribute('data-category') || '').toLowerCase();
+      const shouldShow = normalized === 'all' || category === normalized;
+      card.hidden = !shouldShow;
+    });
+  };
+
+  filterBar.addEventListener('click', (e) => {
+    const button = e.target.closest('.pf-filter');
+    if (!button) {
+      return;
+    }
+    const filterValue = button.getAttribute('data-filter') || 'all';
+    setActiveButton(button);
+    applyFilter(filterValue);
+  });
+
+  // Default state
+  const defaultButton = filterButtons.find((btn) => (btn.getAttribute('data-filter') || '') === 'all') || filterButtons[0];
+  setActiveButton(defaultButton);
+  applyFilter(defaultButton.getAttribute('data-filter') || 'all');
+})();

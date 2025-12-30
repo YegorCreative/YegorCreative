@@ -321,3 +321,35 @@
   }
 }
 
+/* ===================================
+   PORTFOLIO PAGE + FEATURED WORK
+   =================================== */
+
+@media screen and (min-width: 769px) {
+  .portfolio-page .pf-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .portfolio-page .pf-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .fw-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (min-width: 769px){
+  .contact-hero-grid{
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+}
+
+@media screen and (max-width: 768px){
+  .contact-hero-visual{
+    order: -1;
+  }
+}
+
