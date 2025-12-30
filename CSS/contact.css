@@ -1,0 +1,15 @@
+/* ===================================
+   CONTACT PAGE
+   =================================== */
+
+.contact-page .mainHeading {
+  background-image: none;
+  min-height: auto;
+}
+
+/* Active nav state */
+.contact-page .site-nav a.active {
+  background: var(--fast-gradient);
+  color: #fff;
+  border-color: var(--fast-accent);
+}

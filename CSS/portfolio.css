@@ -1,0 +1,235 @@
+/* ===================================
+   PORTFOLIO PAGE (portfolio.html)
+   Scoped styles (pf-*)
+   =================================== */
+
+.portfolio-page .pf-hero {
+  padding: 60px 0;
+  background: linear-gradient(180deg, var(--fast-surface-2) 0%, var(--fast-surface) 100%);
+  text-align: center;
+}
+
+.portfolio-page .pf-hero__title {
+  font-family: 'Righteous', cursive;
+  font-size: clamp(32px, 5vw, 44px);
+  color: var(--fast-ink);
+  margin: 0 0 14px 0;
+  line-height: 1.15;
+}
+
+.portfolio-page .pf-hero__subtitle {
+  font-size: clamp(16px, 3vw, 20px);
+  color: var(--fast-muted);
+  margin: 0 auto 26px auto;
+  max-width: 720px;
+  line-height: 1.6;
+}
+
+.portfolio-page .pf-hero__cta {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.portfolio-page .pf-filter-section {
+  padding: 22px 0 10px;
+}
+
+.portfolio-page .pf-filterbar {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.portfolio-page .pf-filter {
+  min-height: 44px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--fast-accent);
+  background: var(--fast-surface);
+  color: var(--fast-ink);
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .2s ease, background-color .2s ease, color .2s ease;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.portfolio-page .pf-filter:hover {
+  transform: translateY(-1px);
+}
+
+.portfolio-page .pf-filter.is-active {
+  background: var(--fast-gradient);
+  color: #fff;
+  border-color: var(--fast-accent);
+}
+
+.portfolio-page .pf-filter:focus-visible {
+  outline: 3px solid var(--fast-accent);
+  outline-offset: 3px;
+}
+
+.portfolio-page .pf-projects {
+  padding: 36px 0 40px;
+}
+
+.portfolio-page .pf-section-title {
+  font-family: 'Righteous', cursive;
+  font-size: 30px;
+  margin: 0 0 18px 0;
+  color: var(--fast-ink);
+  text-align: center;
+}
+
+.portfolio-page .pf-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.portfolio-page .pf-card {
+  background: var(--fast-surface);
+  border: 1px solid var(--fast-border);
+  border-radius: var(--fast-radius);
+  box-shadow: var(--fast-shadow);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.portfolio-page .pf-card__title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--fast-ink);
+}
+
+.portfolio-page .pf-card__desc {
+  margin: 0;
+  color: var(--fast-muted);
+  line-height: 1.6;
+}
+
+.portfolio-page .pf-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.portfolio-page .pf-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--fast-surface-2);
+  border: 1px solid var(--fast-border);
+  color: var(--fast-ink);
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.portfolio-page .pf-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.portfolio-page .pf-cases {
+  padding: 54px 0;
+  background: linear-gradient(180deg, var(--fast-surface) 0%, var(--fast-surface-2) 100%);
+}
+
+.portfolio-page .pf-case {
+  background: var(--fast-surface);
+  border: 1px solid var(--fast-border);
+  border-radius: var(--fast-radius);
+  box-shadow: var(--fast-shadow);
+  padding: 22px;
+  max-width: 920px;
+  margin: 0 auto 16px auto;
+}
+
+.portfolio-page .pf-case h3 {
+  margin: 0 0 10px 0;
+  color: var(--fast-ink);
+}
+
+.portfolio-page .pf-case ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--fast-muted);
+  line-height: 1.6;
+}
+
+.portfolio-page .pf-skills {
+  padding: 54px 0;
+}
+
+.portfolio-page .pf-skill-list {
+  max-width: 720px;
+  margin: 0 auto 22px auto;
+  padding-left: 18px;
+  color: var(--fast-muted);
+  line-height: 1.8;
+}
+
+.portfolio-page .pf-github-cta {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 22px;
+  border-radius: var(--fast-radius);
+  border: 2px solid var(--fast-accent);
+  background: linear-gradient(135deg, var(--fast-surface-2), var(--fast-surface));
+  text-align: center;
+}
+
+.portfolio-page .pf-github-cta__text {
+  margin: 0 0 14px 0;
+  color: var(--fast-muted);
+  line-height: 1.6;
+}
+
+.portfolio-page .pf-bottom-cta {
+  padding: 54px 0 70px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--fast-surface-2) 0%, var(--fast-surface) 100%);
+}
+
+.portfolio-page .pf-bottom-cta__sub {
+  margin: 0 auto 18px auto;
+  max-width: 720px;
+  color: var(--fast-muted);
+  line-height: 1.6;
+}
+
+.portfolio-page main {
+  background-image: url(../Assets/portfolio.png);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: min(1100px, 92vw) auto !important;   /* must never crop */
+  min-height: calc(min(1100px, 92vw) * 1001 / 1363);
+}
+
+/* ===================================
+   PORTFOLIO PAGE + FEATURED WORK
+   =================================== */
+
+@media screen and (min-width: 769px) {
+  .portfolio-page .pf-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .portfolio-page .pf-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
