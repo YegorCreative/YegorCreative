@@ -43,6 +43,8 @@
     return;
   }
 
+  const isMobileViewport = () => window.matchMedia('(max-width: 768px)').matches;
+
   // Helper function to get all focusable elements
   const getFocusableElements = (container) => {
     return Array.from(container.querySelectorAll(
@@ -57,8 +59,12 @@
     
     if (isOpen) {
       navToggle.setAttribute('aria-label', 'Close menu');
-      // Prevent background scroll
-      document.body.style.overflow = 'hidden';
+      // Prevent background scroll (mobile only)
+      if (isMobileViewport()) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
       // Move focus to first link in nav
       const firstLink = primaryNav.querySelector('a');
       if (firstLink) {
@@ -146,6 +152,16 @@
     }
   });
   document.addEventListener('click', handleClickOutside);
+
+  // If we switch to desktop while menu is open, close it and clear any scroll lock
+  window.addEventListener('resize', () => {
+    if (!isMobileViewport() && document.body.classList.contains('nav-open')) {
+      document.body.classList.remove('nav-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', 'Open menu');
+      document.body.style.overflow = '';
+    }
+  });
 })();
 
 /* ===================================

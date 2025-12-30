@@ -16,6 +16,11 @@
   --fast-radius: 16px;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 /* Button base styles */
 .btn {
   min-height: 44px;
@@ -683,12 +688,19 @@
   align-items: center;
 }
 
+/* Safety: never allow a portfolio overlay to block taps */
+.portfolioYC::before {
+  content: none !important;
+}
+
 .informationP{
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
   color: #fff;
   text-shadow: 0 2px 18px rgba(0,0,0,0.28);
+  position: relative;
+  z-index: 1;
 }
 
 .portfolioYC p{
@@ -716,12 +728,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  line-height: 1;
+  line-height: 1.15;
   border-radius: 999px;
   text-decoration: none;
   border: 2px solid white;
   transition: transform .2s ease, background-color .2s ease;
   color: white;
+  text-align: center;
 }
 
 .newButton:hover{
@@ -736,6 +749,7 @@
 .code-quote {
   max-width: 720px;
   margin: 28px auto;
+  width: 100%;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 14px;
@@ -806,6 +820,7 @@
   padding: 18px 14px;
   background: rgba(0, 0, 0, 0.15);
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   font-size: 13px;
   line-height: 1.8;
 }
@@ -815,6 +830,7 @@
   font-family: 'Courier New', Consolas, Monaco, monospace;
   color: rgba(255, 255, 255, 0.95);
   white-space: pre;
+  max-width: 100%;
 }
 
 .ln {

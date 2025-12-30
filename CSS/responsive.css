@@ -264,3 +264,60 @@
     text-align: left;
   }
 }
+
+@media screen and (max-width: 768px) {
+  /* Portfolio: stop vertical centering that squishes mobile */
+  .portfolioYC{
+    align-items: flex-start;
+    padding: 56px 16px;
+    background-size: 1100px;
+  }
+
+  /* Create a readable card behind the content (no overlay blocking taps) */
+  .informationP{
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 18px 14px;
+    border-radius: 16px;
+    background: rgba(17, 24, 39, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.16);
+    text-shadow: none;
+  }
+
+  .informationP h2{
+    margin-top: 6px;
+    margin-bottom: 12px;
+  }
+
+  .portfolioYC p{
+    font-size: 16px;
+    line-height: 1.55;
+    margin: 0 auto 14px auto;
+    padding-left: 0;
+    padding-right: 0;
+    color: #fff;
+    opacity: 0.95;
+  }
+
+  /* Code quote spacing */
+  .code-quote{
+    margin: 16px auto;
+    max-width: 100%;
+  }
+
+  /* Button grid wraps cleanly */
+  .newBut{
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .newButton{
+    min-height: 44px;
+    padding: 10px 14px;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+}
+
