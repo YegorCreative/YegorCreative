@@ -13,3 +13,7 @@
   color: #fff;
   border-color: var(--fast-accent);
 }
+
+.contact-page .contact-hero {
+  padding-top: 120px;
+}

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Creative | Yegor Creative</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Creative work by Yegor Creative - web, design, and clean layouts built for trust and clarity">
+    <meta name="keywords" content="creative, web design, clean layouts, Yegor Creative">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="CSS/responsive.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <meta property="og:image" content="Assets/YegorCreativeScan.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="400">
+    <meta property="og:image:height" content="300">
+    <link rel="icon" type="image/png" href="./Assets/lionheadico.png">
+</head>
+
+<body>
+    <!-- Skip link for keyboard navigation -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <!-- Top anchor for back-to-top functionality -->
+    <div id="top" aria-hidden="true"></div>
+
+    <header role="banner" class="mainHeading">
+       <div class="container">
+        <div class="mainLogo">
+            <a href="index.html"><img src="Assets/lionhead.png" alt="the logo of the website" height="110px"></a>
+            <h1>YegorCreative</h1>
+        </div>
+        <button type="button"
+                class="nav-toggle"
+                id="navToggle"
+                aria-controls="primaryNav"
+                aria-expanded="false"
+                aria-label="Open menu">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <nav id="primaryNav" class="site-nav primary-nav" aria-label="Primary">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="creative.html" class="active">Creative</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+       </div>
+    </header>
+
+    <main id="main" role="main">
+
+        <!-- Section 1: Hero -->
+        <section aria-label="Creative hero">
+            <img src="Assets/background11.png" alt="" class="design1" aria-hidden="true">
+            <div class="goodWebsite">
+                <div class="hero-content">
+                    <h1 class="head1">Creative Work</h1>
+                    <p class="head2">Web, design, and clean layouts built for trust and clarity.</p>
+
+                    <div class="hero-cta">
+                        <a href="#projects" class="btn-primary">View Projects</a>
+                        <a href="contact.html#contact-form" class="btn-secondary">Request a Quote</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Featured Projects -->
+        <section class="featured-work" id="projects" aria-labelledby="creative-projects-heading">
+            <div class="container">
+                <h2 id="creative-projects-heading" class="section-heading">Featured Projects</h2>
+                <div class="fw-grid" role="list">
+                    <article class="fw-card" role="listitem">
+                        <h3>Bridgeford PT</h3>
+                        <p>Service-first layout with clear calls to action.</p>
+                        <a href="https://bridgefordpt.com/" target="_blank" rel="noopener noreferrer" class="btn-secondary">View</a>
+                    </article>
+                    <article class="fw-card" role="listitem">
+                        <h3>W&amp;W Painting</h3>
+                        <p>Mobile-first site focused on trust and clarity.</p>
+                        <a href="http://wwpaintingla.com/" target="_blank" rel="noopener noreferrer" class="btn-secondary">View</a>
+                    </article>
+                    <article class="fw-card" role="listitem">
+                        <h3>Martin Galleries</h3>
+                        <p>Premium presentation built for visual impact.</p>
+                        <a href="https://www.martingalleries.com/" target="_blank" rel="noopener noreferrer" class="btn-secondary">View</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Services for Creators -->
+        <section class="value-section" aria-labelledby="creative-services-heading">
+            <div class="container">
+                <h2 id="creative-services-heading" class="section-heading">Services for Creators</h2>
+                <div class="services-grid">
+                    <article class="service-card">
+                        <h3>Portfolio Sites</h3>
+                        <p>Clean, focused portfolios that make your work feel premium and easy to browse.</p>
+                    </article>
+                    <article class="service-card">
+                        <h3>Landing Pages</h3>
+                        <p>Short, high-conversion pages with clear messaging and strong calls to action.</p>
+                    </article>
+                    <article class="service-card">
+                        <h3>Redesign + Cleanup</h3>
+                        <p>Modernize your layout, improve clarity, and fix mobile issues without a full rebuild.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Process -->
+        <section class="value-section" aria-labelledby="creative-process-heading">
+            <div class="container">
+                <h2 id="creative-process-heading" class="process-title">Process</h2>
+                <div class="process-row">
+                    <article class="process-step">
+                        <div class="step-number">1</div>
+                        <h3>Discover</h3>
+                        <p>Understand your goals, audience, and what success looks like.</p>
+                    </article>
+                    <article class="process-step">
+                        <div class="step-number">2</div>
+                        <h3>Design + Build</h3>
+                        <p>Create a clean, mobile-first layout that feels trustworthy and clear.</p>
+                    </article>
+                    <article class="process-step">
+                        <div class="step-number">3</div>
+                        <h3>Launch + Improve</h3>
+                        <p>Ship fast, then refine based on feedback and performance.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Tools / Stack -->
+        <section class="value-section" aria-labelledby="creative-tools-heading">
+            <div class="container">
+                <h2 id="creative-tools-heading" class="section-heading">Tools / Stack</h2>
+                <ul>
+                    <li>HTML + CSS + JavaScript</li>
+                    <li>Responsive layout + performance basics</li>
+                    <li>Accessibility-first patterns</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 6: Proof / Credibility -->
+        <section class="testimonials-section" aria-labelledby="creative-proof-heading">
+            <div class="container">
+                <header class="section-header">
+                    <h2 id="creative-proof-heading">Proof</h2>
+                    <p class="section-subtitle">Credibility signals that support trust and clarity.</p>
+                </header>
+
+                <div class="fw-grid" role="list">
+                    <article class="fw-card" role="listitem">
+                        <h3>Google &amp; Udacity Certified</h3>
+                        <p>Training focused on real-world front-end fundamentals.</p>
+                    </article>
+                    <article class="fw-card" role="listitem">
+                        <h3>Mobile-first, accessible, clean code</h3>
+                        <p>Layouts built to be readable, fast, and easy to use on every device.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: CTA Card -->
+        <section class="value-section" aria-label="Creative call to action">
+            <div class="container">
+                <div class="cta-card">
+                    <h2>Ready to build something clean and professional?</h2>
+                    <p>Tell me what you’re making — I’ll help you make it clear, fast, and trustworthy.</p>
+                    <div class="cta-buttons">
+                        <a href="contact.html#contact-form" class="btn-primary">Request a Quote</a>
+                        <a href="mailto:aleqsandregor@gmail.com" class="btn-secondary">Email Me</a>
+                    </div>
+                    <p class="trust-line">Mobile-first • Accessible • Clean code • Built for speed</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer role="contentinfo" class="footFooter">
+        <h2 class="contact-heading"><span class="heading-icon">✉</span>Contact Yegor<span class="heading-underline"></span></h2>
+        <div class="socialMedia">
+            <a  href="https://www.facebook.com/hambaryanyegor/" target="_blank" aria-label="Visit Yegor Creative on Facebook" rel="noopener noreferrer"><img class="socialMI" src="Assets/facebook.png" alt="" width="90px"></a>
+            <a  href="https://www.instagram.com/yegorcreative/" target="_blank" aria-label="Visit Yegor Creative on Instagram" rel="noopener noreferrer"><img class="socialMI" src="Assets/instagram.png" alt="" width="90px"></a>
+            <a  href="https://www.youtube.com/yegorcreative" target="_blank" aria-label="Visit Yegor Creative on YouTube" rel="noopener noreferrer"><img class="socialMI" src="Assets/youtube.png" alt="" width="90px"></a>
+            <a  href="https://www.linkedin.com/in/yegorhambaryan/" target="_blank" aria-label="Visit Yegor Hambaryan on LinkedIn" rel="noopener noreferrer"><img class="socialMI" src="Assets/linkedIn.png" alt="" width="90px"></a>
+            <a  href="https://github.com/YegorCreative" target="_blank" aria-label="Visit Yegor Creative on GitHub" rel="noopener noreferrer"><img class="socialMI" src="Assets/github.png" alt="" width="90px"></a>
+            <a  href="mailto:aleqsandregor@gmail.com" aria-label="Send email to Yegor"><img src="Assets/email.png" alt="" class="socialMI" width="90px"></a>
+        </div>
+    </footer>
+    <div class="lastQuote">Business is complicated, your web solutions can be simple. @YegorCreative2021</div>
+
+    <!-- Back to top button -->
+    <button type="button" id="backToTopBtn" class="back-to-top" aria-label="Back to top">
+      ↑ Top
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
