@@ -45,24 +45,24 @@ body.fm-page .fm-banner {
 
 body.fm-page .fm-banner-eyebrow {
   margin: 0 0 6px 0;
-  font-size: 12px;
+  font-size: 24px;
   font-weight: 900;
   letter-spacing: 0.16em;
-  color: var(--fast-muted);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 body.fm-page .fm-banner-title {
   margin: 0;
-  font-size: 18px;
+  font-size: 36px;
   line-height: 1.25;
-  color: var(--fast-ink);
+  color: #fff;
 }
 
 body.fm-page .fm-banner-sub {
   margin: 8px 0 0 0;
-  font-size: 14px;
+  font-size: 28px;
   line-height: 1.4;
-  color: var(--fast-muted);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 @media (min-width: 760px) {
@@ -71,7 +71,7 @@ body.fm-page .fm-banner-sub {
   }
 
   body.fm-page .fm-banner-title {
-    font-size: 19px;
+    font-size: 38px;
   }
 }
 
