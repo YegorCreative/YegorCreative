@@ -1106,6 +1106,12 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
   border-color: var(--fast-accent);
 }
 
+/* Active page link (set by nav-active.js) */
+.site-nav a.is-active {
+  background: var(--fast-gradient);
+  color: #fff;
+}
+
 /* Mobile overlay menu (powered by existing JS toggling body.nav-open)
    Desktop overrides live in CSS/responsive.css at min-width: 769px */
 @media screen and (max-width: 768px) {

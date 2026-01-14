@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>FastMode | YegorCreative</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="FastMode | Track your plan and know what to do today">
+    <meta name="keywords" content="FastMode, fasting plan, OMAD, schedule">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="CSS/responsive.css">
+    <link rel="stylesheet" href="CSS/fastmode.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@300&display=swap" rel="stylesheet">
+        <meta property="og:image" content="Assets/YegorCreativeScan.png">
+        <meta property="og:image:type" content="image/png">
+        <meta property="og:image:width" content="400">
+        <meta property="og:image:height" content="300">
+        <link rel="icon" type="image/png" href="./Assets/lionheadico.png">
+</head>
+
+
+<body class="fm-page">
+    <!-- Skip link for keyboard navigation -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Top anchor for back-to-top functionality -->
+    <div id="top" aria-hidden="true"></div>
+
+    <header role="banner" class="mainHeading">
+        
+       <div class="container">
+        <div class="mainLogo">
+            <a href="index.html"><img src="Assets/lionhead.png" alt="the logo of the website" height="110px"></a>
+            <h1>YegorCreative</h1>
+        </div>
+        <button type="button"
+                class="nav-toggle"
+                id="navToggle"
+                aria-controls="primaryNav"
+                aria-expanded="false"
+                aria-label="Open menu">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <nav id="primaryNav" class="site-nav primary-nav" aria-label="Primary">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="index.html#creative">Creative</a></li>
+                <li><a href="fastmode.html">FastMode</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <section class="fm-banner" aria-label="FastMode orientation">
+            <p class="fm-banner-eyebrow">FASTMODE</p>
+            <h2 class="fm-banner-title">
+                A calm guide to fasting — helping you know where you are and what to do next.
+            </h2>
+            <p class="fm-banner-sub">
+                No streaks. No pressure. Just today.
+            </p>
+        </section>
+      
+       </div>
+    </header>
+  
+    <main id="main" role="main" class="fm-main">
+        <section class="fm-hero" aria-labelledby="fmTitle">
+            <div class="container">
+                <div class="fm-hero__card">
+                    <div class="fm-hero__grid">
+                        <div class="fm-hero__left">
+                            <h1 id="fmTitle" class="fm-title">FastMode</h1>
+                            <p class="fm-subtitle">Know what to do today. Track your plan.</p>
+                        </div>
+                        <div class="fm-hero__right" aria-label="Today status">
+                            <div class="fm-status" role="group" aria-label="Today status">
+                                <div class="fm-status__meta">Today Status</div>
+                                <div id="fmStatusPill" class="fm-status__pill" aria-live="polite" aria-atomic="true">—</div>
+                            </div>
+
+                            <div class="fm-hero__lines">
+                                <div id="fmDayCount" class="fm-line">Day — of 28</div>
+                                <div id="fmCountdown" class="fm-line fm-countdown" aria-live="polite" aria-atomic="true">Time until next meal: —</div>
+                                <div id="fmLastMeal" class="fm-line fm-muted"></div>
+                            </div>
+
+                            <div class="fm-actions" role="group" aria-label="FastMode actions">
+                                <button type="button" class="fm-btn fm-btn--primary" id="fmLogMealBtn" aria-label="Log that I am eating now">I’m eating now</button>
+                                <button type="button" class="fm-btn fm-btn--secondary" id="fmEditPlanBtn" aria-label="Edit FastMode plan settings">Edit plan</button>
+                            </div>
+
+                            <p class="fm-note">Everything is stored locally in your browser (no account).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="fm-week" aria-labelledby="fmWeekHeading">
+            <div class="container">
+                <div class="fm-section-head">
+                    <h2 id="fmWeekHeading" class="fm-section-title">This Week</h2>
+                    <p class="fm-section-sub">Swipe to scan Sun–Sat.</p>
+                </div>
+                <div class="fm-shelf" id="fmWeekShelf" role="list" aria-label="Week schedule"></div>
+                <section class="fm-daydetail" aria-live="polite" aria-label="Day detail"></section>
+            </div>
+        </section>
+
+        <section class="fm-body" aria-labelledby="fmBodyHeading">
+            <div class="container">
+                <div class="fm-section-head">
+                    <h2 id="fmBodyHeading" class="fm-section-title">What’s happening in your body</h2>
+                    <p class="fm-section-sub">General education only — not medical advice.</p>
+                </div>
+
+                <div class="fm-cards" id="fmBodyCards" role="list" aria-label="Body phase cards"></div>
+
+                <div class="fm-safety" id="fmSafetyNote">
+                    If you feel dizzy, faint, or have palpitations, stop fasting and seek medical care.
+                </div>
+            </div>
+        </section>
+
+        <section class="fm-month" aria-labelledby="fmMonthHeading">
+            <div class="container">
+                <div class="fm-section-head fm-section-head--row">
+                    <div>
+                        <h2 id="fmMonthHeading" class="fm-section-title">Month</h2>
+                        <p class="fm-section-sub">Tap a day for details.</p>
+                    </div>
+                    <button type="button" class="fm-btn fm-btn--tertiary" id="fmMonthToggle" aria-expanded="false" aria-controls="fmMonthPanel">Show month</button>
+                </div>
+
+                <div id="fmMonthPanel" class="fm-month__panel" hidden>
+                    <div class="fm-calendar" id="fmMonthGrid" aria-label="Month calendar"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="fm-rules" aria-labelledby="fmRulesHeading">
+            <div class="container">
+                <div class="fm-section-head">
+                    <h2 id="fmRulesHeading" class="fm-section-title">Rules / Guardrails</h2>
+                    <p class="fm-section-sub">Short, practical reminders.</p>
+                </div>
+
+                <div class="fm-accordion" role="group" aria-label="Fasting rules">
+                    <details class="fm-details">
+                        <summary>Allowed drinks (usually OK)</summary>
+                        <ul>
+                            <li>Water (still or sparkling)</li>
+                            <li>Black coffee (no sugar/cream)</li>
+                            <li>Unsweetened tea</li>
+                            <li>Electrolytes with no sugar (check labels)</li>
+                        </ul>
+                    </details>
+
+                    <details class="fm-details">
+                        <summary>Common fast breakers</summary>
+                        <ul>
+                            <li>Sugar, honey, syrups</li>
+                            <li>Cream/milk, sweetened “zero” add-ins</li>
+                            <li>Mints, gum (often contain sweeteners)</li>
+                            <li>Kombucha / sweetened drinks</li>
+                        </ul>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <div class="fm-a11y-live" id="fmLive" aria-live="polite" aria-atomic="true"></div>
+
+        <div class="fm-modal" id="fmSettingsModal" hidden>
+            <div class="fm-modal__overlay" data-fm-close="true" aria-hidden="true"></div>
+            <div class="fm-modal__panel" role="dialog" aria-modal="true" aria-labelledby="fmSettingsTitle">
+                <div class="fm-modal__header">
+                    <h2 id="fmSettingsTitle" class="fm-modal__title">Edit plan</h2>
+                    <button type="button" class="fm-iconbtn" id="fmCloseSettingsBtn" aria-label="Close settings">×</button>
+                </div>
+
+                <form class="fm-form" id="fmSettingsForm">
+                    <div class="fm-field">
+                        <label for="fmPlanStart">Plan start date</label>
+                        <input type="date" id="fmPlanStart" name="fmPlanStart" autocomplete="off">
+                        <div class="fm-help">Default: 2026-01-14</div>
+                    </div>
+
+                    <div class="fm-fieldgrid" role="group" aria-label="OMAD meal window">
+                        <div class="fm-field">
+                            <label for="fmOmadStart">OMAD window start</label>
+                            <input type="time" id="fmOmadStart" name="fmOmadStart" step="60">
+                        </div>
+                        <div class="fm-field">
+                            <label for="fmOmadEnd">OMAD window end</label>
+                            <input type="time" id="fmOmadEnd" name="fmOmadEnd" step="60">
+                        </div>
+                    </div>
+
+                    <div class="fm-field fm-field--checkbox">
+                        <input type="checkbox" id="fmShowSafety" name="fmShowSafety">
+                        <label for="fmShowSafety">Show safety note</label>
+                    </div>
+
+                    <div class="fm-form__actions">
+                        <button type="submit" class="fm-btn fm-btn--primary" aria-label="Save FastMode settings">Save</button>
+                        <button type="button" class="fm-btn fm-btn--secondary" id="fmCancelSettingsBtn" aria-label="Cancel and close settings">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer role="contentinfo" class="footFooter" id="contact">
+        <!--<img src="Assets/footer.png" alt="design element for footer" class="desFoot">-->
+        <h2 class="contact-heading"><span class="heading-icon">✉</span>Contact Yegor<span class="heading-underline"></span></h2>
+        <div class="socialMedia">
+            <a  href="https://www.facebook.com/hambaryanyegor/" target="_blank" aria-label="Visit Yegor Creative on Facebook"><img class="socialMI" src="Assets/facebook.png" alt="" width="90px"></a>
+            <a  href="https://www.instagram.com/yegorcreative/" target="_blank" aria-label="Visit Yegor Creative on Instagram"><img class="socialMI" src="Assets/instagram.png" alt="" width="90px"></a>
+            <a  href="https://www.youtube.com/yegorcreative" target="_blank" aria-label="Visit Yegor Creative on YouTube"><img class="socialMI" src="Assets/youtube.png" alt="" width="90px"></a>
+            <a  href="https://www.linkedin.com/in/yegorhambaryan/" target="_blank" aria-label="Visit Yegor Hambaryan on LinkedIn"><img class="socialMI" src="Assets/linkedIn.png" alt="" width="90px"></a>
+            <a  href="https://github.com/YegorCreative" target="_blank" aria-label="Visit Yegor Creative on GitHub"><img class="socialMI" src="Assets/github.png" alt="" width="90px"></a>
+            <a  href="mailto:aleqsandregor@gmail.com" aria-label="Send email to Yegor"><img src="Assets/email.png" alt="" class="socialMI" width="90px"></a>
+        </div>
+    </footer>
+    <div class="lastQuote">Business is complicated, your web solutions can be  simple. @YegorCreative2021</div>
+    
+    <!-- Back to top button -->
+    <button type="button" id="backToTopBtn" class="back-to-top" aria-label="Back to top">
+      ↑ Top
+    </button>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5945108334593216"
+     crossorigin="anonymous"></script>
+        <script src="script.js"></script>
+        <script src="nav-active.js"></script>
+        <script src="fastmode.js"></script>
+</body>
+</html>
