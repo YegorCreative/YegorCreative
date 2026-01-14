@@ -35,7 +35,7 @@ body.fm-page .fm-banner {
   padding: 16px 16px;
   border-radius: var(--fast-radius);
   border: 1px solid rgba(124, 58, 237, 0.16);
-  background: url('../Assets/fastMode.jpg') center / cover no-repeat;
+  background: url('../Assets/purple.jpg') center / cover no-repeat;
   background-size: cover;
   background-position: center;
   -webkit-backdrop-filter: blur(12px);
