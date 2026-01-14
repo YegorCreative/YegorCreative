@@ -32,7 +32,7 @@ body.fm-page .fm-hero__grid {
 body.fm-page .fm-banner {
   margin-top: 12px;
   margin-bottom: 0;
-  padding: 16px 16px;
+  padding: 25px 16px;
   border-radius: var(--fast-radius);
   border: 1px solid rgba(124, 58, 237, 0.16);
   background: url('../Assets/purple.jpg') center / cover no-repeat;
@@ -67,7 +67,7 @@ body.fm-page .fm-banner-sub {
 
 @media (min-width: 760px) {
   body.fm-page .fm-banner {
-    padding: 18px 20px;
+    padding: 25px 20px;
   }
 
   body.fm-page .fm-banner-title {
