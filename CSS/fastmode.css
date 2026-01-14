@@ -45,7 +45,7 @@ body.fm-page .fm-banner {
 
 body.fm-page .fm-banner-eyebrow {
   margin: 0 0 6px 0;
-  font-size: 24px;
+  font-size: 12px;
   font-weight: 900;
   letter-spacing: 0.16em;
   color: rgba(255, 255, 255, 0.92);
@@ -53,14 +53,14 @@ body.fm-page .fm-banner-eyebrow {
 
 body.fm-page .fm-banner-title {
   margin: 0;
-  font-size: 36px;
+  font-size: 18px;
   line-height: 1.25;
   color: #fff;
 }
 
 body.fm-page .fm-banner-sub {
   margin: 8px 0 0 0;
-  font-size: 28px;
+  font-size: 14px;
   line-height: 1.4;
   color: rgba(255, 255, 255, 0.92);
 }
@@ -71,7 +71,7 @@ body.fm-page .fm-banner-sub {
   }
 
   body.fm-page .fm-banner-title {
-    font-size: 38px;
+    font-size: 19px;
   }
 }
 
