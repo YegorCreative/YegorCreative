@@ -6,6 +6,13 @@ body.fm-page .fm-main {
   padding: 40px 0 70px;
 }
 
+/* The global header (.mainHeading) is sized for the homepage hero.
+   FastMode uses the header only for logo/nav/banner, so shrink it to avoid a large empty gap. */
+body.fm-page .mainHeading {
+  min-height: auto;
+  padding-bottom: 18px;
+}
+
 body.fm-page .fm-hero {
   padding: 28px 0 22px;
 }
