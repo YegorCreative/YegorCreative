@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Games | YegorCreative</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Games | Small interactive experiments by YegorCreative">
+    <meta name="keywords" content="games, web games, interactive, JavaScript, YegorCreative">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="CSS/responsive.css">
+    <link rel="stylesheet" href="CSS/games.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@300&display=swap" rel="stylesheet">
+        <meta property="og:image" content="Assets/YegorCreativeScan.png">
+        <meta property="og:image:type" content="image/png">
+        <meta property="og:image:width" content="400">
+        <meta property="og:image:height" content="300">
+        <link rel="icon" type="image/png" href="./Assets/lionheadico.png">
+</head>
+
+
+<body class="games-page">
+    <!-- Skip link for keyboard navigation -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <!-- Top anchor for back-to-top functionality -->
+    <div id="top" aria-hidden="true"></div>
+
+    <header role="banner" class="mainHeading">
+        <div class="container">
+            <div class="mainLogo">
+                <a href="index.html"><img src="Assets/lionhead.png" alt="the logo of the website" height="110px"></a>
+                <h1>YegorCreative</h1>
+            </div>
+            <button type="button" class="nav-toggle" id="navToggle" aria-controls="primaryNav" aria-expanded="false" aria-label="Open menu">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+            <nav id="primaryNav" class="site-nav primary-nav" aria-label="Primary">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="index.html#creative">Creative</a></li>
+                    <li><a href="fastmode.html">FastMode</a></li>
+                    <li><a href="games.html" class="active">Games</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main" role="main" class="games-main">
+        <div class="games-shell">
+            <div class="games-shell__bg" aria-hidden="true"></div>
+
+            <div class="container">
+                <section class="games-hero" aria-labelledby="gamesTitle">
+                    <h1 id="gamesTitle" class="games-title">Memoji Memory Match</h1>
+                    <p class="games-sub">Flip two cards at a time. Match all pairs. Built for keyboard and touch.</p>
+                    <ul class="games-rules">
+                        <li>Use Tab to focus a card.</li>
+                        <li>Press Enter or Space to flip.</li>
+                        <li>Use arrow keys to move on the board.</li>
+                    </ul>
+                </section>
+
+                <section class="games-controls" aria-label="Game controls">
+                    <div class="games-control">
+                        <label class="games-label" for="gamesMode">Mode</label>
+                        <select id="gamesMode" class="games-select" name="mode">
+                            <option value="easy">Easy</option>
+                            <option value="normal" selected>Normal</option>
+                            <option value="hard">Hard</option>
+                        </select>
+                    </div>
+
+                    <button id="gamesRestart" class="games-btn" type="button">Restart</button>
+
+                    <div class="games-metric" aria-label="Moves">
+                        <span class="games-metric__k">Moves</span>
+                        <span id="gamesMoves" class="games-metric__v">0</span>
+                    </div>
+
+                    <div class="games-metric" aria-label="Time">
+                        <span class="games-metric__k">Time</span>
+                        <span id="gamesTime" class="games-metric__v">00:00</span>
+                    </div>
+                </section>
+
+                <section class="games-boardwrap" aria-label="Memory match board">
+                    <h2 class="games-boardtitle">Board</h2>
+                    <div id="gamesBoard" class="games-board" role="grid" aria-label="Memory match cards"></div>
+                </section>
+
+                <div id="gamesLive" class="games-live" aria-live="polite"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer role="contentinfo" class="footFooter" id="contact">
+        <h2 class="contact-heading"><span class="heading-icon">Contact</span> Yegor<span class="heading-underline"></span></h2>
+        <div class="socialMedia">
+            <a href="https://www.facebook.com/hambaryanyegor/" target="_blank" aria-label="Visit Yegor Creative on Facebook" rel="noopener noreferrer"><img class="socialMI" src="Assets/facebook.png" alt="" width="90px"></a>
+            <a href="https://www.instagram.com/yegorcreative/" target="_blank" aria-label="Visit Yegor Creative on Instagram" rel="noopener noreferrer"><img class="socialMI" src="Assets/instagram.png" alt="" width="90px"></a>
+            <a href="https://www.youtube.com/yegorcreative" target="_blank" aria-label="Visit Yegor Creative on YouTube" rel="noopener noreferrer"><img class="socialMI" src="Assets/youtube.png" alt="" width="90px"></a>
+            <a href="https://www.linkedin.com/in/yegorhambaryan/" target="_blank" aria-label="Visit Yegor Hambaryan on LinkedIn" rel="noopener noreferrer"><img class="socialMI" src="Assets/linkedIn.png" alt="" width="90px"></a>
+            <a href="https://github.com/YegorCreative" target="_blank" aria-label="Visit Yegor Creative on GitHub" rel="noopener noreferrer"><img class="socialMI" src="Assets/github.png" alt="" width="90px"></a>
+            <a href="mailto:aleqsandregor@gmail.com" aria-label="Send email to Yegor"><img src="Assets/email.png" alt="" class="socialMI" width="90px"></a>
+        </div>
+    </footer>
+    <div class="lastQuote">Business is complicated, your web solutions can be  simple. @YegorCreative2021</div>
+
+    <!-- Back to top button -->
+    <button type="button" id="backToTopBtn" class="back-to-top" aria-label="Back to top">Top</button>
+
+    <script src="script.js"></script>
+    <script src="nav-active.js"></script>
+    <script src="games.js"></script>
+</body>
+
+</html>
