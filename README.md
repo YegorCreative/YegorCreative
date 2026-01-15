@@ -12,6 +12,7 @@ YegorCreative is a professional web development portfolio showcasing cutting-edg
 - **Portfolio Showcase**: Featured client projects and web solutions
 - **Modern UI/UX**: Clean, accessible interface with smooth animations
 - **Google Certified**: Showcasing achievements and certifications
+- **FastMode**: A lightweight fasting schedule/tracking experience (stored locally)
 
 ## 🛠️ Technologies
 
@@ -27,9 +28,12 @@ YegorCreative is a professional web development portfolio showcasing cutting-edg
 YegorCreative/
 ├── index.html              # Main landing page
 ├── contact.html            # Contact page
+├── fastmode.html            # FastMode schedule + dashboard
+├── fastmode.js              # FastMode logic (LocalStorage-backed)
 ├── CSS/
 │   ├── styles.css          # Base styles and mobile-first design
 │   └── responsive.css      # Breakpoint-specific enhancements
+│   └── fastmode.css         # FastMode-only styles (scoped)
 ├── Assets/
 │   ├── Elements/           # Design elements and graphics
 │   └── *.png, *.svg        # Images, icons, and graphics
@@ -62,6 +66,8 @@ YegorCreative/
 
 4. Visit `http://localhost:8000` in your browser
 
+FastMode is available at `http://localhost:8000/fastmode.html`.
+
 ## 📱 Responsive Breakpoints
 
 - **Mobile**: < 498px (base styles)
@@ -89,6 +95,9 @@ YegorCreative/
 Visit the live site: [yegorcreative.com](https://yegorcreative.com)
 
 ## 🚢 Deployment Log
+
+- 2026-01-15
+   - FastMode: Added a premium header banner, fixed “Edit plan” modal visibility/scroll-lock/focus trap, improved “Go to Today” (select + scroll + focus), and aligned Day Detail with Body phases.
 
 - 2025-12-28
    - Navigation: `#primaryNav` now uses `site-nav primary-nav`; full-screen overlay enabled on mobile and desktop; burger remains visible.

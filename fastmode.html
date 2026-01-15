@@ -56,13 +56,19 @@
         </nav>
 
         <section class="fm-banner" aria-label="FastMode orientation">
-            <p class="fm-banner-eyebrow">FASTMODE</p>
-            <h2 class="fm-banner-title">
-                A calm guide to fasting — helping you know where you are and what to do next.
-            </h2>
-            <p class="fm-banner-sub">
-                No streaks. No pressure. Just today.
-            </p>
+            <div class="fm-banner__content">
+                <p class="fm-banner-eyebrow">FASTMODE</p>
+                <h2 class="fm-banner-title">
+                    A calm guide to fasting — helping you know where you are and what to do next.
+                </h2>
+                <p class="fm-banner-sub">
+                    No streaks. No pressure. Just today.
+                </p>
+                <div class="fm-banner__cta">
+                    <a class="fm-banner-link" href="#fmWeek">Open FastMode</a>
+                    <button type="button" class="fm-banner-btn" id="fmScrollToToday">Go to Today</button>
+                </div>
+            </div>
         </section>
       
        </div>
@@ -101,7 +107,7 @@
             </div>
         </section>
 
-        <section class="fm-week" aria-labelledby="fmWeekHeading">
+        <section class="fm-week" id="fmWeek" aria-labelledby="fmWeekHeading">
             <div class="container">
                 <div class="fm-section-head">
                     <h2 id="fmWeekHeading" class="fm-section-title">This Week</h2>
@@ -180,11 +186,23 @@
             <div class="fm-modal__overlay" data-fm-close="true" aria-hidden="true"></div>
             <div class="fm-modal__panel" role="dialog" aria-modal="true" aria-labelledby="fmSettingsTitle">
                 <div class="fm-modal__header">
-                    <h2 id="fmSettingsTitle" class="fm-modal__title">Edit plan</h2>
+                    <div>
+                        <h2 id="fmSettingsTitle" class="fm-modal__title">Edit plan</h2>
+                        <p class="fm-modal__sub" id="fmSettingsSummary"></p>
+                    </div>
                     <button type="button" class="fm-iconbtn" id="fmCloseSettingsBtn" aria-label="Close settings">×</button>
                 </div>
 
                 <form class="fm-form" id="fmSettingsForm">
+                    <div class="fm-modal__explain" role="note" aria-label="What you're editing">
+                        <p><strong>What you’re editing</strong></p>
+                        <p>These settings control your schedule and projections:</p>
+                        <ul>
+                            <li><strong>Plan start date</strong>: used to calculate “Day X of 28”</li>
+                            <li><strong>OMAD window</strong>: your eating window on OMAD/EAT days</li>
+                            <li><strong>Safety note</strong>: show/hide the caution box</li>
+                        </ul>
+                    </div>
                     <div class="fm-field">
                         <label for="fmPlanStart">Plan start date</label>
                         <input type="date" id="fmPlanStart" name="fmPlanStart" autocomplete="off">
