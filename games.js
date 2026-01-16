@@ -17,26 +17,23 @@
 
       if (!board || !mode || !restartBtn || !movesEl || !timeEl || !live) return;
 
-      // Placeholder "memoji" assets: expected paths. If these files do not exist,
-      // the game still works; the cards will show broken images (user can add assets later).
-      const memoji = [
-        { id: 'm1', src: 'Assets/Elements/PNG/memoji-01.png', name: 'Memoji 1' },
-        { id: 'm2', src: 'Assets/Elements/PNG/memoji-02.png', name: 'Memoji 2' },
-        { id: 'm3', src: 'Assets/Elements/PNG/memoji-03.png', name: 'Memoji 3' },
-        { id: 'm4', src: 'Assets/Elements/PNG/memoji-04.png', name: 'Memoji 4' },
-        { id: 'm5', src: 'Assets/Elements/PNG/memoji-05.png', name: 'Memoji 5' },
-        { id: 'm6', src: 'Assets/Elements/PNG/memoji-06.png', name: 'Memoji 6' },
-        { id: 'm7', src: 'Assets/Elements/PNG/memoji-07.png', name: 'Memoji 7' },
-        { id: 'm8', src: 'Assets/Elements/PNG/memoji-08.png', name: 'Memoji 8' },
-        { id: 'm9', src: 'Assets/Elements/PNG/memoji-09.png', name: 'Memoji 9' },
-        { id: 'm10', src: 'Assets/Elements/PNG/memoji-10.png', name: 'Memoji 10' },
-        { id: 'm11', src: 'Assets/Elements/PNG/memoji-11.png', name: 'Memoji 11' },
-        { id: 'm12', src: 'Assets/Elements/PNG/memoji-12.png', name: 'Memoji 12' },
-        { id: 'm13', src: 'Assets/Elements/PNG/memoji-13.png', name: 'Memoji 13' },
-        { id: 'm14', src: 'Assets/Elements/PNG/memoji-14.png', name: 'Memoji 14' },
-        { id: 'm15', src: 'Assets/Elements/PNG/memoji-15.png', name: 'Memoji 15' },
-        { id: 'm16', src: 'Assets/Elements/PNG/memoji-16.png', name: 'Memoji 16' }
-      ];
+      const MEMOJI_TOTAL = 52;
+      const MEMOJI_PATH = 'assets/memoji/';
+      const MEMOJI_PREFIX = 'memoji';
+      const MEMOJI_SUFFIX = '.heic.png';
+
+      function buildMemojiPool() {
+        const pool = [];
+        for (let i = 1; i <= MEMOJI_TOTAL; i++) {
+          const num = String(i).padStart(4, '0');
+          const id = `m${num}`;
+          const src = `${MEMOJI_PATH}${MEMOJI_PREFIX}${num}${MEMOJI_SUFFIX}`;
+          pool.push({ id, src, name: `Memoji ${i}` });
+        }
+        return pool;
+      }
+
+      let currentMemoji = [];
 
       const COLS = 4;
 
@@ -53,66 +50,95 @@
         return Number.isFinite(n) ? n : fallback;
       }
 
-      function computeAndApplyBoardSize() {
+      function updateBoardFit() {
         try {
           const vv = window.visualViewport;
           const viewportHeight = vv ? clampNumber(vv.height, window.innerHeight) : window.innerHeight;
           const viewportWidth = vv ? clampNumber(vv.width, window.innerWidth) : window.innerWidth;
-          const viewportTop = vv ? clampNumber(vv.offsetTop, 0) : 0;
 
-          const gameContainer = root.querySelector('.games-shell .container') || root.querySelector('main .container') || root.querySelector('.container');
-          const containerWidth = gameContainer ? clampNumber(gameContainer.getBoundingClientRect().width, viewportWidth) : viewportWidth;
+          const headerEl = document.querySelector('header.mainHeading');
+          const layoutContainer = root.querySelector('.games-shell > .container');
+          const heroEl = root.querySelector('.games-hero');
+          const gameInfoEl = root.querySelector('.games-gameinfo');
+          const controlsEl = root.querySelector('.games-controls');
+          const boardWrapEl = root.querySelector('.games-boardwrap');
+          const boardTitleEl = root.querySelector('.games-boardtitle');
 
-          const boardHost = board.parentElement;
-          let hostWidth = containerWidth;
-          if (boardHost) {
-            const hostRect = boardHost.getBoundingClientRect();
-            hostWidth = clampNumber(hostRect.width, containerWidth);
+          const headerH = headerEl ? clampNumber(headerEl.getBoundingClientRect().height, 0) : 0;
+          const heroH = heroEl ? clampNumber(heroEl.getBoundingClientRect().height, 0) : 0;
+          const gameInfoH = gameInfoEl ? clampNumber(gameInfoEl.getBoundingClientRect().height, 0) : 0;
+          const controlsH = controlsEl ? clampNumber(controlsEl.getBoundingClientRect().height, 0) : 0;
 
-            const hostStyle = window.getComputedStyle(boardHost);
-            const padLeft = clampNumber(parseFloat(hostStyle.paddingLeft || ''), 0);
-            const padRight = clampNumber(parseFloat(hostStyle.paddingRight || ''), 0);
-            hostWidth = Math.max(0, hostWidth - padLeft - padRight);
+          const paddingBuffer = 16;
+          let availableHeight = viewportHeight - headerH - heroH - gameInfoH - controlsH - paddingBuffer;
+          availableHeight = Math.max(0, availableHeight);
+
+          if (layoutContainer) {
+            const lcStyle = window.getComputedStyle(layoutContainer);
+            const gapPx = clampNumber(parseFloat(lcStyle.rowGap || lcStyle.gap || ''), 0);
+            const countAbove = [heroEl, gameInfoEl, controlsEl].filter(Boolean).length;
+            availableHeight = Math.max(0, availableHeight - gapPx * countAbove);
           }
 
-          const boardRect = board.getBoundingClientRect();
-          const boardTopInVisual = clampNumber(boardRect.top, 0) - viewportTop;
+          if (boardWrapEl) {
+            const wrapStyle = window.getComputedStyle(boardWrapEl);
+            const padTop = clampNumber(parseFloat(wrapStyle.paddingTop || ''), 0);
+            const padBottom = clampNumber(parseFloat(wrapStyle.paddingBottom || ''), 0);
+            const borderTop = clampNumber(parseFloat(wrapStyle.borderTopWidth || ''), 0);
+            const borderBottom = clampNumber(parseFloat(wrapStyle.borderBottomWidth || ''), 0);
+            availableHeight = Math.max(0, availableHeight - padTop - padBottom - borderTop - borderBottom);
+          }
 
-          const buffer = 16;
-          const availableHeight = viewportHeight - boardTopInVisual - buffer;
-          const availableWidth = Math.min(viewportWidth, containerWidth, hostWidth);
+          if (boardTitleEl) {
+            availableHeight = Math.max(0, availableHeight - clampNumber(boardTitleEl.getBoundingClientRect().height, 0));
+          }
+
+          const gameContainer =
+            root.querySelector('.games-shell .container') ||
+            root.querySelector('main .container') ||
+            root.querySelector('.container');
+
+          const availableWidth = gameContainer
+            ? clampNumber(gameContainer.getBoundingClientRect().width, viewportWidth)
+            : viewportWidth;
+
+          let fitWidth = availableWidth;
+          if (boardWrapEl) {
+            const wrapRect = boardWrapEl.getBoundingClientRect();
+            const wrapStyle = window.getComputedStyle(boardWrapEl);
+            const padLeft = clampNumber(parseFloat(wrapStyle.paddingLeft || ''), 0);
+            const padRight = clampNumber(parseFloat(wrapStyle.paddingRight || ''), 0);
+            const borderLeft = clampNumber(parseFloat(wrapStyle.borderLeftWidth || ''), 0);
+            const borderRight = clampNumber(parseFloat(wrapStyle.borderRightWidth || ''), 0);
+            const innerWidth = clampNumber(wrapRect.width, fitWidth) - padLeft - padRight - borderLeft - borderRight;
+            fitWidth = Math.max(0, Math.min(fitWidth, innerWidth));
+          }
 
           const pairsCount = getPairsCount();
-          const totalCards = pairsCount * 2;
-          const rows = Math.max(1, Math.ceil(totalCards / COLS));
+          const rows = Math.max(1, Math.round((pairsCount * 2) / COLS));
+
+          // Fixed sizing: only keep grid geometry (cols/rows). Do not overwrite --games-card.
+          root.style.setProperty('--games-cols', String(COLS));
+          root.style.setProperty('--games-rows', String(rows));
 
           const style = window.getComputedStyle(board);
           const gapPx = clampNumber(parseFloat(style.gap || ''), 10);
-          const gap = Math.max(6, Math.min(12, Math.floor(gapPx)));
+          const gap = Math.max(0, Math.floor(gapPx) || 10);
 
-          const cardFromWidth = Math.floor((availableWidth - gap * (COLS - 1)) / COLS);
-          const cardFromHeight = Math.floor((availableHeight - gap * (rows - 1)) / rows);
-          const card = Math.max(38, Math.min(cardFromWidth, cardFromHeight));
-
-          if (Number.isFinite(card) && card > 0) {
-            root.style.setProperty('--games-cols', String(COLS));
-            root.style.setProperty('--games-rows', String(rows));
-            root.style.setProperty('--games-gap', `${gap}px`);
-            root.style.setProperty('--games-card', `${card}px`);
-          }
+          root.style.setProperty('--games-gap', `${gap}px`);
         } catch {
           // Fail safely: never throw from sizing.
         }
       }
 
-      let boardSizeTimer = null;
-      function scheduleBoardSizeUpdate() {
-        if (boardSizeTimer) {
-          window.clearTimeout(boardSizeTimer);
+      let boardFitTimer = null;
+      function scheduleBoardFitUpdate() {
+        if (boardFitTimer) {
+          window.clearTimeout(boardFitTimer);
         }
-        boardSizeTimer = window.setTimeout(() => {
-          boardSizeTimer = null;
-          computeAndApplyBoardSize();
+        boardFitTimer = window.setTimeout(() => {
+          boardFitTimer = null;
+          updateBoardFit();
         }, 100);
       }
 
@@ -207,7 +233,10 @@
       }
 
       function buildDeck(pairsCount) {
-        const picks = memoji.slice(0, Math.min(pairsCount, memoji.length));
+        const pool = buildMemojiPool();
+        shuffleInPlace(pool);
+        const picks = pool.slice(0, Math.min(pairsCount, pool.length));
+        currentMemoji = picks;
         const next = [];
         for (const m of picks) {
           next.push({ key: `${m.id}-a`, pairId: m.id, src: m.src, name: m.name });
@@ -322,7 +351,7 @@
 
           if (pressed) {
             const pairId = btn.dataset.pairId;
-            const m = memoji.find(x => x.id === pairId);
+            const m = currentMemoji.find(x => x.id === pairId);
             const name = m ? m.name : 'Memoji';
             btn.setAttribute('aria-label', `Card ${index} of ${total}. Face up: ${name}.`);
           } else {
@@ -462,7 +491,7 @@
       }
 
       function renderNewGame() {
-        computeAndApplyBoardSize();
+        updateBoardFit();
 
         locked = false;
         clearPicks();
@@ -483,7 +512,7 @@
         }
 
         window.requestAnimationFrame(() => {
-          computeAndApplyBoardSize();
+          updateBoardFit();
           updateBoardAriaGridMetadata();
         });
 
@@ -494,24 +523,26 @@
       }
 
       mode.addEventListener('change', () => {
+        updateBoardFit();
         renderNewGame();
       });
 
       restartBtn.addEventListener('click', () => {
+        updateBoardFit();
         renderNewGame();
       });
 
       window.addEventListener('resize', scheduleAriaGridMetadataUpdate, { passive: true });
       window.addEventListener('orientationchange', scheduleAriaGridMetadataUpdate, { passive: true });
 
-      window.addEventListener('resize', scheduleBoardSizeUpdate, { passive: true });
-      window.addEventListener('orientationchange', scheduleBoardSizeUpdate, { passive: true });
+      window.addEventListener('resize', scheduleBoardFitUpdate, { passive: true });
+      window.addEventListener('orientationchange', scheduleBoardFitUpdate, { passive: true });
       if (window.visualViewport) {
-        window.visualViewport.addEventListener('resize', scheduleBoardSizeUpdate, { passive: true });
-        window.visualViewport.addEventListener('scroll', scheduleBoardSizeUpdate, { passive: true });
+        window.visualViewport.addEventListener('resize', scheduleBoardFitUpdate, { passive: true });
+        window.visualViewport.addEventListener('scroll', scheduleBoardFitUpdate, { passive: true });
       }
 
   // Initial boot.
-  computeAndApplyBoardSize();
+  updateBoardFit();
   renderNewGame();
 })();
