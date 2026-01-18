@@ -62,45 +62,74 @@
                     <p class="games-sub">Short, thoughtful games you can enjoy for free whenever you need a break.</p>
                 </section>
 
-                <section class="games-gameinfo" aria-labelledby="gameTitle">
-                    <h2 id="gameTitle" class="games-gameinfo__title">Matching Memoji</h2>
-                    <p class="games-gameinfo__sub">Find all matching pairs. Choose a mode and start flipping.</p>
-                    <ul class="games-rules">
-                        <li>Flip two cards to find a match.</li>
-                        <li>Matched pairs stay revealed.</li>
-                        <li>Match all pairs to finish.</li>
-                    </ul>
+                <section class="games-intro" aria-labelledby="gamesIntroTitle">
+                    <h2 id="gamesIntroTitle" class="games-intro__title">Got a free moment?</h2>
+                    <p class="games-intro__text">Pick a game and relax for a bit.</p>
                 </section>
 
-                <section class="games-controls" aria-label="Game controls">
-                    <div class="games-control">
-                        <label class="games-label" for="gamesMode">Mode</label>
-                        <select id="gamesMode" class="games-select" name="mode">
-                            <option value="easy">Easy</option>
-                            <option value="normal" selected>Normal</option>
-                            <option value="hard">Hard</option>
-                        </select>
+                <section class="games-grid" aria-labelledby="gamesGridTitle">
+                    <div class="games-grid__head">
+                        <h2 id="gamesGridTitle" class="games-grid__title">Choose a Game</h2>
+                        <p class="games-grid__sub">Small, focused games for quick breaks.</p>
                     </div>
 
-                    <button id="gamesRestart" class="games-btn" type="button">Restart</button>
+                    <div class="games-cards" role="list">
+                        <article class="game-card" role="listitem">
+                            <a class="game-card__link" href="matching-memoji.html">
+                                <div class="game-card__media game-card__media--memoji" aria-hidden="true"></div>
+                                <div class="game-card__body">
+                                    <h3 class="game-card__title">Matching Memoji</h3>
+                                    <p class="game-card__desc">Flip cards and match pairs as fast as you can.</p>
+                                    <span class="game-card__cta">Play now</span>
+                                </div>
+                            </a>
+                        </article>
 
-                    <div class="games-metric" aria-label="Moves">
-                        <span class="games-metric__k">Moves</span>
-                        <span id="gamesMoves" class="games-metric__v">0</span>
-                    </div>
+                        <article class="game-card" role="listitem">
+                            <a class="game-card__link" href="game-2.html">
+                                <div class="game-card__media game-card__media--placeholder" aria-hidden="true"></div>
+                                <div class="game-card__body">
+                                    <h3 class="game-card__title">Coming Soon</h3>
+                                    <p class="game-card__desc">A quick puzzle experience to unwind.</p>
+                                    <span class="game-card__cta">Preview</span>
+                                </div>
+                            </a>
+                        </article>
 
-                    <div class="games-metric" aria-label="Time">
-                        <span class="games-metric__k">Time</span>
-                        <span id="gamesTime" class="games-metric__v">00:00</span>
+                        <article class="game-card" role="listitem">
+                            <a class="game-card__link" href="game-3.html">
+                                <div class="game-card__media game-card__media--placeholder" aria-hidden="true"></div>
+                                <div class="game-card__body">
+                                    <h3 class="game-card__title">Coming Soon</h3>
+                                    <p class="game-card__desc">A calm, bite-sized challenge you can finish fast.</p>
+                                    <span class="game-card__cta">Preview</span>
+                                </div>
+                            </a>
+                        </article>
+
+                        <article class="game-card" role="listitem">
+                            <a class="game-card__link" href="game-4.html">
+                                <div class="game-card__media game-card__media--placeholder" aria-hidden="true"></div>
+                                <div class="game-card__body">
+                                    <h3 class="game-card__title">Coming Soon</h3>
+                                    <p class="game-card__desc">A light arcade-style moment between tasks.</p>
+                                    <span class="game-card__cta">Preview</span>
+                                </div>
+                            </a>
+                        </article>
+
+                        <article class="game-card" role="listitem">
+                            <a class="game-card__link" href="game-5.html">
+                                <div class="game-card__media game-card__media--placeholder" aria-hidden="true"></div>
+                                <div class="game-card__body">
+                                    <h3 class="game-card__title">Coming Soon</h3>
+                                    <p class="game-card__desc">A playful mini-game for quick resets.</p>
+                                    <span class="game-card__cta">Preview</span>
+                                </div>
+                            </a>
+                        </article>
                     </div>
                 </section>
-
-                <section class="games-boardwrap" aria-label="Memory match board">
-                    <h2 class="games-boardtitle">Board</h2>
-                    <div id="gamesBoard" class="games-board" role="grid" aria-label="Memory match cards"></div>
-                </section>
-
-                <div id="gamesLive" class="games-live" aria-live="polite"></div>
             </div>
         </div>
     </main>
@@ -123,7 +152,6 @@
 
     <script src="script.js"></script>
     <script src="nav-active.js"></script>
-    <script src="games.js"></script>
 </body>
 
 </html>
