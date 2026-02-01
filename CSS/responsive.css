@@ -1,203 +1,221 @@
+@media screen and (min-width: 498px) {
+  .head1 {
+    font-size: 42px;
+    text-align: center;
+    line-height: 1.2;
+  }
 
-@media screen and (min-width: 498px){
-    .head1{
-        font-size: 42px;
-        text-align: center;
-        line-height: 1.2;
-    }
-    .head2{
-        font-size: 20px;
-        text-align: center;
-        line-height: 1.6;
-    }
-    .hero-cta {
-        gap: 20px;
-    }
-    .myInfo{
-        width: 480px;
-        margin: 0 auto;
-    }
-    .goodWebsite{
-        padding: 80px 30px 100px;
-    }
+  .head2 {
+    font-size: 20px;
+    text-align: center;
+    line-height: 1.6;
+  }
 
-   
+  .hero-cta {
+    gap: 20px;
+  }
+
+  .myInfo {
+    width: 480px;
+    margin: 0 auto;
+  }
+
+  .goodWebsite {
+    padding: 80px 30px 100px;
+  }
+
+
 }
 
-@media screen and (min-width: 600px){
-    .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .value-quote {
-        font-size: 22px;
-    }
-    
-    .value-sub {
-        font-size: 17px;
-    }
+@media screen and (min-width: 600px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .value-quote {
+    font-size: 22px;
+  }
+
+  .value-sub {
+    font-size: 17px;
+  }
 }
 
-@media screen and (min-width: 769px){
-    .mainHeading{
-        min-height: 700px;
-    }
-    .mainLogo h1{
-        font-size: 28px;
-    }
-    .mainLogo{
-        padding: 0 60px;
-        padding-right: 60px; /* No need for burger space on desktop */
-    }
-    .btn-primary,
-    .btn-secondary {
-      padding: 5px 40px;
-        font-size: 17px;
-      min-height: 44px;
-    }
+@media screen and (min-width: 769px) {
+  .mainHeading {
+    min-height: 700px;
+  }
 
-    .value-section {
-        padding: 100px 0;
-    }
+  .mainLogo h1 {
+    font-size: 28px;
+  }
 
-    .value-quote-strip {
-        padding: 32px 48px;
-        margin-bottom: 80px;
-    }
+  .mainLogo {
+    padding: 0 60px;
+    padding-right: 60px;
+    /* No need for burger space on desktop */
+  }
 
-    .section-heading,
-    .process-title {
-        font-size: 40px;
-        margin-bottom: 50px;
-    }
+  .btn-primary,
+  .btn-secondary {
+    padding: 5px 40px;
+    font-size: 17px;
+    min-height: 44px;
+  }
 
-    .cta-card {
-        padding: 60px 48px;
-    }
+  .value-section {
+    padding: 100px 0;
+  }
 
-    .cta-card h2 {
-        font-size: 36px;
-    }
+  .value-quote-strip {
+    padding: 32px 48px;
+    margin-bottom: 80px;
+  }
 
-    .cta-card > p {
-        font-size: 18px;
-    }
+  .section-heading,
+  .process-title {
+    font-size: 40px;
+    margin-bottom: 50px;
+  }
 
-    /* Desktop nav behavior: hide burger and ensure inline nav */
-    .nav-toggle {
-        display: none !important;
-    }
+  .cta-card {
+    padding: 60px 48px;
+  }
 
-    .site-nav.primary-nav {
-        position: static;
-        width: auto;
-        height: auto;
-        background: transparent;
-        z-index: auto;
-        overflow: visible;
-        display: block;
-    }
+  .cta-card h2 {
+    font-size: 36px;
+  }
 
-    body.nav-open .site-nav.primary-nav,
-    body.nav-open .site-nav.primary-nav ul {
-        position: static;
-        width: auto;
-        height: auto;
-        background: transparent;
-        display: inline-flex;
-        flex-direction: row;
-        max-width: none;
-        margin: 0;
-        padding: 0;
-    }
-    .backTwo{
-        background-size: 1440px;
-        height: 760px;
-    }
-    .myInfo h1 {
-        font-size: 65px;
-    }
-    .myInfo h2 {
-        font-size: 35px;
-    }
-    .myInfo p {
-        font-size: 25px;
-    }
-    .iframe-container{
-        height: 510px;
-    }
-    .iframe-container iframe {
-        width:560px;
-        height:315px; 
-    }
+  .cta-card>p {
+    font-size: 18px;
+  }
 
-    .site-nav {
-        padding: 20px 40px 10px;
-        text-align: right;
-        margin: 0 15px;
-        border-radius: 25px;
-    }
-    .site-nav ul {
-        justify-content: flex-end;
-        gap: 15px;
-        display: inline-flex;
-    }
-    .site-nav a {
-      padding: 5px 18px;
-    }
-}
-@media screen and (min-width: 920px){
-    .footFooter{
-        height: 750px;
-        background-size: cover;
-        background-size: 900px;
-    }
-    .footFooter h1 {
-        font-size: 65px;
+  /* Desktop nav behavior: hide burger and ensure inline nav */
+  .nav-toggle {
+    display: none !important;
+  }
 
-    }
-    .lastQuote{
-        font-size: 20px;
-    }
+  .site-nav.primary-nav {
+    position: static;
+    width: auto;
+    height: auto;
+    background: transparent;
+    z-index: auto;
+    overflow: visible;
+    display: block;
+  }
+
+  body.nav-open .site-nav.primary-nav,
+  body.nav-open .site-nav.primary-nav ul {
+    position: static;
+    width: auto;
+    height: auto;
+    background: transparent;
+    display: inline-flex;
+    flex-direction: row;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .backTwo {
+    background-size: 1440px;
+    height: 760px;
+  }
+
+  .myInfo h1 {
+    font-size: 65px;
+  }
+
+  .myInfo h2 {
+    font-size: 35px;
+  }
+
+  .myInfo p {
+    font-size: 25px;
+  }
+
+  .iframe-container {
+    height: 510px;
+  }
+
+  .iframe-container iframe {
+    width: 560px;
+    height: 315px;
+  }
+
+  .site-nav {
+    padding: 20px 40px 10px;
+    text-align: right;
+    margin: 0 15px;
+    border-radius: 25px;
+  }
+
+  .site-nav ul {
+    justify-content: flex-end;
+    gap: 15px;
+    display: inline-flex;
+  }
+
+  .site-nav a {
+    padding: 5px 18px;
+  }
 }
 
-@media screen and (min-width: 900px){
-    .services-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
+@media screen and (min-width: 920px) {
+  .footFooter {
+    height: 750px;
+    background-size: cover;
+    background-size: 900px;
+  }
 
-    .process-row {
-        grid-template-columns: repeat(3, 1fr);
-    }
+  .footFooter h1 {
+    font-size: 65px;
 
-    .value-quote {
-        font-size: 24px;
-    }
+  }
+
+  .lastQuote {
+    font-size: 20px;
+  }
 }
 
-@media screen and (min-width: 769px){
-  .portfolioYC{
+@media screen and (min-width: 900px) {
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .process-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .value-quote {
+    font-size: 24px;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .portfolioYC {
     padding: 90px 60px;
     background-size: min(1200px, 92vw);
   }
-  
+
   .code-quote {
     max-width: 840px;
     margin: 36px auto;
   }
-  
+
   .code-quote__pre {
     padding: 22px 18px;
     font-size: 14px;
   }
-  
+
   .code-quote__file {
     font-size: 13px;
   }
 }
 
-@media screen and (min-width: 1200px){
-  .portfolioYC{
+@media screen and (min-width: 1200px) {
+  .portfolioYC {
     background-size: 1300px;
   }
 }
@@ -207,16 +225,16 @@
   .contact-value-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .contact-next-steps {
     grid-template-columns: repeat(3, 1fr);
   }
-  
+
   .contact-direct-links {
     flex-direction: row;
     flex-wrap: wrap;
   }
-  
+
   .contact-direct-link {
     flex: 1;
     min-width: 200px;
@@ -227,11 +245,11 @@
   .contact-value-grid {
     grid-template-columns: repeat(3, 1fr);
   }
-  
+
   .contact-hero {
     padding: 80px 0;
   }
-  
+
   .contact-value,
   .contact-next,
   .contact-fit,
@@ -248,14 +266,14 @@
   }
 
   /* Portfolio: stop vertical centering that squishes mobile */
-  .portfolioYC{
+  .portfolioYC {
     align-items: flex-start;
     padding: 56px 16px;
     background-size: 1100px;
   }
 
   /* Create a readable card behind the content (no overlay blocking taps) */
-  .informationP{
+  .informationP {
     max-width: 720px;
     margin: 0 auto;
     padding: 18px 14px;
@@ -263,16 +281,16 @@
     background: rgba(17, 24, 39, 0.55);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.16);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     text-shadow: none;
   }
 
-  .informationP h2{
+  .informationP h2 {
     margin-top: 6px;
     margin-bottom: 12px;
   }
 
-  .portfolioYC p{
+  .portfolioYC p {
     font-size: 16px;
     line-height: 1.55;
     margin: 0 auto 14px auto;
@@ -283,18 +301,18 @@
   }
 
   /* Code quote spacing */
-  .code-quote{
+  .code-quote {
     margin: 16px auto;
     max-width: 100%;
   }
 
   /* Button grid wraps cleanly */
-  .newBut{
+  .newBut {
     gap: 10px;
     margin-top: 12px;
   }
 
-  .newButton{
+  .newButton {
     min-height: 44px;
     padding: 10px 14px;
     font-size: 15px;
@@ -312,15 +330,103 @@
   }
 }
 
-@media screen and (min-width: 769px){
-  .contact-hero-grid{
+@media screen and (min-width: 769px) {
+  .contact-hero-grid {
     grid-template-columns: 1.1fr 0.9fr;
   }
 }
 
-@media screen and (max-width: 768px){
-  .contact-hero-visual{
+@media screen and (max-width: 768px) {
+  .contact-hero-visual {
     order: -1;
   }
 }
 
+/* ===================================
+   TEST PAGE RESPONSIVE
+   =================================== */
+
+/* Mobile-first: grids are 1-column by default via styles.css */
+
+@media screen and (min-width: 600px) {
+  .page-test .test-why__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .page-test .test-projects__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 769px) {
+
+  /* Hero: 2-column layout */
+  .page-test .test-hero__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+  }
+
+  .page-test .test-hero__content {
+    text-align: left;
+  }
+
+  .page-test .test-hero__text {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .page-test .test-hero__cta {
+    justify-content: flex-start;
+  }
+
+  /* Services: alternating 2-column layout */
+  .page-test .test-service-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+
+  .page-test .test-service-row__content {
+    text-align: left;
+  }
+
+  .page-test .test-service-row__text {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* Alternate row: swap visual and content */
+  .page-test .test-service-row--alt .test-service-row__visual {
+    order: -1;
+  }
+
+  /* Testimonials: carousel-style with center card larger */
+  .page-test .test-testimonials__grid {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+  }
+
+  .page-test .test-testimonial-card--side {
+    transform: scale(0.92);
+    opacity: 0.75;
+  }
+
+  .page-test .test-testimonial-card--center {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 8px 32px rgba(107, 123, 95, 0.18);
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .page-test .test-why__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .page-test .test-projects__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .page-test .test-cta-band__inner {
+    padding: 64px 48px;
+  }
+}

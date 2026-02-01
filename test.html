@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Test | Yegor Creative</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Test page for Yegor Creative - Professional web development and design services">
+    <meta name="keywords" content="HTML, CSS, JavaScript, Yegor Creative, web development">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="CSS/responsive.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@300&display=swap"
+        rel="stylesheet">
+    <meta property="og:image" content="Assets/YegorCreativeScan.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="400">
+    <meta property="og:image:height" content="300">
+    <link rel="icon" type="image/png" href="./Assets/lionheadico.png">
+</head>
+
+
+<body class="page-test">
+    <!-- Skip link for keyboard navigation -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <!-- Top anchor for back-to-top functionality -->
+    <div id="top" aria-hidden="true"></div>
+
+    <header role="banner" class="mainHeading">
+
+        <div class="container">
+            <div class="mainLogo">
+                <a href="index.html"><img src="Assets/lionhead.png" alt="the logo of the website" height="110px"></a>
+                <h1>YegorCreative</h1>
+            </div>
+            <button type="button" class="nav-toggle" id="navToggle" aria-controls="primaryNav" aria-expanded="false"
+                aria-label="Open menu">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+            <nav id="primaryNav" class="site-nav primary-nav" aria-label="Primary">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="test.html">Test</a></li>
+                    <li><a href="index.html#creative">Creative</a></li>
+                    <li><a href="fastmode.html">FastMode</a></li>
+                    <li><a href="games.html">Games</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+
+        </div>
+    </header>
+
+    <main id="main" role="main">
+
+        <!-- Section 1: Hero -->
+        <section id="test-hero" class="test-hero" aria-labelledby="test-hero-heading">
+            <div class="container test-hero__grid">
+                <div class="test-hero__content">
+                    <h1 id="test-hero-heading" class="test-hero__title">Elevate Your Digital Presence</h1>
+                    <p class="test-hero__text">Transform your vision into a beautifully crafted website that connects
+                        with your audience and drives real results.</p>
+                    <div class="test-hero__cta">
+                        <a href="contact.html" class="btn-primary">Request a Quote</a>
+                        <a href="portfolio.html" class="btn-secondary">View Portfolio</a>
+                    </div>
+                </div>
+                <div class="test-hero__visual" aria-hidden="true">
+                    <div class="test-shape-card">
+                        <div class="test-shape test-shape--circle"></div>
+                        <div class="test-shape test-shape--rect"></div>
+                        <div class="test-shape test-shape--small"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Intro Strip -->
+        <section id="test-intro" class="test-intro" aria-labelledby="test-intro-heading">
+            <div class="container">
+                <h2 id="test-intro-heading" class="test-intro__title">Balanced Design. Purposeful Results.</h2>
+                <p class="test-intro__text">Every project begins with clarity and intention. Clean aesthetics meet
+                    strategic thinking to create digital experiences that feel right and perform even better.</p>
+            </div>
+        </section>
+
+        <!-- Section 3: Why Me Features -->
+        <section id="test-why" class="test-why" aria-labelledby="test-why-heading">
+            <div class="container">
+                <h2 id="test-why-heading" class="test-why__title">Why work with me?</h2>
+                <div class="test-why__grid">
+                    <article class="test-feature">
+                        <div class="test-feature__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <h3 class="test-feature__title">Fast Turnaround</h3>
+                        <p class="test-feature__text">Efficient workflows and clear communication mean your project
+                            launches on time, every time.</p>
+                    </article>
+                    <article class="test-feature">
+                        <div class="test-feature__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                <path d="M2 17l10 5 10-5"></path>
+                                <path d="M2 12l10 5 10-5"></path>
+                            </svg>
+                        </div>
+                        <h3 class="test-feature__title">Clean Code</h3>
+                        <p class="test-feature__text">Semantic, accessible, and maintainable code that performs
+                            beautifully across all devices.</p>
+                    </article>
+                    <article class="test-feature">
+                        <div class="test-feature__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="test-feature__title">Personal Touch</h3>
+                        <p class="test-feature__text">Direct collaboration with a dedicated developer who genuinely
+                            cares about your success.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Projects / Cards -->
+        <section id="test-projects" class="test-projects" aria-labelledby="test-projects-heading">
+            <div class="container">
+                <h2 id="test-projects-heading" class="test-projects__title">Featured Projects</h2>
+                <div class="test-projects__grid">
+                    <article class="test-project-card">
+                        <h3 class="test-project-card__title">Brand Website</h3>
+                        <p class="test-project-card__text">A modern, conversion-focused site that builds trust and
+                            captures leads effectively.</p>
+                        <a href="portfolio.html" class="btn-secondary test-project-card__btn">View</a>
+                    </article>
+                    <article class="test-project-card">
+                        <h3 class="test-project-card__title">E-Commerce Store</h3>
+                        <p class="test-project-card__text">Streamlined shopping experience with intuitive navigation and
+                            secure checkout.</p>
+                        <a href="portfolio.html" class="btn-secondary test-project-card__btn">View</a>
+                    </article>
+                    <article class="test-project-card">
+                        <h3 class="test-project-card__title">Portfolio Showcase</h3>
+                        <p class="test-project-card__text">Visual storytelling that highlights creative work and makes
+                            lasting impressions.</p>
+                        <a href="portfolio.html" class="btn-secondary test-project-card__btn">View</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Services Highlight -->
+        <section id="test-services" class="test-services" aria-labelledby="test-services-heading">
+            <div class="container">
+                <h2 id="test-services-heading" class="test-services__title">Services</h2>
+
+                <div class="test-service-row">
+                    <div class="test-service-row__content">
+                        <h3 class="test-service-row__title">Web Design</h3>
+                        <p class="test-service-row__text">Custom designs that capture your brand identity and engage
+                            your audience. Mobile-first approach ensures perfect display on every screen size.</p>
+                        <a href="contact.html" class="btn-secondary test-service-row__btn">Learn More</a>
+                    </div>
+                    <div class="test-service-row__visual" aria-hidden="true">
+                        <div class="test-service-placeholder"></div>
+                    </div>
+                </div>
+
+                <div class="test-service-row test-service-row--alt">
+                    <div class="test-service-row__content">
+                        <h3 class="test-service-row__title">Development</h3>
+                        <p class="test-service-row__text">Clean, efficient code built for performance and longevity.
+                            From simple landing pages to complex web applications, I deliver quality results.</p>
+                        <a href="contact.html" class="btn-secondary test-service-row__btn">Learn More</a>
+                    </div>
+                    <div class="test-service-row__visual" aria-hidden="true">
+                        <div class="test-service-placeholder"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Soft CTA Band -->
+        <section id="test-cta" class="test-cta-band" aria-labelledby="test-cta-heading">
+            <div class="container">
+                <div class="test-cta-band__inner">
+                    <h2 id="test-cta-heading" class="test-cta-band__title">Ready to bring your vision to life?</h2>
+                    <a href="mailto:aleqsandregor@gmail.com" class="btn-primary test-cta-band__btn">Book a Call</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Testimonials -->
+        <section id="test-testimonials" class="test-testimonials" aria-labelledby="test-testimonials-heading">
+            <div class="container">
+                <h2 id="test-testimonials-heading" class="test-testimonials__title">What Clients Say</h2>
+                <div class="test-testimonials__grid">
+                    <article class="test-testimonial-card test-testimonial-card--side">
+                        <p class="test-testimonial-card__quote">"Professional and responsive. My site looks amazing and
+                            loads incredibly fast."</p>
+                        <p class="test-testimonial-card__name">Jordan R.</p>
+                        <p class="test-testimonial-card__role">Startup Founder</p>
+                    </article>
+                    <article class="test-testimonial-card test-testimonial-card--center">
+                        <p class="test-testimonial-card__quote">"Exceeded all expectations. The attention to detail and
+                            communication throughout the project was exceptional."</p>
+                        <p class="test-testimonial-card__name">Taylor M.</p>
+                        <p class="test-testimonial-card__role">Creative Director</p>
+                    </article>
+                    <article class="test-testimonial-card test-testimonial-card--side">
+                        <p class="test-testimonial-card__quote">"Clean design, quick delivery, and a website that
+                            actually converts visitors to customers."</p>
+                        <p class="test-testimonial-card__name">Casey L.</p>
+                        <p class="test-testimonial-card__role">Small Business Owner</p>
+                    </article>
+                </div>
+                <div class="test-testimonials__dots" aria-hidden="true">
+                    <span class="test-dot test-dot--active"></span>
+                    <span class="test-dot"></span>
+                    <span class="test-dot"></span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer role="contentinfo" class="footFooter" id="contact">
+        <h2 class="contact-heading"><span class="heading-icon">✉</span>Contact Yegor<span
+                class="heading-underline"></span></h2>
+        <div class="socialMedia">
+            <a href="https://www.facebook.com/hambaryanyegor/" target="_blank"
+                aria-label="Visit Yegor Creative on Facebook"><img class="socialMI" src="Assets/facebook.png" alt=""
+                    width="90px"></a>
+            <a href="https://www.instagram.com/yegorcreative/" target="_blank"
+                aria-label="Visit Yegor Creative on Instagram"><img class="socialMI" src="Assets/instagram.png" alt=""
+                    width="90px"></a>
+            <a href="https://www.youtube.com/yegorcreative" target="_blank"
+                aria-label="Visit Yegor Creative on YouTube"><img class="socialMI" src="Assets/youtube.png" alt=""
+                    width="90px"></a>
+            <a href="https://www.linkedin.com/in/yegorhambaryan/" target="_blank"
+                aria-label="Visit Yegor Hambaryan on LinkedIn"><img class="socialMI" src="Assets/linkedIn.png" alt=""
+                    width="90px"></a>
+            <a href="https://github.com/YegorCreative" target="_blank" aria-label="Visit Yegor Creative on GitHub"><img
+                    class="socialMI" src="Assets/github.png" alt="" width="90px"></a>
+            <a href="mailto:aleqsandregor@gmail.com" aria-label="Send email to Yegor"><img src="Assets/email.png" alt=""
+                    class="socialMI" width="90px"></a>
+        </div>
+    </footer>
+    <div class="lastQuote">Business is complicated, your web solutions can be simple. @YegorCreative2021</div>
+
+    <!-- Back to top button -->
+    <button type="button" id="backToTopBtn" class="back-to-top" aria-label="Back to top">
+        ↑ Top
+    </button>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5945108334593216"
+        crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+    <script src="nav-active.js"></script>
+</body>
+
+</html>
