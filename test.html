@@ -80,6 +80,122 @@
             </div>
         </section>
 
+        <!-- New UI Prototype Section (Teal Neumorphic Dashboard) -->
+        <section class="test-ui" id="test-ui" aria-labelledby="test-ui-heading">
+            <div class="test-ui__wrap">
+                <h2 id="test-ui-heading" class="test-ui__sr">UI Prototype Layout</h2>
+
+                <!-- Top bar -->
+                <header class="test-ui__topbar" aria-label="Test UI top bar">
+                    <div class="test-ui__pillnav" role="navigation" aria-label="Prototype navigation">
+                        <a class="pill is-active" href="#test-ui">Home</a>
+                        <a class="pill" href="#test-ui-gallery">Gallery</a>
+                        <a class="pill" href="#test-ui-about">About</a>
+                    </div>
+                    <div class="test-ui__profile" aria-label="Profile">
+                        <span class="test-ui__avatar" aria-hidden="true"></span>
+                        <div class="test-ui__profiletext">
+                            <div class="test-ui__name">Yegor Creative</div>
+                            <div class="test-ui__role">Prototype UI</div>
+                        </div>
+                        <button class="test-ui__menuBtn" type="button" aria-label="Menu">=</button>
+                    </div>
+                </header>
+
+                <!-- Search row -->
+                <div class="test-ui__searchRow" aria-label="Search">
+                    <div class="test-ui__search">
+                        <span class="test-ui__searchIcon" aria-hidden="true">*</span>
+                        <input class="test-ui__searchInput" type="search" placeholder="Search..." aria-label="Search">
+                        <button class="test-ui__iconBtn" type="button" aria-label="Voice">Mic</button>
+                        <button class="test-ui__iconBtn" type="button" aria-label="Camera">Cam</button>
+                    </div>
+                    <button class="test-ui__addBtn" type="button" aria-label="Add">+</button>
+                </div>
+
+                <!-- Main grid panels -->
+                <div class="test-ui__grid" aria-label="Prototype panels">
+                    <!-- Big left panel -->
+                    <article class="test-ui__panel test-ui__panel--big" aria-label="Feature panel">
+                        <div class="test-ui__badge">FEATURE</div>
+                        <h3 class="test-ui__title">Prototype Dashboard</h3>
+                        <p class="test-ui__text">Neumorphic layout with layered cards, strong depth, and calm
+                            motion-ready spacing.</p>
+                        <div class="test-ui__panelActions">
+                            <a class="test-ui__cta" href="contact.html">Get Started</a>
+                            <button class="test-ui__miniBtn" type="button" aria-label="Next">-></button>
+                        </div>
+                        <div class="test-ui__stamp" aria-hidden="true">YC</div>
+                    </article>
+
+                    <!-- Right floating info card -->
+                    <article class="test-ui__panel test-ui__panel--float" aria-label="Info card">
+                        <h3 class="test-ui__cardTitle">What is this page?</h3>
+                        <p class="test-ui__text">A structured UI playground for Yegorcreative.com. Use it to test
+                            layouts, spacing, and component style.</p>
+                        <div class="test-ui__panelActions">
+                            <a class="test-ui__cta test-ui__cta--ghost" href="portfolio.html">View Work</a>
+                            <button class="test-ui__miniBtn" type="button" aria-label="Next">-></button>
+                        </div>
+                    </article>
+
+                    <!-- Mid-wide panels row -->
+                    <article class="test-ui__panel test-ui__panel--wide" aria-label="Content panel A">
+                        <h3 class="test-ui__cardTitle">Sections</h3>
+                        <p class="test-ui__text">Reusable blocks: hero, feature grid, services rows, CTA band,
+                            testimonials.</p>
+                        <a class="test-ui__link" href="#test-projects">Jump to projects -></a>
+                    </article>
+
+                    <article class="test-ui__panel test-ui__panel--wide" aria-label="Content panel B">
+                        <h3 class="test-ui__cardTitle">Next Steps</h3>
+                        <p class="test-ui__text">Add real content, wire up buttons, and convert this into a reusable
+                            component style guide.</p>
+                        <div class="test-ui__chipRow" aria-label="Chips">
+                            <span class="test-ui__chip">Layout</span>
+                            <span class="test-ui__chip">Cards</span>
+                            <span class="test-ui__chip">CTA</span>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Gallery strip -->
+                <section class="test-ui__gallery" id="test-ui-gallery" aria-label="Prototype gallery">
+                    <header class="test-ui__galleryHeader">
+                        <h3 class="test-ui__galleryTitle">Gallery</h3>
+                        <div class="test-ui__galleryTabs" role="tablist" aria-label="Gallery tabs">
+                            <button class="tab is-active" type="button" role="tab" aria-selected="true">Type</button>
+                            <button class="tab" type="button" role="tab" aria-selected="false">Galaxy</button>
+                            <button class="tab" type="button" role="tab" aria-selected="false">Green Pea</button>
+                        </div>
+                    </header>
+
+                    <div class="test-ui__cards" role="list">
+                        <article class="test-ui__imgCard" role="listitem" aria-label="Card 1">
+                            <div class="test-ui__imgPlaceholder" aria-hidden="true"></div>
+                            <button class="test-ui__goBtn" type="button" aria-label="Open">-></button>
+                        </article>
+                        <article class="test-ui__imgCard" role="listitem" aria-label="Card 2">
+                            <div class="test-ui__imgPlaceholder is-2" aria-hidden="true"></div>
+                            <button class="test-ui__goBtn" type="button" aria-label="Open">-></button>
+                        </article>
+                        <article class="test-ui__imgCard" role="listitem" aria-label="Card 3">
+                            <div class="test-ui__imgPlaceholder is-3" aria-hidden="true"></div>
+                            <button class="test-ui__goBtn" type="button" aria-label="Open">-></button>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Bottom nav -->
+                <nav class="test-ui__bottomNav" aria-label="Prototype bottom navigation" id="test-ui-about">
+                    <a class="test-ui__bottomLink" href="#test-ui">Collaboration</a>
+                    <a class="test-ui__homeBtn" href="#top" aria-label="Home">H</a>
+                    <a class="test-ui__bottomLink" href="#about">About</a>
+                </nav>
+
+            </div>
+        </section>
+
         <!-- Section 2: Intro Strip -->
         <section id="test-intro" class="test-intro" aria-labelledby="test-intro-heading">
             <div class="container">

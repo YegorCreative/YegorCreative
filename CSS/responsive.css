@@ -430,3 +430,63 @@
     padding: 64px 48px;
   }
 }
+
+/* ===================================
+   TEAL NEUMORPHIC UI RESPONSIVE
+   =================================== */
+
+@media screen and (min-width: 769px) {
+
+  /* Show profile text on larger screens */
+  .page-test .test-ui__profiletext {
+    display: block;
+  }
+
+  /* Grid layout: big panel left (2 cols), float right (1 col) */
+  .page-test .test-ui__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .page-test .test-ui__panel--big {
+    grid-column: span 2;
+  }
+
+  .page-test .test-ui__panel--float {
+    grid-column: span 2;
+  }
+
+  /* Gallery cards side by side */
+  .page-test .test-ui__cards {
+    overflow-x: visible;
+  }
+
+  .page-test .test-ui__imgCard {
+    flex: 1;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+
+  /* 3-column grid for main panels */
+  .page-test .test-ui__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .page-test .test-ui__panel--big {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .page-test .test-ui__panel--float {
+    grid-column: span 1;
+  }
+
+  .page-test .test-ui__panel--wide {
+    grid-column: span 1;
+  }
+
+  /* Wider wrap */
+  .page-test .test-ui__wrap {
+    padding: 36px 32px 40px;
+  }
+}
