@@ -244,6 +244,60 @@
             padding: 10px 12px;
             font-weight: 700;
         }
+
+        .mtc-resources {
+            margin-top: 28px;
+            display: grid;
+            gap: 16px;
+        }
+
+        .mtc-resources__intro {
+            margin: 0;
+        }
+
+        .mtc-resource-block {
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 12px;
+            background: rgba(124, 58, 237, 0.04);
+            padding: 16px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .mtc-resource-block h3 {
+            margin: 0;
+            font-size: 24px;
+            line-height: 1.15;
+        }
+
+        .mtc-resource-block p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        .mtc-resource-list {
+            margin: 0;
+            padding-left: 22px;
+            display: grid;
+            gap: 6px;
+        }
+
+        .mtc-resource-featured {
+            background: linear-gradient(180deg, rgba(124, 58, 237, 0.14), rgba(124, 58, 237, 0.06));
+            border: 1px solid rgba(124, 58, 237, 0.36);
+        }
+
+        .mtc-resource-featured .mtc-resource-name {
+            margin: 0;
+            font-size: clamp(30px, 4vw, 42px);
+            line-height: 1.05;
+            color: var(--fast-accent-dark);
+            font-family: 'Caveat', cursive;
+        }
+
+        .mtc-resource-help {
+            background: rgba(124, 58, 237, 0.08);
+        }
     </style>
 </head>
 
@@ -937,7 +991,84 @@
                     </section>
                 </div>
 
-                <p class="trust-line" style="margin-top: 28px;">Материал подготовлен Егором Амбаряном для студентов MTC.</p>
+                <section class="mtc-resources" aria-labelledby="mtc-resources-heading">
+                    <header class="section-header">
+                        <h2 id="mtc-resources-heading">Lessons &amp; Resources</h2>
+                        <p class="section-subtitle">Практические инструменты и полезные ресурсы</p>
+                        <p class="mtc-resources__intro">Ниже находятся практические инструменты и дополнительные ресурсы, которые помогут применять принципы этих уроков в повседневной жизни.</p>
+                    </header>
+
+                    <section class="mtc-resource-block" aria-labelledby="iphone-sensitive-content-heading">
+                        <h3 id="iphone-sensitive-content-heading">Как включить предупреждение о чувствительном контенте на iPhone</h3>
+                        <p>Что делает эта функция:</p>
+                        <p>Функция «Предупреждение о чувствительном контенте» на iPhone предупреждает пользователя перед просмотром или отправкой изображений и видео, которые могут содержать наготу.</p>
+                        <p>Пошаговая настройка:</p>
+                        <ol class="mtc-resource-list">
+                            <li>Откройте Настройки.</li>
+                            <li>Перейдите в Конфиденциальность и безопасность.</li>
+                            <li>Пролистайте вниз и нажмите Предупреждение о чувствительном контенте.</li>
+                            <li>Включите Предупреждение о чувствительном контенте.</li>
+                            <li>При желании просмотрите дополнительные параметры безопасности.</li>
+                        </ol>
+                        <p>Дополнительно для детей или подростков через Экранное время:</p>
+                        <ol class="mtc-resource-list">
+                            <li>Откройте Настройки.</li>
+                            <li>Нажмите Экранное время.</li>
+                            <li>Выберите Безопасность общения / Communication Safety.</li>
+                            <li>Включите функцию проверки чувствительных изображений и видео.</li>
+                            <li>При необходимости настройте параметры для ребёнка через семейные настройки.</li>
+                        </ol>
+                        <p>Почему это полезно:</p>
+                        <p>Эта функция не заменяет духовную дисциплину, но может стать практической мерой защиты. Иногда именно небольшая пауза между искушением и решением помогает выбрать мудрость.</p>
+                    </section>
+
+                    <section class="mtc-resource-block mtc-resource-featured" aria-labelledby="featured-resource-heading">
+                        <h3 id="featured-resource-heading">Рекомендуемый ресурс</h3>
+                        <p class="mtc-resource-name">GuardiansOfPurity.com</p>
+                        <p>Ресурс для тех, кто хочет глубже изучать темы духовной чистоты, борьбы с искушением, обновления мышления и практических шагов к свободе.</p>
+                        <p>Подходит для личного изучения, духовного укрепления и формирования здоровых привычек в цифровом мире.</p>
+                        <div>
+                            <a class="btn-primary" href="https://guardiansofpurity.com" target="_blank" rel="noopener noreferrer">Открыть ресурс</a>
+                        </div>
+                    </section>
+
+                    <section class="mtc-resource-block" aria-labelledby="quick-guards-heading">
+                        <h3 id="quick-guards-heading">Быстрые меры защиты</h3>
+                        <ul class="mtc-resource-list">
+                            <li>Писание прежде экрана</li>
+                            <li>молитва прежде уведомлений</li>
+                            <li>не листать телефон поздно ночью</li>
+                            <li>включить предупреждение о чувствительном контенте</li>
+                            <li>иметь духовную подотчётность</li>
+                            <li>отключить ненужные уведомления</li>
+                            <li>использовать Focus / режимы концентрации для молитвы и изучения Писания</li>
+                        </ul>
+                    </section>
+
+                    <section class="mtc-resource-block" aria-labelledby="self-reflection-heading">
+                        <h3 id="self-reflection-heading">Вопросы для самоанализа</h3>
+                        <ul class="mtc-resource-list">
+                            <li>Управляю ли я своим устройством или устройство управляет мной?</li>
+                            <li>Что в моём цифровом поведении укрепляет мою веру?</li>
+                            <li>Что ослабляет мою духовную жизнь?</li>
+                            <li>Какие границы мне нужно установить уже сегодня?</li>
+                            <li>Что изменится в моей духовной жизни, если первые и последние минуты дня будут принадлежать Богу, а не телефону?</li>
+                        </ul>
+                    </section>
+
+                    <section class="mtc-resource-block mtc-resource-help" aria-labelledby="need-help-heading">
+                        <h3 id="need-help-heading">Если тебе нужна помощь</h3>
+                        <ul class="mtc-resource-list">
+                            <li>поговори с лидером</li>
+                            <li>поговори с наставником</li>
+                            <li>найди зрелого христианина для подотчётности</li>
+                            <li>не борись в одиночку</li>
+                            <li>ищи не только защиту, но и духовное восстановление</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <p class="trust-line" style="margin-top: 28px;">Материал подготовлен Егором Гамбаряном для студентов MTC.</p>
             </div>
         </section>
     </main>
