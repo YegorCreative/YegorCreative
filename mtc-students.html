@@ -213,6 +213,7 @@
             white-space: normal;
             line-height: 1.8;
             max-width: 72ch;
+            overflow-wrap: anywhere;
         }
 
         .lesson-list,
@@ -367,6 +368,7 @@
             margin: 0;
             line-height: 1.65;
             max-width: 76ch;
+            overflow-wrap: anywhere;
         }
 
         .mtc-resource-list {
@@ -376,6 +378,7 @@
             gap: 8px;
             line-height: 1.7;
             max-width: 76ch;
+            overflow-wrap: anywhere;
         }
 
         .mtc-resource-featured {
@@ -413,6 +416,7 @@
         .mtc-scripture-item p {
             margin: 0;
             line-height: 1.75;
+            overflow-wrap: anywhere;
         }
 
         @media (max-width: 768px) {
@@ -468,6 +472,37 @@
 
             .mtc-page .section-header {
                 margin-bottom: 22px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .mtc-toggle {
+                padding: 14px 14px;
+            }
+
+            .mtc-content {
+                padding: 2px 14px 16px;
+            }
+
+            .lesson-list,
+            .lesson-ol,
+            .mtc-resource-list {
+                padding-left: 18px;
+            }
+
+            .mtc-resource-featured .mtc-resource-name {
+                line-height: 1.1;
+                overflow-wrap: anywhere;
+            }
+
+            .mtc-scripture-item,
+            .lesson-scripture,
+            .lesson-parable,
+            .lesson-biblical,
+            .lesson-demo,
+            .lesson-practice,
+            .lesson-takeaway {
+                padding: 10px 12px;
             }
         }
     </style>
