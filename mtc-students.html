@@ -237,17 +237,60 @@
             padding: 14px 16px;
         }
 
+        .lesson-scripture {
+            background: rgba(124, 58, 237, 0.08);
+            border-left-color: var(--fast-accent-dark);
+        }
+
+        .lesson-scripture .lesson-verse-ref {
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+
+        .lesson-scripture .lesson-verse-text {
+            font-style: italic;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.45);
+            border-radius: 8px;
+            padding: 8px 10px;
+        }
+
         .lesson-biblical {
             background: rgba(124, 58, 237, 0.035);
+            border-left-color: rgba(124, 58, 237, 0.75);
         }
 
         .lesson-parable {
             background: rgba(124, 58, 237, 0.07);
+            border-left-color: rgba(124, 58, 237, 0.9);
+        }
+
+        .lesson-demo {
+            background: rgba(124, 58, 237, 0.06);
+            border-left-color: rgba(124, 58, 237, 0.82);
+        }
+
+        .lesson-practice,
+        .lesson-takeaway {
+            background: rgba(124, 58, 237, 0.09);
+            border-left-color: rgba(124, 58, 237, 0.95);
+        }
+
+        .lesson-label {
+            display: inline-block;
+            width: fit-content;
+            border-radius: 999px;
+            padding: 3px 10px;
+            background: rgba(124, 58, 237, 0.14);
+            color: var(--fast-accent-dark);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
         }
 
         .lesson-moral {
-            margin-top: 8px;
-            padding-top: 8px;
+            margin-top: 10px;
+            padding-top: 10px;
             border-top: 1px solid rgba(124, 58, 237, 0.22);
             font-weight: 600;
         }
@@ -339,6 +382,8 @@
             background: rgba(124, 58, 237, 0.08);
             border: 1px solid rgba(124, 58, 237, 0.34);
             box-shadow: 0 8px 18px rgba(124, 58, 237, 0.08);
+            padding: 20px;
+            gap: 12px;
         }
 
         .mtc-resource-featured .mtc-resource-name {
@@ -351,6 +396,11 @@
 
         .mtc-resource-help {
             background: rgba(124, 58, 237, 0.08);
+        }
+
+        .mtc-resource-reflection {
+            background: rgba(124, 58, 237, 0.06);
+            border-color: rgba(124, 58, 237, 0.25);
         }
 
         .mtc-scripture-item {
@@ -1171,7 +1221,7 @@
                         </div>
                     </section>
 
-                    <section class="mtc-resource-block" aria-labelledby="self-reflection-heading">
+                    <section class="mtc-resource-block mtc-resource-reflection" aria-labelledby="self-reflection-heading">
                         <h3 id="self-reflection-heading">Вопросы для самоанализа</h3>
                         <ul class="mtc-resource-list">
                             <li>Управляю ли я своим устройством или устройство управляет мной?</li>
@@ -1319,6 +1369,32 @@
                             .map((line) => '<li>' + escapeHtml(line.replace(/^\d+\.\s*/, '')) + '</li>')
                             .join('');
                         return '<ol class="lesson-ol">' + items + '</ol>';
+                    }
+
+                    const isLabel =
+                        joined === 'Объяснение:' ||
+                        joined === 'Краткое объяснение:' ||
+                        joined === 'Применение:' ||
+                        joined === 'Основной стих:' ||
+                        joined === 'Дополнительный стих:' ||
+                        joined === 'Почему это полезно:' ||
+                        joined === 'Ключевая идея:' ||
+                        joined === 'Что делает эта функция:' ||
+                        joined === 'Пошаговая настройка:' ||
+                        joined === 'Дополнительно для детей или подростков через Экранное время:';
+
+                    if (isLabel) {
+                        return '<p class="lesson-label">' + chunk.map(escapeHtml).join(' ') + '</p>';
+                    }
+
+                    const isVerseRef = /^(Притчи|Псалом|Марка|Даниила|Филиппийцам|Луки|2 Царств|1 Коринфянам)\s+\d+:\d+/.test(joined);
+                    if (isVerseRef) {
+                        return '<p class="lesson-verse-ref">' + chunk.map(escapeHtml).join('<br>') + '</p>';
+                    }
+
+                    const isVerseText = /^«.*»$/.test(joined) && (joined.includes('источники жизни') || joined.includes('вещи непотребной') || joined.includes('Евангелие всей твари') || joined.includes('не оскверняться'));
+                    if (isVerseText) {
+                        return '<p class="lesson-verse-text">' + chunk.map(escapeHtml).join('<br>') + '</p>';
                     }
 
                     const isAttentionLead = joined.includes('То, чему мы отдаём своё внимание, постепенно формирует:');
