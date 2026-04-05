@@ -56,6 +56,81 @@
             margin: 0;
             white-space: pre-wrap;
         }
+
+        .lesson-doc {
+            display: grid;
+            gap: 16px;
+        }
+
+        .lesson-doc__meta h4 {
+            margin: 0 0 6px;
+            font-size: 18px;
+            font-family: 'Righteous', cursive;
+            color: var(--fast-ink);
+        }
+
+        .lesson-doc__meta p {
+            margin: 0;
+            white-space: normal;
+            line-height: 1.6;
+        }
+
+        .lesson-section {
+            display: grid;
+            gap: 10px;
+        }
+
+        .lesson-section h5 {
+            margin: 0;
+            font-size: 18px;
+            color: var(--fast-ink);
+        }
+
+        .lesson-section p {
+            margin: 0;
+            white-space: normal;
+            line-height: 1.7;
+        }
+
+        .lesson-list,
+        .lesson-ol {
+            margin: 0;
+            padding-left: 22px;
+            display: grid;
+            gap: 6px;
+            line-height: 1.6;
+        }
+
+        .lesson-scripture,
+        .lesson-parable,
+        .lesson-biblical,
+        .lesson-demo,
+        .lesson-practice,
+        .lesson-takeaway {
+            border-left: 4px solid var(--fast-accent);
+            background: rgba(124, 58, 237, 0.06);
+            border-radius: 10px;
+            padding: 12px 14px;
+        }
+
+        .lesson-biblical {
+            background: rgba(124, 58, 237, 0.04);
+        }
+
+        .lesson-parable {
+            background: rgba(124, 58, 237, 0.08);
+        }
+
+        .lesson-moral {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(124, 58, 237, 0.22);
+            font-weight: 600;
+        }
+
+        .lesson-takeaway h5 {
+            margin-bottom: 4px;
+        }
     </style>
 </head>
 
@@ -1075,10 +1150,162 @@
                 }, 210);
             }
 
+            function escapeHtml(value) {
+                return String(value)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+            }
+
+            function renderChunks(lines) {
+                const chunks = [];
+                let current = [];
+
+                lines.forEach((line) => {
+                    if (!line.trim()) {
+                        if (current.length) {
+                            chunks.push(current);
+                            current = [];
+                        }
+                        return;
+                    }
+                    current.push(line.trim());
+                });
+
+                if (current.length) {
+                    chunks.push(current);
+                }
+
+                return chunks.map((chunk) => {
+                    if (chunk.every((line) => line.startsWith('• '))) {
+                        const items = chunk
+                            .map((line) => '<li>' + escapeHtml(line.slice(2).trim()) + '</li>')
+                            .join('');
+                        return '<ul class="lesson-list">' + items + '</ul>';
+                    }
+
+                    if (chunk.every((line) => /^\d+\.\s/.test(line))) {
+                        const items = chunk
+                            .map((line) => '<li>' + escapeHtml(line.replace(/^\d+\.\s*/, '')) + '</li>')
+                            .join('');
+                        return '<ol class="lesson-ol">' + items + '</ol>';
+                    }
+
+                    return '<p>' + chunk.map(escapeHtml).join('<br>') + '</p>';
+                }).join('');
+            }
+
+            function classForSection(title) {
+                if (/Чтение Писания/i.test(title)) return 'lesson-scripture';
+                if (/Притча/i.test(title)) return 'lesson-parable';
+                if (/Библейская история|Библейский пример/i.test(title)) return 'lesson-biblical';
+                if (/Наглядная демонстрация/i.test(title)) return 'lesson-demo';
+                if (/Практический|Практические|Практическое/i.test(title)) return 'lesson-practice';
+                return '';
+            }
+
+            function buildTakeaway(lessonKey) {
+                const textByLesson = {
+                    'День 1 — Урок 1': 'Ключевая мысль: хранить сердце и внимание так, чтобы технологии служили Богу и миссии, а не управляли жизнью.',
+                    'День 1 — Урок 2': 'Ключевая мысль: охрана разума начинается с выбора того, что мы допускаем в мысли, глаза и сердце.',
+                    'День 2 — Урок 1': 'Ключевая мысль: технологии становятся сильным инструментом Царства, когда остаются слугой Евангелия.',
+                    'День 2 — Урок 2': 'Ключевая мысль: цифровая дисциплина помогает сохранять направление ко Христу в мире постоянных отвлечений.'
+                };
+
+                const text = textByLesson[lessonKey] || '';
+                if (!text) return '';
+
+                return '<section class="lesson-section lesson-takeaway"><h5>Ключевая мысль урока</h5><p>' + escapeHtml(text) + '</p></section>';
+            }
+
+            function formatLessonPanel(panel) {
+                const rawEl = panel.querySelector('p');
+                if (!rawEl) return;
+                if (panel.dataset.formatted === 'true') return;
+
+                const lines = rawEl.textContent.replace(/\r/g, '').split('\n');
+                const compact = lines.map((line) => line.trim());
+                const nonEmpty = compact.filter(Boolean);
+                if (nonEmpty.length < 4) return;
+
+                const lessonLabel = nonEmpty[0];
+                const lessonTitle = nonEmpty[1];
+                const lessonTheme = nonEmpty[2];
+
+                let startIndex = 0;
+                let seenHeaderLines = 0;
+                for (let i = 0; i < compact.length; i++) {
+                    if (!compact[i]) continue;
+                    seenHeaderLines += 1;
+                    if (seenHeaderLines === 3) {
+                        startIndex = i + 1;
+                        break;
+                    }
+                }
+
+                const bodyLines = compact.slice(startIndex);
+                const sections = [];
+                let currentTitle = '';
+                let currentLines = [];
+
+                bodyLines.forEach((line) => {
+                    if (/^\d+\.\s/.test(line)) {
+                        if (currentTitle || currentLines.length) {
+                            sections.push({ title: currentTitle, lines: currentLines.slice() });
+                        }
+                        currentTitle = line;
+                        currentLines = [];
+                        return;
+                    }
+                    currentLines.push(line);
+                });
+
+                if (currentTitle || currentLines.length) {
+                    sections.push({ title: currentTitle, lines: currentLines.slice() });
+                }
+
+                let html = '<article class="lesson-doc">';
+                html += '<header class="lesson-doc__meta">';
+                html += '<h4>' + escapeHtml(lessonLabel) + '</h4>';
+                html += '<p><strong>' + escapeHtml(lessonTitle) + '</strong></p>';
+                html += '<p>' + escapeHtml(lessonTheme) + '</p>';
+                html += '</header>';
+
+                sections.forEach((section) => {
+                    const extraClass = classForSection(section.title);
+                    const sectionTitle = section.title || 'Раздел';
+
+                    let sectionBody = renderChunks(section.lines);
+
+                    if (/Притча/i.test(sectionTitle) && /Мораль:/.test(section.lines.join('\n'))) {
+                        const moralIndex = section.lines.findIndex((line) => /^Мораль:/.test(line));
+                        if (moralIndex >= 0) {
+                            const mainPart = renderChunks(section.lines.slice(0, moralIndex));
+                            const moralPart = renderChunks(section.lines.slice(moralIndex));
+                            sectionBody = mainPart + '<div class="lesson-moral">' + moralPart + '</div>';
+                        }
+                    }
+
+                    html += '<section class="lesson-section ' + extraClass + '">';
+                    html += '<h5>' + escapeHtml(sectionTitle) + '</h5>';
+                    html += sectionBody;
+                    html += '</section>';
+                });
+
+                html += buildTakeaway(lessonLabel);
+                html += '</article>';
+
+                panel.innerHTML = html;
+                panel.dataset.formatted = 'true';
+            }
+
             toggles.forEach((btn) => {
                 const panelId = btn.getAttribute('aria-controls');
                 const panel = panelId ? document.getElementById(panelId) : null;
                 if (!panel) return;
+                formatLessonPanel(panel);
                 if (btn.getAttribute('aria-expanded') === 'true') {
                     panel.hidden = false;
                     panel.style.opacity = '1';
