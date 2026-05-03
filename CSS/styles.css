@@ -24,6 +24,8 @@
 html,
 body {
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -46,7 +48,7 @@ body {
 /* Skip link for keyboard navigation */
 .skip-link {
   position: absolute;
-  top: -40px;
+  top: -100px;
   left: 0;
   background: #000;
   color: #fff;
@@ -83,7 +85,6 @@ body {
   width: 100%;
   position: relative;
   overflow: hidden;
-  min-height: 580px;
 }
 
 .mainHeading .container {

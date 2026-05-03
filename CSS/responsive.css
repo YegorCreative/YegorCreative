@@ -40,10 +40,6 @@
 }
 
 @media screen and (min-width: 769px) {
-  .mainHeading {
-    min-height: 640px;
-  }
-
   .mainLogo h1 {
     font-size: 28px;
   }
