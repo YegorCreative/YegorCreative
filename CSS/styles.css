@@ -83,7 +83,7 @@ body {
   width: 100%;
   position: relative;
   overflow: hidden;
-  min-height: 620px;
+  min-height: 680px;
 }
 
 .mainHeading .container {
@@ -126,7 +126,7 @@ body {
 .goodWebsite {
   width: 100%;
   text-align: center;
-  padding: 60px 20px 80px;
+  padding: 80px 20px 100px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -178,40 +178,36 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 44px;
-  padding: 5px 32px;
-  border-radius: 999px;
+  padding: 12px 28px;
+  border-radius: 10px;
   text-decoration: none;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1;
-  transition: all .3s ease;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
   text-align: center;
   border: 2px solid var(--fast-accent);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
 }
 
 .btn-primary {
-  background: var(--fast-gradient);
+  background: var(--fast-accent);
   color: #fff;
-  box-shadow: 0 10px 24px rgba(124, 58, 237, 0.35);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
+  background: var(--fast-accent-dark);
+  border-color: var(--fast-accent-dark);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.55);
+  background: transparent;
   color: var(--fast-accent);
   border-color: var(--fast-accent);
-  box-shadow: 0 10px 24px rgba(124, 58, 237, 0.15);
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.7);
-  transform: translateY(-2px);
+  background: var(--fast-accent);
+  color: #fff;
 }
 
 .btn-primary:focus-visible,
@@ -239,12 +235,11 @@ body {
 
 /* Quote Strip */
 .value-quote-strip {
-  background: rgba(124, 58, 237, 0.05);
-  border-left: 4px solid var(--fast-accent);
-  border-radius: 12px;
-  padding: 24px 28px;
+  border-left: 3px solid var(--fast-accent);
+  border-radius: 0;
+  padding: 16px 24px;
   margin-bottom: 60px;
-  text-align: center;
+  text-align: left;
 }
 
 .value-quote {
@@ -266,10 +261,11 @@ body {
 .section-heading,
 .process-title {
   font-family: 'Righteous', cursive;
-  font-size: 32px;
+  font-size: clamp(22px, 3.5vw, 34px);
   text-align: center;
   color: var(--fast-ink);
   margin: 0 0 40px 0;
+  letter-spacing: -0.3px;
 }
 
 /* Services Grid */
@@ -280,17 +276,15 @@ body {
 }
 
 .service-card {
-  background: var(--fast-surface);
-  border: 1px solid var(--fast-border);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: var(--fast-radius);
-  padding: 28px;
-  box-shadow: var(--fast-shadow);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 32px 28px;
+  transition: box-shadow 0.2s ease;
 }
 
 .service-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(124, 58, 237, 0.18);
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.10);
 }
 
 .service-card h3 {
@@ -324,16 +318,16 @@ body {
 }
 
 .step-number {
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
   margin: 0 auto 16px;
-  background: var(--fast-gradient);
+  background: var(--fast-ink);
   color: #fff;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   font-family: 'Righteous', cursive;
 }
@@ -355,28 +349,32 @@ body {
 
 /* CTA Card */
 .cta-card {
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(168, 139, 250, 0.08));
-  border: 2px solid var(--fast-accent);
+  background: #111827;
+  border: none;
   border-radius: var(--fast-radius);
-  padding: 48px 32px;
+  padding: 56px 40px;
   text-align: center;
 }
 
 .cta-card h2 {
   font-family: 'Righteous', cursive;
-  font-size: 28px;
-  color: var(--fast-ink);
+  font-size: clamp(22px, 3vw, 30px);
+  color: #ffffff;
   margin: 0 0 16px 0;
 }
 
-.cta-card>p {
+.cta-card > p {
   font-size: 17px;
-  line-height: 1.6;
-  color: var(--fast-muted);
-  margin: 0 0 28px 0;
-  max-width: 600px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0 0 32px 0;
+  max-width: 56ch;
   margin-left: auto;
   margin-right: auto;
+}
+
+.cta-card .trust-line {
+  color: rgba(255, 255, 255, 0.45);
 }
 
 .cta-buttons {
@@ -389,10 +387,12 @@ body {
 }
 
 .trust-line {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--fast-muted);
   margin: 0;
-  font-weight: 600;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
 }
 
 /* ===================================
@@ -400,7 +400,7 @@ body {
    =================================== */
 .testimonials-section {
   padding: 80px 0;
-  background: #F9F5FF;
+  background: #f4f4f4;
 }
 
 .section-header {
@@ -410,9 +410,10 @@ body {
 
 .section-header h2 {
   font-family: 'Righteous', cursive;
-  font-size: clamp(26px, 4vw, 36px);
+  font-size: clamp(22px, 3.5vw, 34px);
   color: var(--fast-ink);
   margin: 0;
+  letter-spacing: -0.3px;
 }
 
 .section-subtitle {
@@ -429,11 +430,10 @@ body {
 }
 
 .testimonial-card {
-  background: var(--fast-surface);
-  border: 1px solid var(--fast-border);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
   border-radius: var(--fast-radius);
-  padding: 20px;
-  box-shadow: var(--fast-shadow);
+  padding: 28px;
 }
 
 .testimonial-quote {
