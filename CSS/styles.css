@@ -17,13 +17,19 @@
   --fast-border: rgba(124, 58, 237, 0.15);
   --fast-surface: rgba(255, 255, 255, 0.92);
   --fast-surface-2: #F9F5FF;
-  --fast-shadow: 0 10px 25px rgba(124, 58, 237, 0.15);
-  --fast-radius: 16px;
+  --fast-shadow: 0 4px 16px rgba(124, 58, 237, 0.10);
+  --fast-radius: 14px;
 }
 
 html,
 body {
   overflow-x: hidden;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: var(--fast-ink);
 }
 
 /* Button base styles */
@@ -139,19 +145,20 @@ body {
 
 .head1 {
   font-family: 'Righteous', cursive;
-  font-size: 32px;
-  line-height: 1.2;
-  margin: 0 0 20px 0;
-  color: #111;
+  font-size: clamp(36px, 6vw, 58px);
+  line-height: 1.15;
+  margin: 0 0 24px 0;
+  color: #0d0d0d;
   font-weight: bold;
+  letter-spacing: -0.5px;
 }
 
 .head2 {
-  font-size: 18px;
-  line-height: 1.6;
-  margin: 0 0 32px 0;
-  color: #333;
-  max-width: 680px;
+  font-size: clamp(17px, 2.5vw, 21px);
+  line-height: 1.65;
+  margin: 0 0 40px 0;
+  color: #444;
+  max-width: 65ch;
   margin-left: auto;
   margin-right: auto;
 }
@@ -227,7 +234,7 @@ body {
 
 .value-section {
   padding: 80px 0;
-  background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+  background: #fafafa;
 }
 
 /* Quote Strip */
@@ -340,9 +347,10 @@ body {
 
 .process-step p {
   font-size: 15px;
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--fast-muted);
-  margin: 0;
+  margin: 0 auto;
+  max-width: 48ch;
 }
 
 /* CTA Card */
@@ -391,8 +399,8 @@ body {
    TESTIMONIALS SECTION
    =================================== */
 .testimonials-section {
-  padding: 48px 0;
-  background: linear-gradient(180deg, #F9F5FF 0%, #ffffff 45%);
+  padding: 80px 0;
+  background: #F9F5FF;
 }
 
 .section-header {
@@ -402,7 +410,7 @@ body {
 
 .section-header h2 {
   font-family: 'Righteous', cursive;
-  font-size: 28px;
+  font-size: clamp(26px, 4vw, 36px);
   color: var(--fast-ink);
   margin: 0;
 }
@@ -458,7 +466,7 @@ body {
    PRICING SECTION
    =================================== */
 .pricing-section {
-  padding: 56px 0;
+  padding: 80px 0;
   background: #ffffff;
 }
 
@@ -536,8 +544,8 @@ body {
    CONTACT SECTION
    =================================== */
 .contact-section {
-  padding: 56px 0;
-  background: linear-gradient(180deg, #F9F5FF 0%, #ffffff 45%);
+  padding: 80px 0;
+  background: #F9F5FF;
 }
 
 .contact-card {

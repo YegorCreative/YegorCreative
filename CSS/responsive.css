@@ -1,14 +1,12 @@
 @media screen and (min-width: 498px) {
   .head1 {
-    font-size: 42px;
     text-align: center;
-    line-height: 1.2;
+    line-height: 1.15;
   }
 
   .head2 {
-    font-size: 20px;
     text-align: center;
-    line-height: 1.6;
+    line-height: 1.65;
   }
 
   .hero-cta {
