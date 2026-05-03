@@ -10,7 +10,7 @@
   }
 
   .hero-cta {
-    gap: 20px;
+    gap: 14px;
   }
 
   .myInfo {
@@ -19,7 +19,7 @@
   }
 
   .goodWebsite {
-    padding: 100px 30px 120px;
+    padding: 72px 30px 88px;
   }
 
 
@@ -41,7 +41,7 @@
 
 @media screen and (min-width: 769px) {
   .mainHeading {
-    min-height: 760px;
+    min-height: 640px;
   }
 
   .mainLogo h1 {
@@ -62,30 +62,30 @@
   }
 
   .value-section {
-    padding: 100px 0;
+    padding: 72px 0;
   }
 
   .value-quote-strip {
-    padding: 32px 48px;
-    margin-bottom: 80px;
+    padding: 14px 28px;
+    margin-bottom: 36px;
   }
 
   .section-heading,
   .process-title {
     font-size: 40px;
-    margin-bottom: 50px;
+    margin-bottom: 28px;
   }
 
   .cta-card {
-    padding: 60px 48px;
+    padding: 48px 40px;
   }
 
   .cta-card h2 {
-    font-size: 36px;
+    font-size: 30px;
   }
 
   .cta-card>p {
-    font-size: 18px;
+    font-size: 17px;
   }
 
   /* Desktop nav behavior: hide burger and ensure inline nav */
