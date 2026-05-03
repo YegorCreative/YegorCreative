@@ -1880,14 +1880,7 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
   margin: 0 auto;
 }
 
-/* ===================================
-   TEST PAGE (test.html)
-   Scoped styles for .page-test
-   =================================== */
 
-/* Test Page Variables */
-.page-test {
-  --test-bg: #FDFCFA;
   --test-olive: #6B7B5F;
   --test-olive-light: rgba(107, 123, 95, 0.12);
   --test-olive-hover: #5A6A50;
