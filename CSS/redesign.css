@@ -619,3 +619,136 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
   border-radius: 12px !important;
   margin-top: 10px !important;
 }
+
+/* --- Subpage Hero Redesign (Portfolio, Contact) --- */
+.pf-hero, .contact-hero {
+  padding: 80px 0 60px 0 !important;
+  text-align: center;
+}
+
+.pf-hero__title, .contact-hero__title {
+  font-size: 56px !important;
+  font-family: 'Outfit', sans-serif !important;
+  background: var(--fast-gradient) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  margin-bottom: 20px !important;
+  font-weight: 800 !important;
+}
+
+.pf-hero__subtitle, .contact-hero__subtitle {
+  font-size: 20px !important;
+  color: var(--fast-muted) !important;
+  max-width: 600px;
+  margin: 0 auto 40px auto !important;
+  line-height: 1.6;
+}
+
+.pf-hero__cta, .contact-hero__cta {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .pf-hero__title, .contact-hero__title {
+    font-size: 42px !important;
+  }
+  .pf-hero__subtitle, .contact-hero__subtitle {
+    font-size: 18px !important;
+  }
+  .pf-hero__cta, .contact-hero__cta {
+    flex-direction: column;
+  }
+}
+
+/* --- Ultra-Premium Editorial Hero (Portfolio) --- */
+.pf-hero {
+  padding: 120px 0 80px 0 !important;
+  text-align: left !important;
+}
+
+.pf-hero-card {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  text-align: left !important;
+  margin: 0 !important;
+}
+
+.pf-hero-card::before {
+  display: none !important;
+}
+
+.pf-hero-card .pf-hero__title {
+  font-size: 96px !important;
+  font-family: 'Inter', sans-serif !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: var(--fast-ink) !important;
+  color: var(--fast-ink) !important;
+  margin-bottom: 24px !important;
+  font-weight: 800 !important;
+  letter-spacing: -4px !important;
+  line-height: 1 !important;
+}
+
+.pf-hero-card .pf-hero__subtitle {
+  font-size: 26px !important;
+  font-weight: 300 !important;
+  color: var(--fast-muted) !important;
+  margin-bottom: 60px !important;
+  max-width: 700px;
+  line-height: 1.5;
+}
+
+.pf-hero-quote-block {
+  background: transparent !important;
+  border-left: 3px solid var(--fast-ink) !important;
+  padding: 10px 0 10px 40px !important;
+  border-radius: 0 !important;
+  max-width: 800px;
+  margin: 0 0 60px 0 !important;
+  text-align: left;
+}
+
+.pf-hero-quote {
+  font-size: 32px !important;
+  color: var(--fast-ink) !important;
+  font-weight: 500 !important;
+  font-family: 'Inter', sans-serif !important;
+  font-style: normal !important;
+  line-height: 1.3 !important;
+  margin: 0 !important;
+  letter-spacing: -1px;
+}
+
+.pf-hero__cta {
+  display: flex !important;
+  justify-content: flex-start !important;
+  gap: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .pf-hero {
+    padding: 60px 0 !important;
+  }
+  .pf-hero-card .pf-hero__title {
+    font-size: 56px !important;
+    letter-spacing: -2px !important;
+  }
+  .pf-hero-card .pf-hero__subtitle {
+    font-size: 20px !important;
+    margin-bottom: 40px !important;
+  }
+  .pf-hero-quote-block {
+    padding: 10px 0 10px 20px !important;
+    border-left: 2px solid var(--fast-ink) !important;
+  }
+  .pf-hero-quote {
+    font-size: 24px !important;
+  }
+}
