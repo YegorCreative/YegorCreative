@@ -65,8 +65,10 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
   background: rgba(255, 255, 255, 0.7) !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+  margin: 15px !important;
+  border-radius: 25px !important;
 }
 
 .mainLogo h1 {
@@ -234,4 +236,27 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
   border: 2px solid var(--fast-accent) !important;
   box-shadow: 0 20px 40px rgba(124, 58, 237, 0.15) !important;
   background: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* --- Header Layout Fix --- */
+@media screen and (min-width: 769px) {
+  .mainHeading .container {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+
+  .mainLogo {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #primaryNav {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .site-nav ul {
+    gap: 12px !important;
+  }
 }
