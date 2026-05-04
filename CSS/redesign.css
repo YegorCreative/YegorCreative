@@ -1,0 +1,237 @@
+/* ===================================
+   REDESIGN DESIGN SYSTEM - CSS OVERRIDES
+   PREMIUM LIGHT MODE GLASSMORPHISM
+   =================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap');
+
+:root {
+  /* Premium Light Palette */
+  --fast-accent: #7C3AED; /* Original Vibrant Purple */
+  --fast-accent-dark: #6D28D9;
+  --fast-accent-light: #A78BFA;
+  --fast-gradient: linear-gradient(135deg, #7C3AED 0%, #A855F7 100%);
+  --fast-ink: #111827; /* Dark text for light mode */
+  --fast-muted: #4b5563; /* Muted gray for secondary text */
+  --fast-border: rgba(255, 255, 255, 0.6); /* White frosted borders */
+  --fast-surface: rgba(255, 255, 255, 0.65); /* Glassmorphism Base for light mode */
+  --fast-surface-2: rgba(255, 255, 255, 0.85);
+  --fast-shadow: 0 10px 35px -5px rgba(124, 58, 237, 0.15); /* Soft purple-tinted shadow */
+  --fast-radius: 16px;
+  
+  --bg-color-main: #f8fafc; /* Very soft cool gray/white */
+}
+
+html, body {
+  background-color: var(--bg-color-main) !important;
+  /* Beautiful soft mesh gradient in the background */
+  background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.05), transparent 40%),
+                    radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.05), transparent 40%),
+                    radial-gradient(circle at 50% 50%, rgba(244, 114, 182, 0.04), transparent 40%);
+  color: var(--fast-ink) !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
+  font-family: 'Outfit', sans-serif !important;
+  color: var(--fast-ink) !important;
+  letter-spacing: -0.02em;
+}
+
+/* Typography Overrides */
+.head1 {
+  background: var(--fast-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0px 2px 4px rgba(124, 58, 237, 0.15));
+}
+
+.head2 {
+  color: var(--fast-muted) !important;
+}
+
+/* Sections Overrides - clear explicit backgrounds so our mesh gradient shows */
+.goodWebsite, 
+.value-section, 
+.testimonials-section, 
+.pricing-section, 
+.contact-section,
+.featured-work {
+  background: transparent !important;
+}
+
+/* Floating Navigation Header */
+.mainHeading {
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+}
+
+.mainLogo h1 {
+  color: var(--fast-ink) !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+/* Glassmorphism Cards */
+.service-card,
+.svc-item,
+.cta-card,
+.testimonial-card,
+.pricing-card,
+.contact-card,
+.fw-card,
+.proof-card {
+  background: var(--fast-surface) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--fast-border) !important;
+  box-shadow: var(--fast-shadow) !important;
+  color: var(--fast-ink) !important;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+
+.service-card:hover,
+.svc-item:hover,
+.testimonial-card:hover,
+.pricing-card:hover,
+.fw-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(124, 58, 237, 0.15) !important;
+  border-color: rgba(124, 58, 237, 0.3) !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Text inside cards */
+.service-card p,
+.svc-item .svc-body,
+.testimonial-quote,
+.pricing-desc,
+.fw-card p {
+  color: var(--fast-muted) !important;
+}
+
+.svc-title,
+.pricing-name,
+.testimonial-name,
+.fw-card h3 {
+  color: var(--fast-ink) !important;
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--fast-gradient) !important;
+  border: none !important;
+  color: #fff !important;
+  box-shadow: 0 6px 15px rgba(124, 58, 237, 0.25) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.4) !important;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.5) !important;
+  border: 1px solid var(--fast-accent) !important;
+  color: var(--fast-accent) !important;
+  backdrop-filter: blur(4px) !important;
+  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.05) !important;
+}
+
+.btn-secondary:hover {
+  background: var(--fast-gradient) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3) !important;
+}
+
+/* Navigation Links */
+#primaryNav ul li a {
+  color: var(--fast-ink) !important;
+  font-weight: 500 !important;
+  transition: color 0.2s ease;
+}
+
+#primaryNav ul li a:hover {
+  color: var(--fast-accent) !important;
+}
+
+/* Input Fields */
+.form-row input,
+.form-row select,
+.form-row textarea {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  color: var(--fast-ink) !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02) !important;
+}
+
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  outline: none;
+  border-color: var(--fast-accent) !important;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15) !important;
+  background: #ffffff !important;
+}
+
+.form-row label {
+  color: var(--fast-ink) !important;
+  font-weight: 600 !important;
+}
+
+/* Code Banner Special - Keep this dark for contrast, like a real IDE */
+.yc-codebanner {
+  background: rgba(15, 23, 42, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3) !important;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.yc-codebanner__header {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Footer overrides */
+.footFooter {
+  background: #ffffff !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+  color: var(--fast-muted) !important;
+}
+
+.footer-contact p, .footer-contact a {
+  color: var(--fast-muted) !important;
+}
+
+.contact-heading {
+  color: var(--fast-ink) !important;
+}
+
+/* Process steps */
+.step-number {
+  background: var(--fast-gradient) !important;
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.25);
+  color: white !important;
+}
+
+/* Pricing popular badge */
+.popular-badge {
+  background: var(--fast-gradient) !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.2);
+}
+
+.pricing-card.popular {
+  border: 2px solid var(--fast-accent) !important;
+  box-shadow: 0 20px 40px rgba(124, 58, 237, 0.15) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+}
