@@ -664,8 +664,36 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
 
 /* --- Ultra-Premium Editorial Hero (Portfolio) --- */
 .pf-hero {
-  padding: 120px 0 80px 0 !important;
+  padding: 180px 0 120px 0 !important;
   text-align: left !important;
+  background-image: url('../Assets/portfolio.webp') !important;
+  background-attachment: fixed !important;
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  position: relative;
+  
+  /* Bounded Card Look */
+  margin: 15px auto !important; /* 15px outer spacing */
+  max-width: calc(100% - 30px) !important; /* Ensure it leaves 15px on left and right on mobile */
+  border-radius: 25px !important;
+  overflow: hidden !important; /* Clips the background image to the rounded corners */
+}
+
+.pf-hero::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: rgba(253, 251, 251, 0.85) !important; /* Reverted to soft light overlay */
+  z-index: 0 !important;
+}
+
+.pf-hero .container {
+  position: relative;
+  z-index: 1;
 }
 
 .pf-hero-card {
