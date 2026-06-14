@@ -348,25 +348,39 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
     flex-wrap: wrap;
   }
 
-  body.nav-open .site-nav {
+  body.nav-open .site-nav.primary-nav {
+    position: static !important;
+    inset: auto !important;
     display: block !important;
     background: var(--fast-surface) !important;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--fast-border);
     border-radius: 16px;
+    box-sizing: border-box;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: none !important;
     padding: 20px !important;
     margin-top: 15px !important;
     box-shadow: var(--fast-shadow);
     width: 100%;
+    max-width: none !important;
   }
 
-  body.nav-open .site-nav ul {
+  body.nav-open .site-nav.primary-nav ul {
     display: flex;
     flex-direction: column;
     gap: 12px;
     align-items: stretch;
     text-align: center;
+    width: 100%;
+    max-width: none !important;
+  }
+
+  body.nav-open .site-nav.primary-nav a {
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .head1 {
