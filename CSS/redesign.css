@@ -1196,7 +1196,7 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
   border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-.pf-consult-card div {
+.pf-consult-content {
   grid-column: 1;
   grid-row: 1;
   display: grid;
@@ -1214,7 +1214,7 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
   line-height: 1.35;
 }
 
-.pf-consult-card em {
+.pf-consult-link {
   width: fit-content;
   margin-top: 4px;
   padding: 9px 13px;
@@ -1222,8 +1222,8 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
   background: #0b54c8;
   color: #fff;
   font-size: 10px;
-  font-style: normal;
   font-weight: 800;
+  text-decoration: none;
 }
 
 .pf-social-dots {
