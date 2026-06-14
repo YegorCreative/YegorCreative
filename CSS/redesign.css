@@ -1362,9 +1362,11 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
     right: auto;
     z-index: 3;
     display: block;
-    font-size: clamp(64px, 18vw, 118px) !important;
-    letter-spacing: -0.07em !important;
+    max-width: 100%;
+    font-size: clamp(70px, 15vw, 112px) !important;
+    letter-spacing: -0.075em !important;
     line-height: 0.88 !important;
+    transform: translateX(-0.025em);
   }
 
   .pf-hero-card .pf-hero__title span {
@@ -1442,7 +1444,14 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
 
   .pf-hero-card {
     min-height: 0;
-    padding: 42px 18px 22px !important;
+    padding: 42px 16px 22px !important;
+  }
+
+  .pf-hero-card .pf-hero__title {
+    font-size: clamp(76px, 24vw, 98px) !important;
+    line-height: 0.86 !important;
+    letter-spacing: -0.085em !important;
+    transform: translateX(-0.04em);
   }
 
   .pf-feature-visual {
