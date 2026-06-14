@@ -69,8 +69,10 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
+  box-sizing: border-box;
   margin: 0 !important;
   padding: 15px !important;
+  width: 100%;
 }
 
 .mainHeading .container {
@@ -83,6 +85,8 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
   padding: 12px 30px !important;
   min-height: 84px;
   align-items: center !important;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .mainLogo h1 {
@@ -240,10 +244,10 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
 
 .site-nav ul li.active a,
 .site-nav ul li a.is-active {
-  background: rgba(17, 24, 39, 0.07) !important;
+  background: linear-gradient(145deg, rgba(124, 58, 237, 0.14), rgba(168, 85, 247, 0.08)) !important;
   color: var(--fast-ink) !important;
-  border-color: rgba(17, 24, 39, 0.08) !important;
-  box-shadow: 0 10px 22px rgba(17, 24, 39, 0.07) !important;
+  border-color: rgba(124, 58, 237, 0.16) !important;
+  box-shadow: 0 10px 24px rgba(124, 58, 237, 0.11) !important;
   font-weight: 600 !important;
 }
 
@@ -344,10 +348,10 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
 }
 
 /* --- Header Layout Fix --- */
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 1040px) {
   .mainHeading .container {
     display: flex !important;
-    justify-content: flex-start !important;
+    justify-content: space-between !important;
     align-items: center !important;
     gap: 32px;
   }
@@ -382,7 +386,7 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
   background-color: var(--fast-ink) !important;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1039px) {
   .mainHeading {
     padding: 10px !important;
   }
@@ -394,6 +398,14 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+  }
+
+  .nav-toggle {
+    display: inline-flex !important;
+  }
+
+  .site-nav.primary-nav {
+    display: none !important;
   }
 
   body.nav-open .site-nav.primary-nav {
