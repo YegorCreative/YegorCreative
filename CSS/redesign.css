@@ -347,9 +347,9 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
 @media screen and (min-width: 769px) {
   .mainHeading .container {
     display: flex !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
     align-items: center !important;
-    gap: clamp(40px, 7vw, 128px);
+    gap: 32px;
   }
 
   .mainLogo {
@@ -372,6 +372,8 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
 
   .site-nav ul {
     gap: 12px !important;
+    width: auto;
+    justify-content: flex-start;
   }
 }
 
