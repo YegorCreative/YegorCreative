@@ -411,6 +411,8 @@ body.games-page .game-card__link {
 
 body.games-page .game-card__link--disabled {
   cursor: default;
+  pointer-events: none;
+  user-select: none;
 }
 
 body.games-page .game-card__link--disabled .game-card__media,
@@ -464,9 +466,18 @@ body.games-page .game-card__desc {
 }
 
 body.games-page .game-card__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font-weight: 800;
   color: var(--games-accent);
   letter-spacing: 0.02em;
+}
+
+body.games-page .game-card__link:focus-visible {
+  outline: 3px solid rgba(124, 58, 237, 0.72);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 6px rgba(124, 58, 237, 0.14);
 }
 
 /* Game page (Matching Memoji) */

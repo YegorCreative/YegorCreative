@@ -379,6 +379,72 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
   color: var(--fast-ink) !important;
 }
 
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid rgba(124, 58, 237, 0.72) !important;
+  outline-offset: 4px !important;
+  box-shadow: 0 0 0 6px rgba(124, 58, 237, 0.14) !important;
+}
+
+.btn-primary,
+.btn-secondary,
+.pricing-btn,
+.fw-cta-btn,
+.submit-btn,
+.contact-direct-link {
+  min-height: 44px !important;
+}
+
+.fw-link,
+.direct-link,
+.footer-contact a {
+  min-height: 44px;
+  display: inline-flex !important;
+  align-items: center;
+}
+
+.fw-link {
+  width: fit-content;
+  padding: 8px 0;
+}
+
+.direct-link {
+  padding: 9px 4px;
+}
+
+.footer-contact a {
+  padding: 10px 6px;
+  margin: -10px -6px;
+}
+
+@media screen and (max-width: 768px) {
+  .footer-contact {
+    display: grid;
+    gap: 4px;
+  }
+
+  .footer-contact p {
+    margin: 0 !important;
+  }
+
+  .footer-contact a {
+    justify-content: center;
+  }
+
+  .direct-contact {
+    gap: 6px !important;
+  }
+
+  .fw-link {
+    min-height: 44px;
+  }
+}
+
 /* Process steps */
 .step-number {
   background: var(--fast-gradient) !important;
