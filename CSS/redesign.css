@@ -1478,7 +1478,7 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1039px) {
   .portfolio-page .pf-hero {
     max-width: calc(100% - 18px) !important;
     margin: 10px auto 24px !important;
@@ -1487,6 +1487,10 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
   .pf-hero-stage {
     padding: 30px 10px 16px;
     border-radius: 34px;
+  }
+
+  .pf-showcase {
+    max-width: min(720px, 100%);
   }
 
   .pf-showcase-frame {
