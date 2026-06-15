@@ -18,6 +18,19 @@
   --fast-surface-2: rgba(255, 255, 255, 0.85);
   --fast-shadow: 0 10px 35px -5px rgba(124, 58, 237, 0.15); /* Soft purple-tinted shadow */
   --fast-radius: 16px;
+  --yc-radius-sm: 14px;
+  --yc-radius-md: 18px;
+  --yc-radius-card: 24px;
+  --yc-radius-shell: 32px;
+  --yc-radius-pill: 999px;
+  --yc-border-soft: rgba(124, 58, 237, 0.16);
+  --yc-surface-glass: rgba(255, 255, 255, 0.78);
+  --yc-surface-strong: rgba(255, 255, 255, 0.9);
+  --yc-shadow-card: 0 18px 46px rgba(17, 24, 39, 0.10);
+  --yc-shadow-hover: 0 22px 52px rgba(124, 58, 237, 0.16);
+  --yc-shadow-button: 0 12px 28px rgba(124, 58, 237, 0.24);
+  --yc-section-y: clamp(56px, 7vw, 92px);
+  --yc-transition: 180ms ease;
   
   --bg-color-main: #f8fafc; /* Very soft cool gray/white */
 }
@@ -60,8 +73,29 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
 .testimonials-section, 
 .pricing-section, 
 .contact-section,
-.featured-work {
+.featured-work,
+.contact-value,
+.contact-next,
+.contact-fit,
+.contact-quote-section,
+.contact-checklist,
+.contact-form-section {
   background: transparent !important;
+}
+
+.value-section,
+.testimonials-section,
+.pricing-section,
+.contact-section,
+.featured-work,
+.contact-value,
+.contact-next,
+.contact-fit,
+.contact-quote-section,
+.contact-checklist,
+.contact-form-section {
+  padding-top: var(--yc-section-y) !important;
+  padding-bottom: var(--yc-section-y) !important;
 }
 
 /* Floating Navigation Header */
@@ -81,7 +115,7 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.8) !important;
   box-shadow: 0 10px 30px rgba(124, 58, 237, 0.08) !important;
-  border-radius: 25px !important;
+  border-radius: var(--yc-radius-card) !important;
   padding: 12px 30px !important;
   min-height: 84px;
   align-items: center !important;
@@ -104,25 +138,39 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
 .pricing-card,
 .contact-card,
 .fw-card,
-.proof-card {
-  background: var(--fast-surface) !important;
+.proof-card,
+.contact-value-card,
+.contact-step,
+.contact-form-card,
+.contact-direct-link,
+.contact-quote-highlight,
+.contact-checklist-list,
+.contact-fit-list,
+.game-card,
+.games-intro {
+  background: var(--yc-surface-glass) !important;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--fast-border) !important;
-  box-shadow: var(--fast-shadow) !important;
+  border: 1px solid var(--yc-border-soft) !important;
+  border-radius: var(--yc-radius-card) !important;
+  box-shadow: var(--yc-shadow-card) !important;
   color: var(--fast-ink) !important;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease !important;
+  transition: transform var(--yc-transition), box-shadow var(--yc-transition), border-color var(--yc-transition), background-color var(--yc-transition) !important;
 }
 
 .service-card:hover,
 .svc-item:hover,
 .testimonial-card:hover,
 .pricing-card:hover,
-.fw-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px rgba(124, 58, 237, 0.15) !important;
+.fw-card:hover,
+.contact-value-card:hover,
+.contact-step:hover,
+.contact-direct-link:hover,
+.game-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--yc-shadow-hover) !important;
   border-color: rgba(124, 58, 237, 0.3) !important;
-  background: rgba(255, 255, 255, 0.8) !important;
+  background: var(--yc-surface-strong) !important;
 }
 
 /* Text inside cards */
@@ -146,28 +194,32 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
   background: var(--fast-gradient) !important;
   border: none !important;
   color: #fff !important;
-  box-shadow: 0 6px 15px rgba(124, 58, 237, 0.25) !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  border-radius: var(--yc-radius-sm) !important;
+  box-shadow: var(--yc-shadow-button) !important;
+  transition: transform var(--yc-transition), box-shadow var(--yc-transition), background-color var(--yc-transition) !important;
 }
 
 .btn-primary:hover {
-  transform: scale(1.05) !important;
-  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.4) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 16px 34px rgba(124, 58, 237, 0.32) !important;
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.5) !important;
-  border: 1px solid var(--fast-accent) !important;
+  background: rgba(255, 255, 255, 0.72) !important;
+  border: 1px solid rgba(124, 58, 237, 0.42) !important;
+  border-radius: var(--yc-radius-sm) !important;
   color: var(--fast-accent) !important;
   backdrop-filter: blur(4px) !important;
-  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.05) !important;
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.08) !important;
+  transition: transform var(--yc-transition), box-shadow var(--yc-transition), background-color var(--yc-transition), color var(--yc-transition) !important;
 }
 
 .btn-secondary:hover {
   background: var(--fast-gradient) !important;
   border-color: transparent !important;
   color: #fff !important;
-  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 16px 34px rgba(124, 58, 237, 0.24) !important;
 }
 
 /* --- Navigation Links Overrides --- */
@@ -716,8 +768,42 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
   width: 100% !important;
   padding: 18px !important;
   font-size: 18px !important;
-  border-radius: 12px !important;
+  border-radius: var(--yc-radius-sm) !important;
   margin-top: 10px !important;
+}
+
+/* --- Visual consistency pass: shared cards, buttons, and motion --- */
+.cta-card,
+.testimonial-card,
+.pricing-card,
+.contact-card,
+.contact-form-card,
+.contact-value-card,
+.contact-step,
+.contact-direct-link,
+.contact-quote-highlight,
+.contact-checklist-list,
+.contact-fit-list,
+.game-card,
+.games-intro {
+  border-radius: var(--yc-radius-card) !important;
+  border-color: var(--yc-border-soft) !important;
+  box-shadow: var(--yc-shadow-card) !important;
+}
+
+.cta-card {
+  box-shadow: 0 22px 54px rgba(124, 58, 237, 0.18) !important;
+}
+
+.cta-card .btn-primary,
+.submit-btn {
+  border-radius: var(--yc-radius-sm) !important;
+  box-shadow: var(--yc-shadow-button) !important;
+}
+
+.game-card:has(.game-card__link--disabled):hover {
+  transform: none !important;
+  box-shadow: var(--yc-shadow-card) !important;
 }
 
 /* --- Subpage Hero Redesign (Portfolio, Contact) --- */

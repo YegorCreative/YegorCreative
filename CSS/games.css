@@ -11,10 +11,10 @@ body.games-page {
   --games-ink: rgba(17, 24, 39, 0.96);
   --games-muted: rgba(17, 24, 39, 0.70);
   --games-card: 150px;
-  --games-border: rgba(124, 58, 237, 0.18);
-  --games-accent: rgba(124, 58, 237, 1);
-  --games-shadow: 0 18px 46px rgba(17, 24, 39, 0.10);
-  --games-radius: 18px;
+  --games-border: var(--yc-border-soft, rgba(124, 58, 237, 0.18));
+  --games-accent: var(--fast-accent, rgba(124, 58, 237, 1));
+  --games-shadow: var(--yc-shadow-card, 0 18px 46px rgba(17, 24, 39, 0.10));
+  --games-radius: var(--yc-radius-card, 18px);
 }
 
 body.games-page .games-main {
