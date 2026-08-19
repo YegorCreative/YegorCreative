@@ -211,11 +211,7 @@
 }
 
 .portfolio-page main {
-  background-image: url(../Assets/portfolio.png);
-  background-repeat: no-repeat;
-  background-position: top center;
-  background-size: min(1100px, 92vw) auto !important;   /* must never crop */
-  min-height: calc(min(1100px, 92vw) * 1001 / 1363);
+  background: transparent;
 }
 
 /* ===================================

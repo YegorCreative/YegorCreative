@@ -2,20 +2,25 @@
 <html lang="en">
 
 <head>
-    <title>Portfolio | Yegor Creative</title>
+    <title>Work for Businesses | Yegor Creative</title>
     <meta charset="UTF-8">
-    <meta name="description" content="Portfolio | Selected work by Yegor Creative">
-    <meta name="keywords" content="portfolio, web development, web design, Yegor Creative">
+    <meta name="description" content="Selected websites and App Store apps by Yegor Creative — businesses, churches, and iOS products.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://yegorcreative.com/portfolio.html">
     <link rel="stylesheet" href="CSS/styles.css">
     <link rel="stylesheet" href="CSS/portfolio.css">
     <link rel="stylesheet" href="CSS/responsive.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@300&display=swap" rel="stylesheet">
-    <meta property="og:image" content="Assets/YegorCreativeScan.png">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Work for Businesses | Yegor Creative">
+    <meta property="og:description" content="Selected websites built for businesses that need to look credible and convert visitors.">
+    <meta property="og:url" content="https://yegorcreative.com/portfolio.html">
+    <meta property="og:image" content="https://yegorcreative.com/Assets/YegorCreativeScan.png">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="400">
     <meta property="og:image:height" content="300">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" type="image/png" href="./Assets/lionheadico.png">
     <link rel="stylesheet" href="CSS/redesign.css">
 </head>
@@ -46,12 +51,16 @@
         <nav id="primaryNav" class="site-nav primary-nav" aria-label="Primary">
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="portfolio.html" class="active">Portfolio</a></li>
+                <li><a href="portfolio.html" class="active">Work</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
                 <li><a href="games.html">Games</a></li>
                 <li><a href="index.html#about">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
+        <div class="header-actions">
+            <a href="contact.html#contact-form" class="btn-primary header-cta"><span class="header-cta__long">Start a Project</span><span class="header-cta__short">Start</span></a>
+        </div>
        </div>
     </header>
 
@@ -61,53 +70,61 @@
 
         <!-- Portfolio Hero -->
         <section class="pf-hero" aria-labelledby="pf-hero-heading">
-            <div class="pf-hero-stage">
-                <div class="pf-showcase">
-                    <div class="pf-showcase-frame">
-                        <div class="pf-showcase-brand" aria-hidden="true">Yegor Creative.</div>
-
-                        <div class="pf-hero-card">
-                            <div class="pf-mobile-service-pill" aria-hidden="true">
-                                <span>UI/UX DESIGN</span>
-                                <span>WEB DESIGN</span>
-                                <span>DEVELOPMENT</span>
-                            </div>
-                            <p class="pf-hero-kicker">studio.</p>
-                            <h1 id="pf-hero-heading" class="pf-hero__title">
-                                <span>port</span><span>folio</span>
-                            </h1>
-
-                            <div class="pf-hero-copy">
-                                <p class="pf-hero__subtitle">Selected digital work shaped around clarity, mobile-first flow, and trust-building interfaces.</p>
-                                <p class="pf-hero-quote">Great design is not decoration. It is direction.</p>
-                                <div class="pf-hero__cta">
-                                    <a href="#projects" class="btn-primary">View Projects</a>
-                                </div>
-                            </div>
-
-                            <div class="pf-feature-visual pf-feature-visual--decor" aria-hidden="true">
-                                <img class="pf-feature-image" src="Assets/computer-with-yellow-logo-screen-plant-table.png" alt="">
-                            </div>
-
-                            <div class="pf-mobile-stats" aria-hidden="true">
-                                <span><strong>30+</strong><em>Projects Delivered</em></span>
-                                <span><strong>5+</strong><em>Years of Experience</em></span>
-                                <span><strong>98%</strong><em>Client Satisfaction</em></span>
-                            </div>
-
-                            <div class="pf-consult-card" aria-hidden="true">
-                                <div class="pf-consult-mark"></div>
-                                <div class="pf-consult-content">
-                                    <strong>Free Consultation</strong>
-                                    <span>Talk through your next website with a focused plan.</span>
-                                    <a href="contact.html#contact-form" class="pf-consult-link">Start a Project</a>
-                                </div>
-                            </div>
-
-                            <span class="pf-side-arrow pf-side-arrow--left" aria-hidden="true"></span>
-                            <span class="pf-side-arrow pf-side-arrow--right" aria-hidden="true"></span>
-                            <span class="pf-scroll-cue" aria-hidden="true"></span>
+            <div class="container">
+                <div class="pf-hero-layout">
+                    <div class="pf-hero-copyblock">
+                        <p class="pf-hero-label">Selected work</p>
+                        <h1 id="pf-hero-heading" class="pf-hero__title">Sites that make a business look ready.</h1>
+                        <p class="pf-hero__subtitle">Websites for businesses — and apps on the App Store — that look credible, load fast, and make the next step obvious.</p>
+                        <div class="pf-hero__cta">
+                            <a href="#projects" class="btn-primary">View Projects</a>
+                            <a href="contact.html#contact-form" class="btn-secondary">Start a Project</a>
                         </div>
+
+                        <section class="yc-codebanner" aria-label="Work statement">
+                            <div class="yc-codebanner__inner">
+                                <div class="yc-codebanner__header">
+                                    <div class="yc-codebanner__dots" aria-hidden="true">
+                                        <span class="dot"></span>
+                                        <span class="dot"></span>
+                                        <span class="dot"></span>
+                                    </div>
+                                    <div class="yc-codebanner__title">work.js</div>
+                                </div>
+                                <pre class="yc-codebanner__pre" aria-label="Work statement in code"><code>
+<span class="yc-codebanner__line"><span class="yc-codebanner__ln">1</span><span class="yc-codebanner__code"><span class="yc-codebanner__tok tok--cm">// built for businesses that need customers</span></span></span>
+<span class="yc-codebanner__line"><span class="yc-codebanner__ln">2</span><span class="yc-codebanner__code"><span class="yc-codebanner__tok tok--kw">const</span> <span class="yc-codebanner__tok tok--var">work</span> <span class="yc-codebanner__tok tok--op">=</span> <span class="yc-codebanner__tok tok--op">{</span></span></span>
+<span class="yc-codebanner__line"><span class="yc-codebanner__ln">3</span><span class="yc-codebanner__code">  <span class="yc-codebanner__tok tok--var">look</span><span class="yc-codebanner__tok tok--op">:</span> <span class="yc-codebanner__tok tok--str">"credible"</span><span class="yc-codebanner__tok tok--op">,</span></span></span>
+<span class="yc-codebanner__line"><span class="yc-codebanner__ln">4</span><span class="yc-codebanner__code">  <span class="yc-codebanner__tok tok--var">load</span><span class="yc-codebanner__tok tok--op">:</span> <span class="yc-codebanner__tok tok--str">"fast"</span><span class="yc-codebanner__tok tok--op">,</span></span></span>
+<span class="yc-codebanner__line"><span class="yc-codebanner__ln">5</span><span class="yc-codebanner__code">  <span class="yc-codebanner__tok tok--var">nextStep</span><span class="yc-codebanner__tok tok--op">:</span> <span class="yc-codebanner__tok tok--str">"obvious"</span></span></span>
+<span class="yc-codebanner__line"><span class="yc-codebanner__ln">6</span><span class="yc-codebanner__code"><span class="yc-codebanner__tok tok--op">}</span><span class="yc-codebanner__tok tok--op">;</span><span class="yc-codebanner__cursor" aria-hidden="true"></span></span></span>
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="pf-hero-gallery" aria-label="Recent live sites">
+                        <figure class="pf-window pf-window--back">
+                            <div class="pf-window__bar" aria-hidden="true">
+                                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                <span class="pf-window__url">wwpaintingla.com</span>
+                            </div>
+                            <img src="Assets/work/wwpainting.jpg" alt="W and W Painting live homepage">
+                        </figure>
+                        <figure class="pf-window pf-window--mid">
+                            <div class="pf-window__bar" aria-hidden="true">
+                                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                <span class="pf-window__url">stephannemartinpottery.com</span>
+                            </div>
+                            <img src="Assets/work/martin.jpg" alt="Martin Pottery live homepage">
+                        </figure>
+                        <figure class="pf-window pf-window--front">
+                            <div class="pf-window__bar" aria-hidden="true">
+                                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                <span class="pf-window__url">bridgefordpt.com</span>
+                            </div>
+                            <img src="Assets/work/bridgeford.jpg" alt="Bridgeford Physical Therapy live homepage">
+                        </figure>
                     </div>
                 </div>
             </div>
@@ -118,6 +135,7 @@
             <div class="container">
                 <div class="pf-filterbar" role="group" aria-label="Filter projects">
                     <button type="button" class="pf-filter is-active" data-filter="all" aria-pressed="true">All</button>
+                    <button type="button" class="pf-filter" data-filter="app" aria-pressed="false">Apps</button>
                     <button type="button" class="pf-filter" data-filter="business" aria-pressed="false">Business</button>
                     <button type="button" class="pf-filter" data-filter="service" aria-pressed="false">Service</button>
                     <button type="button" class="pf-filter" data-filter="community" aria-pressed="false">Community</button>
@@ -133,88 +151,163 @@
                 <h2 id="pf-projects-heading" class="pf-section-title">Projects</h2>
 
                 <div class="pf-grid" role="list">
-                    <article class="pf-card" data-category="business" role="listitem">
-                        <h3 class="pf-card__title">Generative Learning</h3>
-                        <p class="pf-card__desc">Clear messaging and a professional layout built for trust.</p>
-                        <div class="pf-tags" aria-label="Tags">
-                            <span class="pf-tag">Business</span>
-                            <span class="pf-tag">Responsive</span>
+                    <article class="pf-card pf-card--app" data-category="app" role="listitem">
+                        <a class="pf-card__media" href="https://apps.apple.com/us/app/guardians-of-purity/id6762563331" target="_blank" rel="noopener noreferrer">
+                            <img src="Assets/work/gop.jpg" alt="Guardians of Purity iPhone app screenshot">
+                        </a>
+                        <div class="pf-card__body">
+                            <div class="pf-app-meta">
+                                <img class="pf-app-icon" src="Assets/work/gop-icon.jpg" alt="" width="40" height="40">
+                                <h3 class="pf-card__title">Guardians of Purity</h3>
+                            </div>
+                            <p class="pf-card__desc">Faith-based iOS app for purity, discipline, and daily encouragement — live on the App Store.</p>
+                            <div class="pf-tags" aria-label="Tags">
+                                <span class="pf-tag">App</span>
+                                <span class="pf-tag">iOS</span>
+                            </div>
+                            <div class="pf-actions">
+                                <a class="btn-primary" href="https://apps.apple.com/us/app/guardians-of-purity/id6762563331" target="_blank" rel="noopener noreferrer">App Store</a>
+                            </div>
                         </div>
-                        <div class="pf-actions">
-                            <a class="btn-primary" href="http://generative-learning.com/" target="_blank" rel="noopener noreferrer">Live Site</a>
+                    </article>
+
+                    <article class="pf-card pf-card--app" data-category="app" role="listitem">
+                        <a class="pf-card__media" href="https://apps.apple.com/us/app/kayt/id6765462201" target="_blank" rel="noopener noreferrer">
+                            <img src="Assets/work/kayt.jpg" alt="Kayt party games iPhone app screenshot">
+                        </a>
+                        <div class="pf-card__body">
+                            <div class="pf-app-meta">
+                                <img class="pf-app-icon" src="Assets/work/kayt-icon.jpg" alt="" width="40" height="40">
+                                <h3 class="pf-card__title">Kayt</h3>
+                            </div>
+                            <p class="pf-card__desc">Party games on one phone — pass-and-play for friends, family, and teams. Live on the App Store.</p>
+                            <div class="pf-tags" aria-label="Tags">
+                                <span class="pf-tag">App</span>
+                                <span class="pf-tag">Games</span>
+                            </div>
+                            <div class="pf-actions">
+                                <a class="btn-primary" href="https://apps.apple.com/us/app/kayt/id6765462201" target="_blank" rel="noopener noreferrer">App Store</a>
+                            </div>
                         </div>
                     </article>
 
                     <article class="pf-card" data-category="service" role="listitem">
-                        <h3 class="pf-card__title">W&amp;W Painting</h3>
-                        <p class="pf-card__desc">Service-forward site structure with mobile-first readability.</p>
-                        <div class="pf-tags" aria-label="Tags">
-                            <span class="pf-tag">Service</span>
-                            <span class="pf-tag">Conversion</span>
+                        <a class="pf-card__media" href="https://bridgefordpt.com/" target="_blank" rel="noopener noreferrer">
+                            <img src="Assets/work/bridgeford.jpg" alt="Bridgeford Physical Therapy homepage">
+                        </a>
+                        <div class="pf-card__body">
+                            <h3 class="pf-card__title">Bridgeford PT</h3>
+                            <p class="pf-card__desc">Mobile PT in the Twin Cities — services, proof, and booking on the first screen.</p>
+                            <div class="pf-tags" aria-label="Tags">
+                                <span class="pf-tag">Service</span>
+                                <span class="pf-tag">Trust</span>
+                            </div>
+                            <div class="pf-actions">
+                                <a class="btn-primary" href="https://bridgefordpt.com/" target="_blank" rel="noopener noreferrer">Live Site</a>
+                            </div>
                         </div>
-                        <div class="pf-actions">
-                            <a class="btn-primary" href="http://wwpaintingla.com/" target="_blank" rel="noopener noreferrer">Live Site</a>
+                    </article>
+
+                    <article class="pf-card" data-category="service" role="listitem">
+                        <a class="pf-card__media" href="https://wwpaintingla.com/" target="_blank" rel="noopener noreferrer">
+                            <img src="Assets/work/wwpainting.jpg" alt="W and W Painting Contractors homepage">
+                        </a>
+                        <div class="pf-card__body">
+                            <h3 class="pf-card__title">W&amp;W Painting</h3>
+                            <p class="pf-card__desc">A 50-year LA painting company with a simple path to a quote.</p>
+                            <div class="pf-tags" aria-label="Tags">
+                                <span class="pf-tag">Service</span>
+                                <span class="pf-tag">Conversion</span>
+                            </div>
+                            <div class="pf-actions">
+                                <a class="btn-primary" href="https://wwpaintingla.com/" target="_blank" rel="noopener noreferrer">Live Site</a>
+                            </div>
                         </div>
                     </article>
 
                     <article class="pf-card" data-category="business" role="listitem">
-                        <h3 class="pf-card__title">Karamelkovo</h3>
-                        <p class="pf-card__desc">Simple, clean presentation with a smooth browsing flow.</p>
-                        <div class="pf-tags" aria-label="Tags">
-                            <span class="pf-tag">Business</span>
-                            <span class="pf-tag">UI</span>
+                        <a class="pf-card__media" href="https://www.generative-learning.com/" target="_blank" rel="noopener noreferrer">
+                            <img src="Assets/work/generative.jpg" alt="Generative Learning consulting homepage">
+                        </a>
+                        <div class="pf-card__body">
+                            <h3 class="pf-card__title">Generative Learning</h3>
+                            <p class="pf-card__desc">Leadership consulting with a clear offer, books, and contact path.</p>
+                            <div class="pf-tags" aria-label="Tags">
+                                <span class="pf-tag">Business</span>
+                                <span class="pf-tag">Responsive</span>
+                            </div>
+                            <div class="pf-actions">
+                                <a class="btn-primary" href="https://www.generative-learning.com/" target="_blank" rel="noopener noreferrer">Live Site</a>
+                            </div>
                         </div>
-                        <div class="pf-actions">
-                            <a class="btn-primary" href="http://karamelkovo.ru/" target="_blank" rel="noopener noreferrer">Live Site</a>
+                    </article>
+
+                    <article class="pf-card" data-category="business" role="listitem">
+                        <a class="pf-card__media" href="https://karamelkovo.ru/" target="_blank" rel="noopener noreferrer">
+                            <img src="Assets/work/karamelkovo.jpg" alt="Karamelkovo handmade caramel workshop homepage">
+                        </a>
+                        <div class="pf-card__body">
+                            <h3 class="pf-card__title">Karamelkovo</h3>
+                            <p class="pf-card__desc">A handmade caramel workshop with a bright, easy browsing flow.</p>
+                            <div class="pf-tags" aria-label="Tags">
+                                <span class="pf-tag">Business</span>
+                                <span class="pf-tag">UI</span>
+                            </div>
+                            <div class="pf-actions">
+                                <a class="btn-primary" href="https://karamelkovo.ru/" target="_blank" rel="noopener noreferrer">Live Site</a>
+                            </div>
                         </div>
                     </article>
 
                     <article class="pf-card" data-category="community" role="listitem">
-                        <h3 class="pf-card__title">CLA City</h3>
-                        <p class="pf-card__desc">Community-focused layout designed to guide visitors quickly.</p>
-                        <div class="pf-tags" aria-label="Tags">
-                            <span class="pf-tag">Community</span>
-                            <span class="pf-tag">Navigation</span>
-                        </div>
-                        <div class="pf-actions">
-                            <a class="btn-primary" href="https://www.cla.city/" target="_blank" rel="noopener noreferrer">Live Site</a>
+                        <a class="pf-card__media" href="https://www.cla.city/" target="_blank" rel="noopener noreferrer">
+                            <img src="Assets/work/cla.jpg" alt="CLA City church about page">
+                        </a>
+                        <div class="pf-card__body">
+                            <h3 class="pf-card__title">CLA City</h3>
+                            <p class="pf-card__desc">A Los Angeles church site that gets visitors to service times and ministries fast.</p>
+                            <div class="pf-tags" aria-label="Tags">
+                                <span class="pf-tag">Community</span>
+                                <span class="pf-tag">Navigation</span>
+                            </div>
+                            <div class="pf-actions">
+                                <a class="btn-primary" href="https://www.cla.city/" target="_blank" rel="noopener noreferrer">Live Site</a>
+                            </div>
                         </div>
                     </article>
 
                     <article class="pf-card" data-category="art" role="listitem">
-                        <h3 class="pf-card__title">Martin Galleries</h3>
-                        <p class="pf-card__desc">Art-forward presentation with a clean, premium feel.</p>
-                        <div class="pf-tags" aria-label="Tags">
-                            <span class="pf-tag">Art</span>
-                            <span class="pf-tag">Brand</span>
-                        </div>
-                        <div class="pf-actions">
-                            <a class="btn-primary" href="https://www.martingalleries.com/" target="_blank" rel="noopener noreferrer">Live Site</a>
-                        </div>
-                    </article>
-
-                    <article class="pf-card" data-category="service" role="listitem">
-                        <h3 class="pf-card__title">Bridgeford PT</h3>
-                        <p class="pf-card__desc">Service clarity with modern structure and fast scanning sections.</p>
-                        <div class="pf-tags" aria-label="Tags">
-                            <span class="pf-tag">Service</span>
-                            <span class="pf-tag">Trust</span>
-                        </div>
-                        <div class="pf-actions">
-                            <a class="btn-primary" href="https://bridgefordpt.com/" target="_blank" rel="noopener noreferrer">Live Site</a>
+                        <a class="pf-card__media" href="https://www.stephannemartinpottery.com/" target="_blank" rel="noopener noreferrer">
+                            <img src="Assets/work/martin.jpg" alt="Stephanne Martin Pottery homepage">
+                        </a>
+                        <div class="pf-card__body">
+                            <h3 class="pf-card__title">Martin Pottery</h3>
+                            <p class="pf-card__desc">An artist shop where the pottery leads and buying is obvious.</p>
+                            <div class="pf-tags" aria-label="Tags">
+                                <span class="pf-tag">Art</span>
+                                <span class="pf-tag">Brand</span>
+                            </div>
+                            <div class="pf-actions">
+                                <a class="btn-primary" href="https://www.stephannemartinpottery.com/" target="_blank" rel="noopener noreferrer">Live Site</a>
+                            </div>
                         </div>
                     </article>
 
                     <article class="pf-card" data-category="code" role="listitem">
-                        <h3 class="pf-card__title">GitHub</h3>
-                        <p class="pf-card__desc">Code samples, projects, and ongoing work.</p>
-                        <div class="pf-tags" aria-label="Tags">
-                            <span class="pf-tag">Code</span>
-                            <span class="pf-tag">Projects</span>
-                        </div>
-                        <div class="pf-actions">
-                            <a class="btn-primary" href="https://github.com/YegorCreative" target="_blank" rel="noopener noreferrer">View GitHub</a>
-                            <a class="btn-secondary" href="contact.html">Start a Project</a>
+                        <a class="pf-card__media" href="https://github.com/YegorCreative" target="_blank" rel="noopener noreferrer">
+                            <img src="Assets/work/github.jpg" alt="YegorCreative GitHub profile">
+                        </a>
+                        <div class="pf-card__body">
+                            <h3 class="pf-card__title">GitHub</h3>
+                            <p class="pf-card__desc">Code samples, experiments, and ongoing work.</p>
+                            <div class="pf-tags" aria-label="Tags">
+                                <span class="pf-tag">Code</span>
+                                <span class="pf-tag">Projects</span>
+                            </div>
+                            <div class="pf-actions">
+                                <a class="btn-primary" href="https://github.com/YegorCreative" target="_blank" rel="noopener noreferrer">View GitHub</a>
+                                <a class="btn-secondary" href="contact.html">Start a Project</a>
+                            </div>
                         </div>
                     </article>
                 </div>
@@ -228,47 +321,59 @@
 
                 <div class="pf-case">
                     <h3>Bridgeford PT</h3>
-                    <ul>
-                        <li>Built a service-first layout that answers key questions fast.</li>
-                        <li>Improved readability with clean hierarchy and spacing.</li>
-                        <li>Focused on mobile usability and clear calls to action.</li>
-                    </ul>
+                    <p class="pf-case__meta">Mobile physical therapy · Twin Cities</p>
+                    <div class="pf-case__grid">
+                        <div>
+                            <h4>Problem</h4>
+                            <p>New patients needed to understand mobile PT, trust the clinician, and book without calling around.</p>
+                        </div>
+                        <div>
+                            <h4>What I built</h4>
+                            <p>A service-first site with care options, patient proof, service area, and register/book buttons on the first screen.</p>
+                        </div>
+                        <div>
+                            <h4>Result</h4>
+                            <p>Visitors can see the offer and start an appointment in one visit — on a phone or a desktop.</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="pf-case">
                     <h3>W&amp;W Painting</h3>
-                    <ul>
-                        <li>Structured content to highlight services and outcomes.</li>
-                        <li>Kept navigation simple to reduce friction on phones.</li>
-                        <li>Designed for trust with consistent, professional styling.</li>
-                    </ul>
+                    <p class="pf-case__meta">Residential and commercial painting · Los Angeles</p>
+                    <div class="pf-case__grid">
+                        <div>
+                            <h4>Problem</h4>
+                            <p>A 50-year contractor needed a site that looked as established as the business and made it easy to request a quote.</p>
+                        </div>
+                        <div>
+                            <h4>What I built</h4>
+                            <p>A simple multi-page site — services, projects, testimonials, contact — that stays readable on phones.</p>
+                        </div>
+                        <div>
+                            <h4>Result</h4>
+                            <p>Visitors immediately see the specialty, the years in business, and how to reach the team.</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="pf-case">
                     <h3>Generative Learning</h3>
-                    <ul>
-                        <li>Created a clean, credible visual system for business visitors.</li>
-                        <li>Emphasized clarity and scannability across sections.</li>
-                        <li>Ensured responsive behavior across common breakpoints.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills / Stack + GitHub -->
-        <section class="pf-skills" aria-labelledby="pf-skills-heading">
-            <div class="container">
-                <h2 id="pf-skills-heading" class="pf-section-title">Skills / Stack</h2>
-                <ul class="pf-skill-list">
-                    <li>Responsive UI</li>
-                    <li>Performance basics</li>
-                    <li>SEO structure</li>
-                    <li>Accessibility basics</li>
-                </ul>
-
-                <div class="pf-github-cta">
-                    <p class="pf-github-cta__text">See more projects and code samples on GitHub.</p>
-                    <a class="btn-primary" href="https://github.com/YegorCreative" target="_blank" rel="noopener noreferrer">Visit GitHub</a>
+                    <p class="pf-case__meta">Leadership consulting · Twin Cities</p>
+                    <div class="pf-case__grid">
+                        <div>
+                            <h4>Problem</h4>
+                            <p>A consultancy needed a credible home for coaching, training, and books without looking like a brochure dump.</p>
+                        </div>
+                        <div>
+                            <h4>What I built</h4>
+                            <p>A clean multi-page site with a clear offer, service groups, books, and a direct contact path.</p>
+                        </div>
+                        <div>
+                            <h4>Result</h4>
+                            <p>Business visitors can understand the work and reach the consultant without wading through clutter.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -277,8 +382,8 @@
         <section class="pf-bottom-cta" aria-labelledby="pf-bottom-cta-heading">
             <div class="container">
                 <h2 id="pf-bottom-cta-heading" class="pf-section-title">Ready to build yours?</h2>
-                <p class="pf-bottom-cta__sub">Tell me what you need and I’ll help you make it clear, fast, and professional.</p>
-                <a class="btn-primary" href="contact.html">Start a Project</a>
+                <p class="pf-bottom-cta__sub">Tell me what your business needs. I’ll help you make it clear, fast, and professional.</p>
+                <a class="btn-primary" href="contact.html#contact-form">Start a Project</a>
             </div>
         </section>
 
@@ -292,10 +397,10 @@
             <a  href="https://www.youtube.com/yegorcreative" target="_blank" aria-label="Visit Yegor Creative on YouTube" rel="noopener noreferrer"><img class="socialMI" src="Assets/youtube.png" alt="" width="90px"></a>
             <a  href="https://www.linkedin.com/in/yegorhambaryan/" target="_blank" aria-label="Visit Yegor Hambaryan on LinkedIn" rel="noopener noreferrer"><img class="socialMI" src="Assets/linkedIn.png" alt="" width="90px"></a>
             <a  href="https://github.com/YegorCreative" target="_blank" aria-label="Visit Yegor Creative on GitHub" rel="noopener noreferrer"><img class="socialMI" src="Assets/github.png" alt="" width="90px"></a>
-            <a  href="mailto:aleqsandregor@gmail.com" aria-label="Send email to Yegor"><img src="Assets/email.png" alt="" class="socialMI" width="90px"></a>
+            <a  href="mailto:yegor@yegorcreative.com" aria-label="Send email to Yegor"><img src="Assets/email.png" alt="" class="socialMI" width="90px"></a>
         </div>
         <div class="footer-contact">
-            <p>5281 Shore Trail NE, Prior Lake, MN 55372 United States</p>
+            <p>Prior Lake, Minnesota</p>
             <p><a href="mailto:yegor@yegorcreative.com" aria-label="Email Yegor Creative at yegor@yegorcreative.com">yegor@yegorcreative.com</a></p>
             <p><a href="tel:+17133306868" aria-label="Call Yegor Creative at +1 713 330 6868">+17133306868</a></p>
         </div>
