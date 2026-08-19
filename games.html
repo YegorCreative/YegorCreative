@@ -4,22 +4,26 @@
 <head>
     <title>Games | Yegor Creative</title>
     <meta charset="UTF-8">
-    <meta name="description" content="Short free games by Yegor Creative — a lighter side project alongside websites for businesses.">
-    <link rel="canonical" href="https://yegorcreative.com/games.html">
-    <meta property="og:title" content="Games | Yegor Creative">
-    <meta property="og:url" content="https://yegorcreative.com/games.html">
-    <meta name="keywords" content="games, web games, interactive, JavaScript, YegorCreative">
+    <meta name="description" content="Free browser games by Yegor Creative — short breaks you can play with no download.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://yegorcreative.com/games.html">
     <link rel="stylesheet" href="CSS/styles.css">
     <link rel="stylesheet" href="CSS/responsive.css">
     <link rel="stylesheet" href="CSS/games.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@300&display=swap" rel="stylesheet">
-        <meta property="og:image" content="Assets/YegorCreativeScan.png">
-        <meta property="og:image:type" content="image/png">
-        <meta property="og:image:width" content="400">
-        <meta property="og:image:height" content="300">
-        <link rel="icon" type="image/png" href="./Assets/lionheadico.png">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Games | Yegor Creative">
+    <meta property="og:description" content="Free browser games by Yegor Creative — short breaks you can play with no download.">
+    <meta property="og:url" content="https://yegorcreative.com/games.html">
+    <meta property="og:image" content="https://yegorcreative.com/Assets/YegorCreativeScan.png">
+    <meta property="og:site_name" content="Yegor Creative">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Games | Yegor Creative">
+    <meta name="twitter:image" content="https://yegorcreative.com/Assets/YegorCreativeScan.png">
+    <meta name="theme-color" content="#7C3AED">
+    <link rel="icon" type="image/png" href="./Assets/lionheadico.png">
     <link rel="stylesheet" href="CSS/redesign.css">
 </head>
 
@@ -34,7 +38,7 @@
     <header role="banner" class="mainHeading">
         <div class="container">
             <div class="mainLogo">
-                <a href="index.html"><img src="Assets/lionhead.png" alt="the logo of the website" height="110px"></a>
+                <a href="index.html"><img src="Assets/lionhead.png" alt="Yegor Creative home" height="110"></a>
                 <span class="brand-title">YegorCreative</span>
             </div>
             <button type="button" class="nav-toggle" id="navToggle" aria-controls="primaryNav" aria-expanded="false" aria-label="Open menu">
@@ -46,7 +50,7 @@
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="portfolio.html">Work</a></li>
-                    <li><a href="index.html#pricing">Pricing</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
                     <li><a href="games.html" class="active">Games</a></li>
                     <li><a href="index.html#about">About</a></li>
                     <li><a href="contact.html">Contact</a></li>
@@ -64,26 +68,52 @@
 
             <div class="container">
                 <section class="games-hero" aria-labelledby="gamesTitle">
-                    <h1 id="gamesTitle" class="games-title">Press Play on a Lighter Moment.</h1>
-                    <p class="games-sub">Short, thoughtful games you can enjoy for free whenever you need a break.</p>
+                    <div class="games-hero__copy">
+                        <p class="games-hero__badge">Free play · No download</p>
+                        <h1 id="gamesTitle" class="games-title">Press start.</h1>
+                        <p class="games-sub">Short games for a break between real work. Tap, match, react — then get back to it.</p>
+                        <a class="btn-primary games-hero__cta" href="#library">Pick a game</a>
+                    </div>
+                    <div class="games-hero__stage" aria-hidden="true">
+                        <div class="games-arcade">
+                            <div class="games-arcade__bar">
+                                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                <span class="games-arcade__label">play.exe</span>
+                            </div>
+                            <div class="games-arcade__screen">
+                                <span class="games-orb games-orb--1"></span>
+                                <span class="games-orb games-orb--2"></span>
+                                <span class="games-orb games-orb--3"></span>
+                                <span class="games-orb games-orb--4"></span>
+                                <span class="games-hero-card"></span>
+                                <span class="games-hero-go">GO</span>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
-                <section class="games-intro" aria-labelledby="gamesIntroTitle">
-                    <h2 id="gamesIntroTitle" class="games-intro__title">Got a free moment?</h2>
-                    <p class="games-intro__text">Pick a game and relax for a bit.</p>
-                </section>
-
-                <section class="games-grid" aria-labelledby="gamesGridTitle">
+                <section class="games-grid" id="library" aria-labelledby="gamesGridTitle">
                     <div class="games-grid__head">
-                        <h2 id="gamesGridTitle" class="games-grid__title">Choose a Game</h2>
-                        <p class="games-grid__sub">Small, focused games for quick breaks.</p>
+                        <div class="games-grid__kicker">
+                            <h2 id="gamesGridTitle" class="games-grid__title">The library</h2>
+                            <span class="games-grid__count">3 ready</span>
+                        </div>
+                        <p class="games-grid__sub">Play what’s here. New games land in this list when we build them.</p>
                     </div>
 
                     <div class="games-cards" role="list">
                         <article class="game-card" role="listitem">
                             <a class="game-card__link" href="matching-memoji.html">
-                                <div class="game-card__media game-card__media--memoji" aria-hidden="true"></div>
+                                <div class="game-card__media game-card__media--memoji" aria-hidden="true">
+                                    <div class="game-preview game-preview--memoji">
+                                        <span class="gp-card gp-card--back"></span>
+                                        <span class="gp-card gp-card--face"><img src="Assets/memoji/memoji1.heic.png" alt=""></span>
+                                        <span class="gp-card gp-card--face"><img src="Assets/memoji/memoji7.heic.png" alt=""></span>
+                                        <span class="gp-card gp-card--back"></span>
+                                    </div>
+                                </div>
                                 <div class="game-card__body">
+                                    <span class="game-card__tag">Memory</span>
                                     <h3 class="game-card__title">Matching Memoji</h3>
                                     <p class="game-card__desc">Flip cards and match pairs as fast as you can.</p>
                                     <span class="game-card__cta">Play now</span>
@@ -92,48 +122,64 @@
                         </article>
 
                         <article class="game-card" role="listitem">
-                            <div class="game-card__link game-card__link--disabled" aria-disabled="true">
-                                <div class="game-card__media game-card__media--placeholder" aria-hidden="true"></div>
-                                <div class="game-card__body">
-                                    <h3 class="game-card__title">Coming Soon</h3>
-                                    <p class="game-card__desc">A quick puzzle experience to unwind.</p>
-                                    <span class="game-card__cta">Coming Soon</span>
+                            <a class="game-card__link" href="color-pulse.html">
+                                <div class="game-card__media game-card__media--pulse" aria-hidden="true">
+                                    <div class="game-preview game-preview--pulse">
+                                        <span class="gp-pad gp-pad--0"></span>
+                                        <span class="gp-pad gp-pad--1"></span>
+                                        <span class="gp-pad gp-pad--2"></span>
+                                        <span class="gp-pad gp-pad--3"></span>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="game-card__body">
+                                    <span class="game-card__tag">Sequence</span>
+                                    <h3 class="game-card__title">Color Pulse</h3>
+                                    <p class="game-card__desc">Watch the sequence, then tap it back. One more color each round.</p>
+                                    <span class="game-card__cta">Play now</span>
+                                </div>
+                            </a>
                         </article>
 
                         <article class="game-card" role="listitem">
-                            <div class="game-card__link game-card__link--disabled" aria-disabled="true">
-                                <div class="game-card__media game-card__media--placeholder" aria-hidden="true"></div>
-                                <div class="game-card__body">
-                                    <h3 class="game-card__title">Coming Soon</h3>
-                                    <p class="game-card__desc">A calm, bite-sized challenge you can finish fast.</p>
-                                    <span class="game-card__cta">Coming Soon</span>
+                            <a class="game-card__link" href="green-light.html">
+                                <div class="game-card__media game-card__media--green" aria-hidden="true">
+                                    <div class="game-preview game-preview--green">
+                                        <span class="gp-go">GO</span>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="game-card__body">
+                                    <span class="game-card__tag">Reaction</span>
+                                    <h3 class="game-card__title">Green Light</h3>
+                                    <p class="game-card__desc">Wait for green, then tap. How fast are your hands?</p>
+                                    <span class="game-card__cta">Play now</span>
+                                </div>
+                            </a>
                         </article>
 
-                        <article class="game-card" role="listitem">
-                            <div class="game-card__link game-card__link--disabled" aria-disabled="true">
-                                <div class="game-card__media game-card__media--placeholder" aria-hidden="true"></div>
+                        <article class="game-card game-card--soon" role="listitem">
+                            <div class="game-card__link game-card__link--disabled">
+                                <div class="game-card__media game-card__media--placeholder" aria-hidden="true">
+                                    <div class="game-preview game-preview--soon">
+                                        <span class="gp-soon">?</span>
+                                    </div>
+                                </div>
                                 <div class="game-card__body">
-                                    <h3 class="game-card__title">Coming Soon</h3>
-                                    <p class="game-card__desc">A light arcade-style moment between tasks.</p>
-                                    <span class="game-card__cta">Coming Soon</span>
+                                    <span class="game-card__tag">Next up</span>
+                                    <h3 class="game-card__title">Your pick</h3>
+                                    <p class="game-card__desc">The next game goes here when you choose it.</p>
+                                    <span class="game-card__cta">Coming soon</span>
                                 </div>
                             </div>
                         </article>
+                    </div>
+                </section>
 
-                        <article class="game-card" role="listitem">
-                            <div class="game-card__link game-card__link--disabled" aria-disabled="true">
-                                <div class="game-card__media game-card__media--placeholder" aria-hidden="true"></div>
-                                <div class="game-card__body">
-                                    <h3 class="game-card__title">Coming Soon</h3>
-                                    <p class="game-card__desc">A playful mini-game for quick resets.</p>
-                                    <span class="game-card__cta">Coming Soon</span>
-                                </div>
-                            </div>
-                        </article>
+                <section class="games-close" aria-labelledby="gamesCloseTitle">
+                    <h2 id="gamesCloseTitle" class="games-close__title">Done playing?</h2>
+                    <p class="games-close__text">The rest of the site is for work — websites and apps for businesses.</p>
+                    <div class="games-close__actions">
+                        <a class="btn-primary" href="portfolio.html">View Work</a>
+                        <a class="btn-secondary" href="contact.html#contact-form">Start a Project</a>
                     </div>
                 </section>
             </div>
@@ -151,7 +197,7 @@
             <a href="mailto:yegor@yegorcreative.com" aria-label="Send email to Yegor"><img src="Assets/email.png" alt="" class="socialMI" width="90px"></a>
         </div>
         <div class="footer-contact">
-            <p>Prior Lake, Minnesota</p>
+            <p>New York</p>
             <p><a href="mailto:yegor@yegorcreative.com" aria-label="Email Yegor Creative at yegor@yegorcreative.com">yegor@yegorcreative.com</a></p>
             <p><a href="tel:+17133306868" aria-label="Call Yegor Creative at +1 713 330 6868">+17133306868</a></p>
         </div>

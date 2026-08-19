@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Green Light | Yegor Creative</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Green Light — wait for green, then tap. A free reaction game by Yegor Creative.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://yegorcreative.com/green-light.html">
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="CSS/responsive.css">
+    <link rel="stylesheet" href="CSS/games.css">
+    <link rel="icon" type="image/png" href="./Assets/lionheadico.png">
+    <link rel="stylesheet" href="CSS/redesign.css">
+    <meta name="theme-color" content="#7C3AED">
+    <meta property="og:title" content="Green Light | Yegor Creative">
+    <meta property="og:description" content="Wait for green, then tap. How fast are you?">
+    <meta property="og:url" content="https://yegorcreative.com/green-light.html">
+    <meta property="og:image" content="https://yegorcreative.com/Assets/YegorCreativeScan.png">
+</head>
+
+<body class="game-page game-green">
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <div id="top" aria-hidden="true"></div>
+
+    <header role="banner" class="mainHeading">
+        <div class="container">
+            <div class="mainLogo">
+                <a href="index.html"><img src="Assets/lionhead.png" alt="Yegor Creative home" height="110"></a>
+                <span class="brand-title">YegorCreative</span>
+            </div>
+            <button type="button" class="nav-toggle" id="navToggle" aria-controls="primaryNav" aria-expanded="false" aria-label="Open menu">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+            <nav id="primaryNav" class="site-nav primary-nav" aria-label="Primary">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="portfolio.html">Work</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="games.html">Games</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="contact.html#contact-form" class="btn-primary header-cta"><span class="header-cta__long">Start a Project</span><span class="header-cta__short">Start</span></a>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" role="main" class="game-main">
+        <section class="game-pre" id="greenStart">
+            <div class="container">
+                <div class="game-pre__grid">
+                    <div class="game-pre__text">
+                        <h1 class="game-pre__title">Green Light</h1>
+                        <p class="game-pre__sub">Wait for the pad to turn green, then tap as fast as you can. Tap too soon and you’re out.</p>
+                        <ul class="game-pre__rules">
+                            <li>Don’t tap while it says wait.</li>
+                            <li>Tap the moment it goes green.</li>
+                            <li>Your best time is saved on this device.</li>
+                        </ul>
+                        <button type="button" class="games-btn" id="greenStartBtn">Start</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="game-viewport" id="greenPlay" hidden aria-label="Green Light game">
+            <div class="game-hud">
+                <a class="games-btn" href="games.html">Games</a>
+                <div class="games-metric" aria-label="Best time">
+                    <span class="games-metric__k">Best</span>
+                    <span id="greenBest" class="games-metric__v">—</span>
+                </div>
+            </div>
+            <button type="button" class="green-pad" id="greenPad" aria-live="assertive">Wait</button>
+            <div id="greenLive" class="games-live" aria-live="polite"></div>
+        </section>
+
+        <section class="game-screen" id="greenEnd" hidden>
+            <div class="container">
+                <div class="game-screen__inner">
+                    <h2 class="game-screen__title" id="greenEndTitle">Too soon.</h2>
+                    <p class="game-screen__sub" id="greenEndStats">Wait for green next time.</p>
+                    <div class="game-screen__actions">
+                        <button type="button" class="games-btn" id="greenAgain">Try again</button>
+                        <a class="games-btn" href="games.html">Back to Games</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="nav-active.js"></script>
+    <script src="green-light.js"></script>
+</body>
+
+</html>

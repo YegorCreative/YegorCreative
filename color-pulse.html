@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Color Pulse | Yegor Creative</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Color Pulse — watch the sequence and tap it back. A free memory game by Yegor Creative.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://yegorcreative.com/color-pulse.html">
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="CSS/responsive.css">
+    <link rel="stylesheet" href="CSS/games.css">
+    <link rel="icon" type="image/png" href="./Assets/lionheadico.png">
+    <link rel="stylesheet" href="CSS/redesign.css">
+    <meta name="theme-color" content="#7C3AED">
+    <meta property="og:title" content="Color Pulse | Yegor Creative">
+    <meta property="og:description" content="Watch the sequence, then tap it back.">
+    <meta property="og:url" content="https://yegorcreative.com/color-pulse.html">
+    <meta property="og:image" content="https://yegorcreative.com/Assets/YegorCreativeScan.png">
+</head>
+
+<body class="game-page game-pulse">
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <div id="top" aria-hidden="true"></div>
+
+    <header role="banner" class="mainHeading">
+        <div class="container">
+            <div class="mainLogo">
+                <a href="index.html"><img src="Assets/lionhead.png" alt="Yegor Creative home" height="110"></a>
+                <span class="brand-title">YegorCreative</span>
+            </div>
+            <button type="button" class="nav-toggle" id="navToggle" aria-controls="primaryNav" aria-expanded="false" aria-label="Open menu">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+            <nav id="primaryNav" class="site-nav primary-nav" aria-label="Primary">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="portfolio.html">Work</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="games.html">Games</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="contact.html#contact-form" class="btn-primary header-cta"><span class="header-cta__long">Start a Project</span><span class="header-cta__short">Start</span></a>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" role="main" class="game-main">
+        <section class="game-pre" id="pulseStart">
+            <div class="container">
+                <div class="game-pre__grid">
+                    <div class="game-pre__text">
+                        <h1 class="game-pre__title">Color Pulse</h1>
+                        <p class="game-pre__sub">Watch the colors light up. Repeat the sequence. Each round adds one more.</p>
+                        <ul class="game-pre__rules">
+                            <li>Wait while the pattern plays.</li>
+                            <li>Tap the pads in the same order.</li>
+                            <li>One miss ends the run.</li>
+                        </ul>
+                        <button type="button" class="games-btn" id="pulseStartBtn">Start</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="game-viewport" id="pulsePlay" hidden aria-label="Color Pulse game">
+            <div class="game-hud">
+                <a class="games-btn" href="games.html">Games</a>
+                <div class="games-metric" aria-label="Round">
+                    <span class="games-metric__k">Round</span>
+                    <span id="pulseRound" class="games-metric__v">1</span>
+                </div>
+                <div class="games-metric" aria-label="Status">
+                    <span class="games-metric__k">Now</span>
+                    <span id="pulseStatus" class="games-metric__v">Watch</span>
+                </div>
+            </div>
+            <div class="pulse-board" role="group" aria-label="Color pads">
+                <button type="button" class="pulse-pad pulse-pad--0" data-pad="0" aria-label="Purple"></button>
+                <button type="button" class="pulse-pad pulse-pad--1" data-pad="1" aria-label="Blue"></button>
+                <button type="button" class="pulse-pad pulse-pad--2" data-pad="2" aria-label="Pink"></button>
+                <button type="button" class="pulse-pad pulse-pad--3" data-pad="3" aria-label="Teal"></button>
+            </div>
+            <div id="pulseLive" class="games-live" aria-live="polite"></div>
+        </section>
+
+        <section class="game-screen" id="pulseEnd" hidden>
+            <div class="container">
+                <div class="game-screen__inner">
+                    <h2 class="game-screen__title">Sequence broke.</h2>
+                    <p class="game-screen__sub" id="pulseEndStats">You reached round 1.</p>
+                    <div class="game-screen__actions">
+                        <button type="button" class="games-btn" id="pulseAgain">Play again</button>
+                        <a class="games-btn" href="games.html">Back to Games</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="nav-active.js"></script>
+    <script src="color-pulse.js"></script>
+</body>
+
+</html>

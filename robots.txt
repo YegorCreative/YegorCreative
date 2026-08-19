@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yegorcreative.com/sitemap.xml
+
+Disallow: /mtc-technology-discipline.html
