@@ -42,7 +42,7 @@
     <header role="banner" class="mainHeading">
        <div class="container">
         <div class="mainLogo">
-            <a href="index.html"><img src="Assets/lionhead.png" alt="the logo of the website" height="110px"></a>
+            <a href="index.html"><img src="Assets/lionhead.png" alt="Yegor Creative home" height="110"></a>
             <span class="brand-title">YegorCreative</span>
         </div>
         <button type="button"
@@ -90,7 +90,7 @@
                     </div>
 
                     <div class="contact-hero-visual">
-                        <img src="Assets/contactUS.png" alt="Customer support and communication illustration">
+                        <img src="Assets/yegorH.webp" alt="Portrait of Yegor Hambaryan">
                     </div>
                 </div>
             </div>
@@ -123,35 +123,49 @@
                         
                         <div class="form-row">
                             <label for="contact-business">Business / Project Name</label>
-                            <input type="text" id="contact-business" name="project" placeholder="Your business name">
+                            <input type="text" id="contact-business" name="project" autocomplete="organization" placeholder="Your business name">
                         </div>
-                        
+
                         <div class="form-row">
-                            <label for="contact-budget">Budget Range</label>
-                            <select id="contact-budget" name="Budget">
-                                <option value="">Select a range</option>
-                                <option value="Starter website ($499)">Starter website ($499)</option>
-                                <option value="Growth website ($1,200)">Growth website ($1,200)</option>
-                                <option value="Pro website ($2,500)">Pro website ($2,500)</option>
+                            <label for="contact-need">What do you need?</label>
+                            <select id="contact-need" name="Need">
+                                <option value="">Select one</option>
+                                <option value="Website">Website</option>
+                                <option value="App">App</option>
                                 <option value="Site Care ($99/mo)">Site Care ($99/mo)</option>
                                 <option value="Priority Care ($199/mo)">Priority Care ($199/mo)</option>
-                                <option value="Launch App ($3,500)">Launch App ($3,500)</option>
-                                <option value="Growth App ($7,500)">Growth App ($7,500)</option>
-                                <option value="Custom / $5,000+">Custom / $5,000+</option>
                                 <option value="Not sure">Not sure</option>
                             </select>
                         </div>
                         
-                        <div class="form-row">
-                            <label for="contact-timeline">Timeline</label>
-                            <select id="contact-timeline" name="Timeline">
-                                <option value="">Select a timeline</option>
-                                <option value="ASAP">ASAP</option>
-                                <option value="1-2 weeks">1-2 weeks</option>
-                                <option value="1 month">1 month</option>
-                                <option value="2-3 months">2-3 months</option>
-                                <option value="Flexible">Flexible</option>
-                            </select>
+                        <div class="form-grid">
+                            <div class="form-row">
+                                <label for="contact-budget">Budget Range</label>
+                                <select id="contact-budget" name="Budget">
+                                    <option value="">Select a range</option>
+                                    <option value="Starter website ($499)">Starter website ($499)</option>
+                                    <option value="Growth website ($1,200)">Growth website ($1,200)</option>
+                                    <option value="Pro website ($2,500)">Pro website ($2,500)</option>
+                                    <option value="Launch App ($3,500)">Launch App ($3,500)</option>
+                                    <option value="Growth App ($7,500)">Growth App ($7,500)</option>
+                                    <option value="Custom / $5,000+">Custom / $5,000+</option>
+                                    <option value="Not sure">Not sure</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-row">
+                                <label for="contact-timeline">Timeline</label>
+                                <select id="contact-timeline" name="Timeline">
+                                    <option value="">Select a timeline</option>
+                                    <option value="ASAP">ASAP</option>
+                                    <option value="1-2 weeks">1-2 weeks</option>
+                                    <option value="This month">This month</option>
+                                    <option value="1 month">1 month</option>
+                                    <option value="Next month">Next month</option>
+                                    <option value="2-3 months">2-3 months</option>
+                                    <option value="Flexible">Flexible</option>
+                                </select>
+                            </div>
                         </div>
                         
                         <div class="form-row">
@@ -174,13 +188,19 @@
                                 <span class="contact-direct-value">yegor@yegorcreative.com</span>
                             </span>
                         </a>
-                        <a href="https://www.instagram.com/yegorcreative/" target="_blank" class="contact-direct-link">
+                        <a href="tel:+17133306868" class="contact-direct-link">
+                            <span class="contact-direct-text">
+                                <strong>Phone:</strong>
+                                <span class="contact-direct-value">+1 713 330 6868</span>
+                            </span>
+                        </a>
+                        <a href="https://www.instagram.com/yegorcreative/" target="_blank" rel="noopener noreferrer" class="contact-direct-link">
                             <span class="contact-direct-text">
                                 <strong>Instagram:</strong>
                                 <span class="contact-direct-value">@yegorcreative</span>
                             </span>
                         </a>
-                        <a href="https://www.linkedin.com/in/yegorhambaryan/" target="_blank" class="contact-direct-link">
+                        <a href="https://www.linkedin.com/in/yegorhambaryan/" target="_blank" rel="noopener noreferrer" class="contact-direct-link">
                             <span class="contact-direct-text">
                                 <strong>LinkedIn:</strong>
                                 <span class="contact-direct-value">Yegor Hambaryan</span>
@@ -200,18 +220,27 @@
                 <div class="contact-next-steps">
                     <div class="contact-step">
                         <div class="contact-step__number">1</div>
+                        <span class="contact-step__icon" aria-hidden="true">
+                            <svg viewBox="0 0 48 48" fill="none"><path d="M10 16h20a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H22l-8 6v-6h-4a4 4 0 0 1-4-4V20a4 4 0 0 1 4-4Z" stroke="currentColor" stroke-width="2.2"/><path d="M18 22h12M18 28h8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+                        </span>
                         <h3 class="contact-step__title">Quick Questions</h3>
                         <p class="contact-step__desc">We'll discuss your goals, audience, and timeline. I'll ask a few questions to understand your vision and what success looks like for your business.</p>
                     </div>
                     
                     <div class="contact-step">
                         <div class="contact-step__number">2</div>
+                        <span class="contact-step__icon" aria-hidden="true">
+                            <svg viewBox="0 0 48 48" fill="none"><rect x="8" y="10" width="32" height="26" rx="4" stroke="currentColor" stroke-width="2.2"/><path d="M8 18h32M16 10v-3M32 10v-3" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M16 26l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </span>
                         <h3 class="contact-step__title">Design & Build</h3>
                         <p class="contact-step__desc">I'll create a modern, mobile-friendly site tailored to your brand. You'll see progress updates and have a chance to request changes before launch.</p>
                     </div>
                     
                     <div class="contact-step">
                         <div class="contact-step__number">3</div>
+                        <span class="contact-step__icon" aria-hidden="true">
+                            <svg viewBox="0 0 48 48" fill="none"><path d="M12 34V20l12-8 12 8v14" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M20 34v-8h8v8" stroke="currentColor" stroke-width="2.2"/><path d="M10 34h28" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+                        </span>
                         <h3 class="contact-step__title">Launch & Support</h3>
                         <p class="contact-step__desc">Once you're happy, we go live. I'll provide guidance on updates and be available if you need help down the road.</p>
                     </div>
@@ -228,10 +257,22 @@
                 <p class="contact-section-subtitle">I work with businesses that need a website that brings in customers.</p>
                 
                 <ul class="contact-fit-list">
-                    <li><strong>Small Businesses</strong> – Local shops, consultants, and professionals who need a strong online presence.</li>
-                    <li><strong>Service Businesses</strong> – Contractors, clinics, and service providers who want more leads.</li>
-                    <li><strong>Growing Brands</strong> – Companies ready to replace an outdated site with something that converts.</li>
-                    <li><strong>Churches & Community Orgs</strong> – Groups that need a clear, trustworthy site for their community.</li>
+                    <li>
+                        <span class="contact-fit__icon" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M8 32V16l12-8 12 8v16H8Z" stroke="currentColor" stroke-width="2"/><path d="M16 32v-8h8v8" stroke="currentColor" stroke-width="2"/></svg></span>
+                        <strong>Small Businesses</strong> – Local shops, consultants, and professionals who need a strong online presence.
+                    </li>
+                    <li>
+                        <span class="contact-fit__icon" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="14" r="5" stroke="currentColor" stroke-width="2"/><path d="M10 30c1.5-6 5-9 10-9s8.5 3 10 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M28 12l4 2M8 22h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+                        <strong>Service Businesses</strong> – Contractors, clinics, and service providers who want more leads.
+                    </li>
+                    <li>
+                        <span class="contact-fit__icon" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M8 28l8-8 6 5 10-12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 13h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                        <strong>Growing Brands</strong> – Companies ready to replace an outdated site with something that converts.
+                    </li>
+                    <li>
+                        <span class="contact-fit__icon" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M20 8l3.5 7H32l-6 5 2.5 8L20 24l-8.5 4L14 20l-6-5h8.5L20 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+                        <strong>Churches & Community Orgs</strong> – Groups that need a clear, trustworthy site for their community.
+                    </li>
                 </ul>
             </div>
         </section>
@@ -242,31 +283,32 @@
                 <h2 id="contact-checklist-heading" class="contact-section-title">Project Checklist</h2>
                 <p class="contact-section-subtitle">To get started quickly, it helps if you can share:</p>
                 
-                <ul class="contact-checklist-list">
-                    <li><strong>Business Name</strong> – What should I call your business or project?</li>
-                    <li><strong>Goal</strong> – What should the site achieve? (e.g., more leads, online bookings, brand awareness)</li>
-                    <li><strong>Pages/Sections</strong> – What content do you need? (Home, About, Services, Contact, etc.)</li>
-                    <li><strong>Examples</strong> – Any websites you admire or want to emulate?</li>
-                    <li><strong>Deadline</strong> – When do you need it live?</li>
-                    <li><strong>Budget Range</strong> – Knowing your budget helps me recommend the right solution.</li>
-                    <li><strong>Content Readiness</strong> – Do you have logos, photos, and text ready, or need help creating them?</li>
-                </ul>
-                
-                <p class="contact-checklist-note">Don't worry if you don't have all of this yet—we can figure it out together.</p>
+                <div class="contact-checklist__board">
+                    <ul class="contact-checklist-list">
+                        <li><strong>Business Name</strong> – What should I call your business or project?</li>
+                        <li><strong>Goal</strong> – What should the site achieve? (e.g., more leads, online bookings, brand awareness)</li>
+                        <li><strong>Pages/Sections</strong> – What content do you need? (Home, About, Services, Contact, etc.)</li>
+                        <li><strong>Examples</strong> – Any websites you admire or want to emulate?</li>
+                        <li><strong>Deadline</strong> – When do you need it live?</li>
+                        <li><strong>Budget Range</strong> – Knowing your budget helps me recommend the right solution.</li>
+                        <li><strong>Content Readiness</strong> – Do you have logos, photos, and text ready, or need help creating them?</li>
+                    </ul>
+                    <p class="contact-checklist-note">Don't worry if you don't have all of this yet—we can figure it out together.</p>
+                </div>
             </div>
         </section>
 
     </main>
 
     <footer role="contentinfo" class="footFooter">
-        <h2 class="contact-heading"><span class="heading-icon">✉</span>Contact Yegor<span class="heading-underline"></span></h2>
+        <h2 class="contact-heading"><span class="heading-icon">Contact</span> Yegor<span class="heading-underline"></span></h2>
         <div class="socialMedia">
-            <a  href="https://www.facebook.com/hambaryanyegor/" target="_blank" aria-label="Visit Yegor Creative on Facebook"><img class="socialMI" src="Assets/facebook.png" alt="" width="90px"></a>
-            <a  href="https://www.instagram.com/yegorcreative/" target="_blank" aria-label="Visit Yegor Creative on Instagram"><img class="socialMI" src="Assets/instagram.png" alt="" width="90px"></a>
-            <a  href="https://www.youtube.com/yegorcreative" target="_blank" aria-label="Visit Yegor Creative on YouTube"><img class="socialMI" src="Assets/youtube.png" alt="" width="90px"></a>
-            <a  href="https://www.linkedin.com/in/yegorhambaryan/" target="_blank" aria-label="Visit Yegor Hambaryan on LinkedIn"><img class="socialMI" src="Assets/linkedIn.png" alt="" width="90px"></a>
-            <a  href="https://github.com/YegorCreative" target="_blank" aria-label="Visit Yegor Creative on GitHub"><img class="socialMI" src="Assets/github.png" alt="" width="90px"></a>
-            <a  href="mailto:yegor@yegorcreative.com" aria-label="Send email to Yegor"><img src="Assets/email.png" alt="" class="socialMI" width="90px"></a>
+            <a href="https://www.facebook.com/hambaryanyegor/" target="_blank" rel="noopener noreferrer" aria-label="Visit Yegor Creative on Facebook"><img class="socialMI" src="Assets/facebook.png" alt="" width="90"></a>
+            <a href="https://www.instagram.com/yegorcreative/" target="_blank" rel="noopener noreferrer" aria-label="Visit Yegor Creative on Instagram"><img class="socialMI" src="Assets/instagram.png" alt="" width="90"></a>
+            <a href="https://www.youtube.com/yegorcreative" target="_blank" rel="noopener noreferrer" aria-label="Visit Yegor Creative on YouTube"><img class="socialMI" src="Assets/youtube.png" alt="" width="90"></a>
+            <a href="https://www.linkedin.com/in/yegorhambaryan/" target="_blank" rel="noopener noreferrer" aria-label="Visit Yegor Hambaryan on LinkedIn"><img class="socialMI" src="Assets/linkedIn.png" alt="" width="90"></a>
+            <a href="https://github.com/YegorCreative" target="_blank" rel="noopener noreferrer" aria-label="Visit Yegor Creative on GitHub"><img class="socialMI" src="Assets/github.png" alt="" width="90"></a>
+            <a href="mailto:yegor@yegorcreative.com" aria-label="Send email to Yegor"><img src="Assets/email.png" alt="" class="socialMI" width="90"></a>
         </div>
         <div class="footer-contact">
             <p>New York</p>

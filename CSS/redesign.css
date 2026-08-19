@@ -186,8 +186,8 @@ h1, h2, h3, h4, h5, h6, .head1, .section-heading, .process-title {
 .contact-form-card,
 .contact-direct-link,
 .contact-quote-highlight,
-.contact-checklist-list,
-.contact-fit-list,
+.contact-checklist-list li,
+.contact-fit-list li,
 .game-card,
 .games-intro {
   background: var(--yc-surface-glass) !important;
@@ -1005,8 +1005,8 @@ textarea:focus-visible,
 .contact-step,
 .contact-direct-link,
 .contact-quote-highlight,
-.contact-checklist-list,
-.contact-fit-list,
+.contact-checklist-list li,
+.contact-fit-list li,
 .game-card,
 .games-intro {
   border-radius: var(--yc-radius-card) !important;

@@ -318,3 +318,16 @@
   setActiveButton(defaultButton);
   applyFilter(defaultButton.getAttribute('data-filter') || 'all');
 })();
+
+(function initInquiryForms() {
+  const forms = document.querySelectorAll('form[action*="formsubmit.co"]');
+  forms.forEach((form) => {
+    form.addEventListener('submit', () => {
+      const btn = form.querySelector('[type="submit"]');
+      if (!btn || btn.disabled) return;
+      btn.disabled = true;
+      btn.setAttribute('aria-busy', 'true');
+      btn.textContent = 'Sending…';
+    });
+  });
+})();

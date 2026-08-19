@@ -222,6 +222,12 @@
 
   .contact-next-steps {
     grid-template-columns: repeat(3, 1fr);
+    align-items: start;
+  }
+
+  .contact-fit-list,
+  .contact-checklist-list {
+    grid-template-columns: 1fr 1fr;
   }
 
   .contact-direct-links {
@@ -330,9 +336,10 @@
   }
 }
 
-@media screen and (max-width: 768px) {
-  .contact-hero-visual {
-    order: -1;
+@media (min-width: 700px) {
+  .contact-direct-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 }
 

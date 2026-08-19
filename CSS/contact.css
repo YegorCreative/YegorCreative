@@ -17,3 +17,217 @@
 .contact-page .contact-hero {
   padding-top: 120px;
 }
+
+.contact-page .contact-hero-visual img {
+  max-width: 320px;
+  border-radius: 28px;
+  object-fit: cover;
+  box-shadow: 0 18px 46px rgba(17, 24, 39, 0.12);
+}
+
+.contact-page .contact-fit-list,
+.contact-page .contact-checklist-list {
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none;
+}
+
+.contact-page .contact-response-note {
+  position: relative;
+  z-index: 1;
+  margin-top: 28px;
+}
+
+/* Process */
+.contact-page .contact-next-steps {
+  position: relative;
+  gap: 22px;
+}
+
+.contact-page .contact-next-steps::before {
+  content: "";
+  position: absolute;
+  top: 38px;
+  left: 10%;
+  right: 10%;
+  height: 3px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #7c3aed, #818cf8, #22c55e);
+  z-index: 0;
+}
+
+.contact-page .contact-step {
+  position: relative;
+  z-index: 1;
+  padding: 22px 22px 26px;
+  overflow: hidden;
+  background:
+    radial-gradient(120px 80px at 100% 0%, rgba(124, 58, 237, 0.1), transparent 70%),
+    #fff !important;
+}
+
+.contact-page .contact-step:nth-child(2) {
+  background:
+    radial-gradient(120px 80px at 100% 0%, rgba(59, 130, 246, 0.12), transparent 70%),
+    #fff !important;
+}
+
+.contact-page .contact-step:nth-child(3) {
+  background:
+    radial-gradient(120px 80px at 100% 0%, rgba(34, 197, 94, 0.14), transparent 70%),
+    #fff !important;
+}
+
+.contact-page .contact-step__number {
+  position: relative;
+  z-index: 2;
+}
+
+.contact-page .contact-step:nth-child(3) .contact-step__number {
+  background: linear-gradient(135deg, #22c55e, #4ade80);
+  box-shadow: 0 10px 20px rgba(34, 197, 94, 0.28);
+}
+
+.contact-page .contact-step__icon {
+  display: flex;
+  width: 48px;
+  height: 48px;
+  margin: 8px 0 14px;
+  color: #7c3aed;
+}
+
+.contact-page .contact-step:nth-child(2) .contact-step__icon { color: #2563eb; }
+.contact-page .contact-step:nth-child(3) .contact-step__icon { color: #16a34a; }
+
+.contact-page .contact-step__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Audience mosaic */
+.contact-page .contact-fit-list li {
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+  padding: 22px 22px 22px 88px !important;
+  background: #fff !important;
+}
+
+.contact-page .contact-fit__icon {
+  position: absolute;
+  left: 18px;
+  top: 22px;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  color: #fff;
+}
+
+.contact-page .contact-fit__icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.contact-page .contact-fit-list li:nth-child(1) {
+  background: linear-gradient(165deg, #fff7ed 0%, #fff 58%) !important;
+  border-color: rgba(249, 115, 22, 0.22) !important;
+}
+.contact-page .contact-fit-list li:nth-child(1) .contact-fit__icon {
+  background: linear-gradient(135deg, #f97316, #fb923c);
+}
+
+.contact-page .contact-fit-list li:nth-child(2) {
+  background: linear-gradient(165deg, #ecfeff 0%, #fff 58%) !important;
+  border-color: rgba(14, 165, 233, 0.22) !important;
+}
+.contact-page .contact-fit-list li:nth-child(2) .contact-fit__icon {
+  background: linear-gradient(135deg, #0284c7, #38bdf8);
+}
+
+.contact-page .contact-fit-list li:nth-child(3) {
+  background: linear-gradient(165deg, #f5f3ff 0%, #fff 58%) !important;
+  border-color: rgba(124, 58, 237, 0.22) !important;
+}
+.contact-page .contact-fit-list li:nth-child(3) .contact-fit__icon {
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+}
+
+.contact-page .contact-fit-list li:nth-child(4) {
+  background: linear-gradient(165deg, #f0fdf4 0%, #fff 58%) !important;
+  border-color: rgba(34, 197, 94, 0.22) !important;
+}
+.contact-page .contact-fit-list li:nth-child(4) .contact-fit__icon {
+  background: linear-gradient(135deg, #16a34a, #4ade80);
+}
+
+.contact-page .contact-fit-list strong {
+  color: #111827;
+}
+
+/* Worksheet */
+.contact-page .contact-checklist__board {
+  max-width: 820px;
+  margin: 36px auto 0;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(124, 58, 237, 0.16);
+  box-shadow: 0 22px 50px rgba(17, 24, 39, 0.08);
+}
+
+.contact-page .contact-checklist__board::before {
+  content: "";
+  display: block;
+  height: 10px;
+  background: linear-gradient(90deg, #7c3aed, #a78bfa 50%, #38bdf8);
+}
+
+.contact-page .contact-checklist-list {
+  margin: 0 !important;
+  gap: 0 !important;
+  grid-template-columns: 1fr !important;
+}
+
+.contact-page .contact-checklist-list li {
+  padding: 16px 22px 16px 56px !important;
+  border-radius: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  background: #fff !important;
+  border-bottom: 1px solid rgba(124, 58, 237, 0.08) !important;
+}
+
+.contact-page .contact-checklist-list li:nth-child(odd) {
+  background: rgba(124, 58, 237, 0.035) !important;
+}
+
+.contact-page .contact-checklist-list li:last-child {
+  border-bottom: 0 !important;
+}
+
+.contact-page .contact-checklist-note {
+  margin: 0;
+  padding: 16px 22px 20px;
+  background: #f5f3ff;
+  text-align: left;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .contact-page .contact-next-steps::before {
+    top: 0;
+    bottom: 0;
+    left: 29px;
+    right: auto;
+    width: 3px;
+    height: auto;
+    background: linear-gradient(180deg, #7c3aed, #818cf8, #22c55e);
+  }
+
+  .contact-page .contact-fit-list li {
+    min-height: 0;
+  }
+}
