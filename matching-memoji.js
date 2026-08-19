@@ -23,11 +23,15 @@
   const endScreen = document.getElementById('memojiEndScreen');
   const endStats = document.getElementById('memojiEndStats');
   const playAgainBtn = document.getElementById('memojiPlayAgain');
+  const backStoryBtn = document.getElementById('memojiBackStory');
+  const winTitle = document.getElementById('memojiWinTitle');
+  const winStars = document.getElementById('memojiWinStars');
+  const winGrade = document.getElementById('memojiWinGrade');
 
   if (!board || !mode || !restartBtn || !movesEl || !timeEl || !live) return;
   if (!preGame || !startBtn || !modeScreen || !playBtn || !gameScreen || !endScreen || !endStats || !playAgainBtn) return;
 
-  const MEMOJI_TOTAL = 52;
+  const MEMOJI_TOTAL = 38;
   const MEMOJI_PATH = 'Assets/memoji/';
   const MEMOJI_PREFIX = 'memoji';
   const MEMOJI_SUFFIX = '.heic.png';
@@ -35,9 +39,8 @@
   function buildMemojiPool() {
     const pool = [];
     for (let i = 1; i <= MEMOJI_TOTAL; i++) {
-      const num = String(i).padStart(4, '0');
-      const id = `m${num}`;
-      const src = `${MEMOJI_PATH}${MEMOJI_PREFIX}${num}${MEMOJI_SUFFIX}`;
+      const id = `m${i}`;
+      const src = `${MEMOJI_PATH}${MEMOJI_PREFIX}${i}${MEMOJI_SUFFIX}`;
       pool.push({ id, src, name: `Memoji ${i}` });
     }
     return pool;
@@ -55,6 +58,64 @@
 
   const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  let audioCtx = null;
+
+  function getAudioContext() {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    if (!audioCtx) {
+      audioCtx = new AC();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume().catch(() => {});
+    }
+    return audioCtx;
+  }
+
+  function unlockAudio() {
+    getAudioContext();
+  }
+
+  function playTone(ctx, freq, start, duration, gainValue) {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freq, start);
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.exponentialRampToValueAtTime(gainValue, start + 0.018);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(start);
+    osc.stop(start + duration + 0.03);
+  }
+
+  function playMatchSound() {
+    try {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const t = ctx.currentTime;
+      playTone(ctx, 784, t, 0.11, 0.07);
+      playTone(ctx, 1175, t + 0.08, 0.16, 0.08);
+    } catch {
+      // Audio is optional.
+    }
+  }
+
+  function playWinSound() {
+    try {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const t = ctx.currentTime;
+      playTone(ctx, 659, t, 0.11, 0.07);
+      playTone(ctx, 784, t + 0.09, 0.11, 0.07);
+      playTone(ctx, 988, t + 0.18, 0.12, 0.08);
+      playTone(ctx, 1319, t + 0.3, 0.28, 0.09);
+    } catch {
+      // Audio is optional.
+    }
+  }
+
   function clampNumber(value, fallback) {
     const n = Number(value);
     return Number.isFinite(n) ? n : fallback;
@@ -64,31 +125,24 @@
     try {
       const vv = window.visualViewport;
       const viewportHeight = vv ? clampNumber(vv.height, window.innerHeight) : window.innerHeight;
-      const viewportWidth = vv ? clampNumber(vv.width, window.innerWidth) : window.innerWidth;
 
+      const headerEl = document.querySelector('header.mainHeading');
       const hudEl = gameScreen.querySelector('.game-hud');
+      const headerH = headerEl ? clampNumber(headerEl.getBoundingClientRect().height, 0) : 0;
       const hudH = hudEl ? clampNumber(hudEl.getBoundingClientRect().height, 0) : 0;
-
-      const paddingBuffer = 32;
-      let availableHeight = Math.max(0, viewportHeight - hudH - paddingBuffer);
-      let availableWidth = Math.max(0, viewportWidth - paddingBuffer);
 
       const pairsCount = getPairsCount();
       const cards = pairsCount * 2;
       const rows = Math.max(1, Math.ceil(cards / COLS));
 
-      const style = window.getComputedStyle(board);
-      const gapPx = clampNumber(parseFloat(style.gap || ''), 10);
-      const gap = Math.max(0, Math.floor(gapPx) || 10);
-
-      const maxCardFromWidth = Math.floor((availableWidth - gap * (COLS - 1)) / COLS);
-      const maxCardFromHeight = Math.floor((availableHeight - gap * (rows - 1)) / rows);
-      const cardSize = Math.max(48, Math.min(maxCardFromWidth, maxCardFromHeight));
-
       root.style.setProperty('--games-cols', String(COLS));
       root.style.setProperty('--games-rows', String(rows));
-      root.style.setProperty('--games-gap', `${gap}px`);
-      root.style.setProperty('--games-card', `${cardSize}px`);
+
+      // Height is used only to keep easy boards from feeling tiny in a tall window.
+      const availableHeight = Math.max(220, viewportHeight - headerH - hudH - 88);
+      if (availableHeight && rows) {
+        root.style.setProperty('--games-min-stage', `${Math.min(availableHeight, 560)}px`);
+      }
     } catch {
       // Fail safely: never throw from sizing.
     }
@@ -238,7 +292,7 @@
     const front = document.createElement('span');
     front.className = 'games-face games-face--front';
     front.setAttribute('aria-hidden', 'true');
-    front.textContent = 'Match';
+    front.textContent = '';
 
     const back = document.createElement('span');
     back.className = 'games-face games-face--back';
@@ -281,6 +335,7 @@
 
   function setCardState(btn, state) {
     if (state === 'down') {
+      btn.classList.remove('is-matched');
       btn.setAttribute('aria-pressed', 'false');
       btn.removeAttribute('disabled');
       btn.removeAttribute('aria-disabled');
@@ -290,6 +345,7 @@
       btn.setAttribute('aria-disabled', 'true');
     }
     if (state === 'matched') {
+      btn.classList.add('is-matched');
       btn.setAttribute('aria-pressed', 'true');
       btn.setAttribute('disabled', '');
       btn.setAttribute('aria-disabled', 'true');
@@ -339,6 +395,7 @@
   }
 
   function onCardClick(e) {
+    unlockAudio();
     const btn = e.currentTarget;
     tryPick(btn);
   }
@@ -392,8 +449,74 @@
     }, 150);
   }
 
+  function ratePlay(pairs, moveCount) {
+    const minMoves = Math.max(1, pairs);
+    const ratio = moveCount / minMoves;
+
+    if (moveCount <= minMoves) {
+      return {
+        stars: 5,
+        title: 'Perfect memory.',
+        grade: 'You never missed. The bear is taking notes.'
+      };
+    }
+    if (ratio <= 1.5) {
+      return {
+        stars: 5,
+        title: 'Unreal.',
+        grade: 'Almost no wasted flips. Show-off energy.'
+      };
+    }
+    if (ratio <= 2) {
+      return {
+        stars: 4,
+        title: 'The memojis are impressed.',
+        grade: 'Clean, quick, and kind of stylish.'
+      };
+    }
+    if (ratio <= 2.75) {
+      return {
+        stars: 3,
+        title: 'Solid run.',
+        grade: 'The panda would play you again.'
+      };
+    }
+    if (ratio <= 3.5) {
+      return {
+        stars: 2,
+        title: 'You got them home.',
+        grade: 'A few extra flips. They still made the party.'
+      };
+    }
+    return {
+      stars: 1,
+      title: 'Chaos victory.',
+      grade: 'Nobody said it had to be pretty.'
+    };
+  }
+
+  function renderStars(count) {
+    if (!winStars) return;
+    winStars.textContent = '';
+    winStars.setAttribute('aria-label', `${count} out of 5 stars`);
+    for (let i = 1; i <= 5; i++) {
+      const star = document.createElement('span');
+      star.className = i <= count ? 'is-on' : 'is-off';
+      star.setAttribute('aria-hidden', 'true');
+      star.textContent = '★';
+      winStars.appendChild(star);
+    }
+  }
+
   function setEndStats(ms) {
-    endStats.textContent = `You finished in ${moves} moves and ${formatTime(ms)}.`;
+    const pairs = getPairsCount();
+    const rating = ratePlay(pairs, moves);
+    const modeLabel = String(mode.options[mode.selectedIndex] ? mode.options[mode.selectedIndex].text : mode.value).split('—')[0].trim();
+
+    if (winTitle) winTitle.textContent = rating.title;
+    if (winGrade) winGrade.textContent = rating.grade;
+    renderStars(rating.stars);
+    endStats.textContent = `${moves} moves · ${formatTime(ms)} · ${modeLabel}`;
   }
 
   function tryPick(btn) {
@@ -430,12 +553,15 @@
       updateCardLabels();
 
       if (matchedCount >= deck.length) {
+        playWinSound();
         stopTimer();
         const totalMs = elapsedMsAtStop;
         announce(`Game complete. Moves: ${moves}. Time: ${formatTime(totalMs)}.`);
         setEndStats(totalMs);
         showEnd();
         playAgainBtn.focus();
+      } else {
+        playMatchSound();
       }
 
       return;
@@ -487,20 +613,27 @@
 
     window.requestAnimationFrame(() => {
       updateBoardFit();
-      updateBoardAriaGridMetadata();
+      window.requestAnimationFrame(() => {
+        updateBoardFit();
+        updateBoardAriaGridMetadata();
+      });
     });
 
     updateCardLabels();
-    announce(`New game. ${pairsCount} pairs. Use Tab to focus a card and Enter to flip.`);
+    announce(`New game. ${pairsCount} pairs. Flip two cards to find a match.`);
     const first = board.querySelector('.games-card');
-    if (first) first.focus();
+    if (first) first.setAttribute('tabindex', '0');
+  }
+
+  function hideWin() {
+    endScreen.hidden = true;
   }
 
   function showOnly(target) {
     preGame.hidden = target !== preGame;
     modeScreen.hidden = target !== modeScreen;
     gameScreen.hidden = target !== gameScreen;
-    endScreen.hidden = target !== endScreen;
+    hideWin();
   }
 
   function showPreGame() {
@@ -519,28 +652,39 @@
   }
 
   function showEnd() {
-    root.classList.remove('game-active');
-    showOnly(endScreen);
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    endScreen.hidden = false;
+    if (playAgainBtn) playAgainBtn.focus();
   }
 
   startBtn.addEventListener('click', () => {
+    unlockAudio();
     showMode();
     mode.focus();
   });
 
+  if (backStoryBtn) {
+    backStoryBtn.addEventListener('click', () => {
+      showPreGame();
+      startBtn.focus();
+    });
+  }
+
   playBtn.addEventListener('click', () => {
+    unlockAudio();
     showGame();
     renderNewGame();
+    gameScreen.scrollIntoView({ block: 'start', behavior: prefersReducedMotion ? 'auto' : 'smooth' });
   });
 
   restartBtn.addEventListener('click', () => {
+    unlockAudio();
     resetRunState();
     showMode();
     mode.focus();
   });
 
   playAgainBtn.addEventListener('click', () => {
+    unlockAudio();
     resetRunState();
     showMode();
     mode.focus();
@@ -562,5 +706,17 @@
     window.visualViewport.addEventListener('scroll', scheduleBoardFitUpdate, { passive: true });
   }
 
-  showPreGame();
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const play = params.get('play');
+    if (play && MODE_TO_PAIRS[play]) {
+      mode.value = play;
+      showGame();
+      renderNewGame();
+    } else {
+      showPreGame();
+    }
+  } catch {
+    showPreGame();
+  }
 })();

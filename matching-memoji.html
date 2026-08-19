@@ -2,37 +2,38 @@
 <html lang="en">
 
 <head>
-    <title>Matching Memoji | YegorCreative</title>
+    <title>Matching Memoji | Yegor Creative</title>
     <meta charset="UTF-8">
-    <meta name="description" content="Matching Memoji | Play a memory match game by YegorCreative">
-    <meta name="keywords" content="games, web games, memory match, JavaScript, YegorCreative">
+    <meta name="description" content="Matching Memoji — flip cards, find pairs, and send every memoji home. A free memory game by Yegor Creative.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://yegorcreative.com/matching-memoji.html">
     <link rel="stylesheet" href="CSS/styles.css">
     <link rel="stylesheet" href="CSS/responsive.css">
     <link rel="stylesheet" href="CSS/games.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@300&display=swap" rel="stylesheet">
-        <meta property="og:image" content="Assets/YegorCreativeScan.png">
-        <meta property="og:image:type" content="image/png">
-        <meta property="og:image:width" content="400">
-        <meta property="og:image:height" content="300">
-        <link rel="icon" type="image/png" href="./Assets/lionheadico.png">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Matching Memoji | Yegor Creative">
+    <meta property="og:description" content="The memojis RSVP’d twice. Pair them up so they can go home.">
+    <meta property="og:url" content="https://yegorcreative.com/matching-memoji.html">
+    <meta property="og:image" content="https://yegorcreative.com/Assets/YegorCreativeScan.png">
+    <meta property="og:site_name" content="Yegor Creative">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Matching Memoji | Yegor Creative">
+    <meta name="theme-color" content="#7C3AED">
+    <link rel="icon" type="image/png" href="./Assets/lionheadico.png">
     <link rel="stylesheet" href="CSS/redesign.css">
 </head>
 
-
 <body class="game-page game-memoji">
-    <!-- Skip link for keyboard navigation -->
     <a href="#main" class="skip-link">Skip to main content</a>
-
-    <!-- Top anchor for back-to-top functionality -->
     <div id="top" aria-hidden="true"></div>
 
     <header role="banner" class="mainHeading">
         <div class="container">
             <div class="mainLogo">
-                <a href="index.html"><img src="Assets/lionhead.png" alt="the logo of the website" height="110px"></a>
-                <h1>YegorCreative</h1>
+                <a href="index.html"><img src="Assets/lionhead.png" alt="Yegor Creative home" height="110"></a>
+                <span class="brand-title">YegorCreative</span>
             </div>
             <button type="button" class="nav-toggle" id="navToggle" aria-controls="primaryNav" aria-expanded="false" aria-label="Open menu">
                 <span class="nav-toggle-bar"></span>
@@ -44,7 +45,7 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="portfolio.html">Work</a></li>
                     <li><a href="pricing.html">Pricing</a></li>
-                    <li><a href="games.html">Games</a></li>
+                    <li><a href="games.html" class="active">Games</a></li>
                     <li><a href="index.html#about">About</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
@@ -60,17 +61,27 @@
             <div class="container">
                 <div class="game-pre__grid">
                     <div class="game-pre__text">
+                        <p class="game-pre__eyebrow">A tiny story first</p>
                         <h1 class="game-pre__title">Matching Memoji</h1>
-                        <p class="game-pre__sub">Flip cards, find pairs, and keep your streak going as you match every memoji.</p>
+                        <p class="game-pre__story">The memojis RSVP’d twice to the same party. Now there are two of everybody — two bears, two ghosts, two dogs who both swear they arrived first.</p>
+                        <p class="game-pre__story game-pre__story--punch">The bear already tried matching with the panda. It did not go well. Pair them up so they can go home. Group chats are waiting.</p>
                         <ul class="game-pre__rules">
-                            <li>Flip two cards to reveal a pair.</li>
-                            <li>Matched pairs stay open.</li>
-                            <li>Clear the board to finish.</li>
+                            <li>Tap two cards. Matching twins stay open.</li>
+                            <li>Misses flip back. That’s part of the joke.</li>
+                            <li>Clear the board and send everyone home.</li>
                         </ul>
-                        <button type="button" class="games-btn" id="memojiStartBtn">Start</button>
+                        <div class="game-pre__actions">
+                            <button type="button" class="games-btn" id="memojiStartBtn">Start matching</button>
+                            <a class="btn-secondary" href="games.html">All games</a>
+                        </div>
                     </div>
                     <div class="game-pre__media" aria-hidden="true">
-                        <div class="game-pre__graphic"></div>
+                        <div class="game-pre__faces">
+                            <span class="game-pre__face"><img src="Assets/memoji/memoji1.heic.png" alt=""></span>
+                            <span class="game-pre__face"><img src="Assets/memoji/memoji2.heic.png" alt=""></span>
+                            <span class="game-pre__face"><img src="Assets/memoji/memoji7.heic.png" alt=""></span>
+                            <span class="game-pre__face"><img src="Assets/memoji/memoji4.heic.png" alt=""></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -79,54 +90,65 @@
         <section class="game-screen" id="memojiModeScreen" hidden>
             <div class="container">
                 <div class="game-screen__inner">
-                    <h2 class="game-screen__title">Pick a Mode</h2>
-                    <p class="game-screen__sub">Choose how many pairs you want to match.</p>
+                    <h2 class="game-screen__title">How brave are you?</h2>
+                    <p class="game-screen__sub">More pairs, more chaos. You can change this later with Restart.</p>
                     <div>
                         <label class="games-label" for="memojiMode">Mode</label>
                         <select id="memojiMode" class="games-select" name="mode">
-                            <option value="easy">Easy</option>
-                            <option value="normal" selected>Normal</option>
-                            <option value="hard">Hard</option>
+                            <option value="easy">Easy — 8 pairs · 16 cards</option>
+                            <option value="normal" selected>Normal — 12 pairs · 24 cards</option>
+                            <option value="hard">Hard — 16 pairs · 32 cards</option>
                         </select>
                     </div>
                     <div class="game-screen__actions">
                         <button type="button" class="games-btn" id="memojiPlayBtn">Play</button>
+                        <button type="button" class="btn-secondary" id="memojiBackStory">Wait, the story again</button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="game-viewport" id="memojiGameScreen" hidden aria-label="Matching Memoji game">
-            <div class="game-hud" role="group" aria-label="Game stats">
-                <button id="memojiRestart" class="games-btn" type="button">Restart</button>
-                <div class="games-metric" aria-label="Moves">
-                    <span class="games-metric__k">Moves</span>
-                    <span id="memojiMoves" class="games-metric__v">0</span>
-                </div>
-                <div class="games-metric" aria-label="Time">
-                    <span class="games-metric__k">Time</span>
-                    <span id="memojiTime" class="games-metric__v">00:00</span>
-                </div>
-            </div>
-            <div class="game-stage">
-                <div class="game-stage__inner">
-                    <div id="memojiBoard" class="memoji-board" role="grid" aria-label="Memory match cards"></div>
+        <section class="memoji-play" id="memojiGameScreen" hidden aria-label="Matching Memoji game">
+            <div class="container">
+                <div class="memoji-window">
+                    <div class="game-hud" role="group" aria-label="Game stats">
+                        <a class="games-btn games-btn--ghost" href="games.html">Games</a>
+                        <button id="memojiRestart" class="games-btn" type="button">Restart</button>
+                        <div class="games-metric" aria-label="Moves">
+                            <span class="games-metric__k">Moves</span>
+                            <span id="memojiMoves" class="games-metric__v">0</span>
+                        </div>
+                        <div class="games-metric" aria-label="Time">
+                            <span class="games-metric__k">Time</span>
+                            <span id="memojiTime" class="games-metric__v">00:00</span>
+                        </div>
+                    </div>
+                    <div class="game-stage">
+                        <div class="game-stage__inner">
+                            <div id="memojiBoard" class="memoji-board" role="grid" aria-label="Memory match cards"></div>
+                        </div>
+                    </div>
+                    <p class="memoji-hint">Tip: tap slowly on purpose. The memojis can wait.</p>
+
+                    <div class="memoji-win" id="memojiEndScreen" hidden>
+                        <div class="memoji-win__card" role="dialog" aria-modal="true" aria-labelledby="memojiWinTitle" aria-describedby="memojiWinGrade memojiEndStats">
+                            <div class="memoji-win__burst" aria-hidden="true">
+                                <span></span><span></span><span></span><span></span><span></span><span></span>
+                            </div>
+                            <p class="memoji-win__eyebrow">Board clear</p>
+                            <h2 class="memoji-win__title" id="memojiWinTitle">They’re all home.</h2>
+                            <div class="memoji-win__stars" id="memojiWinStars" aria-label="Rating"></div>
+                            <p class="memoji-win__grade" id="memojiWinGrade">Nice work.</p>
+                            <p class="memoji-win__stats" id="memojiEndStats">0 moves · 00:00</p>
+                            <div class="memoji-win__actions">
+                                <button type="button" class="games-btn" id="memojiPlayAgain">Play again</button>
+                                <a class="btn-secondary" href="games.html">Back to Games</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="memojiLive" class="games-live" aria-live="polite"></div>
-        </section>
-
-        <section class="game-screen" id="memojiEndScreen" hidden>
-            <div class="container">
-                <div class="game-screen__inner">
-                    <h2 class="game-screen__title">Congrats — you did it!</h2>
-                    <p class="game-screen__sub" id="memojiEndStats">You finished in 0 moves and 00:00.</p>
-                    <div class="game-screen__actions">
-                        <button type="button" class="games-btn" id="memojiPlayAgain">Play Again</button>
-                        <a class="games-btn" href="games.html">Back to Games</a>
-                    </div>
-                </div>
-            </div>
         </section>
     </main>
 
@@ -148,7 +170,6 @@
     </footer>
     <div class="lastQuote">Business is complicated, your web solutions can be  simple. @YegorCreative2021</div>
 
-    <!-- Back to top button -->
     <button type="button" id="backToTopBtn" class="back-to-top" aria-label="Back to top">Top</button>
 
     <script src="script.js"></script>
