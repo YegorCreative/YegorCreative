@@ -2748,3 +2748,346 @@ body.games-page .game-preview--sweet .candy--2 { background: #22c55e; }
 body.games-page .game-preview--sweet .candy--3 { background: #8b5cf6; }
 body.games-page .game-preview--sweet .candy--4 { background: #38bdf8; }
 body.games-page .game-preview--sweet .candy--5 { background: #fb7185; }
+
+/* Drop 15 */
+body.game-drop {
+  overflow-x: hidden;
+}
+
+body.game-drop .games-btn {
+  min-height: 44px;
+  border-radius: 999px;
+  border: 2px solid #7c3aed;
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+  color: #fff;
+  font-weight: 800;
+  padding: 10px 18px;
+  cursor: pointer;
+  font: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.game-drop .games-btn--ghost {
+  background: rgba(255, 255, 255, 0.86);
+  color: rgba(76, 29, 149, 0.92);
+  border-color: rgba(124, 58, 237, 0.35);
+}
+
+body.game-drop .games-metric {
+  display: grid;
+  gap: 2px;
+  min-width: 52px;
+}
+
+body.game-drop .games-metric__k {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(17, 24, 39, 0.45);
+}
+
+body.game-drop .games-metric__v {
+  font-weight: 800;
+  color: #4c1d95;
+}
+
+body.game-drop .drop-pre-well {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  width: min(220px, 64vw);
+  padding: 16px;
+  border-radius: 24px;
+  background: #111827;
+  box-shadow: 0 18px 42px rgba(17, 24, 39, 0.16);
+}
+
+body.game-drop .drop-pre-well .drop-cell {
+  aspect-ratio: 1;
+}
+
+body.game-drop .drop-modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+body.game-drop .drop-mode {
+  min-height: 40px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(124, 58, 237, 0.28);
+  background: #fff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+body.game-drop .drop-mode.is-on {
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+  color: #fff;
+  border-color: transparent;
+}
+
+body.game-drop .drop-mode-note {
+  margin: 0;
+  color: rgba(17, 24, 39, 0.62);
+  font-size: 14px;
+}
+
+body.game-drop .drop-level-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+body.game-drop .drop-level {
+  display: grid;
+  gap: 2px;
+  justify-items: center;
+  min-height: 64px;
+  padding: 10px 6px;
+  border-radius: 14px;
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  background: #fff;
+  cursor: pointer;
+}
+
+body.game-drop .drop-level__num {
+  font-weight: 800;
+  font-size: 18px;
+  color: #4c1d95;
+}
+
+body.game-drop .drop-level__mark {
+  font-size: 11px;
+  color: rgba(17, 24, 39, 0.5);
+}
+
+body.game-drop .drop-level.is-cleared {
+  background: #f0fdf4;
+  border-color: rgba(22, 163, 74, 0.3);
+}
+
+body.game-drop .drop-level.is-current {
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+  border-color: transparent;
+}
+
+body.game-drop .drop-level.is-current .drop-level__num,
+body.game-drop .drop-level.is-current .drop-level__mark {
+  color: #fff;
+}
+
+body.game-drop .drop-level.is-locked,
+body.game-drop .drop-level:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+body.game-drop .drop-play {
+  padding: 8px 0 36px;
+}
+
+body.game-drop .drop-window {
+  position: relative;
+  display: grid;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 22px;
+  border: 1px solid rgba(124, 58, 237, 0.18);
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 18px 46px rgba(17, 24, 39, 0.1);
+}
+
+body.game-drop .game-hud {
+  position: sticky;
+  top: 10px;
+  z-index: 4;
+}
+
+body.game-drop .drop-stage {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+body.game-drop .drop-well-wrap {
+  width: min(280px, 68vw);
+}
+
+body.game-drop .drop-well {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+  aspect-ratio: 10 / 20;
+  gap: 2px;
+  padding: 7px;
+  border-radius: 18px;
+  background: #0f172a;
+  box-shadow: inset 0 0 0 3px #1e293b, 0 16px 32px rgba(15, 23, 42, 0.2);
+}
+
+body.game-drop .drop-cell {
+  display: block;
+  border-radius: 4px;
+  background: rgba(148, 163, 184, 0.08);
+}
+
+body.game-drop .drop-cell.is-c0 { background: linear-gradient(180deg, #67e8f9, #22d3ee); }
+body.game-drop .drop-cell.is-c1 { background: linear-gradient(180deg, #fde047, #facc15); }
+body.game-drop .drop-cell.is-c2 { background: linear-gradient(180deg, #c4b5fd, #a78bfa); }
+body.game-drop .drop-cell.is-c3 { background: linear-gradient(180deg, #4ade80, #22c55e); }
+body.game-drop .drop-cell.is-c4 { background: linear-gradient(180deg, #fb7185, #ef4444); }
+body.game-drop .drop-cell.is-c5 { background: linear-gradient(180deg, #60a5fa, #3b82f6); }
+body.game-drop .drop-cell.is-c6 { background: linear-gradient(180deg, #fb923c, #f97316); }
+
+body.game-drop .drop-cell.is-live {
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.14), 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+body.game-drop .drop-cell.is-ghost {
+  opacity: 0.28;
+}
+
+body.game-drop .drop-cell.is-empty {
+  background: transparent;
+}
+
+body.game-drop .drop-side {
+  display: grid;
+  gap: 12px;
+  width: 124px;
+  flex: 0 0 auto;
+}
+
+body.game-drop .drop-next {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 16px;
+  background: #111827;
+}
+
+body.game-drop .drop-next__k {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+body.game-drop .drop-next__grid {
+  display: grid;
+  gap: 3px;
+  width: 84px;
+}
+
+body.game-drop .drop-next__grid .drop-cell {
+  aspect-ratio: 1;
+}
+
+body.game-drop .drop-hint {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(17, 24, 39, 0.55);
+}
+
+body.game-drop .drop-pad {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+
+body.game-drop .drop-pad__btn {
+  min-height: 48px;
+  border-radius: 14px;
+  border: 1px solid rgba(124, 58, 237, 0.22);
+  background: #fff;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 800;
+  color: #4c1d95;
+  cursor: pointer;
+}
+
+body.game-drop .drop-pad__btn--drop {
+  font-size: 13px;
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+  color: #fff;
+  border-color: transparent;
+}
+
+body.game-drop .drop-pad__btn:focus-visible,
+body.game-drop .games-btn:focus-visible,
+body.game-drop .drop-level:focus-visible {
+  outline: 3px solid #7c3aed;
+  outline-offset: 2px;
+}
+
+body.game-drop .games-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+@media (max-width: 640px) {
+  body.game-drop .drop-level-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  body.game-drop .drop-stage {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  body.game-drop .drop-side {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    width: min(260px, 78vw);
+  }
+
+  body.game-drop .drop-well-wrap {
+    width: min(228px, 70vw);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.game-drop .drop-cell {
+    transition: none;
+  }
+}
+
+body.games-page .game-card__media--drop {
+  background:
+    radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.16), transparent 42%),
+    linear-gradient(145deg, #0f172a, #312e81 70%);
+}
+
+body.games-page .game-preview--drop {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  width: 118px;
+  height: 118px;
+}
+
+body.games-page .game-preview--drop .drop-cell {
+  display: block;
+  border-radius: 4px;
+}
+
+body.games-page .game-preview--drop .drop-cell.is-c0 { background: #22d3ee; }
+body.games-page .game-preview--drop .drop-cell.is-c1 { background: #facc15; }
+body.games-page .game-preview--drop .drop-cell.is-c2 { background: #a78bfa; }
+body.games-page .game-preview--drop .drop-cell.is-c3 { background: #22c55e; }
+body.games-page .game-preview--drop .drop-cell.is-c4 { background: #ef4444; }
+body.games-page .game-preview--drop .drop-cell.is-c5 { background: #3b82f6; }
+body.games-page .game-preview--drop .drop-cell.is-c6 { background: #f97316; }

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Drop 15 | Yegor Creative</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Drop 15 — falling blocks, 15 levels, then you’re done. A short stacker by Yegor Creative.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://yegorcreative.com/drop-15.html">
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="CSS/responsive.css">
+    <link rel="stylesheet" href="CSS/games.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Drop 15 | Yegor Creative">
+    <meta property="og:description" content="Falling blocks. Only 15 levels. You can actually finish this.">
+    <meta property="og:url" content="https://yegorcreative.com/drop-15.html">
+    <meta property="og:image" content="https://yegorcreative.com/Assets/YegorCreativeScan.png">
+    <meta property="og:site_name" content="Yegor Creative">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Drop 15 | Yegor Creative">
+    <meta name="theme-color" content="#7C3AED">
+    <link rel="icon" type="image/png" href="./Assets/lionheadico.png">
+    <link rel="stylesheet" href="CSS/redesign.css">
+</head>
+
+<body class="game-page game-drop">
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <div id="top" aria-hidden="true"></div>
+
+    <header role="banner" class="mainHeading">
+        <div class="container">
+            <div class="mainLogo">
+                <a href="index.html"><img src="Assets/lionhead.png" alt="Yegor Creative home" height="110"></a>
+                <span class="brand-title">YegorCreative</span>
+            </div>
+            <button type="button" class="nav-toggle" id="navToggle" aria-controls="primaryNav" aria-expanded="false" aria-label="Open menu">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+            <nav id="primaryNav" class="site-nav primary-nav" aria-label="Primary">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="portfolio.html">Work</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="games.html" class="active">Games</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="contact.html#contact-form" class="btn-primary header-cta"><span class="header-cta__long">Start a Project</span><span class="header-cta__short">Start</span></a>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" role="main" class="game-main">
+        <section class="game-pre" id="dropPre">
+            <div class="container">
+                <div class="game-pre__grid">
+                    <div class="game-pre__text">
+                        <p class="game-pre__eyebrow">Only 15 levels</p>
+                        <h1 class="game-pre__title">Drop 15</h1>
+                        <p class="game-pre__story">Falling blocks, without the endless grind. Fifteen floors. Clear the lines. Then you’re done.</p>
+                        <p class="game-pre__story game-pre__story--punch">The pieces will not wait. Slide them, spin them, drop them. Four in a row is the rude one.</p>
+                        <ul class="game-pre__rules">
+                            <li>Move, rotate, and drop the falling piece.</li>
+                            <li>Fill a row to clear it. Clear the floor’s lines to unlock the next.</li>
+                            <li>Pick Easy, Normal, or Hard. Fifteen levels either way.</li>
+                        </ul>
+                        <div class="game-pre__actions">
+                            <button type="button" class="games-btn" id="dropStartBtn">Play the 15</button>
+                            <a class="btn-secondary" href="games.html">All games</a>
+                        </div>
+                    </div>
+                    <div class="game-pre__media" aria-hidden="true">
+                        <div class="drop-pre-well">
+                            <span class="drop-cell is-c0"></span>
+                            <span class="drop-cell is-c1"></span>
+                            <span class="drop-cell is-c1"></span>
+                            <span class="drop-cell is-c3"></span>
+                            <span class="drop-cell is-c4"></span>
+                            <span class="drop-cell is-c5"></span>
+                            <span class="drop-cell is-c5"></span>
+                            <span class="drop-cell is-c2"></span>
+                            <span class="drop-cell is-c2"></span>
+                            <span class="drop-cell is-c2"></span>
+                            <span class="drop-cell is-c6"></span>
+                            <span class="drop-cell is-c0"></span>
+                            <span class="drop-cell is-c0"></span>
+                            <span class="drop-cell is-c0"></span>
+                            <span class="drop-cell is-c4"></span>
+                            <span class="drop-cell is-c4"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="game-screen" id="dropLevels" hidden>
+            <div class="container">
+                <div class="game-screen__inner">
+                    <h2 class="game-screen__title">Pick a floor</h2>
+                    <p class="game-screen__sub">Fifteen stops. Clear one to unlock the next. That’s the whole game.</p>
+                    <div class="drop-modes" id="dropModes" role="radiogroup" aria-label="Difficulty">
+                        <button type="button" class="drop-mode" data-mode="easy">Easy</button>
+                        <button type="button" class="drop-mode is-on" data-mode="normal">Normal</button>
+                        <button type="button" class="drop-mode" data-mode="hard">Hard</button>
+                    </div>
+                    <p class="drop-mode-note" id="dropModeNote">Normal — regular speed and line counts.</p>
+                    <div class="drop-level-grid" id="dropLevelGrid" role="list"></div>
+                    <div class="game-screen__actions">
+                        <button type="button" class="games-btn" id="dropContinueBtn">Continue</button>
+                        <button type="button" class="btn-secondary" id="dropBackStory">Back</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="drop-play" id="dropPlay" hidden aria-label="Drop 15 game">
+            <div class="container">
+                <div class="drop-window">
+                    <div class="game-hud" role="group" aria-label="Game stats">
+                        <a class="games-btn games-btn--ghost" href="games.html">Games</a>
+                        <button type="button" class="games-btn" id="dropRetry">Retry</button>
+                        <button type="button" class="games-btn games-btn--ghost" id="dropLevelsBtn">Floors</button>
+                        <div class="games-metric" aria-label="Level">
+                            <span class="games-metric__k">Floor</span>
+                            <span id="dropLevelHud" class="games-metric__v">1 / 15</span>
+                        </div>
+                        <div class="games-metric" aria-label="Lines left">
+                            <span class="games-metric__k">Lines</span>
+                            <span id="dropLinesHud" class="games-metric__v">0 / 4</span>
+                        </div>
+                        <div class="games-metric" aria-label="Score">
+                            <span class="games-metric__k">Score</span>
+                            <span id="dropScoreHud" class="games-metric__v">0</span>
+                        </div>
+                    </div>
+
+                    <div class="drop-stage">
+                        <div class="drop-well-wrap">
+                            <div id="dropWell" class="drop-well" role="img" aria-label="Stack well"></div>
+                        </div>
+                        <aside class="drop-side">
+                            <div class="drop-next">
+                                <span class="drop-next__k">Next</span>
+                                <div id="dropNext" class="drop-next__grid" aria-hidden="true"></div>
+                            </div>
+                            <p class="drop-hint" id="dropHint">Arrows move. Up rotates. Space drops.</p>
+                        </aside>
+                    </div>
+
+                    <div class="drop-pad" aria-label="Touch controls">
+                        <button type="button" class="drop-pad__btn" data-act="left" aria-label="Move left">←</button>
+                        <button type="button" class="drop-pad__btn" data-act="rot" aria-label="Rotate">↻</button>
+                        <button type="button" class="drop-pad__btn" data-act="right" aria-label="Move right">→</button>
+                        <button type="button" class="drop-pad__btn" data-act="down" aria-label="Soft drop">↓</button>
+                        <button type="button" class="drop-pad__btn drop-pad__btn--drop" data-act="hard" aria-label="Hard drop">Drop</button>
+                    </div>
+
+                    <div class="memoji-win" id="dropOverlay" hidden>
+                        <div class="memoji-win__card" role="dialog" aria-modal="true" aria-labelledby="dropOverlayTitle" aria-describedby="dropOverlayText">
+                            <p class="memoji-win__eyebrow" id="dropOverlayEye">Floor clear</p>
+                            <h2 class="memoji-win__title" id="dropOverlayTitle">Stacked.</h2>
+                            <div class="memoji-win__stars" id="dropStars" aria-label="Rating"></div>
+                            <p class="memoji-win__grade" id="dropOverlayText">Nice work.</p>
+                            <p class="memoji-win__stats" id="dropOverlayStats"></p>
+                            <div class="memoji-win__actions">
+                                <button type="button" class="games-btn" id="dropAgain">Next floor</button>
+                                <a class="btn-secondary" href="games.html">Back to Games</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="dropLive" class="games-live" aria-live="polite"></div>
+        </section>
+    </main>
+
+    <footer role="contentinfo" class="footFooter" id="contact">
+        <h2 class="contact-heading"><span class="heading-icon">Contact</span> Yegor<span class="heading-underline"></span></h2>
+        <div class="socialMedia">
+            <a href="https://www.facebook.com/hambaryanyegor/" target="_blank" aria-label="Visit Yegor Creative on Facebook" rel="noopener noreferrer"><img class="socialMI" src="Assets/facebook.png" alt="" width="90px"></a>
+            <a href="https://www.instagram.com/yegorcreative/" target="_blank" aria-label="Visit Yegor Creative on Instagram" rel="noopener noreferrer"><img class="socialMI" src="Assets/instagram.png" alt="" width="90px"></a>
+            <a href="https://www.youtube.com/yegorcreative" target="_blank" aria-label="Visit Yegor Creative on YouTube" rel="noopener noreferrer"><img class="socialMI" src="Assets/youtube.png" alt="" width="90px"></a>
+            <a href="https://www.linkedin.com/in/yegorhambaryan/" target="_blank" aria-label="Visit Yegor Hambaryan on LinkedIn" rel="noopener noreferrer"><img class="socialMI" src="Assets/linkedIn.png" alt="" width="90px"></a>
+            <a href="https://github.com/YegorCreative" target="_blank" aria-label="Visit Yegor Creative on GitHub" rel="noopener noreferrer"><img class="socialMI" src="Assets/github.png" alt="" width="90px"></a>
+            <a href="mailto:yegor@yegorcreative.com" aria-label="Send email to Yegor"><img src="Assets/email.png" alt="" class="socialMI" width="90px"></a>
+        </div>
+        <div class="footer-contact">
+            <p>New York</p>
+            <p><a href="mailto:yegor@yegorcreative.com" aria-label="Email Yegor Creative at yegor@yegorcreative.com">yegor@yegorcreative.com</a></p>
+            <p><a href="tel:+17133306868" aria-label="Call Yegor Creative at +1 713 330 6868">+17133306868</a></p>
+        </div>
+    </footer>
+    <div class="lastQuote">Business is complicated, your web solutions can be  simple. @YegorCreative2021</div>
+
+    <button type="button" id="backToTopBtn" class="back-to-top" aria-label="Back to top">Top</button>
+
+    <script src="script.js"></script>
+    <script src="nav-active.js"></script>
+    <script src="drop-15.js"></script>
+</body>
+
+</html>
