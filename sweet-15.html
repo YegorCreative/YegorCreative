@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Sweet 15 | Yegor Creative</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Sweet 15 — a short candy match-3. Only 15 levels. Swap, match, finish.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://yegorcreative.com/sweet-15.html">
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="CSS/responsive.css">
+    <link rel="stylesheet" href="CSS/games.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Sweet 15 | Yegor Creative">
+    <meta property="og:description" content="Candy Crush energy. Only 15 levels. You can actually finish this.">
+    <meta property="og:url" content="https://yegorcreative.com/sweet-15.html">
+    <meta property="og:image" content="https://yegorcreative.com/Assets/YegorCreativeScan.png">
+    <meta property="og:site_name" content="Yegor Creative">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sweet 15 | Yegor Creative">
+    <meta name="theme-color" content="#7C3AED">
+    <link rel="icon" type="image/png" href="./Assets/lionheadico.png">
+    <link rel="stylesheet" href="CSS/redesign.css">
+</head>
+
+<body class="game-page game-sweet">
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <div id="top" aria-hidden="true"></div>
+
+    <header role="banner" class="mainHeading">
+        <div class="container">
+            <div class="mainLogo">
+                <a href="index.html"><img src="Assets/lionhead.png" alt="Yegor Creative home" height="110"></a>
+                <span class="brand-title">YegorCreative</span>
+            </div>
+            <button type="button" class="nav-toggle" id="navToggle" aria-controls="primaryNav" aria-expanded="false" aria-label="Open menu">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+            <nav id="primaryNav" class="site-nav primary-nav" aria-label="Primary">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="portfolio.html">Work</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="games.html" class="active">Games</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="contact.html#contact-form" class="btn-primary header-cta"><span class="header-cta__long">Start a Project</span><span class="header-cta__short">Start</span></a>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" role="main" class="game-main">
+        <section class="game-pre" id="sweetPre">
+            <div class="container">
+                <div class="game-pre__grid">
+                    <div class="game-pre__text">
+                        <p class="game-pre__eyebrow">Only 15 levels</p>
+                        <h1 class="game-pre__title">Sweet 15</h1>
+                        <p class="game-pre__story">Candy Crush energy, without the endless grind. Fifteen boards. Then you’re done.</p>
+                        <p class="game-pre__story game-pre__story--punch">You can finish this on a lunch break. Swap neighbors, make a line of three, beat the score, unlock the next one.</p>
+                        <ul class="game-pre__rules">
+                            <li>Tap two neighbors to swap them. Three in a line pop.</li>
+                            <li>After level 3: match 4 to blow a row or column. Match 5 to wipe a color.</li>
+                            <li>Pick Easy, Normal, or Hard. Fifteen levels either way.</li>
+                        </ul>
+                        <div class="game-pre__actions">
+                            <button type="button" class="games-btn" id="sweetStartBtn">Play the 15</button>
+                            <a class="btn-secondary" href="games.html">All games</a>
+                        </div>
+                    </div>
+                    <div class="game-pre__media" aria-hidden="true">
+                        <div class="sweet-pre-grid">
+                            <span class="candy candy--0"></span>
+                            <span class="candy candy--1"></span>
+                            <span class="candy candy--2"></span>
+                            <span class="candy candy--3"></span>
+                            <span class="candy candy--4"></span>
+                            <span class="candy candy--5"></span>
+                            <span class="candy candy--1"></span>
+                            <span class="candy candy--0"></span>
+                            <span class="candy candy--2"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="game-screen" id="sweetLevels" hidden>
+            <div class="container">
+                <div class="game-screen__inner">
+                    <h2 class="game-screen__title">Pick a level</h2>
+                    <p class="game-screen__sub">Fifteen stops. Clear one to unlock the next. That’s the whole game.</p>
+                    <div class="sweet-modes" id="sweetModes" role="radiogroup" aria-label="Difficulty">
+                        <button type="button" class="sweet-mode" data-mode="easy">Easy</button>
+                        <button type="button" class="sweet-mode is-on" data-mode="normal">Normal</button>
+                        <button type="button" class="sweet-mode" data-mode="hard">Hard</button>
+                    </div>
+                    <p class="sweet-mode-note" id="sweetModeNote">Normal — regular targets and moves. Specials from level 4.</p>
+                    <div class="sweet-level-grid" id="sweetLevelGrid" role="list"></div>
+                    <div class="game-screen__actions">
+                        <button type="button" class="games-btn" id="sweetContinueBtn">Continue</button>
+                        <button type="button" class="btn-secondary" id="sweetBackStory">Back</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sweet-play" id="sweetPlay" hidden aria-label="Sweet 15 game">
+            <div class="container">
+                <div class="sweet-window">
+                    <div class="game-hud" role="group" aria-label="Game stats">
+                        <a class="games-btn games-btn--ghost" href="games.html">Games</a>
+                        <button type="button" class="games-btn" id="sweetRestart">Retry</button>
+                        <button type="button" class="games-btn games-btn--ghost" id="sweetLevelsBtn">Levels</button>
+                        <div class="games-metric" aria-label="Level">
+                            <span class="games-metric__k">Level</span>
+                            <span id="sweetLevel" class="games-metric__v">1 / 15</span>
+                        </div>
+                        <div class="games-metric" aria-label="Moves">
+                            <span class="games-metric__k">Moves</span>
+                            <span id="sweetMoves" class="games-metric__v">20</span>
+                        </div>
+                        <div class="games-metric" aria-label="Mode">
+                            <span class="games-metric__k">Mode</span>
+                            <span id="sweetModeHud" class="games-metric__v">Normal</span>
+                        </div>
+                    </div>
+                    <div class="sweet-goal" aria-label="Score">
+                        <div class="sweet-goal__row">
+                            <span>Score</span>
+                            <span><span id="sweetScore">0</span> / <span id="sweetTarget">300</span></span>
+                        </div>
+                        <div class="sweet-goal__bar" aria-hidden="true">
+                            <span class="sweet-goal__fill" id="sweetFill"></span>
+                        </div>
+                    </div>
+                    <div class="sweet-stage">
+                        <div id="sweetBoard" class="sweet-board" role="grid" aria-label="Candy board"></div>
+                    </div>
+                    <p class="sweet-hint" id="sweetHint">Swap two neighbors. Make three in a line. Fifteen levels and you’re out.</p>
+
+                    <div class="memoji-win" id="sweetOverlay" hidden>
+                        <div class="memoji-win__card" role="dialog" aria-modal="true" aria-labelledby="sweetOverlayTitle" aria-describedby="sweetOverlayText">
+                            <p class="memoji-win__eyebrow" id="sweetOverlayEyebrow">Level clear</p>
+                            <h2 class="memoji-win__title" id="sweetOverlayTitle">Sweet.</h2>
+                            <p class="memoji-win__grade" id="sweetOverlayText">Nice work.</p>
+                            <div class="memoji-win__actions">
+                                <button type="button" class="games-btn" id="sweetOverlayPrimary">Next level</button>
+                                <button type="button" class="btn-secondary" id="sweetOverlaySecondary">Retry</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="sweetLive" class="games-live" aria-live="polite"></div>
+        </section>
+    </main>
+
+    <footer role="contentinfo" class="footFooter" id="contact">
+        <h2 class="contact-heading"><span class="heading-icon">Contact</span> Yegor<span class="heading-underline"></span></h2>
+        <div class="socialMedia">
+            <a href="https://www.facebook.com/hambaryanyegor/" target="_blank" aria-label="Visit Yegor Creative on Facebook" rel="noopener noreferrer"><img class="socialMI" src="Assets/facebook.png" alt="" width="90px"></a>
+            <a href="https://www.instagram.com/yegorcreative/" target="_blank" aria-label="Visit Yegor Creative on Instagram" rel="noopener noreferrer"><img class="socialMI" src="Assets/instagram.png" alt="" width="90px"></a>
+            <a href="https://www.youtube.com/yegorcreative" target="_blank" aria-label="Visit Yegor Creative on YouTube" rel="noopener noreferrer"><img class="socialMI" src="Assets/youtube.png" alt="" width="90px"></a>
+            <a href="https://www.linkedin.com/in/yegorhambaryan/" target="_blank" aria-label="Visit Yegor Hambaryan on LinkedIn" rel="noopener noreferrer"><img class="socialMI" src="Assets/linkedIn.png" alt="" width="90px"></a>
+            <a href="https://github.com/YegorCreative" target="_blank" aria-label="Visit Yegor Creative on GitHub" rel="noopener noreferrer"><img class="socialMI" src="Assets/github.png" alt="" width="90px"></a>
+            <a href="mailto:yegor@yegorcreative.com" aria-label="Send email to Yegor"><img src="Assets/email.png" alt="" class="socialMI" width="90px"></a>
+        </div>
+        <div class="footer-contact">
+            <p>New York</p>
+            <p><a href="mailto:yegor@yegorcreative.com" aria-label="Email Yegor Creative at yegor@yegorcreative.com">yegor@yegorcreative.com</a></p>
+            <p><a href="tel:+17133306868" aria-label="Call Yegor Creative at +1 713 330 6868">+17133306868</a></p>
+        </div>
+    </footer>
+    <div class="lastQuote">Business is complicated, your web solutions can be  simple. @YegorCreative2021</div>
+
+    <button type="button" id="backToTopBtn" class="back-to-top" aria-label="Back to top">Top</button>
+
+    <script src="script.js"></script>
+    <script src="nav-active.js"></script>
+    <script src="sweet-15.js"></script>
+</body>
+
+</html>

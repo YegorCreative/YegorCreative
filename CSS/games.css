@@ -1627,3 +1627,354 @@ body.game-memoji .games-live {
     grid-template-columns: 1.1fr 0.9fr;
   }
 }
+
+/* Sweet 15 */
+body.game-sweet {
+  overflow-x: hidden;
+}
+
+body.game-sweet .games-btn {
+  min-height: 44px;
+  border-radius: 999px;
+  border: 2px solid rgba(124, 58, 237, 1);
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+  color: #fff;
+  font-weight: 800;
+  padding: 10px 18px;
+  cursor: pointer;
+  font: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.game-sweet .games-btn--ghost {
+  background: rgba(255, 255, 255, 0.86);
+  color: rgba(76, 29, 149, 0.92);
+  border-color: rgba(124, 58, 237, 0.35);
+}
+
+body.game-sweet .sweet-pre-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: min(280px, 80vw);
+  padding: 16px;
+  border-radius: 24px;
+  background:
+    radial-gradient(140px 90px at 20% 15%, rgba(255, 255, 255, 0.2), transparent 55%),
+    linear-gradient(145deg, #7c3aed, #fb7185 70%);
+  box-shadow: 0 18px 42px rgba(17, 24, 39, 0.16);
+}
+
+body.game-sweet .sweet-modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+body.game-sweet .sweet-mode {
+  min-height: 40px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(124, 58, 237, 0.28);
+  background: #fff;
+  color: rgba(76, 29, 149, 0.88);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+body.game-sweet .sweet-mode.is-on {
+  border-color: transparent;
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+  color: #fff;
+}
+
+body.game-sweet .sweet-mode-note {
+  margin: 0;
+  color: rgba(17, 24, 39, 0.62);
+  font-size: 14px;
+}
+
+body.game-sweet .sweet-level-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+body.game-sweet .sweet-level {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
+  border-radius: 14px;
+  border: 1px solid rgba(124, 58, 237, 0.22);
+  background: #fff;
+  color: rgba(17, 24, 39, 0.9);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+body.game-sweet .sweet-level__num {
+  font-size: 16px;
+}
+
+body.game-sweet .sweet-level__mark {
+  font-size: 12px;
+  line-height: 1;
+}
+
+body.game-sweet .sweet-level.is-cleared {
+  border-color: rgba(22, 163, 74, 0.35);
+  background: rgba(74, 222, 128, 0.16);
+  color: #166534;
+}
+
+body.game-sweet .sweet-level.is-current {
+  border-color: transparent;
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+  color: #fff;
+  box-shadow: 0 10px 22px rgba(124, 58, 237, 0.22);
+}
+
+body.game-sweet .sweet-level.is-locked {
+  border-style: dashed;
+  background: rgba(248, 250, 252, 0.9);
+  color: rgba(17, 24, 39, 0.38);
+  cursor: not-allowed;
+}
+
+body.game-sweet .sweet-level:disabled {
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  body.game-sweet .sweet-level-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+body.game-sweet .sweet-play {
+  padding: 8px 0 36px;
+}
+
+body.game-sweet .sweet-window {
+  position: relative;
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 22px;
+  border: 1px solid rgba(124, 58, 237, 0.18);
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 18px 46px rgba(17, 24, 39, 0.1);
+}
+
+body.game-sweet .game-hud {
+  position: sticky;
+  top: 10px;
+  z-index: 4;
+}
+
+body.game-sweet .sweet-goal {
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(124, 58, 237, 0.06);
+}
+
+body.game-sweet .sweet-goal__row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+body.game-sweet .sweet-goal__bar {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.08);
+  overflow: hidden;
+}
+
+body.game-sweet .sweet-goal__fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #fb7185, #f59e0b 55%, #4ade80);
+  transition: width 180ms ease;
+}
+
+body.game-sweet .sweet-stage {
+  width: min(100%, 420px);
+  margin: 0 auto;
+}
+
+body.game-sweet .sweet-board {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(5px, 1.6vw, 8px);
+}
+
+body.game-sweet .candy {
+  aspect-ratio: 1;
+  min-width: 0;
+  border: 0;
+  border-radius: 30%;
+  cursor: pointer;
+  position: relative;
+  box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.12), 0 4px 10px rgba(17, 24, 39, 0.12);
+  touch-action: manipulation;
+}
+
+body.game-sweet .candy::after {
+  content: "";
+  position: absolute;
+  left: 18%;
+  top: 16%;
+  width: 34%;
+  height: 22%;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+body.game-sweet .candy--0 { background: #ef4444; }
+body.game-sweet .candy--1 { background: #f59e0b; }
+body.game-sweet .candy--2 { background: #22c55e; }
+body.game-sweet .candy--3 { background: #8b5cf6; }
+body.game-sweet .candy--4 { background: #38bdf8; }
+body.game-sweet .candy--5 { background: #fb7185; }
+
+body.game-sweet .candy.is-selected {
+  outline: 3px solid #111827;
+  outline-offset: 2px;
+  transform: scale(1.06);
+}
+
+body.game-sweet .candy.is-row::before,
+body.game-sweet .candy.is-col::before {
+  content: "";
+  position: absolute;
+  inset: 42% 12%;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.12);
+}
+
+body.game-sweet .candy.is-col::before {
+  inset: 12% 42%;
+}
+
+body.game-sweet .candy.is-bomb {
+  box-shadow:
+    inset 0 -6px 0 rgba(0, 0, 0, 0.12),
+    0 0 0 3px #fff,
+    0 0 0 6px rgba(250, 204, 21, 0.9),
+    0 8px 16px rgba(17, 24, 39, 0.16);
+}
+
+body.game-sweet .candy.is-bomb::before {
+  content: "★";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 18px;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(17, 24, 39, 0.35);
+}
+
+body.game-sweet .candy.is-pop {
+  transform: scale(0.2);
+  opacity: 0;
+  transition: transform 160ms ease, opacity 160ms ease;
+}
+
+body.game-sweet .sweet-hint {
+  margin: 0;
+  text-align: center;
+  color: rgba(17, 24, 39, 0.58);
+  font-size: 13px;
+}
+
+body.game-page .games-live,
+body.game-sweet .games-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+body.game-sweet .candy:focus-visible,
+body.game-sweet .games-btn:focus-visible,
+body.game-sweet .sweet-level:focus-visible {
+  outline: 2px solid rgba(124, 58, 237, 0.75);
+  outline-offset: 2px;
+}
+
+@media (max-width: 520px) {
+  body.game-sweet .sweet-play .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  body.game-sweet .game-hud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  body.game-sweet .game-hud .games-btn {
+    flex: 1 1 30%;
+    min-width: 0;
+    padding: 10px 12px;
+  }
+
+  body.game-sweet .sweet-goal__row {
+    font-size: 13px;
+    gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.game-sweet .candy.is-pop,
+  body.game-sweet .sweet-goal__fill {
+    transition: none;
+  }
+}
+
+body.games-page .game-card__media--sweet {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.18), transparent 40%),
+    linear-gradient(145deg, #7c3aed, #fb7185);
+}
+
+body.games-page .game-preview--sweet {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  width: 132px;
+  height: 132px;
+}
+
+body.games-page .game-preview--sweet .candy {
+  display: block;
+  border-radius: 30%;
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.12);
+}
+
+body.games-page .game-preview--sweet .candy--0 { background: #ef4444; }
+body.games-page .game-preview--sweet .candy--1 { background: #f59e0b; }
+body.games-page .game-preview--sweet .candy--2 { background: #22c55e; }
+body.games-page .game-preview--sweet .candy--3 { background: #8b5cf6; }
+body.games-page .game-preview--sweet .candy--4 { background: #38bdf8; }
+body.games-page .game-preview--sweet .candy--5 { background: #fb7185; }
