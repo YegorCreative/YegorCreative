@@ -70,6 +70,31 @@ var CARDS=[
  q:"Highlights EV 11, shadows EV 6. What's the stop range?",a:"11 − 6 = 5 stops"}
 ];
 var root=document.querySelector('.eqf');
+var scrollY=0,lockedFixed=false;
+function lockScroll(){
+  prevOverflow=document.body.style.overflow;
+  document.body.style.overflow='hidden';
+  if(window.matchMedia('(pointer: coarse)').matches){
+    scrollY=window.scrollY||document.documentElement.scrollTop||0;
+    document.body.style.position='fixed';
+    document.body.style.top='-'+scrollY+'px';
+    document.body.style.left='0';
+    document.body.style.right='0';
+    document.body.style.width='100%';
+    lockedFixed=true;
+  }
+}
+function unlockScroll(){
+  document.body.style.overflow=prevOverflow;
+  if(!lockedFixed)return;
+  document.body.style.position='';
+  document.body.style.top='';
+  document.body.style.left='';
+  document.body.style.right='';
+  document.body.style.width='';
+  lockedFixed=false;
+  window.scrollTo(0,scrollY);
+}
 var grid=document.getElementById('eqf-grid'),ov=document.getElementById('eqf-overlay'),modal=document.getElementById('eqf-modal'),mt=document.getElementById('eqf-mtitle'),mn=document.getElementById('eqf-mnum'),mi=document.getElementById('eqf-micon'),mb=document.getElementById('eqf-mbody'),xb=document.getElementById('eqf-x'),pv=document.getElementById('eqf-prev'),nx=document.getElementById('eqf-next'),dots=document.getElementById('eqf-dots');
 var cards=[],cur=-1,opener=null,prevOverflow='';
 function esc(s){return String(s).replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
@@ -92,13 +117,14 @@ function show(i){var c=CARDS[i];cur=i;colorize(modal,c.g);
  var rb=mb.querySelector('.eqf-reveal');rb.addEventListener('click',function(){rb.hidden=true;mb.querySelector('.eqf-ans').hidden=false;});
  Array.prototype.forEach.call(dots.children,function(d,k){d.className=k===i?'on':'';});
  cards[i].classList.add('is-seen');
- if(ov.hidden){ov.hidden=false;prevOverflow=document.body.style.overflow;document.body.style.overflow='hidden';requestAnimationFrame(function(){ov.classList.add('eqf-open');});xb.focus();}
+ if(ov.hidden){ov.hidden=false;lockScroll();requestAnimationFrame(function(){ov.classList.add('eqf-open');});xb.focus();}
 }
-function close(){if(ov.hidden)return;ov.classList.remove('eqf-open');document.body.style.overflow=prevOverflow;
+function close(){if(ov.hidden)return;ov.classList.remove('eqf-open');unlockScroll();
  setTimeout(function(){ov.hidden=true;mb.innerHTML='';},200);var o=cards[cur]||opener;if(o)o.focus();}
 function step(d){show((cur+d+CARDS.length)%CARDS.length);}
 xb.addEventListener('click',close);pv.addEventListener('click',function(){step(-1);});nx.addEventListener('click',function(){step(1);});
 ov.addEventListener('click',function(e){if(e.target===ov)close();});
+ov.addEventListener('touchmove',function(e){if(ov.hidden)return;var sc=document.getElementById('eqf-mbody');if(sc&&sc.contains(e.target))return;e.preventDefault();},{passive:false});
 document.addEventListener('keydown',function(e){if(ov.hidden)return;
  if(e.key==='Escape'){close();return;}
  if(e.key==='ArrowRight'){step(1);return;}if(e.key==='ArrowLeft'){step(-1);return;}

@@ -19,11 +19,41 @@
     frame._fitting = false;
   }
 
+  function watchViewer(frame, doc) {
+    const viewer = doc.getElementById("lb");
+    if (!viewer || frame.dataset.viewer === "true") return;
+    frame.dataset.viewer = "true";
+
+    function showViewerTop() {
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      frame.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" });
+    }
+
+    doc.addEventListener("click", function (event) {
+      const opener = event.target.closest && event.target.closest("[data-i]");
+      if (!opener || viewer.hidden) return;
+      if (frame.requestFullscreen) {
+        frame.requestFullscreen().catch(showViewerTop);
+      } else {
+        showViewerTop();
+      }
+    });
+
+    const viewerWatch = new MutationObserver(function () {
+      if (viewer.hidden && document.fullscreenElement === frame) {
+        document.exitFullscreen().catch(function () {});
+      }
+    });
+    viewerWatch.observe(viewer, { attributes: true, attributeFilter: ["hidden"] });
+  }
+
   function watchFrame(frame) {
     frame.addEventListener("load", function () {
       fitFrame(frame);
       const doc = frame.contentDocument;
-      if (!doc || !doc.body || typeof ResizeObserver === "undefined") return;
+      if (!doc || !doc.body) return;
+      watchViewer(frame, doc);
+      if (typeof ResizeObserver === "undefined") return;
       const observer = new ResizeObserver(function () {
         fitFrame(frame);
       });
