@@ -106,6 +106,21 @@ button,input,select{font:inherit}
 .why{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--bg)}
 .why summary{cursor:pointer;font-weight:800;min-height:28px}
 .why p{margin:8px 0 0;font-size:14px}
+.spots{position:absolute;inset:0;pointer-events:none}
+.spot{position:absolute;transform:translate(-50%,-50%);width:38px;height:38px;border-radius:50%;border:3px solid #fff;background:rgba(109,74,217,.85);color:#fff;font:800 15px/1 Inter,sans-serif;display:grid;place-items:center;cursor:pointer;pointer-events:auto;box-shadow:0 0 0 2px rgba(0,0,0,.45),0 0 0 0 rgba(255,224,102,.7);animation:spotp 1.5s ease-out infinite;padding:0}
+.spot:hover,.spot:focus-visible{background:#FFE066;color:#15131C;outline:none}
+.spot.best{width:44px;height:44px;background:rgba(31,138,112,.9)}
+@keyframes spotp{70%{box-shadow:0 0 0 2px rgba(0,0,0,.45),0 0 0 14px rgba(255,224,102,0)}100%{box-shadow:0 0 0 2px rgba(0,0,0,.45),0 0 0 0 rgba(255,224,102,0)}}
+@media(prefers-reduced-motion:reduce){.spot{animation:none}}
+
+.vcard{position:absolute;right:10px;top:10px;display:flex;align-items:center;gap:8px;padding:6px 10px 6px 6px;border-radius:12px;border:2px solid #FFE066;background:rgba(20,12,40,.78);color:#fff;cursor:pointer;font:inherit;text-align:left;animation:vpulse 1.6s ease-in-out infinite}
+.vcard:hover{background:rgba(20,12,40,.92)}
+.vsw{width:44px;height:34px;border-radius:6px;border:3px solid #EDEDED;flex:none}
+.vt{font-size:12px;font-weight:800;line-height:1.2}.vt small{display:block;font-weight:600;font-size:11px;color:#FFE066}
+@keyframes vpulse{50%{box-shadow:0 0 0 6px rgba(255,224,102,.25)}}
+@media(max-width:480px){.vt{display:none}.vcard{padding:5px}}
+@media(prefers-reduced-motion:reduce){.vcard{animation:none}}
+
 .gcard{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--bg)}
 .gcard p{margin:4px 0 8px;font-size:14px}
 .gprev{flex:none;width:96px;height:72px;border-radius:8px;background:#777;border:6px solid #EDEDED;box-shadow:0 1px 3px rgba(0,0,0,.2);display:grid;place-items:end center}
@@ -165,6 +180,7 @@ button,input,select{font:inherit}
 </div>
 <div class="fixbar">
 <label class="chk" for="str" style="gap:10px">Correction strength <input type="range" id="str" min="0" max="100" value="100" style="width:140px"> <span id="strv" style="min-width:3.2em;font-variant-numeric:tabular-nums">100%</span></label>
+<button class="btn ghost" type="button" id="find">🔍 Find gray spots</button>
 <button class="btn ghost" type="button" id="auto">✨ No gray card? Auto balance</button>
 </div>
 <div class="gcard">
@@ -177,7 +193,9 @@ button,input,select{font:inherit}
 <div class="stage">
 <div class="cv" id="bwrap"><span class="lab">BEFORE</span><canvas id="before" aria-label="Original photo. Tap the middle-gray patch to correct it."></canvas>
 <div class="hint" id="hint"><span class="hand" aria-hidden="true">👆</span><span id="hintt">Tap the middle-gray patch</span></div>
-<div class="ring" id="ring" aria-hidden="true"></div></div>
+<div class="ring" id="ring" aria-hidden="true"></div>
+<div class="spots" id="spots"></div>
+<button class="vcard" id="vcard" type="button" hidden aria-label="Estimated gray card. Tap to auto-fix the colors."><span class="vsw" id="vsw"></span><span class="vt">Estimated gray card<small>tap to fix</small></span></button></div>
 <div class="cv" id="awrap"><span class="lab">AFTER</span><canvas id="after" aria-label="Corrected photo"></canvas><div class="wait" id="wait">Your corrected photo<br>will appear here</div></div>
 </div>
 <div class="fixbar" id="done" hidden>
@@ -269,7 +287,7 @@ var bc=document.getElementById('before'),ac=document.getElementById('after'),bx=
 var MAXW=1400,isSample=false,lastPick=null;
 function step(n){steps.forEach(function(li,i){li.classList.toggle('done',i+1<n);li.classList.toggle('now',i+1===n);if(i+1===n)li.setAttribute('aria-current','step');else li.removeAttribute('aria-current');});}
 function say(html,ok){st.innerHTML=html;st.className='callout'+(ok?' ok':'');}
-function ready(){mode=null;ax.drawImage(bc,0,0);wait.hidden=false;done.hidden=true;hint.hidden=false;bwrap.classList.add('ready');lastPick=null;step(2);}
+function ready(){mode=null;if(document.getElementById('spots'))document.getElementById('spots').innerHTML='';ax.drawImage(bc,0,0);wait.hidden=false;done.hidden=true;hint.hidden=false;bwrap.classList.add('ready');lastPick=null;step(2);}
 function placeRing(){if(!isSample){ring.style.display='none';return;}/* sample's Neutral 5 patch: x 372-438, y 402-468 of 900x600 */
  ring.style.display='block';ring.style.left=(724/900*100)+'%';ring.style.top=(460/600*100)+'%';ring.style.width=(148/900*100)+'%';ring.style.height=(104/600*100)+'%';}
 function sampleScene(){var W=900,H=600;bc.width=ac.width=W;bc.height=ac.height=H;
@@ -281,11 +299,11 @@ function sampleScene(){var W=900,H=600;bc.width=ac.width=W;bc.height=ac.height=H
  var s=66,g=12;P.forEach(function(p,i){bx.fillStyle=tc(p[1]);bx.fillRect(132+(i%6)*(s+g)+6,162+Math.floor(i/6)*(s+g)+6,s,s);});
  bx.fillStyle=tc('#EDEDED');bx.fillRect(716,452,164,128);bx.fillStyle=tc('#777777');bx.fillRect(724,460,148,104);bx.fillStyle=tc('#333333');bx.font='700 13px Inter,sans-serif';bx.textAlign='center';bx.fillText('18% GRAY CARD',798,576);
  var img=bx.getImageData(0,0,W,H),d=img.data;for(var k=0;k<d.length;k+=4){var n=(Math.random()-.5)*10;d[k]+=n;d[k+1]+=n;d[k+2]+=n;}bx.putImageData(img,0,0);
- isSample=true;expo.checked=true;mode=null;ready();placeRing();hintt.textContent='Tap the glowing gray card';
+ isSample=true;expo.checked=true;mode=null;ready();placeRing();document.getElementById('vcard').hidden=true;hintt.textContent='Tap the glowing gray card';
  say('This sample was shot under <b>orange tungsten light</b> and is a bit <b>too dark</b>.<small>Step 2: tap the glowing <b>gray card</b> in the bottom-right corner (or the middle-gray patch on the chart, bottom row, 4th from left) to fix both.</small>');}
 function loadFile(f){var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var k=Math.min(1,MAXW/im.width);bc.width=ac.width=Math.round(im.width*k);bc.height=ac.height=Math.round(im.height*k);bx.drawImage(im,0,0,bc.width,bc.height);
-  isSample=false;expo.checked=false;mode=null;ready();placeRing();hintt.textContent='Tap a gray card in your photo';
-  say('Your photo is loaded.<small>Step 2: tap the <b>middle-gray</b> patch of a color checker or gray card in the Before photo. <b>No gray card in the photo?</b> Use <b>✨ Auto balance</b> instead. Tapping sand, skin or rock will give wrong colors. "Fix brightness" is off for your photos. Turn it on only if you tap a middle-gray card.</small>');};
+  isSample=false;expo.checked=false;mode=null;ready();placeRing();hintt.textContent='Tap a real gray card, or the one in the corner ↗';showVcard();
+  say('Your photo is loaded.<small>Step 2: tap the <b>middle-gray</b> patch of a real color checker or gray card in the photo. <b>No gray card in the photo?</b> Tap the <b>Estimated gray card</b> in the corner (or ✨ Auto balance). Tapping sand, skin or rock will give wrong colors. "Fix brightness" is off for your photos. Turn it on only if you tap a middle-gray card.</small>');showSpots(true);};
  im.onerror=function(){say('That file couldn’t be opened as an image. Try a JPG or PNG.');};im.src=r.result;};r.readAsDataURL(f);}
 document.getElementById('file').addEventListener('change',function(e){if(e.target.files&&e.target.files[0])loadFile(e.target.files[0]);e.target.value='';});
 document.getElementById('sample').addEventListener('click',sampleScene);
@@ -326,6 +344,40 @@ function autoFix(){mode={type:'auto'};var W=bc.width,H=bc.height,d=bx.getImageDa
  applyGains(cg,null);
  say('✓ Auto balanced <small>using the average color of the whole photo (the "gray world" method) at '+str.value+'% strength. Brightness was left as it was. This works best when the scene has a mix of colors. A scene that’s mostly one color (like a desert) can still shift too far, so lower the strength if it looks off. A real gray card is always more accurate.</small>',true);}
 bc.addEventListener('click',function(e){var r=bc.getBoundingClientRect();fix(Math.round((e.clientX-r.left)/r.width*bc.width),Math.round((e.clientY-r.top)/r.height*bc.height));});
+
+function estGray(){var W=bc.width,H=bc.height,d=bx.getImageData(0,0,W,H).data,s=[0,0,0],n=0;
+ for(var k=0;k<d.length;k+=16){var r=s2l(d[k]),g=s2l(d[k+1]),b=s2l(d[k+2]);if(Math.max(r,g,b)>0.97||Math.max(r,g,b)<0.01)continue;s[0]+=r;s[1]+=g;s[2]+=b;n++;}
+ if(!n)return null;s=s.map(function(v){return v/n;});var Y=.2126*s[0]+.7152*s[1]+.0722*s[2],k2=0.184/Y;return s.map(function(v){return l2s(v*k2);});}
+function showVcard(){var v=document.getElementById('vcard'),c=estGray();if(!c){v.hidden=true;return;}document.getElementById('vsw').style.background='rgb('+c.join(',')+')';v.hidden=false;}
+document.getElementById('vcard').addEventListener('click',function(e){e.stopPropagation();autoFix();
+ say('✓ Fixed with the estimated gray card <small>The card showed the average color of your photo at middle-gray brightness, which is how a gray card would <i>probably</i> look in that light. Tapping it made that color neutral (at '+str.value+'% strength). It’s an estimate: a scene full of one color, like a desert or a sunset, can still shift too far, so lower the strength if needed. A real gray card in the photo is always more accurate.</small>',true);});
+
+/* ---- find likely gray spots ---- */
+function clearSpots(){document.getElementById('spots').innerHTML='';}
+function findSpots(){var W=bc.width,H=bc.height,cs=Math.max(8,Math.round(W/48)),d=bx.getImageData(0,0,W,H).data,cells=[],gs=[0,0,0],gn=0;
+ for(var cy=0;cy+cs<=H;cy+=cs)for(var cx=0;cx+cs<=W;cx+=cs){var r=0,g=0,b=0,y=0,y2=0,n=0,clip=false;
+  for(var yy=cy;yy<cy+cs;yy+=2)for(var xx=cx;xx<cx+cs;xx+=2){var i=(yy*W+xx)*4,R=s2l(d[i]),G=s2l(d[i+1]),B=s2l(d[i+2]);if(Math.max(R,G,B)>0.95)clip=true;var L=.2126*R+.7152*G+.0722*B;r+=R;g+=G;b+=B;y+=L;y2+=L*L;n++;}
+  r/=n;g/=n;b/=n;y/=n;var sd=Math.sqrt(Math.max(0,y2/n-y*y));
+  if(!clip&&y>0.02){gs[0]+=r;gs[1]+=g;gs[2]+=b;gn++;}
+  cells.push({x:cx+cs/2,y:cy+cs/2,r:r,g:g,b:b,Y:y,u:sd/(y+1e-6),clip:clip,cx:cx/cs,cy:cy/cs});}
+ if(!gn)return [];
+ /* Gray surfaces under real light (candle to blue sky) take the color of that light, which lies along the black-body curve.
+    So: find very smooth, mid-tone patches whose color sits on that curve. Smoothest first (a gray card has no texture). */
+ var LOC=[[255,137,14],[255,161,72],[255,180,107],[255,196,137],[255,209,163],[255,228,206],[255,249,253],[227,233,255],[204,219,255]].map(function(c){var l=c.map(function(v){return s2l(v);}),t=l[0]+l[1]+l[2];return[l[0]/t,l[2]/t];});
+ function dLoc(k){var t=k.r+k.g+k.b,x=k.r/t,y=k.b/t,best=9;for(var i=0;i<LOC.length-1;i++){var a=LOC[i],b=LOC[i+1],vx=b[0]-a[0],vy=b[1]-a[1],w=((x-a[0])*vx+(y-a[1])*vy)/(vx*vx+vy*vy);w=Math.max(0,Math.min(1,w));best=Math.min(best,Math.hypot(x-(a[0]+w*vx),y-(a[1]+w*vy)));}return best;}
+ var c=cells.filter(function(k){return !k.clip&&k.Y>0.03&&k.Y<0.8&&k.u<0.05;}).map(function(k){k.d=dLoc(k);k.score=k.u*10+k.d*6+Math.abs(Math.log(k.Y/0.184))*0.02;return k;})
+  .filter(function(k){return k.d<0.025;}).sort(function(a,b){return a.score-b.score;});
+ var pick=[];c.forEach(function(k){if(pick.length<5&&pick.every(function(q){return Math.hypot(q.cx-k.cx,q.cy-k.cy)>=7;}))pick.push(k);});
+ return pick;}
+function showSpots(auto){clearSpots();var pk=findSpots(),box=document.getElementById('spots');
+ if(!pk.length){if(!auto)say('No likely gray spots found.<small>This photo may not have anything neutral in it. Try the <b>Estimated gray card</b> or ✨ Auto balance instead.</small>');return;}
+ pk.forEach(function(k,i){var b=document.createElement('button');b.type='button';b.className='spot'+(i===0?' best':'');b.textContent=i+1;
+  b.style.left=Math.min(95,Math.max(5,k.x/bc.width*100))+'%';b.style.top=Math.min(92,Math.max(8,k.y/bc.height*100))+'%';b.setAttribute('aria-label','Possible gray spot '+(i+1)+(i===0?' (best match)':''));
+  b.addEventListener('click',function(e){e.stopPropagation();fix(Math.round(k.x),Math.round(k.y),true);var n=i+1;
+   setTimeout(function(){st.innerHTML=st.innerHTML.replace('✓ Fixed!','✓ Fixed using gray spot '+n+'!');},0);});box.appendChild(b);});
+ hint.hidden=true;ring.style.display='none';
+ say('🔍 Found '+pk.length+' possible gray spot'+(pk.length>1?'s':'')+'.<small>Tap a numbered circle to correct the photo from that spot. <b>Green #1</b> is the best match. The tool looks for smooth, even areas whose color matches plain gray or the overall tint of the light. It can be fooled by things like gray rocks or walls, so check the result and try another number if it looks off.</small>');}
+document.getElementById('find').addEventListener('click',function(){if(!wait.hidden||mode){ready();if(!isSample)showVcard();}showSpots(false);});
 document.getElementById('auto').addEventListener('click',autoFix);
 (function(){try{var c=document.createElement('canvas');c.width=1500;c.height=1000;var x=c.getContext('2d');x.fillStyle='#FFFFFF';x.fillRect(0,0,1500,1000);x.fillStyle='#777777';x.fillRect(60,60,1380,820);x.fillStyle='#333333';x.font='700 44px Inter,Arial,sans-serif';x.textAlign='center';x.fillText('18% GRAY CARD \u00b7 practice (RGB 119, 119, 119)',750,950);document.getElementById('gdl').href=c.toDataURL('image/png');}catch(e){}})();
 sampleScene();
