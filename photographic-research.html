@@ -63,49 +63,80 @@
     <main id="main" role="main">
         <div class="research-page">
             <h1>Photographic Research</h1>
-            <p class="research-intro">Interactive study tools for photographic science. Tap a card to open it.</p>
-            <div class="research-grid">
-                <button type="button" class="research-card" data-title="Exposure Simulator" data-src="research/exposure-simulator.html">
-                    <span class="research-card__title">Exposure Simulator</span>
-                    <span class="research-card__desc">Adjust aperture, shutter speed and ISO and see exposure, depth of field, motion blur and noise change.</span>
-                </button>
-                <button type="button" class="research-card" data-title="Practice Test" data-src="research/practice-test.html">
-                    <span class="research-card__title">Practice Test</span>
-                    <span class="research-card__desc">96 questions with 7 scored attempts, instant feedback and a review of your misses.</span>
-                </button>
-                <button type="button" class="research-card" data-title="Density Explorer" data-src="research/density-explorer.html">
-                    <span class="research-card__title">Density Explorer</span>
-                    <span class="research-card__desc">See how transmittance, opacity and density change as a filter gets darker.</span>
-                </button>
-                <button type="button" class="research-card" data-title="Illuminance vs Luminance" data-src="research/illuminance-luminance.html">
-                    <span class="research-card__title">Illuminance vs Luminance</span>
-                    <span class="research-card__desc">Light falling onto a subject vs light bouncing off it, and incident vs reflected meters.</span>
-                </button>
-                <button type="button" class="research-card" data-title="Equations Cheat Sheet" data-src="research/equations-cheat-sheet.html">
-                    <span class="research-card__title">Equations Cheat Sheet</span>
-                    <span class="research-card__desc">Every formula on one page, with worked examples.</span>
-                </button>
-            </div>
-            <div class="research-overlay" hidden>
-                <div class="research-dialog" role="dialog" aria-modal="true" aria-labelledby="researchDialogTitle">
-                    <div class="research-dialog__bar">
-                        <h2 id="researchDialogTitle"></h2>
-                        <button type="button" class="research-dialog__close" aria-label="Close">&times;</button>
+            <p class="research-intro">Interactive study tools for photographic science. Open a section to use it.</p>
+            <div class="research-acc">
+                <div class="research-item">
+                    <button type="button" class="research-toggle" aria-expanded="false" aria-controls="research-panel-sim">
+                        <span class="research-toggle__copy">
+                            <span class="research-toggle__title">Exposure Simulator</span>
+                            <span class="research-toggle__desc">Adjust aperture, shutter speed and ISO and see exposure, depth of field, motion blur and noise change.</span>
+                        </span>
+                        <span class="research-chevron" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="research-panel" id="research-panel-sim" hidden>
+                        <div class="research-panel__clip">
+                            <iframe class="research-frame" title="Exposure Simulator" data-src="research/exposure-simulator.html" scrolling="no"></iframe>
+                        </div>
                     </div>
-                    <iframe class="research-dialog__frame" title=""></iframe>
+                </div>
+                <div class="research-item">
+                    <button type="button" class="research-toggle" aria-expanded="false" aria-controls="research-panel-test">
+                        <span class="research-toggle__copy">
+                            <span class="research-toggle__title">Practice Test (96 questions)</span>
+                            <span class="research-toggle__desc">96 questions with 7 scored attempts, instant feedback and a review of your misses.</span>
+                        </span>
+                        <span class="research-chevron" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="research-panel" id="research-panel-test" hidden>
+                        <div class="research-panel__clip">
+                            <iframe class="research-frame" title="Practice Test (96 questions)" data-src="research/practice-test.html" scrolling="no"></iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="research-item">
+                    <button type="button" class="research-toggle" aria-expanded="false" aria-controls="research-panel-density">
+                        <span class="research-toggle__copy">
+                            <span class="research-toggle__title">Density Explorer</span>
+                            <span class="research-toggle__desc">See how transmittance, opacity and density change as a filter gets darker.</span>
+                        </span>
+                        <span class="research-chevron" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="research-panel" id="research-panel-density" hidden>
+                        <div class="research-panel__clip">
+                            <iframe class="research-frame" title="Density Explorer" data-src="research/density-explorer.html" scrolling="no"></iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="research-item">
+                    <button type="button" class="research-toggle" aria-expanded="false" aria-controls="research-panel-light">
+                        <span class="research-toggle__copy">
+                            <span class="research-toggle__title">Illuminance vs Luminance</span>
+                            <span class="research-toggle__desc">Light falling onto a subject vs light bouncing off it, and incident vs reflected meters.</span>
+                        </span>
+                        <span class="research-chevron" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="research-panel" id="research-panel-light" hidden>
+                        <div class="research-panel__clip">
+                            <iframe class="research-frame" title="Illuminance vs Luminance" data-src="research/illuminance-luminance.html" scrolling="no"></iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <section class="eqf" aria-labelledby="eqf-heading">
 <div class="eqf-wrap">
-<h2 class="eqf-title" id="eqf-heading">Equation Flashcards</h2>
-<p class="eqf-intro">Try to say the formula out loud, then tap the card to check yourself and see the explanation.</p>
+<div class="eqf-top">
+<div><h2 class="eqf-title" id="eqf-heading">Equation Flashcards</h2>
+<p class="eqf-intro">Say the formula out loud first, then tap the card to check yourself. Use the arrows inside to flip through all 8.</p></div>
+<div class="eqf-legend" id="eqf-legend"></div>
+</div>
 <div class="eqf-grid" id="eqf-grid"></div>
 </div>
 <div class="eqf-overlay" id="eqf-overlay" hidden>
-<div class="eqf-modal" role="dialog" aria-modal="true" aria-labelledby="eqf-mtitle">
-<div class="eqf-head"><h3 id="eqf-mtitle"></h3><button class="eqf-x" id="eqf-x" aria-label="Close">&times;</button></div>
+<div class="eqf-modal" id="eqf-modal" role="dialog" aria-modal="true" aria-labelledby="eqf-mtitle">
+<div class="eqf-head"><div class="eqf-ico" id="eqf-micon"></div><div class="eqf-head-t"><div class="eqf-num" id="eqf-mnum"></div><h3 id="eqf-mtitle"></h3></div><button class="eqf-x" id="eqf-x" aria-label="Close">&times;</button></div>
 <div class="eqf-body" id="eqf-mbody"></div>
+<div class="eqf-nav"><button id="eqf-prev" type="button">← Previous</button><div class="eqf-dots" id="eqf-dots"></div><button id="eqf-next" type="button">Next →</button></div>
 </div>
 </div>
 </section>
