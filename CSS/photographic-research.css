@@ -1,0 +1,261 @@
+/* Exposure simulator. Every rule is scoped to .exposure-sim so site styles stay untouched. */
+.exposure-sim {
+  font-family: system-ui, -apple-system, "Segoe UI", "Noto Sans Armenian", sans-serif;
+  background: #F4F5F7;
+  color: #15181C;
+  margin: 0;
+  padding: 20px 16px 48px;
+  line-height: normal;
+}
+
+.exposure-sim h1,
+.exposure-sim h2 {
+  font-family: inherit !important;
+  color: inherit !important;
+  letter-spacing: normal;
+}
+
+.exposure-sim .w {
+  max-width: 860px;
+  margin: 0 auto;
+  display: grid;
+  gap: 16px;
+}
+
+.exposure-sim .card {
+  background: #fff;
+  border: 1px solid #D8DCE1;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.exposure-sim h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.exposure-sim h2 {
+  font-size: 17px;
+  margin: 0 0 10px;
+}
+
+.exposure-sim .muted {
+  color: #59616B;
+  font-size: 14px;
+}
+
+.exposure-sim .scene {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #000;
+}
+
+.exposure-sim .scene > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.exposure-sim #expo {
+  transition: filter .2s;
+}
+
+.exposure-sim #bg {
+  transition: filter .2s;
+}
+
+.exposure-sim #noise {
+  pointer-events: none;
+  mix-blend-mode: normal;
+}
+
+.exposure-sim .ctrl {
+  display: grid;
+  grid-template-columns: 150px 1fr 90px;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #EEF0F2;
+}
+
+.exposure-sim .ctrl:last-child {
+  border-bottom: none;
+}
+
+.exposure-sim .ctrl b {
+  font-size: 20px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.exposure-sim input[type=range] {
+  width: 100%;
+}
+
+@media (max-width: 560px) {
+  .exposure-sim .ctrl {
+    grid-template-columns: 1fr 70px;
+  }
+
+  .exposure-sim .ctrl input {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+.exposure-sim .seg {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.exposure-sim .seg button {
+  font: inherit;
+  border: 1.5px solid #C9CED5;
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.exposure-sim .seg button.on {
+  background: #15181C;
+  color: #fff;
+  border-color: #15181C;
+}
+
+.exposure-sim .meter {
+  position: relative;
+  height: 56px;
+  margin-top: 8px;
+}
+
+.exposure-sim .scale {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 22px;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #2C3E66, #9aa3ad 50%, #F2E3B3);
+}
+
+.exposure-sim .tick {
+  position: absolute;
+  top: 34px;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #59616B;
+  font-variant-numeric: tabular-nums;
+}
+
+.exposure-sim .needle {
+  position: absolute;
+  top: 10px;
+  width: 4px;
+  height: 30px;
+  background: #C4611A;
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: left .2s;
+}
+
+.exposure-sim .tgt {
+  position: absolute;
+  top: 4px;
+  transform: translateX(-50%);
+  font-size: 11px;
+  font-weight: 700;
+  color: #2B7A4B;
+}
+
+.exposure-sim .tgtline {
+  position: absolute;
+  top: 16px;
+  width: 2px;
+  height: 20px;
+  background: #2B7A4B;
+  transform: translateX(-50%);
+}
+
+.exposure-sim .status {
+  font-weight: 700;
+  font-size: 18px;
+  margin-top: 6px;
+}
+
+.exposure-sim .good {
+  color: #2B7A4B;
+}
+
+.exposure-sim .under {
+  color: #2C3E66;
+}
+
+.exposure-sim .over {
+  color: #A8671B;
+}
+
+.exposure-sim .effects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.exposure-sim .fx {
+  border: 1px solid #E3E6EA;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.exposure-sim .fx .t {
+  font-size: 13px;
+  color: #59616B;
+}
+
+.exposure-sim .fx .v {
+  font-weight: 700;
+}
+
+.exposure-sim table {
+  border-collapse: collapse;
+  width: 100%;
+  font-variant-numeric: tabular-nums;
+}
+
+.exposure-sim td,
+.exposure-sim th {
+  padding: 7px 10px;
+  border-bottom: 1px solid #EEF0F2;
+  text-align: center;
+}
+
+.exposure-sim tr.cur td {
+  background: #FBE7D6;
+  font-weight: 700;
+}
+
+.exposure-sim label.lk {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-weight: 600;
+}
+
+.exposure-sim select {
+  font: inherit;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+
+.exposure-sim .warn {
+  color: #B0261D;
+  font-size: 14px;
+  min-height: 1.2em;
+}

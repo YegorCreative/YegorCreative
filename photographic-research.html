@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Photographic Research | Yegor Creative</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="An interactive exposure simulator for aperture, shutter speed, and ISO, with a light meter and equivalent exposures.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://yegorcreative.com/photographic-research.html">
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="CSS/responsive.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Photographic Research | Yegor Creative">
+    <meta property="og:description" content="An interactive exposure simulator for aperture, shutter speed, and ISO.">
+    <meta property="og:url" content="https://yegorcreative.com/photographic-research.html">
+    <meta property="og:image" content="https://yegorcreative.com/Assets/YegorCreativeScan.png">
+    <meta property="og:site_name" content="Yegor Creative">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Photographic Research | Yegor Creative">
+    <meta name="theme-color" content="#7C3AED">
+    <link rel="icon" type="image/png" href="./Assets/lionheadico.png">
+    <link rel="apple-touch-icon" href="./Assets/lionheadico.png">
+    <link rel="stylesheet" href="CSS/redesign.css">
+    <link rel="stylesheet" href="CSS/photographic-research.css">
+</head>
+
+<body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <div id="top" aria-hidden="true"></div>
+
+    <header role="banner" class="mainHeading">
+        <div class="container">
+            <div class="mainLogo">
+                <a href="index.html"><img src="Assets/lionhead.png" alt="Yegor Creative home" height="110"></a>
+                <span class="brand-title">YegorCreative</span>
+            </div>
+            <button type="button" class="nav-toggle" id="navToggle" aria-controls="primaryNav" aria-expanded="false" aria-label="Open menu">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+            <nav id="primaryNav" class="site-nav primary-nav" aria-label="Primary">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="portfolio.html">Work</a></li>
+                    <li><a href="photography.html">Photos</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="games.html">Games</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="photographic-research.html">Photographic Research</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="contact.html#contact-form" class="btn-primary header-cta"><span class="header-cta__long">Start a Project</span><span class="header-cta__short">Start</span></a>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" role="main">
+        <div class="exposure-sim">
+            <div class="w">
+                <div><h1>Exposure Simulator</h1></div>
+
+                <div class="card">
+                    <div class="scene">
+                        <div id="expo"><svg id="bg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice">
+                            <rect width="640" height="360" fill="#9CC7EA"/>
+                            <circle cx="540" cy="70" r="34" fill="#FBE7A1"/>
+                            <path d="M0 230 Q120 150 250 215 T520 190 T640 205 V360 H0Z" fill="#7FA86A"/>
+                            <path d="M0 270 Q160 225 330 262 T640 250 V360 H0Z" fill="#5E8C4E"/>
+                            <g fill="#3F6B35"><circle cx="60" cy="200" r="34"/><circle cx="110" cy="185" r="42"/><circle cx="470" cy="190" r="38"/><circle cx="530" cy="178" r="46"/><circle cx="590" cy="198" r="32"/></g>
+                            <g fill="#5A3E2B"><rect x="104" y="220" width="12" height="45"/><rect x="524" y="215" width="12" height="45"/></g>
+                            <g fill="#E9EDF1"><rect x="250" y="150" width="70" height="80"/><polygon points="245,152 285,118 325,152" fill="#B5543A"/><rect x="275" y="190" width="18" height="40" fill="#6B4A36"/></g>
+                        </svg>
+                        <svg id="mover" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice"></svg>
+                        <svg id="subj" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice">
+                            <g transform="translate(360 150)"><circle cx="0" cy="0" r="26" fill="#F1C7A0"/><path d="M-26 -6 Q0 -40 26 -6 Q18 -24 0 -26 Q-18 -24 -26 -6Z" fill="#3A2A20"/>
+                            <circle cx="-9" cy="2" r="3" fill="#222"/><circle cx="9" cy="2" r="3" fill="#222"/><path d="M-8 12 Q0 18 8 12" stroke="#222" stroke-width="2.5" fill="none"/>
+                            <path d="M-40 110 Q-44 40 0 32 Q44 40 40 110Z" fill="#C4611A"/><rect x="-40" y="105" width="80" height="110" fill="#2D3A4F"/></g>
+                        </svg></div>
+                        <canvas id="noise" width="320" height="180"></canvas>
+                    </div>
+                    <p class="muted" style="margin:8px 0 0">The person is in focus. Watch the <b>background</b> (aperture), the <b>flying ball</b> (shutter speed), the <b>grain</b> (ISO) and the <b>brightness</b> (total exposure).</p>
+                </div>
+
+                <div class="card">
+                    <div class="ctrl"><div>Aperture</div><input id="a" type="range" min="0" max="9" step="1" value="5"><b id="av"></b></div>
+                    <div class="ctrl"><div>Shutter speed</div><input id="s" type="range" min="0" max="10" step="1" value="7"><b id="sv"></b></div>
+                    <div class="ctrl"><div>ISO</div><input id="i" type="range" min="0" max="6" step="1" value="2"><b id="iv"></b></div>
+                    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:10px">
+                        <label class="lk"><input type="checkbox" id="lock"> Equivalent exposure mode (lock brightness)</label>
+                        <span class="muted">Compensate with <select id="comp"><option value="s">shutter speed</option><option value="a">aperture</option><option value="i">ISO</option></select></span>
+                    </div>
+                    <div class="warn" id="warn"></div>
+                </div>
+
+                <div class="card">
+                    <h2>Light meter</h2>
+                    <div class="muted">Choose your target:</div>
+                    <div class="seg" id="tg"><button data-t="-2">EV −2</button><button data-t="-1">EV −1</button><button data-t="0" class="on">EV 0</button><button data-t="1">EV +1</button><button data-t="2">EV +2</button></div>
+                    <div class="meter" id="meter"><div class="scale"></div><div class="tgtline" id="tl"></div><div class="tgt" id="tt">TARGET</div><div class="needle" id="nd"></div></div>
+                    <div style="height:14px"></div>
+                    <div class="status" id="st"></div>
+                    <div class="muted" id="st2"></div>
+                </div>
+
+                <div class="card">
+                    <h2>What each setting is doing right now</h2>
+                    <div class="effects">
+                        <div class="fx"><div class="t">Aperture → depth of field</div><div class="v" id="fa"></div></div>
+                        <div class="fx"><div class="t">Shutter speed → motion</div><div class="v" id="fs"></div></div>
+                        <div class="fx"><div class="t">ISO → noise</div><div class="v" id="fi"></div></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Equivalent exposures at ISO <span id="eqiso"></span></h2>
+                    <p class="muted" style="margin:0 0 8px">Every row gives the <b>same brightness</b> as your current settings. Open the aperture 1 stop → the shutter must get 1 stop faster.</p>
+                    <div style="overflow-x:auto"><table id="eq"></table></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer role="contentinfo" class="footFooter">
+        <h2 class="contact-heading"><span class="heading-icon">Contact</span> Yegor<span class="heading-underline"></span></h2>
+        <div class="socialMedia">
+            <a href="https://www.facebook.com/hambaryanyegor/" target="_blank" rel="noopener noreferrer" aria-label="Visit Yegor Creative on Facebook"><img class="socialMI" src="Assets/facebook.png" alt="" width="90"></a>
+            <a href="https://www.instagram.com/yegorcreative/" target="_blank" rel="noopener noreferrer" aria-label="Visit Yegor Creative on Instagram"><img class="socialMI" src="Assets/instagram.png" alt="" width="90"></a>
+            <a href="https://www.youtube.com/yegorcreative" target="_blank" rel="noopener noreferrer" aria-label="Visit Yegor Creative on YouTube"><img class="socialMI" src="Assets/youtube.png" alt="" width="90"></a>
+            <a href="https://www.linkedin.com/in/yegorhambaryan/" target="_blank" rel="noopener noreferrer" aria-label="Visit Yegor Hambaryan on LinkedIn"><img class="socialMI" src="Assets/linkedIn.png" alt="" width="90"></a>
+            <a href="https://github.com/YegorCreative" target="_blank" rel="noopener noreferrer" aria-label="Visit Yegor Creative on GitHub"><img class="socialMI" src="Assets/github.png" alt="" width="90"></a>
+            <a href="mailto:yegor@yegorcreative.com" aria-label="Send email to Yegor"><img src="Assets/email.png" alt="" class="socialMI" width="90"></a>
+        </div>
+        <div class="footer-contact">
+            <p>New York</p>
+            <p><a href="mailto:yegor@yegorcreative.com" aria-label="Email Yegor Creative at yegor@yegorcreative.com">yegor@yegorcreative.com</a></p>
+            <p><a href="tel:+17133306868" aria-label="Call Yegor Creative at +1 713 330 6868">+17133306868</a></p>
+        </div>
+    </footer>
+    <div class="lastQuote">Business is complicated, your web solutions can be  simple. @YegorCreative2021</div>
+    <button type="button" id="backToTopBtn" class="back-to-top" aria-label="Back to top">Top</button>
+    <script src="script.js"></script>
+    <script src="nav-active.js"></script>
+    <script src="photographic-research.js"></script>
+</body>
+
+</html>
