@@ -93,7 +93,7 @@ button,input,select{font:inherit}
 .callout.ok{background:var(--okb);border-color:var(--ok);color:#135C49}
 .callout small{display:block;font-weight:500;font-size:13px;margin-top:4px;color:inherit}
 #before{cursor:crosshair}
-.hint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:rgba(20,12,40,.82);color:#fff;font-weight:800;font-size:14px;padding:8px 14px;border-radius:999px;pointer-events:none;white-space:nowrap;animation:bob 1.6s ease-in-out infinite}
+.hint{position:absolute;left:50%;top:44px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:rgba(20,12,40,.82);color:#fff;font-weight:800;font-size:14px;padding:8px 14px;border-radius:999px;pointer-events:none;white-space:nowrap;animation:bob 1.6s ease-in-out infinite}
 .hint .hand{font-size:18px}
 @keyframes bob{50%{transform:translate(-50%,-4px)}}
 .ring{position:absolute;width:0;height:0;pointer-events:none;display:none}
@@ -106,6 +106,14 @@ button,input,select{font:inherit}
 .why{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--bg)}
 .why summary{cursor:pointer;font-weight:800;min-height:28px}
 .why p{margin:8px 0 0;font-size:14px}
+.gcard{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--bg)}
+.gcard p{margin:4px 0 8px;font-size:14px}
+.gprev{flex:none;width:96px;height:72px;border-radius:8px;background:#777;border:6px solid #EDEDED;box-shadow:0 1px 3px rgba(0,0,0,.2);display:grid;place-items:end center}
+.gprev span{font-size:9px;font-weight:800;color:#222;background:#EDEDED;padding:0 4px;margin-bottom:-6px}
+@media(max-width:480px){.gcard{flex-direction:column}}
+.callout.warn{background:#FFF4DC;border-color:#D9A21E;color:#5A3D00}
+.callout .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.swatch{display:inline-block;width:18px;height:18px;border-radius:4px;vertical-align:-3px;border:1px solid rgba(0,0,0,.2);margin:0 4px}
 @media(prefers-reduced-motion:reduce){.hint,.ring::after{animation:none}}
 @media(prefers-reduced-motion:reduce){.patch,.sw-btn::after{transition:none}}
 </style></head><body>
@@ -147,13 +155,23 @@ button,input,select{font:inherit}
 <div class="th"><div class="num" aria-hidden="true">03</div><div><h2 id="t3h">Fix my photo</h2><p>Use the gray patch to correct color (white balance) and brightness (exposure)</p></div></div>
 <ol class="stepper" id="stepper" aria-label="Steps">
 <li data-s="1"><span class="sn">1</span><div><b>Choose a photo</b><small>Upload your own, or use the sample</small></div></li>
-<li data-s="2"><span class="sn">2</span><div><b>Tap the gray patch</b><small>The middle-gray square (Neutral 5)</small></div></li>
+<li data-s="2"><span class="sn">2</span><div><b>Tap the gray card</b><small>Or the middle-gray patch (Neutral 5)</small></div></li>
 <li data-s="3"><span class="sn">3</span><div><b>See the fix</b><small>Compare and download</small></div></li>
 </ol>
 <div class="fixbar">
 <label class="btn file">⬆ Upload a photo<input type="file" id="file" accept="image/*"></label>
 <button class="btn ghost" type="button" id="sample">Use sample photo</button>
 <label class="chk"><input type="checkbox" id="expo" checked> Also fix brightness (exposure)</label>
+</div>
+<div class="fixbar">
+<label class="chk" for="str" style="gap:10px">Correction strength <input type="range" id="str" min="0" max="100" value="100" style="width:140px"> <span id="strv" style="min-width:3.2em;font-variant-numeric:tabular-nums">100%</span></label>
+<button class="btn ghost" type="button" id="auto">✨ No gray card? Auto balance</button>
+</div>
+<div class="gcard">
+<div class="gprev" aria-hidden="true"><span>18% gray</span></div>
+<div><b>Want to try it with your own photos?</b><p>A gray card has to be <b>in the scene when you take the photo</b>, lit by the same light, so it can't be added afterward. Download this practice card, print it (or show it full screen on a phone or tablet), put it next to your subject, and take the photo. Then upload it here and tap the card.</p>
+<a class="btn ghost" id="gdl" href="#" download="practice-gray-card.png">⬇ Download practice gray card</a>
+<p class="note" style="margin-top:6px">Printers and screens aren't calibrated, so this is for practice. For accurate work, use a real photographic gray card.</p></div>
 </div>
 <div class="callout" id="status" aria-live="polite"></div>
 <div class="stage">
@@ -168,7 +186,7 @@ button,input,select{font:inherit}
 </div>
 <details class="why"><summary>Why does tapping gray fix the photo?</summary>
 <p>The middle-gray patch is <b>perfectly neutral</b> (no color) and is <b>18% gray</b>, the same brightness a light meter aims for. If it looks orange, blue or green in your photo, the light added a color cast. The tool measures that patch and adjusts the red, green and blue channels until it's neutral again. That's <b>white balance</b>. With "Also fix brightness" on, it also brightens or darkens the whole photo until the patch is exactly middle gray. That's <b>exposure</b>.</p>
-<p>Tip: only tap a <b>gray or white</b> area. Tapping a colored patch would push the whole photo the wrong way. For brightness, use the <b>middle gray</b> patch, not white.</p></details>
+<p><b>Important:</b> only tap something that is <b>really</b> gray or white in real life, like a gray card. If you tap sand, skin or a tan rock, the tool thinks that color is a mistake and pushes the whole photo the opposite way (usually too blue). For brightness, use the <b>middle gray</b> patch, not white. No gray card in your photo? Use <b>Auto balance</b>, which averages the whole scene instead, and lower the strength if it looks too strong.</p></details>
 <p class="note">Your photo stays on your device. Nothing is uploaded anywhere.</p>
 </section>
 </div>
@@ -251,9 +269,9 @@ var bc=document.getElementById('before'),ac=document.getElementById('after'),bx=
 var MAXW=1400,isSample=false,lastPick=null;
 function step(n){steps.forEach(function(li,i){li.classList.toggle('done',i+1<n);li.classList.toggle('now',i+1===n);if(i+1===n)li.setAttribute('aria-current','step');else li.removeAttribute('aria-current');});}
 function say(html,ok){st.innerHTML=html;st.className='callout'+(ok?' ok':'');}
-function ready(){ax.drawImage(bc,0,0);wait.hidden=false;done.hidden=true;hint.hidden=false;bwrap.classList.add('ready');lastPick=null;step(2);}
+function ready(){mode=null;ax.drawImage(bc,0,0);wait.hidden=false;done.hidden=true;hint.hidden=false;bwrap.classList.add('ready');lastPick=null;step(2);}
 function placeRing(){if(!isSample){ring.style.display='none';return;}/* sample's Neutral 5 patch: x 372-438, y 402-468 of 900x600 */
- ring.style.display='block';ring.style.left=(372/900*100)+'%';ring.style.top=(402/600*100)+'%';ring.style.width=(66/900*100)+'%';ring.style.height=(66/600*100)+'%';}
+ ring.style.display='block';ring.style.left=(724/900*100)+'%';ring.style.top=(460/600*100)+'%';ring.style.width=(148/900*100)+'%';ring.style.height=(104/600*100)+'%';}
 function sampleScene(){var W=900,H=600;bc.width=ac.width=W;bc.height=ac.height=H;
  var T=LIGHTS[1];function tc(hex){var l=hex2rgb(hex).map(s2l);return'rgb('+render(l,T).map(function(v){return v*0.62;}).map(l2s).join(',')+')';}
  bx.fillStyle=tc('#B9B4AC');bx.fillRect(0,0,W,H);bx.fillStyle=tc('#7B5B43');bx.fillRect(0,420,W,180);
@@ -261,36 +279,55 @@ function sampleScene(){var W=900,H=600;bc.width=ac.width=W;bc.height=ac.height=H
  bx.fillStyle=tc('#C23B3B');bx.fillRect(700,300,120,140);
  bx.fillStyle=tc('#1A1A1C');bx.fillRect(120,150,480,330);
  var s=66,g=12;P.forEach(function(p,i){bx.fillStyle=tc(p[1]);bx.fillRect(132+(i%6)*(s+g)+6,162+Math.floor(i/6)*(s+g)+6,s,s);});
+ bx.fillStyle=tc('#EDEDED');bx.fillRect(716,452,164,128);bx.fillStyle=tc('#777777');bx.fillRect(724,460,148,104);bx.fillStyle=tc('#333333');bx.font='700 13px Inter,sans-serif';bx.textAlign='center';bx.fillText('18% GRAY CARD',798,576);
  var img=bx.getImageData(0,0,W,H),d=img.data;for(var k=0;k<d.length;k+=4){var n=(Math.random()-.5)*10;d[k]+=n;d[k+1]+=n;d[k+2]+=n;}bx.putImageData(img,0,0);
- isSample=true;ready();placeRing();hintt.textContent='Tap the glowing gray patch';
- say('This sample was shot under <b>orange tungsten light</b> and is a bit <b>too dark</b>.<small>Step 2: tap the glowing yellow box, the middle-gray patch (bottom row, 4th from left), to fix both.</small>');}
+ isSample=true;expo.checked=true;mode=null;ready();placeRing();hintt.textContent='Tap the glowing gray card';
+ say('This sample was shot under <b>orange tungsten light</b> and is a bit <b>too dark</b>.<small>Step 2: tap the glowing <b>gray card</b> in the bottom-right corner (or the middle-gray patch on the chart, bottom row, 4th from left) to fix both.</small>');}
 function loadFile(f){var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var k=Math.min(1,MAXW/im.width);bc.width=ac.width=Math.round(im.width*k);bc.height=ac.height=Math.round(im.height*k);bx.drawImage(im,0,0,bc.width,bc.height);
-  isSample=false;ready();placeRing();hintt.textContent='Tap the gray patch in your photo';
-  say('Your photo is loaded.<small>Step 2: tap the <b>middle-gray</b> patch of your color checker (or any gray card) in the Before photo.</small>');};
+  isSample=false;expo.checked=false;mode=null;ready();placeRing();hintt.textContent='Tap a gray card in your photo';
+  say('Your photo is loaded.<small>Step 2: tap the <b>middle-gray</b> patch of a color checker or gray card in the Before photo. <b>No gray card in the photo?</b> Use <b>✨ Auto balance</b> instead. Tapping sand, skin or rock will give wrong colors. "Fix brightness" is off for your photos. Turn it on only if you tap a middle-gray card.</small>');};
  im.onerror=function(){say('That file couldn’t be opened as an image. Try a JPG or PNG.');};im.src=r.result;};r.readAsDataURL(f);}
 document.getElementById('file').addEventListener('change',function(e){if(e.target.files&&e.target.files[0])loadFile(e.target.files[0]);e.target.value='';});
 document.getElementById('sample').addEventListener('click',sampleScene);
 document.getElementById('again').addEventListener('click',function(){ready();placeRing();say('Pick another spot.<small>Tap a gray or white area in the Before photo.</small>');});
-expo.addEventListener('change',function(){if(lastPick)fix(lastPick[0],lastPick[1]);});
-function fix(x,y){lastPick=[x,y];
- var R=Math.max(3,Math.round(bc.width/150)),x0=Math.max(0,x-R),y0=Math.max(0,y-R),w=Math.min(bc.width-x0,2*R+1),h=Math.min(bc.height-y0,2*R+1);
+var str=document.getElementById('str'),strv=document.getElementById('strv'),mode=null;/* mode: {type:'pick',x,y,s,force} or {type:'auto'} */
+function rerun(){if(mode)mode.type==='auto'?autoFix():fix(mode.x,mode.y,true);}
+expo.addEventListener('change',rerun);
+str.addEventListener('input',function(){strv.textContent=str.value+'%';rerun();});
+function sampleAt(x,y){var R=Math.max(3,Math.round(bc.width/150)),x0=Math.max(0,x-R),y0=Math.max(0,y-R),w=Math.min(bc.width-x0,2*R+1),h=Math.min(bc.height-y0,2*R+1);
  var d=bx.getImageData(x0,y0,w,h).data,s=[0,0,0],n=0;for(var k=0;k<d.length;k+=4){s[0]+=s2l(d[k]);s[1]+=s2l(d[k+1]);s[2]+=s2l(d[k+2]);n++;}
- s=s.map(function(v){return v/n;});
+ return {s:s.map(function(v){return v/n;}),box:[x0,y0,w,h]};}
+function applyGains(g,box){var LUT=[];for(var c=0;c<3;c++){LUT[c]=new Uint8ClampedArray(256);for(var v=0;v<256;v++)LUT[c][v]=l2s(s2l(v)*g[c]);}
+ var img=bx.getImageData(0,0,bc.width,bc.height),D=img.data;for(var k=0;k<D.length;k+=4){D[k]=LUT[0][D[k]];D[k+1]=LUT[1][D[k+1]];D[k+2]=LUT[2][D[k+2]];}
+ ax.putImageData(img,0,0);try{dl.href=ac.toDataURL('image/jpeg',.92);}catch(err){}
+ if(box){ax.strokeStyle='#FFE066';ax.lineWidth=Math.max(2,bc.width/300);ax.strokeRect(box[0]-2,box[1]-2,box[2]+4,box[3]+4);}
+ hint.hidden=true;ring.style.display='none';wait.hidden=true;done.hidden=false;bwrap.classList.remove('ready');step(4);steps[2].classList.add('now');steps[2].classList.remove('done');}
+function colorGains(s){var m=(s[0]+s[1]+s[2])/3,k=str.value/100;return s.map(function(v){return Math.pow(m/v,k);});}
+function castName(s){return s[0]>s[2]*1.08?'an orange (warm)':s[2]>s[0]*1.08?'a blue (cool)':s[1]>Math.max(s[0],s[2])*1.05?'a green':'a slight';}
+function hueWord(s){var r=s[0],g=s[1],b=s[2];if(r>g*1.1&&g>b*1.1)return'tan/orange';if(r>b*1.15)return'warm/reddish';if(b>r*1.15)return'blue';if(g>r*1.1&&g>b*1.1)return'green';return'colored';}
+function fix(x,y,force){var sm=sampleAt(x,y),s=sm.s;mode={type:'pick',x:x,y:y};
  if(Math.min(s[0],s[1],s[2])<0.004){say('That spot is too dark to measure.<small>Tap a gray or white area instead.</small>');return;}
  var sat=(Math.max(s[0],s[1],s[2])-Math.min(s[0],s[1],s[2]))/Math.max(s[0],s[1],s[2]);
- var m=(s[0]+s[1]+s[2])/3,target=0.184,e=expo.checked?target/m:1,g=[m/s[0]*e,m/s[1]*e,m/s[2]*e];
- var LUT=[];for(var c=0;c<3;c++){LUT[c]=new Uint8ClampedArray(256);for(var v=0;v<256;v++)LUT[c][v]=l2s(s2l(v)*g[c]);}
- var img=bx.getImageData(0,0,bc.width,bc.height),D=img.data;for(k=0;k<D.length;k+=4){D[k]=LUT[0][D[k]];D[k+1]=LUT[1][D[k+1]];D[k+2]=LUT[2][D[k+2]];}
- ax.putImageData(img,0,0);
- try{dl.href=ac.toDataURL('image/jpeg',.92);}catch(err){}
- ax.strokeStyle='#FFE066';ax.lineWidth=Math.max(2,bc.width/300);ax.strokeRect(x0-2,y0-2,w+4,h+4);
- hint.hidden=true;ring.style.display='none';wait.hidden=true;done.hidden=false;bwrap.classList.remove('ready');step(4);steps[2].classList.add('now');steps[2].classList.remove('done');
- var stops=Math.log(e)/Math.LN2,cast=s[0]>s[2]*1.08?'an orange (warm)':s[2]>s[0]*1.08?'a blue (cool)':s[1]>Math.max(s[0],s[2])*1.05?'a green':'a slight';
- var msg='✓ Fixed! <small><b>Color:</b> removed '+cast+' color cast, so the gray is now neutral.'+(expo.checked?' <b>Brightness:</b> '+(Math.abs(stops)<0.05?'already correct, no change.':(stops>0?'brightened':'darkened')+' by about '+Math.abs(stops).toFixed(1)+' stop'+(Math.abs(stops).toFixed(1)==='1.0'?'':'s')+' so the gray is exactly middle gray (18%).'):' Brightness was left as it was.')+'</small>';
- if(sat>0.8)msg+='<small>⚠ That spot looks quite colorful. For best results, tap a gray or white patch.</small>';
- say(msg,true);
+ if(!isSample&&!force&&sat>0.18){var sw='rgb('+s.map(l2s).join(',')+')';
+  st.className='callout warn';st.innerHTML='⚠ That spot isn’t gray. It looks <b>'+hueWord(s)+'</b> <span class="swatch" style="background:'+sw+'"></span><small>The tool will force that spot to be gray, which pushes the <b>whole photo the opposite way</b> (for example, a tan rock turns the photo blue). Only continue if you tapped a real gray or white card.</small><div class="row"><button class="btn" type="button" id="wAny">It’s a gray card, fix anyway</button><button class="btn ghost" type="button" id="wAuto">✨ Use Auto balance instead</button><button class="btn ghost" type="button" id="wAgain">Pick another spot</button></div>';
+  document.getElementById('wAny').onclick=function(){fix(x,y,true);};document.getElementById('wAuto').onclick=autoFix;document.getElementById('wAgain').onclick=function(){st.className='callout';say('Tap a gray or white area in the Before photo.');};
+  return;}
+ var m=(s[0]+s[1]+s[2])/3,e=1,expoNote='';
+ if(expo.checked){if(m>0.55){expoNote=' <b>Brightness:</b> left as it was, because that spot looks brighter than middle gray (maybe white). Use the middle-gray patch to set brightness.';}
+  else{e=Math.min(4,Math.max(0.25,0.184/m));var stops=Math.log(e)/Math.LN2;expoNote=' <b>Brightness:</b> '+(Math.abs(stops)<0.05?'already correct, no change.':(stops>0?'brightened':'darkened')+' by about '+Math.abs(stops).toFixed(1)+' stops so the gray is middle gray (18%)'+(Math.abs(Math.log(0.184/m)/Math.LN2)>2?' (limited to 2 stops)':'')+'.');}}
+ else expoNote=' Brightness was left as it was.';
+ var cg=colorGains(s);applyGains(cg.map(function(v){return v*e;}),sm.box);
+ say('✓ Fixed! <small><b>Color:</b> removed '+castName(s)+' color cast at '+str.value+'% strength, so the tapped spot is now neutral.'+expoNote+'</small>',true);
  document.getElementById('awrap').scrollIntoView({behavior:'smooth',block:'nearest'});}
+function autoFix(){mode={type:'auto'};var W=bc.width,H=bc.height,d=bx.getImageData(0,0,W,H).data,s=[0,0,0],n=0;
+ for(var k=0;k<d.length;k+=16){var r=s2l(d[k]),g=s2l(d[k+1]),b=s2l(d[k+2]);if(Math.max(r,g,b)>0.97||Math.max(r,g,b)<0.01)continue;s[0]+=r;s[1]+=g;s[2]+=b;n++;}
+ if(!n){say('Couldn’t measure this photo.');return;}
+ s=s.map(function(v){return v/n;});var cg=colorGains(s).map(function(v){return Math.min(1.8,Math.max(0.55,v));});
+ applyGains(cg,null);
+ say('✓ Auto balanced <small>using the average color of the whole photo (the "gray world" method) at '+str.value+'% strength. Brightness was left as it was. This works best when the scene has a mix of colors. A scene that’s mostly one color (like a desert) can still shift too far, so lower the strength if it looks off. A real gray card is always more accurate.</small>',true);}
 bc.addEventListener('click',function(e){var r=bc.getBoundingClientRect();fix(Math.round((e.clientX-r.left)/r.width*bc.width),Math.round((e.clientY-r.top)/r.height*bc.height));});
+document.getElementById('auto').addEventListener('click',autoFix);
+(function(){try{var c=document.createElement('canvas');c.width=1500;c.height=1000;var x=c.getContext('2d');x.fillStyle='#FFFFFF';x.fillRect(0,0,1500,1000);x.fillStyle='#777777';x.fillRect(60,60,1380,820);x.fillStyle='#333333';x.font='700 44px Inter,Arial,sans-serif';x.textAlign='center';x.fillText('18% GRAY CARD \u00b7 practice (RGB 119, 119, 119)',750,950);document.getElementById('gdl').href=c.toDataURL('image/png');}catch(e){}})();
 sampleScene();
 document.querySelectorAll('.toc a').forEach(function(a){a.addEventListener('click',function(e){var t=document.getElementById(a.getAttribute('href').slice(1));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});});
 })();
