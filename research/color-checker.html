@@ -106,6 +106,16 @@ button,input,select{font:inherit}
 .why{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--bg)}
 .why summary{cursor:pointer;font-weight:800;min-height:28px}
 .why p{margin:8px 0 0;font-size:14px}
+.measure{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;border:1.5px solid #2F7FD0;background:#EAF3FC;border-radius:12px;padding:12px 14px}
+.measure .mchip{width:64px;height:64px;border-radius:10px;border:3px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+.mgrid2{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+@media(max-width:560px){.mgrid2{grid-template-columns:repeat(3,minmax(0,1fr))}.measure{grid-template-columns:1fr}.measure .mchip{width:100%;height:36px}}
+.mgrid2 div{background:#fff;border-radius:8px;padding:5px 8px}
+.mgrid2 span{display:block;font-size:10.5px;font-weight:800;letter-spacing:.06em;color:#5E5A6B;text-transform:uppercase}
+.mgrid2 b{font-size:18px;font-variant-numeric:tabular-nums}
+.measure p{margin:6px 0 0;font-size:13px}
+#meas[aria-pressed="true"]{background:#2F7FD0;color:#fff;border-color:#2F7FD0}
+
 .spots{position:absolute;inset:0;pointer-events:none}
 .spot{position:absolute;transform:translate(-50%,-50%);width:38px;height:38px;border-radius:50%;border:3px solid #fff;background:rgba(109,74,217,.85);color:#fff;font:800 15px/1 Inter,sans-serif;display:grid;place-items:center;cursor:pointer;pointer-events:auto;box-shadow:0 0 0 2px rgba(0,0,0,.45),0 0 0 0 rgba(255,224,102,.7);animation:spotp 1.5s ease-out infinite;padding:0}
 .spot:hover,.spot:focus-visible{background:#FFE066;color:#15131C;outline:none}
@@ -181,6 +191,7 @@ button,input,select{font:inherit}
 <div class="fixbar">
 <label class="chk" for="str" style="gap:10px">Correction strength <input type="range" id="str" min="0" max="100" value="100" style="width:140px"> <span id="strv" style="min-width:3.2em;font-variant-numeric:tabular-nums">100%</span></label>
 <button class="btn ghost" type="button" id="find">🔍 Find gray spots</button>
+<button class="btn ghost" type="button" id="meas" aria-pressed="false">📏 Measure mode: off</button>
 <button class="btn ghost" type="button" id="auto">✨ No gray card? Auto balance</button>
 </div>
 <div class="gcard">
@@ -190,6 +201,7 @@ button,input,select{font:inherit}
 <p class="note" style="margin-top:6px">Printers and screens aren't calibrated, so this is for practice. For accurate work, use a real photographic gray card.</p></div>
 </div>
 <div class="callout" id="status" aria-live="polite"></div>
+<div class="measure" id="mpanel" hidden aria-live="polite"></div>
 <div class="stage">
 <div class="cv" id="bwrap"><span class="lab">BEFORE</span><canvas id="before" aria-label="Original photo. Tap the middle-gray patch to correct it."></canvas>
 <div class="hint" id="hint"><span class="hand" aria-hidden="true">👆</span><span id="hintt">Tap the middle-gray patch</span></div>
@@ -343,7 +355,7 @@ function autoFix(){mode={type:'auto'};var W=bc.width,H=bc.height,d=bx.getImageDa
  s=s.map(function(v){return v/n;});var cg=colorGains(s).map(function(v){return Math.min(1.8,Math.max(0.55,v));});
  applyGains(cg,null);
  say('✓ Auto balanced <small>using the average color of the whole photo (the "gray world" method) at '+str.value+'% strength. Brightness was left as it was. This works best when the scene has a mix of colors. A scene that’s mostly one color (like a desert) can still shift too far, so lower the strength if it looks off. A real gray card is always more accurate.</small>',true);}
-bc.addEventListener('click',function(e){var r=bc.getBoundingClientRect();fix(Math.round((e.clientX-r.left)/r.width*bc.width),Math.round((e.clientY-r.top)/r.height*bc.height));});
+bc.addEventListener('click',function(e){var r=bc.getBoundingClientRect();if(measOn){measure(Math.round((e.clientX-r.left)/r.width*bc.width),Math.round((e.clientY-r.top)/r.height*bc.height));return;}fix(Math.round((e.clientX-r.left)/r.width*bc.width),Math.round((e.clientY-r.top)/r.height*bc.height));});
 
 function estGray(){var W=bc.width,H=bc.height,d=bx.getImageData(0,0,W,H).data,s=[0,0,0],n=0;
  for(var k=0;k<d.length;k+=16){var r=s2l(d[k]),g=s2l(d[k+1]),b=s2l(d[k+2]);if(Math.max(r,g,b)>0.97||Math.max(r,g,b)<0.01)continue;s[0]+=r;s[1]+=g;s[2]+=b;n++;}
@@ -378,6 +390,22 @@ function showSpots(auto){clearSpots();var pk=findSpots(),box=document.getElement
  hint.hidden=true;ring.style.display='none';
  say('🔍 Found '+pk.length+' possible gray spot'+(pk.length>1?'s':'')+'.<small>Tap a numbered circle to correct the photo from that spot. <b>Green #1</b> is the best match. The tool looks for smooth, even areas whose color matches plain gray or the overall tint of the light. It can be fooled by things like gray rocks or walls, so check the result and try another number if it looks off.</small>');}
 document.getElementById('find').addEventListener('click',function(){if(!wait.hidden||mode){ready();if(!isSample)showVcard();}showSpots(false);});
+
+/* ---- measure mode ---- */
+var measOn=false,measBtn=document.getElementById('meas'),mpanel=document.getElementById('mpanel');
+measBtn.addEventListener('click',function(){measOn=!measOn;measBtn.setAttribute('aria-pressed',measOn?'true':'false');measBtn.textContent='📏 Measure mode: '+(measOn?'on':'off');
+ if(measOn){hint.hidden=false;hintt.textContent='Tap any spot to measure it';say('📏 Measure mode is on.<small>Tap any spot in the Before photo to read its <b>mean values (0–255)</b>. The photo won’t change. Turn measure mode off to go back to fixing.</small>');}
+ else{mpanel.hidden=true;say('Measure mode is off.<small>Tap a gray spot to fix the photo again.</small>');}});
+function measure(x,y){var R=Math.max(3,Math.round(bc.width/150)),x0=Math.max(0,x-R),y0=Math.max(0,y-R),w=Math.min(bc.width-x0,2*R+1),hh=Math.min(bc.height-y0,2*R+1);
+ var d=bx.getImageData(x0,y0,w,hh).data,s=[0,0,0],ls=0,l2=0,n=0;for(var k=0;k<d.length;k+=4){var L=.2126*d[k]+.7152*d[k+1]+.0722*d[k+2];s[0]+=d[k];s[1]+=d[k+1];s[2]+=d[k+2];ls+=L;l2+=L*L;n++;}
+ var m=s.map(function(v){return v/n;}),L=ls/n,sd=Math.sqrt(Math.max(0,l2/n-L*L));
+ var all=bx.getImageData(0,0,bc.width,bc.height).data,A=0,An=0;for(k=0;k<all.length;k+=16){A+=.2126*all[k]+.7152*all[k+1]+.0722*all[k+2];An++;}A/=An;
+ var st2=(m[0]+m[1]+m[2])/3,spread=Math.max(m[0],m[1],m[2])-Math.min(m[0],m[1],m[2]),neutral=spread<8?'neutral (R, G and B are about equal)':(m[0]>m[2]?'warm: more red than blue':'cool: more blue than red')+', a spread of '+Math.round(spread);
+ var ex=L<60?'dark (shadow)':L<100?'darker than middle gray':L<140?'close to middle gray (~118)':L<200?'brighter than middle gray':'very bright (highlight)';
+ mpanel.hidden=false;mpanel.innerHTML='<div class="mchip" style="background:rgb('+m.map(Math.round).join(',')+')"></div><div><div class="mgrid2"><div><span>Mean R</span><b>'+Math.round(m[0])+'</b></div><div><span>Mean G</span><b>'+Math.round(m[1])+'</b></div><div><span>Mean B</span><b>'+Math.round(m[2])+'</b></div><div><span>Brightness</span><b>'+Math.round(L)+'</b></div><div><span>Std Dev</span><b>'+sd.toFixed(1)+'</b></div></div>'
+ +'<p><b>This spot:</b> '+ex+', and '+neutral+'. Std Dev '+(sd<4?'is low, so the area is smooth and even.':'is higher, so the area has texture or detail.')+' <b>Whole photo mean:</b> '+Math.round(A)+' (0 = black, 255 = white).</p></div>';
+ ax.drawImage(bc,0,0);ax.strokeStyle='#2F7FD0';ax.lineWidth=Math.max(2,bc.width/300);ax.strokeRect(x0-2,y0-2,w+4,hh+4);wait.hidden=true;hint.hidden=true;
+ mpanel.scrollIntoView({behavior:'smooth',block:'nearest'});}
 document.getElementById('auto').addEventListener('click',autoFix);
 (function(){try{var c=document.createElement('canvas');c.width=1500;c.height=1000;var x=c.getContext('2d');x.fillStyle='#FFFFFF';x.fillRect(0,0,1500,1000);x.fillStyle='#777777';x.fillRect(60,60,1380,820);x.fillStyle='#333333';x.font='700 44px Inter,Arial,sans-serif';x.textAlign='center';x.fillText('18% GRAY CARD \u00b7 practice (RGB 119, 119, 119)',750,950);document.getElementById('gdl').href=c.toDataURL('image/png');}catch(e){}})();
 sampleScene();

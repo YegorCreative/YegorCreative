@@ -17,7 +17,7 @@ h1{font-size:24px;margin:0}h2{font-size:17px;margin:0 0 10px}
 .ctrl:last-child{border-bottom:none}
 .ctrl b{font-size:20px;text-align:right;font-variant-numeric:tabular-nums}
 input[type=range]{width:100%}
-@media(max-width:560px){.ctrl{grid-template-columns:1fr 70px}.ctrl input{grid-column:1/-1;grid-row:2;min-height:44px}.seg button{min-height:44px}}
+@media(max-width:560px){.ctrl{grid-template-columns:1fr 70px}.ctrl input{grid-column:1/-1;grid-row:2}}
 .seg{display:flex;gap:6px;flex-wrap:wrap}
 .seg button{font:inherit;border:1.5px solid #C9CED5;background:#fff;border-radius:8px;padding:8px 12px;cursor:pointer;font-weight:600}
 .seg button.on{background:#15181C;color:#fff;border-color:#15181C}
@@ -39,6 +39,11 @@ label.lk{display:flex;gap:8px;align-items:center;font-weight:600}
 select{font:inherit;padding:4px 6px;border-radius:6px}
 .hist{background:#15131C;border-radius:10px;padding:8px}
 .hist svg{display:block;width:100%;height:auto}
+.hstats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0}
+@media(max-width:480px){.hstats{grid-template-columns:repeat(2,1fr)}}
+.hstats div{background:#F4F2FA;border-radius:8px;padding:6px 8px}
+.hstats b{display:block;font-size:20px;font-variant-numeric:tabular-nums}
+.hstats span{font-size:11px;font-weight:700;letter-spacing:.06em;color:#59616B;text-transform:uppercase}
 .warn{color:#B0261D;font-size:14px;min-height:1.2em}
 </style></head><body><div class="w">
 <div><h1>Exposure Simulator</h1></div>
@@ -88,8 +93,9 @@ select{font:inherit;padding:4px 6px;border-radius:6px}
 
 <div class="card">
 <h2>Histogram</h2>
-<p class="muted" style="margin:0 0 8px">A histogram illustrates the <b>frequency</b> of each tone in the photo: how many pixels are at each brightness, from <b>0 (pure black)</b> to <b>255 (pure white)</b>. It updates live as you change the settings.</p>
+<p class="muted" style="margin:0 0 8px">A histogram illustrates the <b>frequency</b> of each tone in the photo: how many pixels are at each brightness, from <b>0 (pure black)</b> to <b>255 (pure white)</b>. It updates live as you change the settings. The dashed yellow line is the <b>mean</b> (average pixel value). Middle gray is about <b>118</b>, lower means darker and higher means brighter. A correct exposure doesn't have to average 118: this bright outdoor scene is properly exposed with a mean in the 150s.</p>
 <div class="hist"><svg id="hist" viewBox="0 0 640 206" role="img" aria-label="Histogram of the simulated photo"></svg></div>
+<div class="hstats" id="hstats"></div>
 <div class="status" id="hs" style="font-size:16px"></div>
 <div class="muted" id="hs2"></div>
 </div>
@@ -157,13 +163,14 @@ function render(){
 
 // ---- live histogram ----
 var HB=null;
-(function(){var W=192,H=108,c=document.createElement('canvas');c.width=W;c.height=H;var x=c.getContext('2d');
+try{(function(){var W=192,H=108,c=document.createElement('canvas');c.width=W;c.height=H;var x=c.getContext('2d');
  var ser=new XMLSerializer();var parts=['bg','subj'].map(function(id){var s=document.getElementById(id).cloneNode(true);s.removeAttribute('style');s.setAttribute('xmlns','http://www.w3.org/2000/svg');s.setAttribute('width',W);s.setAttribute('height',H);return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(ser.serializeToString(s));});
  var n=0;var imgs=parts.map(function(u){var im=new Image();im.onload=function(){n++;if(n===parts.length){imgs.forEach(function(i){x.drawImage(i,0,0,W,H);});
-  try{var d=x.getImageData(0,0,W,H).data;HB=new Float32Array(W*H);for(var k=0,j=0;k<d.length;k+=4,j++)HB[j]=(0.2126*d[k]+0.7152*d[k+1]+0.0722*d[k+2])/255;}catch(e){HB=null;}render();}};im.src=u;return im;});})();
-function drawHist(b,con,noise){var svg=document.getElementById('hist');if(!svg)return;
- var N=64,bins=new Array(N).fill(0),tot=0,sum=0;
- if(HB){for(var j=0;j<HB.length;j++){var v=HB[j]*b;if(con!==1)v=(v-.5)*con+.5;if(noise)v=v*(1-noise)+Math.random()*noise;v=Math.max(0,Math.min(1,v));bins[Math.min(N-1,Math.floor(v*N))]++;tot++;sum+=v;}}
+  try{var d=x.getImageData(0,0,W,H).data;HB=new Float32Array(W*H);for(var k=0,j=0;k<d.length;k+=4,j++)HB[j]=(0.2126*d[k]+0.7152*d[k+1]+0.0722*d[k+2])/255;}catch(e){HB=null;}try{render();}catch(e){}}};im.onerror=function(){};im.src=u;return im;});})();}catch(e){HB=null;}
+function drawHist(b,con,noise){try{drawHist2(b,con,noise);}catch(e){}}
+function drawHist2(b,con,noise){var svg=document.getElementById('hist');if(!svg)return;
+ var N=64,bins=[];for(var q=0;q<N;q++)bins.push(0);var _x=0,tot=0,sum=0,sq=0,fine=[];for(var q2=0;q2<256;q2++)fine.push(0);
+ if(HB){for(var j=0;j<HB.length;j++){var v=HB[j]*b;if(con!==1)v=(v-.5)*con+.5;if(noise)v=v*(1-noise)+Math.random()*noise;v=Math.max(0,Math.min(1,v));bins[Math.min(N-1,Math.floor(v*N))]++;tot++;sum+=v;sq+=v*v;fine[Math.min(255,Math.round(v*255))]++;}}
  var mx=Math.max.apply(null,bins.slice(1,N-1).concat([1]));var X0=20,X1=620,Y0=150,Y1=10,bw=(X1-X0)/N,s='';
  s+='<rect x="'+X0+'" y="'+Y1+'" width="'+(X1-X0)+'" height="'+(Y0-Y1)+'" fill="#1F1C28"/>';
  [1,2].forEach(function(k){var xx=X0+(X1-X0)*k/3;s+='<line x1="'+xx+'" y1="'+Y1+'" x2="'+xx+'" y2="'+Y0+'" stroke="#3A3645" stroke-dasharray="3 3"/>';});
@@ -171,8 +178,12 @@ function drawHist(b,con,noise){var svg=document.getElementById('hist');if(!svg)r
   s+='<rect x="'+(X0+i*bw+.5).toFixed(1)+'" y="'+(Y0-hh).toFixed(1)+'" width="'+(bw-1).toFixed(1)+'" height="'+hh.toFixed(1)+'" fill="'+(clip?'#FF5A4F':'#D9D2F5')+'"/>';}
  s+='<rect x="'+X0+'" y="'+(Y0+4)+'" width="'+(X1-X0)+'" height="8" fill="url(#hg)"/><defs><linearGradient id="hg"><stop offset="0" stop-color="#000"/><stop offset="1" stop-color="#fff"/></linearGradient></defs>';
  s+='<text x="'+X0+'" y="178" fill="#CFC6EE" font-size="13" font-weight="700">0 black</text><text x="'+((X0+X1)/6+X0/2)+'" y="198" fill="#9A93B5" font-size="13" text-anchor="middle">shadows</text><text x="320" y="198" fill="#9A93B5" font-size="13" text-anchor="middle">midtones</text><text x="'+(X1-(X1-X0)/6)+'" y="198" fill="#9A93B5" font-size="13" text-anchor="middle">highlights</text><text x="'+X1+'" y="178" fill="#CFC6EE" font-size="13" font-weight="700" text-anchor="end">255 white</text>';
+ if(tot){var mean0=sum/tot*255,mx0=X0+(X1-X0)*mean0/255;s+='<line x1="'+mx0.toFixed(1)+'" y1="'+(Y1-2)+'" x2="'+mx0.toFixed(1)+'" y2="'+Y0+'" stroke="#FFE066" stroke-width="2.5" stroke-dasharray="6 4"/><text x="'+Math.min(X1-60,Math.max(X0+60,mx0)).toFixed(1)+'" y="'+(Y1+14)+'" text-anchor="middle" fill="#FFE066" font-size="13" font-weight="800">mean '+Math.round(mean0)+'</text>';}
  svg.innerHTML=s;
  if(!tot){return;}
+ (function(){var mean=sum/tot*255,sd=Math.sqrt(Math.max(0,sq/tot-(sum/tot)*(sum/tot)))*255,acc=0,med=0;for(var z=0;z<256;z++){acc+=fine[z];if(acc>=tot/2){med=z;break;}}
+  var clipP=(fine[0]+fine[255])/tot*100;
+  document.getElementById('hstats').innerHTML='<div><span>Mean</span><b>'+Math.round(mean)+'</b></div><div><span>Median</span><b>'+med+'</b></div><div><span>Std Dev</span><b>'+sd.toFixed(1)+'</b></div><div><span>Clipped</span><b>'+clipP.toFixed(1)+'%</b></div>';})();
  var mean=sum/tot,lo=bins[0]/tot,hi=bins[N-1]/tot,hs=document.getElementById('hs'),hs2=document.getElementById('hs2'),t,cls,m2;
  if(hi>0.02&&mean>0.55){t='Piled up on the right: overexposed';cls='status over';m2='The bars are crammed against 255 (red bar = clipped highlights). Those pure-white areas have lost all detail.';}
  else if(lo>0.02&&mean<0.4){t='Piled up on the left: underexposed';cls='status under';m2='The bars are crammed against 0 (red bar = clipped shadows). Those pure-black areas have lost all detail.';}
