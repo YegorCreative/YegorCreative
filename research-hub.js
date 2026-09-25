@@ -59,6 +59,6 @@ function open(t,b){close(true);openId=t.id;var p=getPanel(t);p.hidden=false;
 function close(silent){if(!openId)return;var id=openId,p=panels[id];openId=null;if(p)p.hidden=true;
  var tile=null;tiles.forEach(function(x){x.el.classList.remove('is-open');x.el.setAttribute('aria-expanded','false');if(x.t.id===id)tile=x.el;});
  if(!silent&&tile){tile.focus({preventScroll:true});tile.scrollIntoView({behavior:'smooth',block:'nearest'});}}
-var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(place,120);});
+var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){place();if(openId&&panels[openId]){var f=panels[openId].querySelector('iframe');if(f)fit(f);}},120);});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&openId){var a=document.activeElement;var p=panels[openId];if(p&&p.contains(a))close();}});
 })();

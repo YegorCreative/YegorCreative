@@ -84,3 +84,10 @@
 .eqf-dots i.on{background:var(--eqf-accent);transform:scale(1.25)}
 @media(max-width:480px){.eqf-dots{display:none}}
 @media(prefers-reduced-motion:reduce){.eqf-card,.eqf-overlay,.eqf-modal,.eqf-x,.eqf-hint span{transition:none}}
+@media(max-width:480px),(max-height:500px) and (max-width:932px){
+ .eqf-overlay{padding:0;align-items:stretch}
+ .eqf-modal{width:100%;max-width:none;height:100dvh;max-height:100dvh;border-radius:0}
+ .eqf-head{padding-top:max(16px,env(safe-area-inset-top))}
+ .eqf-nav{padding-bottom:max(12px,env(safe-area-inset-bottom))}
+}
+@media(max-width:768px){.eqf-reveal{min-height:44px}}
