@@ -1,0 +1,308 @@
+(function () {
+"use strict";
+const root = document.querySelector(".exposure-test");
+if (!root) return;
+const TOPICS={light:"Light & color",density:"Density & ND",meter:"Falloff & metering",expo:"Exposure",math:"F-number & mired",data:"Data management"};
+const ISO=["100","200","400","800","1600","3200","6400"];
+const SHUT=["1","1/2","1/4","1/8","1/15","1/30","1/60","1/125","1/250","1/500","1/1000"];
+const APER=["1.4","2","2.8","4","5.6","8","11","16","22","32"];
+// first mc option is the correct one (shuffled on screen)
+const Q=[
+// LIGHT
+{id:"L1",t:"light",k:"fill",q:"CRI stands for ________.",a:["color rendering index","colour rendering index"],e:"CRI = Color Rendering Index: how accurately a light shows colors compared to a reference source."},
+{id:"L2",t:"light",k:"tf",q:"A perfect CRI is 80.",a:false,e:"False. A perfect CRI is 100. (Professionals want 90+.)"},
+{id:"L3",t:"light",k:"fill",q:"The range of the visible spectrum is ________ (include units).",a:["400-700 nm","400-700nm","400 to 700 nm","400 - 700 nm","400-700"],e:"400–700 nm. 400 is violet/blue, 700 is red."},
+{id:"L4",t:"light",k:"tf",q:"Color temperature is measured in degrees Kelvin.",a:true,e:"True (for your professor). Color temperature is in Kelvin (K)."},
+{id:"L5",t:"light",k:"tf",q:"To be given a color temperature, a light source must simulate a black body radiator.",a:true,e:"True. Only sources that glow from heat, like a black body, get a true color temperature."},
+{id:"L6",t:"light",k:"fill",q:"If a light source does NOT simulate a black body radiator, it is given a ________ (write the full name).",a:["correlated color temperature","correlated colour temperature","correlated color temperature (cct)"],e:"Correlated color temperature (CCT). Fluorescent and LED sources get this."},
+{id:"L7",t:"light",k:"tf",q:"A light source with a color temperature of 6500K will appear cooler/blue.",a:true,e:"True. Higher K means cooler, bluer light."},
+{id:"L8",t:"light",k:"mc",q:"Which light is the warmest (most orange)?",o:["3200K","5600K","6500K","10,000K"],e:"Lower Kelvin = warmer. 3200K is tungsten."},
+{id:"L9",t:"light",k:"mc",q:"What tone does a higher color temperature indicate?",o:["Cool tones","Warm tones","Neutral tones","Green tones"],e:"Higher color temperature → cool (blue) tones."},
+{id:"L10",t:"light",k:"fill",q:"Incandescent light is associated with ________.",a:["heat"],e:"Heat. Incandescent (tungsten) light comes from a heated filament."},
+{id:"L11",t:"light",k:"mc",q:"What is color constancy?",o:["Our eyes' ability to adapt to any white point","A light with a CRI of 100","Light that never changes color temperature","A camera's auto white balance setting"],e:"Color constancy: your eyes adapt so white looks white under different light."},
+{id:"L12",t:"light",k:"spd",g:"fluor",q:"Match this SPD graph to its light source.",o:["Fluorescent","Tungsten","Daylight"],e:"Tall narrow spikes on a low base = Fluorescent."},
+{id:"L13",t:"light",k:"spd",g:"tung",q:"Match this SPD graph to its light source.",o:["Tungsten","Fluorescent","Daylight"],e:"Smooth curve climbing steadily toward red (700 nm) = Tungsten."},
+{id:"L14",t:"light",k:"spd",g:"day",q:"Match this SPD graph to its light source.",o:["Daylight","Tungsten","Fluorescent"],e:"Full and fairly even across the spectrum, a bit stronger in blue = Daylight."},
+{id:"L15",t:"light",k:"mc",q:"An SPD graph shows…",o:["How much power a light gives off at each wavelength","How bright a light is at each distance","The tones in an image from 0 to 255","How many stops a filter removes"],e:"SPD = spectral power distribution: power at each wavelength."},
+// DENSITY
+{id:"D1",t:"density",k:"mc",q:"Transmittance equals…",o:["Transmitted light ÷ incident light","Incident light ÷ transmitted light","log(opacity)","1 ÷ density"],e:"T = transmitted ÷ incident. How much got Through."},
+{id:"D2",t:"density",k:"mc",q:"Opacity equals…",o:["Incident light ÷ transmitted light","Transmitted light ÷ incident light","log(transmittance)","Transmittance × 2"],e:"O = incident ÷ transmitted, which is also 1 ÷ transmittance."},
+{id:"D3",t:"density",k:"mc",q:"Density equals…",o:["log(opacity)","log(transmittance)","1 ÷ opacity","Opacity ÷ transmittance"],e:"D = log(opacity), which is also log(1 ÷ transmittance)."},
+{id:"D4",t:"density",k:"mc",q:"The higher the density, the ______ the transmittance and the ______ the opacity.",o:["lower, higher","higher, higher","higher, lower","lower, lower"],e:"Higher density → lower transmittance, higher opacity."},
+{id:"D5",t:"density",k:"tf",q:"Density is linear and additive.",a:true,e:"True. Stack a 0.3 and a 0.6 and you get 0.9."},
+{id:"D6",t:"density",k:"tf",q:"Transmittance is the easiest to read because it is linear and additive.",a:false,e:"False. DENSITY is easiest to read because it is linear and additive."},
+{id:"D7",t:"density",k:"num",q:"Incident light is 100 lux, transmitted light is 50 lux. What is the transmittance?",a:0.5,tol:0.01,d:"0.5",e:"50 ÷ 100 = 0.5"},
+{id:"D8",t:"density",k:"num",q:"Incident light is 100 lux, transmitted light is 50 lux. What is the opacity?",a:2,tol:0.01,d:"2",e:"100 ÷ 50 = 2"},
+{id:"D9",t:"density",k:"num",q:"Incident light is 100 lux, transmitted light is 50 lux. What is the density? (Hint: log 2 ≈ ?)",a:0.3,tol:0.01,d:"0.3",e:"log(100/50) = log(2) ≈ 0.3. That's exactly 1 stop."},
+{id:"D10",t:"density",k:"mc",q:"Incident light is 200 lux, transmitted light is 85 lux. Which is the correct setup for density?",o:["log(200 lux / 85 lux)","log(85 lux / 200 lux)","200 lux / 85 lux","85 lux / 200 lux"],e:"Density = log(opacity) = log(incident/transmitted) = log(200/85) ≈ 0.37."},
+{id:"D11",t:"density",k:"mc",q:"Incident light is 200 lux, transmitted light is 85 lux. Which is the correct setup for opacity?",o:["200 lux / 85 lux","85 lux / 200 lux","log(200 lux / 85 lux)","200 lux × 85 lux"],e:"Opacity = incident ÷ transmitted = 200/85 ≈ 2.35."},
+{id:"D12",t:"density",k:"fill",q:"A 0.3 ND filter changes exposure by ________.",a:["1 stop","one stop","1","1 stops"],e:"0.3 = 1 stop. The magic number."},
+{id:"D13",t:"density",k:"num",q:"You have a 0.6 ND filter. How many stops did you lose?",a:2,tol:0,d:"2 stops",e:"0.6 ÷ 0.3 = 2 stops."},
+{id:"D14",t:"density",k:"num",q:"You have a 0.9 ND filter. How many stops did you lose?",a:3,tol:0,d:"3 stops",e:"0.9 ÷ 0.3 = 3 stops."},
+{id:"D15",t:"density",k:"num",q:"You lost 2 stops. What ND filter was used?",a:0.6,tol:0.001,d:"0.6 ND",e:"2 × 0.3 = 0.6 ND."},
+{id:"D16",t:"density",k:"num",q:"You lost 3 stops. What ND filter was used?",a:0.9,tol:0.001,d:"0.9 ND",e:"3 × 0.3 = 0.9 ND."},
+{id:"D17",t:"density",k:"tf",q:"A 0.9 ND filter will alter the exposure by two stops.",a:false,e:"False. 0.9 ND = three stops."},
+{id:"D18",t:"density",k:"num",q:"Beyond class: you stack a 0.3 ND and a 0.9 ND. How many stops total?",a:4,tol:0,d:"4 stops",e:"Density adds: 0.3 + 0.9 = 1.2 → 1.2 ÷ 0.3 = 4 stops."},
+// METER
+{id:"M1",t:"meter",k:"mc",q:"The inverse square law equation is…",o:["E = I / d²","E = I × d²","E = d / I²","E = I / d"],e:"E = I / d². E = illuminance, I = intensity, d = distance."},
+{id:"M2",t:"meter",k:"tf",q:"You use broad sources for the inverse square law, not point sources.",a:false,e:"False. The inverse square law only works with POINT sources."},
+{id:"M3",t:"meter",k:"num",q:"A light reads 100 lux at 10 ft. What does it read at 20 ft? (lux)",a:25,tol:0.01,d:"25 lux",e:"Double the distance → ¼ the light. 100 / 2² = 25 lux."},
+{id:"M4",t:"meter",k:"num",q:"A light reads 100 lux at 10 ft. What does it read at 30 ft? (lux, 2 decimals)",a:11.11,tol:0.05,d:"11.11 lux",e:"Triple the distance → 1/9 the light. 100 / 3² ≈ 11.11 lux."},
+{id:"M5",t:"meter",k:"num",q:"A light reads 85 lux at 15 ft. What does it read at 30 ft? (lux)",a:21.25,tol:0.02,d:"21.25 lux",e:"30 ft is 2× the distance: 85 / 2² = 85/4 = 21.25 lux."},
+{id:"M6",t:"meter",k:"mc",q:"A light reads 85 lux at 15 ft. Which is the correct setup for 45 ft?",o:["E = 85 lux / 3²","E = 85 lux / 45²","E = 85 lux / 3","E = 85 lux × 3²"],e:"45 ft is 3× the distance, so divide by 3² = 9 → ≈ 9.44 lux."},
+{id:"M7",t:"meter",k:"mc",q:"If you double the distance from a point source, the light becomes…",o:["¼ as bright","½ as bright","2× as bright","⅛ as bright"],e:"Inverse square: 1/2² = ¼."},
+{id:"M8",t:"meter",k:"mc",q:"Intensity is…",o:["Light coming from a source in a single direction","The rate a source emits light in all directions","Light reflected off a subject","Light falling onto a subject"],e:"Intensity = one direction."},
+{id:"M9",t:"meter",k:"mc",q:"Flux is…",o:["The rate at which a source emits light in all directions","Light coming from a source in one direction","Light falling onto a subject","The number of stops in a scene"],e:"Flux = all directions."},
+{id:"M10",t:"meter",k:"tf",q:"Flux measures the rate of light emitted in one direction.",a:false,e:"False. INTENSITY measures light in one direction. Flux is all directions."},
+{id:"M11",t:"meter",k:"fill",q:"Light falling ONTO a subject is called ________.",a:["illuminance"],e:"Illuminance. Measured with an incident meter reading. (Illuminance = Incident = Incoming.)"},
+{id:"M12",t:"meter",k:"fill",q:"Light reflected OFF a subject is called ________.",a:["luminance"],e:"Luminance. Measured with a reflected meter reading."},
+{id:"M13",t:"meter",k:"mc",q:"An incident meter reading measures…",o:["Illuminance (light falling onto the subject)","Luminance (light reflected off the subject)","Flux","Color temperature"],e:"Incident → illuminance."},
+{id:"M14",t:"meter",k:"mc",q:"A reflected meter reading measures…",o:["Luminance (light reflected off the subject)","Illuminance (light falling onto the subject)","Intensity in all directions","CRI"],e:"Reflected → luminance."},
+{id:"M15",t:"meter",k:"num",q:"EV reading of 8 in the highlights, 4 in the shadows. What is the stop range?",a:4,tol:0,d:"4 stops",e:"8 − 4 = 4 stops."},
+{id:"M16",t:"meter",k:"num",q:"EV reading of 6 in the highlights, 2 in the shadows. What is the stop range?",a:4,tol:0,d:"4 stops",e:"6 − 2 = 4 stops."},
+{id:"M17",t:"meter",k:"fill",q:"An average scene (light meter) is calibrated to ________.",a:["18% gray","18% grey","18 percent gray","18 percent grey","18 % gray"],e:"18% gray (middle gray)."},
+{id:"M18",t:"meter",k:"mc",q:"Metering to a WHITE card will make the image…",o:["Underexposed","Overexposed","Properly exposed","Unchanged"],e:"The meter tries to make white look gray → it darkens → underexposed."},
+{id:"M19",t:"meter",k:"mc",q:"Metering to a BLACK card will make the image…",o:["Overexposed","Underexposed","Properly exposed","Unchanged"],e:"The meter tries to make black look gray → it brightens → overexposed."},
+{id:"M20",t:"meter",k:"mc",q:"Metering to a GRAY card will make the image…",o:["Properly exposed","Underexposed","Overexposed","Too warm"],e:"The meter is calibrated to 18% gray → proper exposure."},
+{id:"M21",t:"meter",k:"tf",q:"Taking a reflected light meter reading of a gray card and a white card will give different values.",a:true,e:"True. White reflects more light than gray, so the readings differ."},
+{id:"M22",t:"meter",k:"fill",q:"A ________ illustrates the frequency in which something occurs.",a:["histogram"],e:"Histogram."},
+{id:"M23",t:"meter",k:"mc",q:"What is the range of a histogram?",o:["0–255","0–100","1–1000","400–700"],e:"0 (pure black) to 255 (pure white)."},
+// EXPOSURE
+{id:"E1",t:"expo",k:"mc",q:"The 3 controls for exposure are…",o:["Aperture, shutter speed, ISO","Aperture, white balance, ISO","Shutter speed, focal length, ISO","Aperture, shutter speed, CRI"],e:"Aperture, shutter speed, ISO."},
+{id:"E2",t:"expo",k:"seq",q:"List the ISO increments from 100 to 6400.",a:ISO,e:"100, 200, 400, 800, 1600, 3200, 6400. Just double each time."},
+{id:"E3",t:"expo",k:"seq",q:"List the shutter speeds from 1 sec to 1/1000.",a:SHUT,e:"1, 1/2, 1/4, 1/8, 1/15, 1/30, 1/60, 1/125, 1/250, 1/500, 1/1000. Watch 1/15 and 1/125."},
+{id:"E4",t:"expo",k:"seq",q:"List the apertures from f/1.4 to f/32.",a:APER,e:"f/1.4, 2, 2.8, 4, 5.6, 8, 11, 16, 22, 32. Two doubling series: 1.4-2.8-5.6-11-22 and 2-4-8-16-32."},
+{id:"E5",t:"expo",k:"seq",q:"List the shutter speeds from 1/2 to 1/500.",a:SHUT.slice(1,10),e:"1/2, 1/4, 1/8, 1/15, 1/30, 1/60, 1/125, 1/250, 1/500."},
+{id:"E6",t:"expo",k:"seq",q:"List the apertures from f/2.8 to f/22.",a:APER.slice(2,9),e:"f/2.8, 4, 5.6, 8, 11, 16, 22."},
+{id:"E7",t:"expo",k:"mc",q:"Which aperture is missing?  f/2.8 → f/4 → ___ → f/8",o:["f/5.6","f/5","f/6","f/6.3"],e:"f/5.6."},
+{id:"E8",t:"expo",k:"mc",q:"Which shutter speed is missing?  1/30 → 1/60 → ___ → 1/250",o:["1/125","1/120","1/100","1/150"],e:"1/125, not 1/120."},
+{id:"E9",t:"expo",k:"mc",q:"Which lets MORE light into the camera?",o:["1 sec","1/1000"],e:"1 sec stays open much longer → more light."},
+{id:"E10",t:"expo",k:"mc",q:"Which shutter speed will FREEZE motion?",o:["1/1000","1 sec"],e:"Fast shutter (1/1000) freezes. 1 sec blurs."},
+{id:"E11",t:"expo",k:"mc",q:"ISO 6400 is ______ sensitive and has ______ noise than ISO 100.",o:["more, more","less, less","more, less","less, more"],e:"High ISO = more sensitive, more noise."},
+{id:"E12",t:"expo",k:"mc",q:"ISO 100 is used when there is ______ available light.",o:["more","less"],e:"Low ISO for bright situations (more available light)."},
+{id:"E13",t:"expo",k:"mc",q:"f/1.4 has ______ light coming in and a ______ depth of field.",o:["more, shallow","less, deep","more, deep","less, shallow"],e:"Small f-number = big opening → more light, shallow depth of field."},
+{id:"E14",t:"expo",k:"mc",q:"f/32 has a ______ depth of field.",o:["deep","shallow"],e:"Small hole → deep depth of field (everything sharp)."},
+{id:"E15",t:"expo",k:"mc",q:"Stopping down ______ the light; stopping up ______ the light.",o:["halves, doubles","doubles, halves","halves, halves","doubles, doubles"],e:"Down = halves, up = doubles."},
+{id:"E16",t:"expo",k:"mc",q:"A full stop either…",o:["doubles or halves the amount of light","adds or removes 0.1 of light","triples or thirds the light","changes the color temperature"],e:"A stop doubles or halves the light."},
+{id:"E17",t:"expo",k:"mc",q:"Shutter speed determines…",o:["The amount of time light hits the sensor","The size of the opening that lets light in","The sensitivity of the sensor","The color of the light"],e:"Shutter speed = time."},
+{id:"E18",t:"expo",k:"mc",q:"Aperture determines…",o:["The size of the opening that lets light in","The amount of time light hits the sensor","The sensitivity of the sensor","How many copies of a file exist"],e:"Aperture = size of the opening."},
+{id:"E19",t:"expo",k:"mc",q:"ISO is…",o:["The characteristic of the sensor that determines the amount of light needed for a proper exposure","The size of the lens opening","The time the shutter stays open","The color accuracy of a light"],e:"ISO = sensor sensitivity."},
+{id:"E20",t:"expo",k:"mc",q:"Going from f/8 to f/5.6 is…",o:["1 stop MORE light","1 stop LESS light","2 stops more light","No change"],e:"Smaller f-number = bigger hole = 1 stop more light (doubles)."},
+// MATH
+{id:"F1",t:"math",k:"mc",q:"The f-number equals…",o:["Focal length ÷ diameter of aperture","Diameter of aperture ÷ focal length","Focal length × diameter","1 ÷ focal length"],e:"f-number = focal length ÷ aperture diameter."},
+{id:"F2",t:"math",k:"num",q:"A 100mm lens has an aperture diameter of 10mm. What is the f-number? (just the number)",a:10,tol:0,d:"f/10",e:"100mm ÷ 10mm = f/10."},
+{id:"F3",t:"math",k:"mc",q:"A 200mm lens has an aperture diameter of 15mm. Which is the correct equation?",o:["200mm / 15mm","15mm / 200mm","200mm × 15mm","log(200/15)"],e:"200 ÷ 15 ≈ f/13.3."},
+{id:"F4",t:"math",k:"mc",q:"The mired scale equation is…",o:["(1 ÷ color temperature) × 10⁶","1 ÷ (color temperature × 10⁶)","color temperature × 10⁶","color temperature ÷ 10⁶"],e:"(1/K) × 1,000,000. The SI slide's version 1/(K × 10⁶) is WRONG."},
+{id:"F5",t:"math",k:"num",q:"The color temperature is 2000K. What is the mired value?",a:500,tol:0,d:"500",e:"1,000,000 ÷ 2000 = 500."},
+{id:"F6",t:"math",k:"num",q:"The color temperature is 5000K. What is the mired value?",a:200,tol:0,d:"200",e:"1,000,000 ÷ 5000 = 200."},
+{id:"F7",t:"math",k:"mc",q:"The color temperature is 1800K. Which is the correct setup?",o:["(1 / 1800K) × 10⁶","1 / (1800K × 10⁶)","1800K × 10⁶","1800K / 10⁶"],e:"(1/1800) × 10⁶ ≈ 555.6."},
+{id:"F8",t:"math",k:"mc",q:"As color temperature (K) goes UP, the mired value goes…",o:["Down","Up","Stays the same"],e:"Mired = 1,000,000 ÷ K, so higher K → lower mired."},
+// DATA
+{id:"T1",t:"data",k:"multi",q:"Select the FOUR types of metadata.",o:["Descriptive","Administrative","Technical","Processing","Structural","Geographic"],c:[0,1,2,3],e:"Descriptive, Administrative, Technical, Processing (Dogs Always Take Pictures)."},
+{id:"T2",t:"data",k:"mc",q:"Shutter speed, ISO and lens info stored in a file is which metadata type?",o:["Technical","Descriptive","Administrative","Processing"],e:"Camera/EXIF data = technical."},
+{id:"T3",t:"data",k:"mc",q:"Copyright and creator contact info is which metadata type?",o:["Administrative","Technical","Descriptive","Processing"],e:"Ownership/rights = administrative."},
+{id:"T4",t:"data",k:"mc",q:"Keywords and captions are which metadata type?",o:["Descriptive","Administrative","Technical","Processing"],e:"What's in the image = descriptive."},
+{id:"T5",t:"data",k:"mc",q:"Edits made in Lightroom are which metadata type?",o:["Processing","Technical","Descriptive","Administrative"],e:"Edits = processing."},
+{id:"T6",t:"data",k:"mc",q:"The 3-2-1 rule is…",o:["3 copies, 2 different media, 1 offsite","3 drives, 2 computers, 1 cloud","3 backups, 2 archives, 1 RAID","3 media, 2 copies, 1 offsite"],e:"3 copies of your data, 2 different media types, 1 copy offsite."},
+{id:"T7",t:"data",k:"mc",q:"Colleges → RIT, U of R.  Restaurants → Chick-fil-A, Shake Shack.  How many parents and children?",o:["2 parents, 4 children","4 parents, 2 children","6 parents, 0 children","1 parent, 5 children"],e:"Top level (Colleges, Restaurants) = 2 parents; nested items = 4 children."},
+{id:"T8",t:"data",k:"fill",q:"JBOD stands for ________.",a:["just a bunch of disks","just a bunch of drives"],e:"Just a Bunch Of Disks."},
+{id:"T9",t:"data",k:"fill",q:"RAID stands for ________.",a:["redundant array of independent disks","redundant array of inexpensive disks","redundant array of independent drives"],e:"Redundant Array of Independent Disks."},
+{id:"T10",t:"data",k:"mc",q:"What's the key difference between JBOD and RAID?",o:["JBOD disks work independently with no backup; RAID stores data redundantly across disks so it survives a failure","JBOD is faster and always backed up; RAID has no backup","They are the same thing","RAID is for archives only; JBOD is for backups only"],e:"JBOD: lose a disk, lose its data. RAID: data is backed up across disks."},
+{id:"T11",t:"data",k:"tf",q:"An archive is used for files you are no longer working on.",a:true,e:"True. Archive = finished work kept long term."},
+{id:"T12",t:"data",k:"mc",q:"A backup is for…",o:["Files you are currently working on","Files you are no longer working on","Deleted files only","Metadata only"],e:"Backup = current work. Archive = finished work."}
+];
+
+/* ---------- storage (per-viewer, best effort) ---------- */
+const KEY="exposurecheck-v1";
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.attempts)return s;}catch(e){}return{attempts:[],stats:{}};}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+let S=load();
+let run=null; let confirmReset=false;
+
+/* ---------- helpers ---------- */
+const $=s=>root.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function norm(s){return String(s).toLowerCase().replace(/[–—]/g,"-").replace(/½/g,"1/2").replace(/¼/g,"1/4").replace(/⅛/g,"1/8").replace(/\s+/g," ").replace(/[.!]+$/,"").trim();}
+function lev(a,b){const m=[];for(let i=0;i<=a.length;i++){m[i]=[i];for(let j=1;j<=b.length;j++)m[i][j]=i?Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1)):j;}return m[a.length][b.length];}
+function seqTokens(s){return norm(s).replace(/f\s*\//g," ").replace(/\bsec(onds?)?\b/g," ").replace(/→|->|>/g," ").split(/[\s,;]+/).filter(t=>t&&t!=="-");}
+function answerText(q){
+  if(q.k==="mc"||q.k==="spd")return q.o[0];
+  if(q.k==="tf")return q.a?"True":"False";
+  if(q.k==="fill")return q.a[0].replace(/\b\w/g,c=>c.toUpperCase());
+  if(q.k==="num")return q.d;
+  if(q.k==="seq")return q.a.join(", ");
+  if(q.k==="multi")return q.c.map(i=>q.o[i]).join(", ");
+}
+
+/* ---------- SPD graphs ---------- */
+function spdSVG(kind){
+  const W=340,H=160,x0=36,x1=326,yb=130,yt=14,g=(l,c,w)=>Math.exp(-(((l-c)/w)**2));
+  const f={
+    tung:l=>0.04+0.96*((l-400)/300)**2.1,
+    day:l=>0.62+0.3*g(l,465,55)-0.18*((l-400)/300)+0.025*Math.sin(l/7),
+    fluor:l=>0.1+0.14*g(l,600,60)+0.08*g(l,480,40)+0.45*g(l,405,2.5)+0.8*g(l,436,2.5)+1*g(l,546,2.5)+0.35*g(l,578,3)+0.7*g(l,611,3)
+  }[kind];
+  const pts=[];let max=0;for(let l=400;l<=700;l++){const v=f(l);max=Math.max(max,v);pts.push([l,v]);}
+  const X=l=>x0+(l-400)/300*(x1-x0),Y=v=>yb-(v/max)*(yb-yt);
+  const line=pts.map(p=>X(p[0]).toFixed(1)+","+Y(p[1]).toFixed(1)).join(" ");
+  const area=`${x0},${yb} ${line} ${x1},${yb}`;
+  let ticks="";[400,500,600,700].forEach(l=>{ticks+=`<line x1="${X(l)}" y1="${yb}" x2="${X(l)}" y2="${yb+4}"/><text x="${X(l)}" y="${yb+16}" text-anchor="middle">${l}</text>`;});
+  return `<svg class="spd" viewBox="0 0 ${W} ${H}" role="img" aria-label="Spectral power distribution graph">
+    <line x1="${x0}" y1="${yb}" x2="${x1}" y2="${yb}"/><line x1="${x0}" y1="${yt}" x2="${x0}" y2="${yb}"/>
+    <polygon class="area" points="${area}"/><polyline class="curve" points="${line}"/>${ticks}
+    <text x="${(x0+x1)/2}" y="${H-2}" text-anchor="middle">wavelength (nm)</text>
+    <text x="12" y="${(yt+yb)/2}" text-anchor="middle" transform="rotate(-90 12 ${(yt+yb)/2})">power</text></svg>`;
+}
+
+/* ---------- picking questions ---------- */
+function pick(mode){
+  if(mode==="miss")return shuffle(Q.filter(q=>S.stats[q.id]&&S.stats[q.id].last==="w"));
+  if(mode==="all")return shuffle(Q);
+  let out=[];
+  for(const t in TOPICS){
+    const pool=shuffle(Q.filter(q=>q.t===t)).map(q=>{const s=S.stats[q.id];let p=Math.random();if(!s)p+=2;else{if(s.last==="w")p+=3;p+=s.wrong*0.5-s.right*0.3;}return{q,p};});
+    pool.sort((a,b)=>b.p-a.p);out=out.concat(pool.slice(0,5).map(x=>x.q));
+  }
+  return shuffle(out);
+}
+
+/* ---------- screens ---------- */
+function home(){
+  run=null;
+  const n=S.attempts.length;
+  let dots="";for(let i=0;i<7;i++){const a=S.attempts[i];
+    dots+=a?`<div class="dot done"><span>${Math.round(a.score/a.total*100)}%</span><small>#${i+1}</small></div>`
+           :`<div class="dot ${i===n?"next":""}"><span>#${i+1}</span></div>`;}
+  let bars="";for(const t in TOPICS){let r=0,s=0;Q.filter(q=>q.t===t).forEach(q=>{const st=S.stats[q.id];if(st){s++;if(st.last==="r")r++;}});
+    const total=Q.filter(q=>q.t===t).length,pct=Math.round(r/total*100);
+    bars+=`<div class="bar"><span>${TOPICS[t]}</span><div class="track"><div class="fill" style="width:${pct}%"></div></div><span class="pct">${pct}%</span></div>`;}
+  const misses=Q.filter(q=>S.stats[q.id]&&S.stats[q.id].last==="w").length;
+  const label=n<7?`Start attempt ${n+1} of 7`:"Extra round";
+  $("#exposure-test-app").innerHTML=`
+  <header class="head">
+    <div><div class="eyebrow">PHOSCIFUN · exam prep</div><h1>Exposure Check</h1></div>
+    <div class="chip18"><i></i>18% gray</div>
+  </header>
+  <section class="card stack">
+    <div class="qmeta"><h2>Your 7 attempts</h2><span class="muted">${n} done${n>=7?" · all 7 complete":""}</span></div>
+    <div class="dots">${dots}</div>
+    <p class="muted" style="margin:0">Each attempt is 30 questions, 5 from each topic. Questions you miss come back more often in later attempts.</p>
+    <div class="btns">
+      <button class="btn" id="go">${label}</button>
+      <button class="btn ghost" id="miss" ${misses?"":"disabled"}>Redo my misses (${misses})</button>
+      <button class="btn ghost" id="all">All ${Q.length} questions</button>
+    </div>
+  </section>
+  <section class="card stack">
+    <h2>Mastery by topic</h2>
+    <div class="bars">${bars}</div>
+    <p class="hint" style="margin:0">Percent of each topic's questions you got right the last time you saw them.</p>
+  </section>
+  <section class="card stack">
+    <h2>Exam day rules</h2>
+    <ul class="rules">
+      <li><b>No calculators.</b> Know the setup: log 2 ≈ 0.3, 2× distance = ¼ light, 3× = 1/9.</li>
+      <li><b>Include units</b> (lux, nm, stops).</li>
+      <li><b>Spelling matters.</b> This quiz marks misspellings wrong too.</li>
+      <li>Charge your laptop to 100% and bring it.</li>
+    </ul>
+    <div class="btns"><button class="btn ghost" id="reset">${confirmReset?"Tap again to erase all progress":"Reset all attempts"}</button></div>
+  </section>`;
+  $("#go").onclick=()=>start("attempt");
+  $("#miss").onclick=()=>start("miss");
+  $("#all").onclick=()=>start("all");
+  $("#reset").onclick=()=>{if(confirmReset){S={attempts:[],stats:{}};save();confirmReset=false;}else confirmReset=true;home();};
+}
+
+function start(mode){confirmReset=false;run={mode,qs:pick(mode),i:0,results:[]};show();}
+
+function show(){
+  const q=run.qs[run.i],N=run.qs.length;
+  run.sel=null;run.done=false;
+  let body="";
+  if(q.k==="mc"||q.k==="spd"){run.order=shuffle(q.o.map((_,i)=>i));
+    body=(q.k==="spd"?spdSVG(q.g):"")+`<div class="opts">${run.order.map((oi,j)=>`<button class="opt" data-i="${oi}"><span class="key">${"ABCD"[j]}</span><span>${esc(q.o[oi])}</span></button>`).join("")}</div>`;}
+  else if(q.k==="tf"){body=`<div class="opts"><button class="opt" data-i="t"><span class="key">T</span><span>True</span></button><button class="opt" data-i="f"><span class="key">F</span><span>False</span></button></div><p class="hint" style="margin:0">If it's false, think about how you would fix it before you check.</p>`;}
+  else if(q.k==="multi"){run.order=shuffle(q.o.map((_,i)=>i));run.sel=new Set();
+    body=`<div class="opts">${run.order.map((oi,j)=>`<button class="opt" data-i="${oi}"><span class="key">${j+1}</span><span>${esc(q.o[oi])}</span></button>`).join("")}</div><p class="hint" style="margin:0">Select all that apply.</p>`;}
+  else{const hint=q.k==="seq"?"Separate with commas, e.g. 100, 200, 400 (the f/ is optional)":q.k==="num"?"Type the number. You can add units.":"Type your answer. Spelling counts.";
+    body=`<input type="text" id="ans" autocomplete="off" spellcheck="false" aria-label="Your answer"><p class="hint" style="margin:0">${hint}</p>`;}
+  $("#exposure-test-app").innerHTML=`
+  <div class="qmeta"><button class="btn ghost" id="quit">Quit</button><span class="eyebrow">${run.mode==="attempt"?`Attempt ${Math.min(S.attempts.length+1,99)}`:run.mode==="miss"?"Misses":"All questions"} · ${run.i+1} / ${N}</span></div>
+  <div class="progress"><div style="width:${run.i/N*100}%"></div></div>
+  <section class="card stack">
+    <div><span class="tag">${TOPICS[q.t]}</span></div>
+    <div class="qtext">${esc(q.q)}</div>
+    ${body}
+    <div id="fb"></div>
+    <div class="btns"><button class="btn" id="check">Check</button></div>
+  </section>`;
+  $("#quit").onclick=home;
+  root.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    if(run.done)return;
+    if(q.k==="multi"){const i=+b.dataset.i;run.sel.has(i)?run.sel.delete(i):run.sel.add(i);b.classList.toggle("sel");}
+    else{root.querySelectorAll(".opt").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");run.sel=b.dataset.i;}
+  });
+  $("#check").onclick=()=>run.done?next():check();
+  const inp=$("#ans");if(inp)inp.focus();
+}
+
+function check(){
+  const q=run.qs[run.i];let ok=false,given="",spell=false;
+  if(q.k==="mc"||q.k==="spd"){if(run.sel===null)return;ok=run.sel==="0";given=q.o[+run.sel];}
+  else if(q.k==="tf"){if(run.sel===null)return;ok=(run.sel==="t")===q.a;given=run.sel==="t"?"True":"False";}
+  else if(q.k==="multi"){if(!run.sel.size)return;ok=run.sel.size===q.c.length&&q.c.every(i=>run.sel.has(i));given=[...run.sel].map(i=>q.o[i]).join(", ");}
+  else{const v=$("#ans").value;if(!v.trim())return;given=v;
+    if(q.k==="num"){const m=v.replace(/,/g,"").match(/-?\d*\.?\d+/);ok=!!m&&Math.abs(parseFloat(m[0])-q.a)<=q.tol+1e-9;}
+    else if(q.k==="seq"){const t=seqTokens(v),a=q.a.map(x=>norm(x));ok=t.length===a.length&&t.every((x,i)=>x===a[i]);}
+    else{const n=norm(v).replace(/^(a|an|the) /,""),ns=n.replace(/\s/g,"");
+      ok=q.a.some(a=>norm(a).replace(/\s/g,"")===ns);
+      if(!ok)spell=q.a.some(a=>{const as=norm(a).replace(/\s/g,"");return as.length>4&&lev(as,ns)<=2;});}
+    $("#ans").disabled=true;}
+  run.done=true;
+  // mark options
+  root.querySelectorAll(".opt").forEach(b=>{b.disabled=true;const i=b.dataset.i;
+    const correct=(q.k==="mc"||q.k==="spd")?i==="0":q.k==="tf"?(i==="t")===q.a:q.k==="multi"?q.c.includes(+i):false;
+    if(correct)b.classList.add("right");else if(b.classList.contains("sel"))b.classList.add("wrong");});
+  const st=S.stats[q.id]||{right:0,wrong:0};ok?st.right++:st.wrong++;st.last=ok?"r":"w";S.stats[q.id]=st;save();
+  run.results.push({q,ok,given});
+  $("#fb").innerHTML=`<div class="fb ${ok?"ok":"no"}"><strong>${ok?"Correct":"Not quite"}</strong>
+    ${spell?`<div class="spell">Close. Check your spelling, because spelling counts on the exam.</div>`:""}
+    ${ok?"":`<div>Answer: <b>${esc(answerText(q))}</b></div>`}
+    <div>${esc(q.e)}</div></div>`;
+  $("#check").textContent=run.i+1<run.qs.length?"Next":"See results";
+  $("#check").focus();
+}
+
+function next(){run.i++;if(run.i<run.qs.length)show();else results();}
+
+function results(){
+  const r=run.results,score=r.filter(x=>x.ok).length,total=r.length,pct=Math.round(score/total*100);
+  if(run.mode==="attempt"){S.attempts.push({score,total,date:new Date().toISOString()});save();}
+  let byT="";for(const t in TOPICS){const x=r.filter(y=>y.q.t===t);if(!x.length)continue;const s=x.filter(y=>y.ok).length,p=Math.round(s/x.length*100);
+    byT+=`<div class="bar"><span>${TOPICS[t]}</span><div class="track"><div class="fill" style="width:${p}%"></div></div><span class="pct">${s}/${x.length}</span></div>`;}
+  const missed=r.filter(x=>!x.ok);
+  const verdict=pct>=90?"Exam ready on this set.":pct>=75?"Solid. Redo your misses, then take the next attempt.":"Review the misses below, then go again.";
+  $("#exposure-test-app").innerHTML=`
+  <header class="head"><div><div class="eyebrow">${run.mode==="attempt"?`Attempt ${S.attempts.length} of 7`:run.mode==="miss"?"Misses round":"All questions"}</div><h1>Results</h1></div></header>
+  <section class="card stack">
+    <div class="score">${score}<span class="muted" style="font-size:.45em">/${total}</span></div>
+    <p style="margin:0"><b>${pct}%</b>. ${verdict}</p>
+    <div class="bars">${byT}</div>
+    <div class="btns"><button class="btn" id="home">Back to attempts</button></div>
+  </section>
+  ${missed.length?`<section class="card stack"><h2>What you missed (${missed.length})</h2>
+    ${missed.map(x=>`<div class="miss"><div><span class="tag">${TOPICS[x.q.t]}</span></div><div>${esc(x.q.q)}</div>
+      <div class="you">You: ${esc(x.given)}</div><div class="ans">Answer: ${esc(answerText(x.q))}</div><div class="hint">${esc(x.q.e)}</div></div>`).join("")}
+  </section>`:""}`;
+  $("#home").onclick=home;
+  (document.getElementById("practiceTestHeading") || root).scrollIntoView({block:"start"});
+}
+
+document.addEventListener("keydown",e=>{
+  if(!run||e.key!=="Enter")return;
+  const b=$("#check");if(b){e.preventDefault();b.click();}
+});
+home();
+})();
