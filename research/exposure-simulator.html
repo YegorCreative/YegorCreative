@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Exposure Simulator</title>
+<style>
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#F4F5F7;color:#15181C;margin:0;padding:20px 16px 48px}
+.w{max-width:860px;margin:0 auto;display:grid;gap:16px}
+.card{background:#fff;border:1px solid #D8DCE1;border-radius:12px;padding:16px}
+h1{font-size:24px;margin:0}h2{font-size:17px;margin:0 0 10px}
+.hy{color:#6A3FB5;font-size:.9em}
+.muted{color:#59616B;font-size:14px}
+.scene{position:relative;width:100%;aspect-ratio:16/9;max-width:100%;overflow:hidden;border-radius:10px;background:#000}
+.scene>*{position:absolute;inset:0;width:100%;height:100%}
+#expo{transition:filter .2s}
+#bg{transition:filter .2s}
+#noise{pointer-events:none;mix-blend-mode:normal}
+.ctrl{display:grid;grid-template-columns:150px 1fr 90px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #EEF0F2}
+.ctrl:last-child{border-bottom:none}
+.ctrl b{font-size:20px;text-align:right;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%}
+@media(max-width:560px){.ctrl{grid-template-columns:1fr 70px}.ctrl input{grid-column:1/-1;grid-row:2}}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{font:inherit;border:1.5px solid #C9CED5;background:#fff;border-radius:8px;padding:8px 12px;cursor:pointer;font-weight:600}
+.seg button.on{background:#15181C;color:#fff;border-color:#15181C}
+.meter{position:relative;height:56px;margin-top:8px}
+.scale{position:absolute;left:0;right:0;top:22px;height:8px;border-radius:4px;background:linear-gradient(90deg,#2C3E66,#9aa3ad 50%,#F2E3B3)}
+.tick{position:absolute;top:34px;transform:translateX(-50%);font-size:12px;color:#59616B;font-variant-numeric:tabular-nums}
+.needle{position:absolute;top:10px;width:4px;height:30px;background:#C4611A;border-radius:2px;transform:translateX(-50%);transition:left .2s}
+.tgt{position:absolute;top:4px;transform:translateX(-50%);font-size:11px;font-weight:700;color:#2B7A4B}
+.tgtline{position:absolute;top:16px;width:2px;height:20px;background:#2B7A4B;transform:translateX(-50%)}
+.status{font-weight:700;font-size:18px;margin-top:6px}
+.good{color:#2B7A4B}.under{color:#2C3E66}.over{color:#A8671B}
+.effects{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.fx{border:1px solid #E3E6EA;border-radius:8px;padding:10px}
+.fx .t{font-size:13px;color:#59616B}.fx .v{font-weight:700}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+td,th{padding:7px 10px;border-bottom:1px solid #EEF0F2;text-align:center}
+tr.cur td{background:#FBE7D6;font-weight:700}
+label.lk{display:flex;gap:8px;align-items:center;font-weight:600}
+select{font:inherit;padding:4px 6px;border-radius:6px}
+.warn{color:#B0261D;font-size:14px;min-height:1.2em}
+</style></head><body><div class="w">
+<div><h1>Exposure Simulator</h1></div>
+
+<div class="card">
+<div class="scene">
+<div id="expo"><svg id="bg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice">
+<rect width="640" height="360" fill="#9CC7EA"/>
+<circle cx="540" cy="70" r="34" fill="#FBE7A1"/>
+<path d="M0 230 Q120 150 250 215 T520 190 T640 205 V360 H0Z" fill="#7FA86A"/>
+<path d="M0 270 Q160 225 330 262 T640 250 V360 H0Z" fill="#5E8C4E"/>
+<g fill="#3F6B35"><circle cx="60" cy="200" r="34"/><circle cx="110" cy="185" r="42"/><circle cx="470" cy="190" r="38"/><circle cx="530" cy="178" r="46"/><circle cx="590" cy="198" r="32"/></g>
+<g fill="#5A3E2B"><rect x="104" y="220" width="12" height="45"/><rect x="524" y="215" width="12" height="45"/></g>
+<g fill="#E9EDF1"><rect x="250" y="150" width="70" height="80"/><polygon points="245,152 285,118 325,152" fill="#B5543A"/><rect x="275" y="190" width="18" height="40" fill="#6B4A36"/></g>
+</svg>
+<svg id="mover" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice"></svg>
+<svg id="subj" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice">
+<g transform="translate(360 150)"><circle cx="0" cy="0" r="26" fill="#F1C7A0"/><path d="M-26 -6 Q0 -40 26 -6 Q18 -24 0 -26 Q-18 -24 -26 -6Z" fill="#3A2A20"/>
+<circle cx="-9" cy="2" r="3" fill="#222"/><circle cx="9" cy="2" r="3" fill="#222"/><path d="M-8 12 Q0 18 8 12" stroke="#222" stroke-width="2.5" fill="none"/>
+<path d="M-40 110 Q-44 40 0 32 Q44 40 40 110Z" fill="#C4611A"/><rect x="-40" y="105" width="80" height="110" fill="#2D3A4F"/></g>
+</svg></div>
+<canvas id="noise" width="320" height="180"></canvas>
+</div>
+<p class="muted" style="margin:8px 0 0">The person is in focus. Watch the <b>background</b> (aperture), the <b>flying ball</b> (shutter speed), the <b>grain</b> (ISO) and the <b>brightness</b> (total exposure).</p>
+</div>
+
+<div class="card">
+<div class="ctrl"><div>Aperture</div><input id="a" type="range" min="0" max="9" step="1" value="5"><b id="av"></b></div>
+<div class="ctrl"><div>Shutter speed</div><input id="s" type="range" min="0" max="10" step="1" value="7"><b id="sv"></b></div>
+<div class="ctrl"><div>ISO</div><input id="i" type="range" min="0" max="6" step="1" value="2"><b id="iv"></b></div>
+<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:10px">
+<label class="lk"><input type="checkbox" id="lock"> Equivalent exposure mode (lock brightness)</label>
+<span class="muted">Compensate with <select id="comp"><option value="s">shutter speed</option><option value="a">aperture</option><option value="i">ISO</option></select></span>
+</div>
+<div class="warn" id="warn"></div>
+</div>
+
+<div class="card">
+<h2>Light meter</h2>
+<div class="muted">Choose your target:</div>
+<div class="seg" id="tg"><button data-t="-2">EV −2</button><button data-t="-1">EV −1</button><button data-t="0" class="on">EV 0</button><button data-t="1">EV +1</button><button data-t="2">EV +2</button></div>
+<div class="meter" id="meter"><div class="scale"></div><div class="tgtline" id="tl"></div><div class="tgt" id="tt">TARGET</div><div class="needle" id="nd"></div></div>
+<div style="height:14px"></div>
+<div class="status" id="st"></div>
+<div class="muted" id="st2"></div>
+</div>
+
+<div class="card">
+<h2>What each setting is doing right now</h2>
+<div class="effects">
+<div class="fx"><div class="t">Aperture → depth of field</div><div class="v" id="fa"></div></div>
+<div class="fx"><div class="t">Shutter speed → motion</div><div class="v" id="fs"></div></div>
+<div class="fx"><div class="t">ISO → noise</div><div class="v" id="fi"></div></div>
+</div>
+</div>
+
+<div class="card">
+<h2>Equivalent exposures at ISO <span id="eqiso"></span></h2>
+<p class="muted" style="margin:0 0 8px">Every row gives the <b>same brightness</b> as your current settings. Open the aperture 1 stop → the shutter must get 1 stop faster.</p>
+<div style="overflow-x:auto"><table id="eq"></table></div>
+</div>
+</div>
+<script>
+const AP=["1.4","2","2.8","4","5.6","8","11","16","22","32"];
+const SH=["1 sec","1/2","1/4","1/8","1/15","1/30","1/60","1/125","1/250","1/500","1/1000"];
+const IS=["100","200","400","800","1600","3200","6400"];
+const BASE=-5-7+2; // f/8, 1/125, ISO 400 = correct (EV 0)
+const $=id=>document.getElementById(id);
+let target=0,last={a:5,s:7,i:2};
+const total=(a,s,i)=>-a-s+i;
+const off=()=>total(+$('a').value,+$('s').value,+$('i').value)-BASE;
+
+// noise canvas
+const nc=$('noise'),nx=nc.getContext('2d');
+function drawNoise(level){const img=nx.createImageData(320,180);for(let k=0;k<img.data.length;k+=4){const v=Math.random()*255;img.data[k]=img.data[k+1]=img.data[k+2]=v;img.data[k+3]=255;}nx.putImageData(img,0,0);nc.style.opacity=level;}
+
+function drawMover(sIdx){const streak=[230,180,130,90,55,30,15,6,2,0,0][sIdx];let g="";const n=streak?14:1;
+ for(let k=0;k<n;k++){const x=175-streak*(k/(n-1||1));g+=`<circle cx="${x}" cy="105" r="16" fill="#E24B4A" fill-opacity="${streak?(0.12+0.5*(1-k/n))/ (streak>60?1.6:1):1}"/>`;}
+ $('mover').innerHTML=g;}
+
+function render(){
+ const a=+$('a').value,s=+$('s').value,i=+$('i').value,o=off();
+ $('av').textContent='f/'+AP[a];$('sv').textContent=SH[s];$('iv').textContent=IS[i];
+ const blur=[9,7.5,6,4.5,3.2,2,1.1,0.5,0.1,0][a];$('bg').style.filter=`blur(${blur}px)`;
+ drawMover(s);drawNoise([0,0.03,0.07,0.12,0.19,0.28,0.4][i]);
+ const b=Math.min(4.5,Math.max(0.06,Math.pow(2,o*0.75)));$('expo').style.filter=`brightness(${b})`+(o>1?` contrast(${Math.max(0.5,1-0.1*(o-1))})`:'');
+ // meter -3..+3
+ const pos=v=>((Math.max(-3.4,Math.min(3.4,v))+3.5)/7*100)+'%';
+ $('nd').style.left=pos(o);$('tl').style.left=pos(target);$('tt').style.left=pos(target);
+ const m=$('meter');m.querySelectorAll('.tick').forEach(t=>t.remove());for(let v=-3;v<=3;v++){const t=document.createElement('div');t.className='tick';t.style.left=pos(v);t.textContent=(v>0?'+':v<0?'−':'')+Math.abs(v);m.appendChild(t);}
+ const ev=(o>0?'+':o<0?'−':'')+Math.abs(o);
+ const st=$('st');
+ if(o===0){st.textContent='EV 0 · Properly exposed';st.className='status good';}
+ else if(o<0){st.textContent=`EV ${ev} · Underexposed (too dark) by ${-o} stop${o===-1?'':'s'}`;st.className='status under';}
+ else{st.textContent=`EV ${ev} · Overexposed (too bright) by ${o} stop${o===1?'':'s'}`;st.className='status over';}
+ const d=target-o;
+ $('st2').innerHTML=d===0?`<b class="good">✓ You hit your target (EV ${target>0?'+':''}${target}).</b>`:`To reach your target you need <b>${Math.abs(d)} stop${Math.abs(d)===1?'':'s'} ${d>0?'MORE':'LESS'} light</b>. ${d>0?'Open the aperture (smaller f-number), use a slower shutter, or raise ISO.':'Close the aperture (bigger f-number), use a faster shutter, or lower ISO.'}`;
+ $('fa').textContent=a<=2?`f/${AP[a]}: big opening, SHALLOW depth of field (blurry background)`:a>=7?`f/${AP[a]}: tiny opening, DEEP depth of field (sharp background)`:`f/${AP[a]}: medium depth of field`;
+ $('fs').textContent=s<=4?`${SH[s]}: slow, motion BLURS`:s>=8?`${SH[s]}: fast, motion FREEZES`:`${SH[s]}: slight blur on fast motion`;
+ $('fi').textContent=i<=1?`ISO ${IS[i]}: less sensitive, LESS noise (clean)`:i>=5?`ISO ${IS[i]}: more sensitive, MORE noise (grainy)`:`ISO ${IS[i]}: some noise`;
+ // equivalents
+ $('eqiso').textContent=IS[i];const tot=total(a,s,i);let rows='<tr><th>Aperture</th><th>Shutter speed</th><th>ISO</th></tr>';
+ for(let x=0;x<10;x++){const y=i-x-tot;if(y<0||y>10)continue;rows+=`<tr class="${x===a?'cur':''}"><td>f/${AP[x]}</td><td>${SH[y]}</td><td>${IS[i]}</td></tr>`;}
+ $('eq').innerHTML=rows;
+ last={a,s,i};
+}
+function onMove(which){
+ const w=$('warn');w.textContent='';
+ if($('lock').checked){const c=$('comp').value;
+  if(c===which){w.textContent='Pick a different setting to compensate with.';render();return;}
+  const tot=total(last.a,last.s,last.i);const a=+$('a').value,s=+$('s').value,i=+$('i').value;
+  let need;if(c==='s')need=i-a-tot;else if(c==='a')need=i-s-tot;else need=tot+a+s;
+  const el=$(c),mx=+el.max;const cl=Math.max(0,Math.min(mx,need));el.value=cl;
+  if(cl!==need)w.textContent='Ran out of range on the compensating setting, so the exposure changed.';
+ }
+ render();
+}
+['a','s','i'].forEach(k=>$(k).addEventListener('input',()=>onMove(k)));
+$('tg').querySelectorAll('button').forEach(b=>b.onclick=()=>{$('tg').querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');target=+b.dataset.t;render();});
+render();
+</script></body></html>

@@ -4,7 +4,7 @@
 <head>
     <title>Photographic Research | Yegor Creative</title>
     <meta charset="UTF-8">
-    <meta name="description" content="An interactive exposure simulator for aperture, shutter speed, and ISO, with a light meter and equivalent exposures.">
+    <meta name="description" content="Interactive study tools for photographic science: exposure, density, light, equations, and a practice test.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="https://yegorcreative.com/photographic-research.html">
     <link rel="stylesheet" href="CSS/styles.css">
@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@300&display=swap" rel="stylesheet">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Photographic Research | Yegor Creative">
-    <meta property="og:description" content="An interactive exposure simulator for aperture, shutter speed, and ISO.">
+    <meta property="og:description" content="Interactive study tools for photographic science. Tap a card to open one.">
     <meta property="og:url" content="https://yegorcreative.com/photographic-research.html">
     <meta property="og:image" content="https://yegorcreative.com/Assets/YegorCreativeScan.png">
     <meta property="og:site_name" content="Yegor Creative">
@@ -24,9 +24,7 @@
     <link rel="apple-touch-icon" href="./Assets/lionheadico.png">
     <link rel="stylesheet" href="CSS/redesign.css">
     <link rel="stylesheet" href="CSS/photographic-research.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
-    <link rel="stylesheet" href="CSS/exposure-test.css">
+    <link rel="stylesheet" href="CSS/equation-flashcards.css">
 </head>
 
 <body>
@@ -63,76 +61,54 @@
     </header>
 
     <main id="main" role="main">
-        <div class="exposure-sim">
-            <div class="w">
-                <div><h1>Exposure Simulator</h1></div>
-
-                <div class="card">
-                    <div class="scene">
-                        <div id="expo"><svg id="bg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice">
-                            <rect width="640" height="360" fill="#9CC7EA"/>
-                            <circle cx="540" cy="70" r="34" fill="#FBE7A1"/>
-                            <path d="M0 230 Q120 150 250 215 T520 190 T640 205 V360 H0Z" fill="#7FA86A"/>
-                            <path d="M0 270 Q160 225 330 262 T640 250 V360 H0Z" fill="#5E8C4E"/>
-                            <g fill="#3F6B35"><circle cx="60" cy="200" r="34"/><circle cx="110" cy="185" r="42"/><circle cx="470" cy="190" r="38"/><circle cx="530" cy="178" r="46"/><circle cx="590" cy="198" r="32"/></g>
-                            <g fill="#5A3E2B"><rect x="104" y="220" width="12" height="45"/><rect x="524" y="215" width="12" height="45"/></g>
-                            <g fill="#E9EDF1"><rect x="250" y="150" width="70" height="80"/><polygon points="245,152 285,118 325,152" fill="#B5543A"/><rect x="275" y="190" width="18" height="40" fill="#6B4A36"/></g>
-                        </svg>
-                        <svg id="mover" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice"></svg>
-                        <svg id="subj" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice">
-                            <g transform="translate(360 150)"><circle cx="0" cy="0" r="26" fill="#F1C7A0"/><path d="M-26 -6 Q0 -40 26 -6 Q18 -24 0 -26 Q-18 -24 -26 -6Z" fill="#3A2A20"/>
-                            <circle cx="-9" cy="2" r="3" fill="#222"/><circle cx="9" cy="2" r="3" fill="#222"/><path d="M-8 12 Q0 18 8 12" stroke="#222" stroke-width="2.5" fill="none"/>
-                            <path d="M-40 110 Q-44 40 0 32 Q44 40 40 110Z" fill="#C4611A"/><rect x="-40" y="105" width="80" height="110" fill="#2D3A4F"/></g>
-                        </svg></div>
-                        <canvas id="noise" width="320" height="180"></canvas>
+        <div class="research-page">
+            <h1>Photographic Research</h1>
+            <p class="research-intro">Interactive study tools for photographic science. Tap a card to open it.</p>
+            <div class="research-grid">
+                <button type="button" class="research-card" data-title="Exposure Simulator" data-src="research/exposure-simulator.html">
+                    <span class="research-card__title">Exposure Simulator</span>
+                    <span class="research-card__desc">Adjust aperture, shutter speed and ISO and see exposure, depth of field, motion blur and noise change.</span>
+                </button>
+                <button type="button" class="research-card" data-title="Practice Test" data-src="research/practice-test.html">
+                    <span class="research-card__title">Practice Test</span>
+                    <span class="research-card__desc">96 questions with 7 scored attempts, instant feedback and a review of your misses.</span>
+                </button>
+                <button type="button" class="research-card" data-title="Density Explorer" data-src="research/density-explorer.html">
+                    <span class="research-card__title">Density Explorer</span>
+                    <span class="research-card__desc">See how transmittance, opacity and density change as a filter gets darker.</span>
+                </button>
+                <button type="button" class="research-card" data-title="Illuminance vs Luminance" data-src="research/illuminance-luminance.html">
+                    <span class="research-card__title">Illuminance vs Luminance</span>
+                    <span class="research-card__desc">Light falling onto a subject vs light bouncing off it, and incident vs reflected meters.</span>
+                </button>
+                <button type="button" class="research-card" data-title="Equations Cheat Sheet" data-src="research/equations-cheat-sheet.html">
+                    <span class="research-card__title">Equations Cheat Sheet</span>
+                    <span class="research-card__desc">Every formula on one page, with worked examples.</span>
+                </button>
+            </div>
+            <div class="research-overlay" hidden>
+                <div class="research-dialog" role="dialog" aria-modal="true" aria-labelledby="researchDialogTitle">
+                    <div class="research-dialog__bar">
+                        <h2 id="researchDialogTitle"></h2>
+                        <button type="button" class="research-dialog__close" aria-label="Close">&times;</button>
                     </div>
-                    <p class="muted" style="margin:8px 0 0">The person is in focus. Watch the <b>background</b> (aperture), the <b>flying ball</b> (shutter speed), the <b>grain</b> (ISO) and the <b>brightness</b> (total exposure).</p>
-                </div>
-
-                <div class="card">
-                    <div class="ctrl"><div>Aperture</div><input id="a" type="range" min="0" max="9" step="1" value="5"><b id="av"></b></div>
-                    <div class="ctrl"><div>Shutter speed</div><input id="s" type="range" min="0" max="10" step="1" value="7"><b id="sv"></b></div>
-                    <div class="ctrl"><div>ISO</div><input id="i" type="range" min="0" max="6" step="1" value="2"><b id="iv"></b></div>
-                    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:10px">
-                        <label class="lk"><input type="checkbox" id="lock"> Equivalent exposure mode (lock brightness)</label>
-                        <span class="muted">Compensate with <select id="comp"><option value="s">shutter speed</option><option value="a">aperture</option><option value="i">ISO</option></select></span>
-                    </div>
-                    <div class="warn" id="warn"></div>
-                </div>
-
-                <div class="card">
-                    <h2>Light meter</h2>
-                    <div class="muted">Choose your target:</div>
-                    <div class="seg" id="tg"><button data-t="-2">EV −2</button><button data-t="-1">EV −1</button><button data-t="0" class="on">EV 0</button><button data-t="1">EV +1</button><button data-t="2">EV +2</button></div>
-                    <div class="meter" id="meter"><div class="scale"></div><div class="tgtline" id="tl"></div><div class="tgt" id="tt">TARGET</div><div class="needle" id="nd"></div></div>
-                    <div style="height:14px"></div>
-                    <div class="status" id="st"></div>
-                    <div class="muted" id="st2"></div>
-                </div>
-
-                <div class="card">
-                    <h2>What each setting is doing right now</h2>
-                    <div class="effects">
-                        <div class="fx"><div class="t">Aperture → depth of field</div><div class="v" id="fa"></div></div>
-                        <div class="fx"><div class="t">Shutter speed → motion</div><div class="v" id="fs"></div></div>
-                        <div class="fx"><div class="t">ISO → noise</div><div class="v" id="fi"></div></div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2>Equivalent exposures at ISO <span id="eqiso"></span></h2>
-                    <p class="muted" style="margin:0 0 8px">Every row gives the <b>same brightness</b> as your current settings. Open the aperture 1 stop → the shutter must get 1 stop faster.</p>
-                    <div style="overflow-x:auto"><table id="eq"></table></div>
+                    <iframe class="research-dialog__frame" title=""></iframe>
                 </div>
             </div>
         </div>
-
-        <section aria-labelledby="practiceTestHeading">
-            <div class="exposure-test">
-                <h2 id="practiceTestHeading">Practice Test</h2>
-                <div class="wrap" id="exposure-test-app"></div>
-            </div>
-        </section>
+        <section class="eqf" aria-labelledby="eqf-heading">
+<div class="eqf-wrap">
+<h2 class="eqf-title" id="eqf-heading">Equation Flashcards</h2>
+<p class="eqf-intro">Try to say the formula out loud, then tap the card to check yourself and see the explanation.</p>
+<div class="eqf-grid" id="eqf-grid"></div>
+</div>
+<div class="eqf-overlay" id="eqf-overlay" hidden>
+<div class="eqf-modal" role="dialog" aria-modal="true" aria-labelledby="eqf-mtitle">
+<div class="eqf-head"><h3 id="eqf-mtitle"></h3><button class="eqf-x" id="eqf-x" aria-label="Close">&times;</button></div>
+<div class="eqf-body" id="eqf-mbody"></div>
+</div>
+</div>
+</section>
     </main>
 
     <footer role="contentinfo" class="footFooter">
@@ -156,7 +132,7 @@
     <script src="script.js"></script>
     <script src="nav-active.js"></script>
     <script src="photographic-research.js"></script>
-    <script src="exposure-test.js"></script>
+    <script src="equation-flashcards.js"></script>
 </body>
 
 </html>

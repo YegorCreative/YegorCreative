@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Equations Cheat Sheet</title>
+<style>
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#F4F5F7;color:#15181C;margin:0;padding:20px 16px 48px}
+.w{max-width:800px;margin:0 auto;display:grid;gap:14px}
+h1{font-size:24px;margin:0}
+.eq{background:#fff;border:1px solid #D8DCE1;border-radius:12px;padding:14px 16px;display:grid;gap:4px}
+.name{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#59616B;font-weight:600}
+.f{font-size:20px;font-weight:600;font-family:ui-monospace,Menlo,Consolas,monospace}
+.ex{font-size:15px;color:#3A4048}
+.tip{background:#FFF4DC;border:1px solid #E09A1B;border-radius:12px;padding:14px 16px}
+</style></head><body><div class="w">
+<h1>Equations Cheat Sheet</h1>
+
+<div class="eq"><div class="name">Transmittance</div><div class="f">transmitted light / incident light</div><div class="ex">100 lux in, 50 lux out → 50 / 100 = 0.5</div></div>
+<div class="eq"><div class="name">Opacity</div><div class="f">incident light / transmitted light<br>or 1 / transmittance</div><div class="ex">100 / 50 = 2</div></div>
+<div class="eq"><div class="name">Density</div><div class="f">log(opacity)<br>or log(1 / transmittance)</div><div class="ex">log(2) = 0.3 · each ×2 in opacity adds +0.3 · messy numbers: write log(200 lux / 85 lux)</div></div>
+<div class="eq"><div class="name">Neutral Density</div><div class="f">0.3 = 1 stop</div><div class="ex">0.6 = 2 stops · 0.9 = 3 stops · 1.2 = 4 stops</div></div>
+<div class="eq"><div class="name">Inverse Square Law</div><div class="f">E = I / d²</div><div class="ex">85 lux at 15 ft → 30 ft (2× farther): 85 / 2² = 21.25 lux · point source only</div></div>
+<div class="eq"><div class="name">Mired Scale</div><div class="f">(1 / color temperature) × 10⁶</div><div class="ex">2000K → 1,000,000 / 2000 = 500 · higher K = lower mired</div></div>
+<div class="eq"><div class="name">F-number</div><div class="f">focal length / diameter of aperture</div><div class="ex">100 mm / 10 mm = f/10</div></div>
+<div class="eq"><div class="name">Luminance Ratio</div><div class="f">highlight EV − shadow EV</div><div class="ex">EV 8 − EV 4 = 4 stops</div></div>
+
+<div class="tip"><b>On the exam:</b> write the formula, plug in the numbers with units, then the answer. No calculators, so if the math is messy, stop at the setup.</div>
+</div></body></html>

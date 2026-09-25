@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Density Visual</title>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#F4F5F7;color:#15181C;margin:0;padding:20px 16px 48px}
+.w{max-width:760px;margin:0 auto;display:grid;gap:20px}
+.card{background:#fff;border:1px solid #D8DCE1;border-radius:12px;padding:18px}
+h1{font-size:24px;margin:0}h2{font-size:18px;margin:0 0 10px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.m{flex:1;min-width:160px;border:1px solid #D8DCE1;border-radius:10px;padding:12px}
+.l{font-size:13px;color:#59616B}.v{font-size:28px;font-weight:600}
+.t{height:10px;background:#E8EAED;border-radius:5px;overflow:hidden;margin-top:6px}.f{height:100%;transition:width .25s}
+.d{font-weight:600;margin-top:6px;min-height:1.2em}
+input[type=range]{flex:1;min-width:200px}
+table{border-collapse:collapse;width:100%;font-size:16px}td,th{padding:10px;border-bottom:1px solid #E3E6EA;text-align:center}
+th{background:#F4F5F7}.add{background:#E2F3EC}.mul{background:#FBE9E3}
+</style></head><body><div class="w">
+<h1>Density, Opacity, Transmittance</h1>
+
+<div class="card">
+<h2>1. Drag the slider to make the filter darker</h2>
+<div class="row"><span class="l">Clear</span><input id="s" type="range" min="0" max="4" step="1" value="0"><span class="l">Dark</span><b id="st"></b></div>
+<svg viewBox="0 0 680 170" width="100%">
+<text x="20" y="20" font-size="14" fill="#59616B">Incident light (goes IN)</text>
+<text x="660" y="20" font-size="14" fill="#59616B" text-anchor="end">Transmitted light (comes OUT)</text>
+<rect x="20" y="45" width="270" height="80" rx="4" fill="#FAC775"/>
+<text x="155" y="92" text-anchor="middle" font-size="20" font-weight="600" fill="#633806">100 lux</text>
+<rect x="290" y="28" width="70" height="115" rx="4" fill="#fff" stroke="#888"/>
+<rect id="tint" x="290" y="28" width="70" height="115" rx="4" fill="#222"/>
+<text x="325" y="162" text-anchor="middle" font-size="13" fill="#59616B">FILTER (sunglasses)</text>
+<rect id="out" x="360" y="45" width="300" height="80" rx="4" fill="#FAC775"/>
+<text id="ot" x="510" y="92" text-anchor="middle" font-size="20" font-weight="600" fill="#633806"></text>
+</svg>
+<div class="row">
+<div class="m"><div class="l">TRANSMITTANCE = out ÷ in<br>"how much gets THROUGH"</div><div class="v" id="tv"></div><div class="t"><div class="f" id="tb" style="background:#1D9E75"></div></div><div class="d" id="td" style="color:#1D7A55"></div></div>
+<div class="m"><div class="l">OPACITY = in ÷ out<br>"how much it BLOCKS"</div><div class="v" id="ov"></div><div class="t"><div class="f" id="ob" style="background:#D85A30"></div></div><div class="d" id="od" style="color:#B0261D"></div></div>
+<div class="m"><div class="l">DENSITY = log(opacity)<br>"how DARK"</div><div class="v" id="dv"></div><div class="t"><div class="f" id="db" style="background:#D85A30"></div></div><div class="d" id="dd" style="color:#B0261D"></div></div>
+</div>
+<p><b>Watch:</b> as the filter gets darker, <span style="color:#B0261D"><b>density and opacity go UP together</b></span> (twins). <span style="color:#1D7A55"><b>Transmittance goes DOWN</b></span> (the opposite).</p>
+</div>
+
+<div class="card">
+<h2>2. The full table (each row = 1 more stop)</h2>
+<table><tr><th>Stops</th><th>Light out</th><th>Transmittance</th><th>Opacity</th><th>Density</th></tr>
+<tr><td>0</td><td>100 lux</td><td>1</td><td>1</td><td>0</td></tr>
+<tr><td>1</td><td>50 lux</td><td>0.5</td><td>2</td><td>0.3</td></tr>
+<tr><td>2</td><td>25 lux</td><td>0.25</td><td>4</td><td>0.6</td></tr>
+<tr><td>3</td><td>12.5 lux</td><td>0.125</td><td>8</td><td>0.9</td></tr>
+<tr><td>4</td><td>6.25 lux</td><td>0.0625</td><td>16</td><td>1.2</td></tr>
+<tr><td></td><td>▼ down</td><td style="color:#1D7A55"><b>▼ DOWN</b></td><td style="color:#B0261D"><b>▲ UP</b></td><td style="color:#B0261D"><b>▲ UP</b></td></tr></table>
+</div>
+
+<div class="card">
+<h2>3. Why density is "linear and additive"</h2>
+<p>Stack a 1-stop filter and a 2-stop filter together:</p>
+<table>
+<tr><th></th><th>Filter A</th><th></th><th>Filter B</th><th></th><th>Together</th></tr>
+<tr class="add"><td><b>Density</b><br><small>just ADD ✅</small></td><td>0.3</td><td>+</td><td>0.6</td><td>=</td><td><b>0.9</b></td></tr>
+<tr class="mul"><td><b>Transmittance</b><br><small>must MULTIPLY ❌</small></td><td>0.5</td><td>×</td><td>0.25</td><td>=</td><td><b>0.125</b></td></tr>
+</table>
+<p><b>"Density Does the adding."</b> That's why photographers use density.</p>
+</div>
+</div>
+<script>
+const s=document.getElementById('s');let p=0;const $=i=>document.getElementById(i);
+function u(){const n=+s.value,O=2**n,T=1/O,D=0.3*n,out=100*T;
+$('st').textContent=n+(n===1?' stop':' stops');$('tint').setAttribute('fill-opacity',(1-T)*0.95);
+const h=Math.max(6,80*T);$('out').setAttribute('height',h);$('out').setAttribute('y',85-h/2);
+$('ot').textContent=out+' lux';$('ot').setAttribute('y',h<30?42:92);
+$('tv').textContent=T;$('ov').textContent=O;$('dv').textContent=D.toFixed(1);
+$('tb').style.width=T*100+'%';$('ob').style.width=O/16*100+'%';$('db').style.width=D/1.2*100+'%';
+const up=n>p,dn=n<p;$('td').textContent=up?'▼ went DOWN':dn?'▲ went UP':'';$('od').textContent=up?'▲ went UP':dn?'▼ went DOWN':'';$('dd').textContent=$('od').textContent;p=n;}
+s.oninput=u;u();
+</script></body></html>

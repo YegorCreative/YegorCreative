@@ -1,261 +1,198 @@
-/* Exposure simulator. Every rule is scoped to .exposure-sim so site styles stay untouched. */
-.exposure-sim {
-  font-family: system-ui, -apple-system, "Segoe UI", "Noto Sans Armenian", sans-serif;
-  background: #F4F5F7;
-  color: #15181C;
-  margin: 0;
-  padding: 20px 16px 48px;
-  line-height: normal;
-}
-
-.exposure-sim h1,
-.exposure-sim h2 {
-  font-family: inherit !important;
-  color: inherit !important;
-  letter-spacing: normal;
-}
-
-.exposure-sim .w {
-  max-width: 860px;
+/* Photographic Research hub. Scoped so it does not affect the rest of the site. */
+.research-page {
+  max-width: 1100px;
   margin: 0 auto;
+  padding: 36px 20px 28px;
+  color: var(--fast-ink, #111827);
+  font-family: Inter, sans-serif;
+}
+
+.research-page h1 {
+  margin: 0 0 8px;
+  font-family: Outfit, Inter, sans-serif;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.research-page .research-intro {
+  margin: 0 0 28px;
+  max-width: 40rem;
+  color: var(--fast-muted, #4b5563);
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.research-page .research-grid {
   display: grid;
+  grid-template-columns: 1fr;
   gap: 16px;
 }
 
-.exposure-sim .card {
-  background: #fff;
-  border: 1px solid #D8DCE1;
-  border-radius: 12px;
-  padding: 16px;
+@media (min-width: 700px) {
+  .research-page .research-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.exposure-sim h1 {
-  font-size: 24px;
+@media (min-width: 1040px) {
+  .research-page .research-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.research-page .research-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  min-height: 168px;
   margin: 0;
-}
-
-.exposure-sim h2 {
-  font-size: 17px;
-  margin: 0 0 10px;
-}
-
-.exposure-sim .muted {
-  color: #59616B;
-  font-size: 14px;
-}
-
-.exposure-sim .scene {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16/9;
-  max-width: 100%;
-  overflow: hidden;
-  border-radius: 10px;
-  background: #000;
-}
-
-.exposure-sim .scene > * {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.exposure-sim #expo {
-  transition: filter .2s;
-}
-
-.exposure-sim #bg {
-  transition: filter .2s;
-}
-
-.exposure-sim #noise {
-  pointer-events: none;
-  mix-blend-mode: normal;
-}
-
-.exposure-sim .ctrl {
-  display: grid;
-  grid-template-columns: 150px 1fr 90px;
-  gap: 10px;
-  align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid #EEF0F2;
-}
-
-.exposure-sim .ctrl:last-child {
-  border-bottom: none;
-}
-
-.exposure-sim .ctrl b {
-  font-size: 20px;
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-.exposure-sim input[type=range] {
-  width: 100%;
-}
-
-@media (max-width: 560px) {
-  .exposure-sim .ctrl {
-    grid-template-columns: 1fr 70px;
-  }
-
-  .exposure-sim .ctrl input {
-    grid-column: 1 / -1;
-    grid-row: 2;
-  }
-}
-
-.exposure-sim .seg {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.exposure-sim .seg button {
+  padding: 22px;
+  text-align: left;
   font: inherit;
-  border: 1.5px solid #C9CED5;
-  background: #fff;
-  border-radius: 8px;
-  padding: 8px 12px;
+  color: inherit;
   cursor: pointer;
-  font-weight: 600;
+  background: #fff;
+  border: 1px solid var(--yc-border-soft, rgba(124, 58, 237, 0.16));
+  border-radius: var(--yc-radius-card, 24px);
+  box-shadow: var(--yc-shadow-card, 0 18px 46px rgba(17, 24, 39, 0.1));
+  transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
-.exposure-sim .seg button.on {
-  background: #15181C;
-  color: #fff;
-  border-color: #15181C;
+.research-page .research-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--yc-shadow-hover, 0 22px 52px rgba(124, 58, 237, 0.16));
 }
 
-.exposure-sim .meter {
-  position: relative;
-  height: 56px;
-  margin-top: 8px;
+.research-page .research-card:focus-visible {
+  outline: 2px solid var(--fast-accent, #7c3aed);
+  outline-offset: 3px;
 }
 
-.exposure-sim .scale {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 22px;
-  height: 8px;
-  border-radius: 4px;
-  background: linear-gradient(90deg, #2C3E66, #9aa3ad 50%, #F2E3B3);
-}
-
-.exposure-sim .tick {
-  position: absolute;
-  top: 34px;
-  transform: translateX(-50%);
-  font-size: 12px;
-  color: #59616B;
-  font-variant-numeric: tabular-nums;
-}
-
-.exposure-sim .needle {
-  position: absolute;
-  top: 10px;
-  width: 4px;
-  height: 30px;
-  background: #C4611A;
-  border-radius: 2px;
-  transform: translateX(-50%);
-  transition: left .2s;
-}
-
-.exposure-sim .tgt {
-  position: absolute;
-  top: 4px;
-  transform: translateX(-50%);
-  font-size: 11px;
+.research-page .research-card__title {
+  font-family: Outfit, Inter, sans-serif;
+  font-size: 1.25rem;
   font-weight: 700;
-  color: #2B7A4B;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
-.exposure-sim .tgtline {
-  position: absolute;
-  top: 16px;
-  width: 2px;
-  height: 20px;
-  background: #2B7A4B;
-  transform: translateX(-50%);
+.research-page .research-card__desc {
+  color: var(--fast-muted, #4b5563);
+  font-size: 0.95rem;
+  line-height: 1.45;
 }
 
-.exposure-sim .status {
-  font-weight: 700;
-  font-size: 18px;
-  margin-top: 6px;
-}
-
-.exposure-sim .good {
-  color: #2B7A4B;
-}
-
-.exposure-sim .under {
-  color: #2C3E66;
-}
-
-.exposure-sim .over {
-  color: #A8671B;
-}
-
-.exposure-sim .effects {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 10px;
-}
-
-.exposure-sim .fx {
-  border: 1px solid #E3E6EA;
-  border-radius: 8px;
-  padding: 10px;
-}
-
-.exposure-sim .fx .t {
-  font-size: 13px;
-  color: #59616B;
-}
-
-.exposure-sim .fx .v {
-  font-weight: 700;
-}
-
-.exposure-sim table {
-  border-collapse: collapse;
-  width: 100%;
-  font-variant-numeric: tabular-nums;
-}
-
-.exposure-sim td,
-.exposure-sim th {
-  padding: 7px 10px;
-  border-bottom: 1px solid #EEF0F2;
-  text-align: center;
-}
-
-.exposure-sim tr.cur td {
-  background: #FBE7D6;
-  font-weight: 700;
-}
-
-.exposure-sim label.lk {
+.research-page .research-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
   display: flex;
-  gap: 8px;
   align-items: center;
-  font-weight: 600;
+  justify-content: center;
+  padding: 2.5vh 2.5vw;
+  background: rgba(17, 24, 39, 0.62);
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
-.exposure-sim select {
-  font: inherit;
-  padding: 4px 6px;
-  border-radius: 6px;
+.research-page .research-overlay[hidden] {
+  display: none;
 }
 
-.exposure-sim .warn {
-  color: #B0261D;
-  font-size: 14px;
-  min-height: 1.2em;
+.research-page .research-overlay.is-open {
+  opacity: 1;
+}
+
+.research-page .research-dialog {
+  display: flex;
+  flex-direction: column;
+  width: 95vw;
+  height: 90vh;
+  max-width: 1100px;
+  overflow: hidden;
+  background: #fff;
+  border-radius: var(--yc-radius-md, 18px);
+  box-shadow: 0 24px 60px rgba(17, 24, 39, 0.28);
+  transform: scale(0.96);
+  transition: transform 0.2s ease;
+}
+
+.research-page .research-overlay.is-open .research-dialog {
+  transform: scale(1);
+}
+
+.research-page .research-dialog__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex: none;
+  padding: 12px 12px 12px 20px;
+  border-bottom: 1px solid var(--yc-border-soft, rgba(124, 58, 237, 0.16));
+}
+
+.research-page .research-dialog__bar h2 {
+  margin: 0;
+  font-family: Outfit, Inter, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.research-page .research-dialog__close {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--yc-border-soft, rgba(124, 58, 237, 0.16));
+  border-radius: 999px;
+  background: #fff;
+  color: var(--fast-ink, #111827);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.research-page .research-dialog__close:hover {
+  background: #f8fafc;
+}
+
+.research-page .research-dialog__close:focus-visible {
+  outline: 2px solid var(--fast-accent, #7c3aed);
+  outline-offset: 3px;
+}
+
+.research-page .research-dialog__frame {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  height: 100%;
+  border: 0;
+  background: #fff;
+}
+
+@media (max-width: 699px) {
+  .research-page .research-overlay {
+    padding: 0;
+  }
+
+  .research-page .research-dialog {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    border-radius: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .research-page .research-card,
+  .research-page .research-overlay,
+  .research-page .research-dialog {
+    transition: none;
+  }
 }

@@ -1,7 +1,102 @@
-(function () {
-"use strict";
-const root = document.querySelector(".exposure-test");
-if (!root) return;
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Exposure Check</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#E8EAED; --surface:#FFFFFF; --ink:#15181C; --muted:#59616B; --line:#D2D6DC;
+  --accent:#C4611A; --accent-ink:#FFFFFF; --accent-soft:#F6E4D6;
+  --good:#2B7A4B; --good-bg:#E2F1E7; --bad:#B0261D; --bad-bg:#F8E0DD; --warn:#8A6100;
+  --gray18:#777B7F;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#121417; --surface:#1B1E22; --ink:#E6E8EB; --muted:#9BA3AE; --line:#2D3238;
+    --accent:#F08A3C; --accent-ink:#1A0E04; --accent-soft:#3A2515;
+    --good:#72D09A; --good-bg:#142A1E; --bad:#FF8C82; --bad-bg:#301816; --warn:#E6B94F;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#121417; --surface:#1B1E22; --ink:#E6E8EB; --muted:#9BA3AE; --line:#2D3238;
+  --accent:#F08A3C; --accent-ink:#1A0E04; --accent-soft:#3A2515;
+  --good:#72D09A; --good-bg:#142A1E; --bad:#FF8C82; --bad-bg:#301816; --warn:#E6B94F;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;padding-inline:16px;padding-block:24px 64px}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1,h2{font-family:var(--display);font-weight:700;letter-spacing:.01em;line-height:1.05;margin:0;text-wrap:balance}
+h1{font-size:clamp(2.4rem,7vw,3.4rem);text-transform:uppercase}
+h2{font-size:1.6rem}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
+.head{display:flex;gap:16px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
+.chip18{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.75rem;color:var(--muted)}
+.chip18 i{display:block;width:28px;height:28px;border-radius:4px;background:var(--gray18)}
+/* attempts */
+.dots{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.dot{aspect-ratio:1;max-width:100%;border-radius:50%;border:2px dashed var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.dot.done{border-style:solid;border-color:var(--accent);color:var(--ink);background:var(--accent-soft)}
+.dot.next{border-style:solid;border-color:var(--ink);color:var(--ink)}
+.dot small{font-size:.62rem;color:var(--muted)}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+button{font:inherit;cursor:pointer;border-radius:8px}
+.btn{background:var(--accent);color:var(--accent-ink);border:none;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.45;cursor:default}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+/* mastery */
+.bars{display:grid;gap:10px}
+.bar{display:grid;grid-template-columns:150px 1fr 48px;gap:10px;align-items:center;font-size:.9rem}
+.track{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.fill{height:100%;background:var(--accent)}
+.bar .pct{font-family:var(--mono);font-size:.8rem;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+@media (max-width:480px){.bar{grid-template-columns:110px 1fr 40px}}
+.rules{margin:0;padding-left:18px;display:grid;gap:4px}
+/* quiz */
+.progress{height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.progress div{height:100%;background:var(--accent);transition:width .25s}
+.qmeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.tag{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;background:var(--accent-soft);color:var(--ink);padding:4px 8px;border-radius:4px}
+.qtext{font-size:1.2rem;font-weight:500;line-height:1.45}
+.opts{display:grid;gap:8px}
+.opt{text-align:left;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);padding:12px 14px;display:flex;gap:12px;align-items:flex-start}
+.opt .key{font-family:var(--mono);font-size:.8rem;color:var(--muted);min-width:1.2em;padding-top:2px}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.opt.right{border-color:var(--good);background:var(--good-bg)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.opt:disabled{cursor:default}
+input[type=text]{width:100%;font:inherit;font-size:1.05rem;padding:12px 14px;border:1.5px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+.hint{font-size:.85rem;color:var(--muted)}
+.fb{border-radius:8px;padding:14px 16px;display:grid;gap:6px}
+.fb.ok{background:var(--good-bg);border:1px solid var(--good)}
+.fb.no{background:var(--bad-bg);border:1px solid var(--bad)}
+.fb strong{font-family:var(--display);font-size:1.3rem;letter-spacing:.02em;text-transform:uppercase}
+.fb.ok strong{color:var(--good)} .fb.no strong{color:var(--bad)}
+.spell{color:var(--warn);font-weight:600}
+.spd{width:100%;max-width:420px;height:auto;color:var(--muted)}
+.spd .curve{fill:none;stroke:var(--accent);stroke-width:2}
+.spd .area{fill:var(--accent);fill-opacity:.15}
+.spd text{fill:var(--muted);font-family:var(--mono);font-size:10px}
+.spd line{stroke:var(--line)}
+/* results */
+.score{font-family:var(--display);font-size:clamp(3.5rem,14vw,5.5rem);font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.miss{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:4px}
+.miss .you{color:var(--bad)} .miss .ans{color:var(--good);font-weight:500}
+.stack{display:grid;gap:14px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head><body>
+
+<div class="wrap" id="app"></div>
+
+<script>
 const TOPICS={light:"Light & color",density:"Density & ND",meter:"Falloff & metering",expo:"Exposure",math:"F-number & mired",data:"Data management"};
 const ISO=["100","200","400","800","1600","3200","6400"];
 const SHUT=["1","1/2","1/4","1/8","1/15","1/30","1/60","1/125","1/250","1/500","1/1000"];
@@ -120,7 +215,7 @@ let S=load();
 let run=null; let confirmReset=false;
 
 /* ---------- helpers ---------- */
-const $=s=>root.querySelector(s);
+const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function norm(s){return String(s).toLowerCase().replace(/[–—]/g,"-").replace(/½/g,"1/2").replace(/¼/g,"1/4").replace(/⅛/g,"1/8").replace(/\s+/g," ").replace(/[.!]+$/,"").trim();}
@@ -179,7 +274,7 @@ function home(){
     bars+=`<div class="bar"><span>${TOPICS[t]}</span><div class="track"><div class="fill" style="width:${pct}%"></div></div><span class="pct">${pct}%</span></div>`;}
   const misses=Q.filter(q=>S.stats[q.id]&&S.stats[q.id].last==="w").length;
   const label=n<7?`Start attempt ${n+1} of 7`:"Extra round";
-  $("#exposure-test-app").innerHTML=`
+  $("#app").innerHTML=`
   <header class="head">
     <div><div class="eyebrow">PHOSCIFUN · exam prep</div><h1>Exposure Check</h1></div>
     <div class="chip18"><i></i>18% gray</div>
@@ -228,7 +323,7 @@ function show(){
     body=`<div class="opts">${run.order.map((oi,j)=>`<button class="opt" data-i="${oi}"><span class="key">${j+1}</span><span>${esc(q.o[oi])}</span></button>`).join("")}</div><p class="hint" style="margin:0">Select all that apply.</p>`;}
   else{const hint=q.k==="seq"?"Separate with commas, e.g. 100, 200, 400 (the f/ is optional)":q.k==="num"?"Type the number. You can add units.":"Type your answer. Spelling counts.";
     body=`<input type="text" id="ans" autocomplete="off" spellcheck="false" aria-label="Your answer"><p class="hint" style="margin:0">${hint}</p>`;}
-  $("#exposure-test-app").innerHTML=`
+  $("#app").innerHTML=`
   <div class="qmeta"><button class="btn ghost" id="quit">Quit</button><span class="eyebrow">${run.mode==="attempt"?`Attempt ${Math.min(S.attempts.length+1,99)}`:run.mode==="miss"?"Misses":"All questions"} · ${run.i+1} / ${N}</span></div>
   <div class="progress"><div style="width:${run.i/N*100}%"></div></div>
   <section class="card stack">
@@ -239,10 +334,10 @@ function show(){
     <div class="btns"><button class="btn" id="check">Check</button></div>
   </section>`;
   $("#quit").onclick=home;
-  root.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
     if(run.done)return;
     if(q.k==="multi"){const i=+b.dataset.i;run.sel.has(i)?run.sel.delete(i):run.sel.add(i);b.classList.toggle("sel");}
-    else{root.querySelectorAll(".opt").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");run.sel=b.dataset.i;}
+    else{document.querySelectorAll(".opt").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");run.sel=b.dataset.i;}
   });
   $("#check").onclick=()=>run.done?next():check();
   const inp=$("#ans");if(inp)inp.focus();
@@ -262,7 +357,7 @@ function check(){
     $("#ans").disabled=true;}
   run.done=true;
   // mark options
-  root.querySelectorAll(".opt").forEach(b=>{b.disabled=true;const i=b.dataset.i;
+  document.querySelectorAll(".opt").forEach(b=>{b.disabled=true;const i=b.dataset.i;
     const correct=(q.k==="mc"||q.k==="spd")?i==="0":q.k==="tf"?(i==="t")===q.a:q.k==="multi"?q.c.includes(+i):false;
     if(correct)b.classList.add("right");else if(b.classList.contains("sel"))b.classList.add("wrong");});
   const st=S.stats[q.id]||{right:0,wrong:0};ok?st.right++:st.wrong++;st.last=ok?"r":"w";S.stats[q.id]=st;save();
@@ -284,7 +379,7 @@ function results(){
     byT+=`<div class="bar"><span>${TOPICS[t]}</span><div class="track"><div class="fill" style="width:${p}%"></div></div><span class="pct">${s}/${x.length}</span></div>`;}
   const missed=r.filter(x=>!x.ok);
   const verdict=pct>=90?"Exam ready on this set.":pct>=75?"Solid. Redo your misses, then take the next attempt.":"Review the misses below, then go again.";
-  $("#exposure-test-app").innerHTML=`
+  $("#app").innerHTML=`
   <header class="head"><div><div class="eyebrow">${run.mode==="attempt"?`Attempt ${S.attempts.length} of 7`:run.mode==="miss"?"Misses round":"All questions"}</div><h1>Results</h1></div></header>
   <section class="card stack">
     <div class="score">${score}<span class="muted" style="font-size:.45em">/${total}</span></div>
@@ -297,7 +392,7 @@ function results(){
       <div class="you">You: ${esc(x.given)}</div><div class="ans">Answer: ${esc(answerText(x.q))}</div><div class="hint">${esc(x.q.e)}</div></div>`).join("")}
   </section>`:""}`;
   $("#home").onclick=home;
-  (document.getElementById("practiceTestHeading") || root).scrollIntoView({block:"start"});
+  window.scrollTo(0,0);
 }
 
 document.addEventListener("keydown",e=>{
@@ -305,4 +400,6 @@ document.addEventListener("keydown",e=>{
   const b=$("#check");if(b){e.preventDefault();b.click();}
 });
 home();
-})();
+</script>
+
+</body></html>

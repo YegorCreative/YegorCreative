@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Illuminance vs Luminance</title>
+<style>
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#F4F5F7;color:#15181C;margin:0;padding:20px 16px 48px}
+.w{max-width:800px;margin:0 auto;display:grid;gap:18px}
+.card{background:#fff;border:1px solid #D8DCE1;border-radius:12px;padding:18px}
+h1{font-size:24px;margin:0}h2{font-size:18px;margin:0 0 10px}
+table{border-collapse:collapse;width:100%}td,th{padding:10px;border-bottom:1px solid #E3E6EA;text-align:left;vertical-align:top}
+th{background:#F4F5F7}
+.in{background:#FFF4DC}.out{background:#E4F1FB}
+svg text{font-family:inherit}
+</style></head><body><div class="w">
+<h1>Illuminance vs Luminance</h1>
+
+<div class="card">
+<svg viewBox="0 0 760 340" width="100%" role="img" aria-label="Light falling onto a subject is illuminance; light bouncing off the subject into the camera is luminance.">
+<defs>
+<marker id="ay" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#E09A1B"/></marker>
+<marker id="ab" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#2F7FD0"/></marker>
+</defs>
+<circle cx="90" cy="80" r="42" fill="#FAC775" stroke="#E09A1B" stroke-width="3"/>
+<text x="90" y="86" text-anchor="middle" font-size="16" font-weight="600" fill="#633806">LIGHT</text>
+<line x1="135" y1="100" x2="360" y2="215" stroke="#E09A1B" stroke-width="6" marker-end="url(#ay)"/>
+<line x1="125" y1="120" x2="345" y2="245" stroke="#E09A1B" stroke-width="6" marker-end="url(#ay)"/>
+<rect x="150" y="165" width="190" height="50" rx="8" fill="#FFF4DC" stroke="#E09A1B"/>
+<text x="245" y="186" text-anchor="middle" font-size="15" font-weight="700" fill="#633806">ILLUMINANCE (IN)</text>
+<text x="245" y="205" text-anchor="middle" font-size="13" fill="#633806">light falling ONTO subject</text>
+<rect x="365" y="195" width="90" height="120" rx="8" fill="#888780"/>
+<text x="410" y="260" text-anchor="middle" font-size="14" font-weight="600" fill="#fff">SUBJECT</text>
+<rect x="330" y="258" width="30" height="38" rx="6" fill="#fff" stroke="#E09A1B" stroke-width="2"/>
+<circle cx="345" cy="262" r="10" fill="#fff" stroke="#E09A1B" stroke-width="2"/>
+<text x="300" y="318" text-anchor="middle" font-size="12" fill="#633806">incident meter</text>
+<line x1="460" y1="230" x2="640" y2="150" stroke="#2F7FD0" stroke-width="6" marker-end="url(#ab)"/>
+<line x1="460" y1="260" x2="640" y2="180" stroke="#2F7FD0" stroke-width="6" marker-end="url(#ab)"/>
+<rect x="470" y="250" width="200" height="50" rx="8" fill="#E4F1FB" stroke="#2F7FD0"/>
+<text x="570" y="271" text-anchor="middle" font-size="15" font-weight="700" fill="#0C447C">LUMINANCE (OFF)</text>
+<text x="570" y="290" text-anchor="middle" font-size="13" fill="#0C447C">light bouncing OFF subject</text>
+<rect x="645" y="130" width="80" height="55" rx="8" fill="#2C2C2A"/>
+<circle cx="685" cy="157" r="16" fill="#555" stroke="#aaa" stroke-width="3"/>
+<text x="685" y="210" text-anchor="middle" font-size="13" fill="#0C447C">camera =</text>
+<text x="685" y="226" text-anchor="middle" font-size="13" fill="#0C447C">reflected meter</text>
+</svg>
+</div>
+
+<div class="card">
+<h2>Memory trick</h2>
+<p style="font-size:18px;margin:0 0 8px"><b>I</b>lluminance = <b>I</b>ncident = <b>I</b>ncoming</p>
+<p style="margin:0">All three start with "I" and all mean light <b>falling onto</b> the subject. <b>Luminance</b> is light <b>bouncing off</b> the subject toward the camera.</p>
+</div>
+
+<div class="card">
+<h2>Sort the terms</h2>
+<table>
+<tr><th>Light falling onto a subject</th><th>Light reflected off a subject</th></tr>
+<tr><td class="in"><b>Illuminance</b></td><td class="out"><b>Luminance</b></td></tr>
+<tr><td class="in">Incident meter reading (meter at the subject, pointed at the light)</td><td class="out">Reflected meter reading (camera's meter, pointed at the subject)</td></tr>
+<tr><td class="in">Not fooled by white or black subjects</td><td class="out">Calibrated to 18% gray: white → underexposed, black → overexposed</td></tr>
+</table>
+</div>
+</div></body></html>
