@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Light Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+<style>
+:root{--bg:#F6F5FA;--card:#FFFFFF;--ink:#15131C;--muted:#5E5A6B;--line:#E2DEEE;--accent:#6D4AD9;--soft:#EFEAFD;--ok:#1F8A70;--okb:#E1F4EE;--bad:#C0392B;--badb:#FBE3E0}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55;padding:24px 16px 56px}
+.w{max-width:960px;margin:0 auto;display:grid;gap:22px}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(28px,6vw,40px);font-weight:900}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.intro p{margin:8px 0 0;color:var(--muted);max-width:66ch}
+button{font:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.topic{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 18px;display:grid;gap:16px}
+.th{display:flex;gap:14px;align-items:center}
+.num{font-size:40px;font-weight:900;line-height:1;color:transparent;-webkit-text-stroke:2px var(--accent);min-width:52px}
+.th h2{font-size:clamp(22px,4vw,28px)}
+.th p{margin:2px 0 0;color:var(--muted);font-weight:600;font-size:14px}
+.src{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media(max-width:640px){.src{grid-template-columns:repeat(2,1fr)}}
+.sb{display:flex;align-items:center;gap:10px;text-align:left;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:8px 10px;min-height:58px;cursor:pointer;font-weight:800;font-size:14px;line-height:1.25}
+.sb i{width:26px;height:26px;border-radius:50%;flex:none;border:1px solid rgba(0,0,0,.15);box-shadow:0 0 12px var(--glow)}
+.sb small{display:block;font-weight:500;font-size:12px;color:var(--muted)}
+.sb[aria-pressed="true"]{border-color:var(--accent);background:var(--soft)}
+.ctrls{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:12px;overflow:hidden}
+.seg button{border:0;background:var(--card);color:var(--ink);font-weight:700;font-size:13px;padding:0 12px;min-height:40px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.chk{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;min-height:40px;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:var(--accent)}
+.chart{background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px}
+.chart svg{display:block;width:100%;height:auto}
+.chart text{font-family:inherit;font-size:13px;fill:var(--muted)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;font-weight:700}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:22px;height:10px;border-radius:3px;display:inline-block}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:640px){.stats{grid-template-columns:1fr}}
+.stat{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px}
+.stat .k{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.stat .v{font-size:30px;font-weight:900;color:var(--accent);line-height:1.1;font-variant-numeric:tabular-nums}
+.stat .d{font-size:13px;font-weight:600}
+.bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:6px}
+.bar div{height:100%;background:var(--accent);transition:width .3s}
+.says{background:var(--soft);border-radius:12px;padding:12px 14px;font-weight:600;font-size:14.5px}
+.cmp{display:grid;gap:8px}
+.cr{display:grid;grid-template-columns:130px 1fr 70px;gap:10px;align-items:center;font-size:14px;font-weight:700}
+@media(max-width:480px){.cr{grid-template-columns:96px 1fr 58px;font-size:13px}}
+.cr .t{height:14px;border-radius:7px;background:var(--line);overflow:hidden}
+.cr .t div{height:100%;border-radius:7px;transition:width .35s}
+.cr .n{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.cr.on{color:var(--accent)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.two{grid-template-columns:1fr}}
+.pane{border-radius:14px;padding:14px;border:1.5px solid var(--c);background:var(--cs);display:grid;gap:6px;align-content:start}
+.pane .t{font-size:20px;font-weight:900;color:var(--c)}
+.pane p{margin:0;font-size:14px}
+.pane svg{width:100%;max-width:300px;height:auto;justify-self:center}
+.trick{display:flex;gap:10px;background:var(--bg);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:10px 12px}
+.trick b{color:var(--accent)}
+.note{font-size:12.5px;color:var(--muted);margin:0}
+.check{border:1px dashed var(--accent);border-radius:12px;padding:12px 14px;display:grid;gap:10px}
+.check h4{margin:0;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.opt{border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 12px;min-height:44px;cursor:pointer;font-weight:600}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--okb);color:var(--ok)}
+.opt.wrong{border-color:var(--bad);background:var(--badb);color:var(--bad)}
+.fb{font-weight:700;min-height:1.3em;font-size:14px}.fb.ok{color:var(--ok)}.fb.no{color:var(--bad)}
+@media(prefers-reduced-motion:reduce){.bar div,.cr .t div{transition:none}}
+</style></head><body>
+<div class="w">
+<header class="intro">
+<div class="eyebrow">Photographic Research</div>
+<h1>Light Lab</h1>
+<p>Compare tungsten, daylight, fluorescent and LED light against the sensitivity of your eyes. See what a <b>photometer</b> measures, and why some lights waste most of their energy as invisible heat.</p>
+</header>
+
+<section class="topic" aria-labelledby="t1h">
+<div class="th"><div class="num" aria-hidden="true">01</div><div><h2 id="t1h">Spectrum vs your eyes</h2><p>Pick a light and see how much of it your eyes can actually use</p></div></div>
+<div class="src" id="src" role="group" aria-label="Choose a light source"></div>
+<div class="ctrls">
+<div class="seg" role="group" aria-label="Eye mode"><button type="button" id="day" aria-pressed="true">☀ Day vision</button><button type="button" id="night" aria-pressed="false">☾ Night vision</button></div>
+<label class="chk"><input type="checkbox" id="showEye" checked> Show eye curve</label>
+<label class="chk"><input type="checkbox" id="showSeen" checked> Shade what the eye sees</label>
+</div>
+<div class="chart"><svg id="chart" viewBox="0 0 700 342" role="img" aria-label="Spectral power of the selected light with the eye sensitivity curve"></svg></div>
+<div class="legend"><span><i style="background:#9C8CE0"></i>Light's spectrum (SPD)</span><span><i style="background:repeating-linear-gradient(90deg,#15131C 0 5px,transparent 5px 8px)"></i><span id="eyeName">Eye sensitivity (day, peak 555 nm)</span></span><span><i style="background:linear-gradient(90deg,#6A4BC4,#3F6CC9,#47A94E,#E9C62B,#E0473C)"></i>What the eye / photometer counts</span></div>
+<div class="stats">
+<div class="stat"><div class="k">Peak wavelength</div><div class="v" id="pk"></div><div class="d" id="pkd"></div></div>
+<div class="stat"><div class="k">Energy that's visible</div><div class="v" id="vis"></div><div class="d">in 400–700 nm</div><div class="bar"><div id="visb"></div></div></div>
+<div class="stat"><div class="k">Eye efficiency</div><div class="v" id="ler"></div><div class="d" id="lerd"></div><div class="bar"><div id="lerb"></div></div></div>
+</div>
+<div class="says" id="says" aria-live="polite"></div>
+<div><h3 style="font-size:16px;margin-bottom:8px" id="cmpT">How bright each light looks to the eye (per watt of light)</h3><div class="cmp" id="cmp"></div></div>
+<p class="note">Simplified spectra for learning. Tungsten is modeled as a 3200K black body, daylight as a 6500K sky-like curve, fluorescent as a typical cool-white tube, and LED as a typical blue-chip white LED. "Eye efficiency" is the luminous efficacy of the light itself (lumens per watt of light), not the lamp's power use.</p>
+</section>
+
+<section class="topic" aria-labelledby="t2h">
+<div class="th"><div class="num" aria-hidden="true">02</div><div><h2 id="t2h">Photometer vs radiometer</h2><p>Two ways to measure the same light</p></div></div>
+<div class="two">
+<div class="pane" style="--c:#6D4AD9;--cs:#EFEAFD"><span class="t">Photometer</span><p>Measures light <b>the way the human eye sees it</b>. It has a filter shaped like the eye's sensitivity curve, so green-yellow light (around 555 nm) counts the most, and UV and infrared count as zero.</p><p><b>Units:</b> lumens (flux), candelas (intensity), lux (illuminance). Your camera's light meter works like this.</p></div>
+<div class="pane" style="--c:#C8701F;--cs:#FCEFE0"><span class="t">Radiometer</span><p>Measures <b>all the energy</b>, including invisible UV and infrared, no matter what the eye sees.</p><p><b>Units:</b> watts. A tungsten bulb scores high on a radiometer but low on a photometer, because most of its energy is invisible heat.</p></div>
+</div>
+<div class="trick"><span aria-hidden="true">💡</span><div><b>Photo = light as people see it.</b> The eye is most sensitive to <b>green (555 nm)</b> in daylight and shifts toward <b>blue-green (507 nm)</b> in the dark. That's why blue and green objects look relatively brighter at dusk (the Purkinje effect). Incandescent light is associated with <b>heat</b> because most of a tungsten bulb's energy is infrared.</div></div>
+</section>
+
+<section class="topic" aria-labelledby="t3h">
+<div class="th"><div class="num" aria-hidden="true">03</div><div><h2 id="t3h">Quick checks</h2><p>Test yourself on what the lab shows</p></div></div>
+<div class="check"><h4>Question 1</h4><div>Where is the peak of a 3200K tungsten light's spectrum?</div><div class="opts"><button class="opt" type="button">In the blue (about 450 nm)</button><button class="opt" type="button">In the green (about 555 nm)</button><button class="opt" type="button" data-ok="1">In the infrared, beyond 700 nm</button></div><div class="fb" aria-live="polite"></div></div>
+<div class="check"><h4>Question 2</h4><div>A photometer measures light…</div><div class="opts"><button class="opt" type="button" data-ok="1">Weighted by the human eye's sensitivity</button><button class="opt" type="button">As total energy, including infrared</button><button class="opt" type="button">Only in the ultraviolet</button></div><div class="fb" aria-live="polite"></div></div>
+<div class="check"><h4>Question 3</h4><div>Which color is the eye most sensitive to in daylight?</div><div class="opts"><button class="opt" type="button">Red (about 650 nm)</button><button class="opt" type="button" data-ok="1">Green (about 555 nm)</button><button class="opt" type="button">Violet (about 400 nm)</button></div><div class="fb" aria-live="polite"></div></div>
+<div class="check"><h4>Question 4</h4><div>Why does the fluorescent spectrum have tall spikes?</div><div class="opts"><button class="opt" type="button" data-ok="1">Its gas and phosphors give off light at specific wavelengths, not from heat</button><button class="opt" type="button">Because it's a black body radiator</button><button class="opt" type="button">Because it's very hot</button></div><div class="fb" aria-live="polite"></div></div>
+</section>
+</div>
+
+<script>
+(function(){
+var V=function(l){return 1.019*Math.exp(-285.4*Math.pow(l/1000-0.559,2));};
+var Vs=function(l){return 0.992*Math.exp(-321.9*Math.pow(l/1000-0.503,2));};
+function planck(l,T){var x=l*1e-9;return 1/(Math.pow(x,5)*(Math.exp(1.4388e-2/(x*T))-1));}
+function g(l,c,w){return Math.exp(-Math.pow((l-c)/w,2));}
+var SRC=[
+ {id:'tung',n:'Tungsten',s:'3200K · incandescent',dot:'#FFB870',hi:6000,f:function(l){return planck(l,3200);},
+  say:'A smooth curve that keeps rising past red. Its peak is far into the infrared, so most of its energy is invisible heat. Only a small slice lands where your eyes are sensitive.'},
+ {id:'day',n:'Daylight',s:'about 6500K · sky + sun',dot:'#F2F6FF',hi:1100,f:function(l){return planck(l,6500)*(l<380?Math.max(0,(l-300)/80):1)*(1-0.12*g(l,760,8)-0.1*g(l,687,5)-0.15*g(l,940,25));},
+  say:'Full and fairly even across the whole visible range, a little stronger in blue. It covers every color, which is why daylight renders colors so well.'},
+ {id:'fluor',n:'Fluorescent',s:'about 4000K · cool white',dot:'#E6FFE0',hi:1100,f:function(l){return 0.12*g(l,610,60)+0.08*g(l,480,45)+0.06*g(l,540,50)+0.45*g(l,405,3)+0.9*g(l,436,3)+g(l,546,3)+0.35*g(l,578,3.5)+0.6*g(l,611,4);},
+  say:'Tall narrow spikes from mercury gas and phosphors, not heat. The big spike at 546 nm sits right next to the eye’s peak, so it looks bright and wastes little energy, but the gaps between spikes hurt its CRI.'},
+ {id:'led',n:'White LED',s:'about 5000K · blue chip',dot:'#FFFFFF',hi:1100,f:function(l){return 0.9*g(l,450,11)+0.62*g(l,565,62)+0.18*g(l,625,40);},
+  say:'A sharp blue peak from the LED chip plus a wide yellow hump from the phosphor coating. Almost all of its energy is visible, so it’s very efficient.'}];
+/* precompute */
+SRC.forEach(function(S){var tot=0,vis=0,ev=0,evs=0,pk=0,pl=0,mx=0;
+ for(var l=300;l<=S.hi;l++){var s=S.f(l);tot+=s;if(l>=400&&l<=700)vis+=s;ev+=s*V(l);evs+=s*Vs(l);if(s>pk){pk=s;pl=l;}if(l>=350&&l<=1000&&s>mx)mx=s;}
+ S.vis=vis/tot;S.ler=683*ev/tot;S.slr=1700*evs/tot;S.peak=pl;S.max=mx;});
+var cur=0,night=false;
+var X0=50,X1=685,Y0=262,Y1=46,L0=350,L1=1000;
+function X(l){return X0+(l-L0)/(L1-L0)*(X1-X0);}function Y(v){return Y0-v*(Y0-Y1);}
+function wl2rgb(l){var r=0,gg=0,b=0;if(l<440){r=-(l-440)/60;b=1;}else if(l<490){gg=(l-440)/50;b=1;}else if(l<510){gg=1;b=-(l-510)/20;}else if(l<580){r=(l-510)/70;gg=1;}else if(l<645){r=1;gg=-(l-645)/65;}else{r=1;}
+ return 'rgb('+Math.round(r*255)+','+Math.round(gg*255)+','+Math.round(b*255)+')';}
+var chart=document.getElementById('chart');
+function draw(){var S=SRC[cur],E=night?Vs:V,showE=document.getElementById('showEye').checked,showS=document.getElementById('showSeen').checked;
+ var h='<defs><linearGradient id="spec" x1="'+X(380)+'" x2="'+X(720)+'" y1="0" y2="0" gradientUnits="userSpaceOnUse">';
+ for(var l=380;l<=720;l+=20)h+='<stop offset="'+((l-380)/340)+'" stop-color="'+wl2rgb(l)+'"/>';
+ h+='</linearGradient></defs>';
+ h+='<rect x="'+X(L0)+'" y="'+Y1+'" width="'+(X(400)-X(L0))+'" height="'+(Y0-Y1)+'" fill="#EDEAF7"/><rect x="'+X(700)+'" y="'+Y1+'" width="'+(X(L1)-X(700))+'" height="'+(Y0-Y1)+'" fill="#FBEFE6"/>';
+ h+='<text x="'+((X(L0)+X(400))/2)+'" y="'+(Y1-10)+'" text-anchor="middle">UV</text><text x="'+((X(700)+X(L1))/2)+'" y="'+(Y1-10)+'" text-anchor="middle">infrared (invisible heat)</text><text x="'+((X(400)+X(700))/2)+'" y="'+(Y1-10)+'" text-anchor="middle" style="font-weight:700;fill:#15131C">visible light</text>';
+ /* spd */
+ var pts=[],seen=[];for(l=L0;l<=L1;l+=2){var v=S.f(l)/S.max;pts.push(X(l).toFixed(1)+','+Y(v).toFixed(1));seen.push(X(l).toFixed(1)+','+Y(v*E(l)).toFixed(1));}
+ h+='<polygon points="'+X(L0)+','+Y0+' '+pts.join(' ')+' '+X(L1)+','+Y0+'" fill="#9C8CE0" fill-opacity=".28" stroke="#6D4AD9" stroke-width="2.5"/>';
+ if(showS)h+='<polygon points="'+X(L0)+','+Y0+' '+seen.join(' ')+' '+X(L1)+','+Y0+'" fill="url(#spec)" fill-opacity=".95"/>';
+ if(showE){var ep=[];for(l=L0;l<=L1;l+=2)ep.push(X(l).toFixed(1)+','+Y(E(l)).toFixed(1));h+='<polyline points="'+ep.join(' ')+'" fill="none" stroke="#15131C" stroke-width="2.2" stroke-dasharray="6 4"/>';
+  var pl=night?507:555;h+='<text x="'+(X(pl)+10)+'" y="'+(Y(1)+14)+'" style="font-weight:800;fill:#15131C;paint-order:stroke;stroke:#fff;stroke-width:4px">← eye peak '+pl+' nm</text>';}
+ /* axis */
+ h+='<line x1="'+X0+'" y1="'+Y0+'" x2="'+X1+'" y2="'+Y0+'" stroke="#8C88A0"/>';
+ h+='<rect x="'+X(400)+'" y="'+(Y0+4)+'" width="'+(X(700)-X(400))+'" height="10" fill="url(#spec)" rx="2"/>';
+ [400,500,600,700,800,900,1000].forEach(function(t){h+='<line x1="'+X(t)+'" y1="'+Y0+'" x2="'+X(t)+'" y2="'+(Y0+18)+'" stroke="#8C88A0"/><text x="'+X(t)+'" y="'+(Y0+34)+'" text-anchor="middle">'+t+'</text>';});
+ h+='<text x="'+((X0+X1)/2)+'" y="'+(Y0+58)+'" text-anchor="middle">wavelength (nm)</text>';
+ h+='<text x="16" y="'+((Y0+Y1)/2)+'" text-anchor="middle" transform="rotate(-90 16 '+((Y0+Y1)/2)+')">relative power</text>';
+ if(S.peak<=1000){h+='<circle cx="'+X(S.peak)+'" cy="'+Y(1)+'" r="5" fill="#6D4AD9"/>';}
+ chart.innerHTML=h;
+ /* stats */
+ document.getElementById('pk').textContent=S.peak+' nm';
+ document.getElementById('pkd').textContent=S.peak>700?'infrared: invisible':S.peak<400?'ultraviolet':(S.peak<490?'blue':S.peak<570?'green':'yellow-red')+' part of the spectrum';
+ document.getElementById('vis').textContent=Math.round(S.vis*100)+'%';document.getElementById('visb').style.width=(S.vis*100)+'%';
+ var ler=night?S.slr:S.ler,mx=night?1700:683;
+ document.getElementById('ler').textContent=Math.round(ler);document.getElementById('lerd').textContent=(night?'scotopic ':'')+'lumens per watt of light (max '+mx+')';document.getElementById('lerb').style.width=(ler/mx*100)+'%';
+ document.getElementById('says').textContent=S.say+(night?' In night vision, the eye’s peak moves to blue-green (507 nm), so bluer lights gain and warm tungsten loses even more.':'');
+ document.getElementById('eyeName').textContent=night?'Eye sensitivity (night, peak 507 nm)':'Eye sensitivity (day, peak 555 nm)';
+ /* comparison */
+ var all=SRC.map(function(x){return night?x.slr:x.ler;}),top=Math.max.apply(null,all);
+ document.getElementById('cmp').innerHTML=SRC.map(function(x,i){var v=all[i];return '<div class="cr'+(i===cur?' on':'')+'"><span>'+x.n+'</span><div class="t"><div style="width:'+(v/top*100)+'%;background:'+(i===cur?'#6D4AD9':'#B9ADE9')+'"></div></div><span class="n">'+Math.round(v)+'</span></div>';}).join('');
+ document.getElementById('cmpT').textContent='How bright each light looks to the eye per watt of light ('+(night?'night':'day')+' vision)';
+ btns.forEach(function(b,k){b.setAttribute('aria-pressed',k===cur?'true':'false');});}
+var src=document.getElementById('src'),btns=[];
+SRC.forEach(function(S,i){var b=document.createElement('button');b.type='button';b.className='sb';b.innerHTML='<i style="background:'+S.dot+';--glow:'+S.dot+'"></i><span>'+S.n+'<small>'+S.s+'</small></span>';b.addEventListener('click',function(){cur=i;draw();});src.appendChild(b);btns.push(b);});
+document.getElementById('day').addEventListener('click',function(){night=false;this.setAttribute('aria-pressed','true');document.getElementById('night').setAttribute('aria-pressed','false');draw();});
+document.getElementById('night').addEventListener('click',function(){night=true;this.setAttribute('aria-pressed','true');document.getElementById('day').setAttribute('aria-pressed','false');draw();});
+document.getElementById('showEye').addEventListener('change',draw);document.getElementById('showSeen').addEventListener('change',draw);
+draw();
+document.querySelectorAll('.check').forEach(function(q){var bs=q.querySelectorAll('.opt'),fb=q.querySelector('.fb');
+ bs.forEach(function(b){b.addEventListener('click',function(){var ok=b.hasAttribute('data-ok');bs.forEach(function(x){x.disabled=true;if(x.hasAttribute('data-ok'))x.classList.add('right');});if(!ok)b.classList.add('wrong');
+  fb.textContent=ok?'Correct!':'Not quite. The green answer is correct.';fb.className='fb '+(ok?'ok':'no');});});});
+})();
+</script>
+</body></html>

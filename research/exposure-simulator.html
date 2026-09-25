@@ -17,7 +17,7 @@ h1{font-size:24px;margin:0}h2{font-size:17px;margin:0 0 10px}
 .ctrl:last-child{border-bottom:none}
 .ctrl b{font-size:20px;text-align:right;font-variant-numeric:tabular-nums}
 input[type=range]{width:100%}
-@media(max-width:560px){.ctrl{grid-template-columns:1fr 70px}.ctrl input{grid-column:1/-1;grid-row:2}.seg button{min-height:44px}input[type=range]{min-height:44px}}
+@media(max-width:560px){.ctrl{grid-template-columns:1fr 70px}.ctrl input{grid-column:1/-1;grid-row:2}}
 .seg{display:flex;gap:6px;flex-wrap:wrap}
 .seg button{font:inherit;border:1.5px solid #C9CED5;background:#fff;border-radius:8px;padding:8px 12px;cursor:pointer;font-weight:600}
 .seg button.on{background:#15181C;color:#fff;border-color:#15181C}
@@ -37,6 +37,8 @@ td,th{padding:7px 10px;border-bottom:1px solid #EEF0F2;text-align:center}
 tr.cur td{background:#FBE7D6;font-weight:700}
 label.lk{display:flex;gap:8px;align-items:center;font-weight:600}
 select{font:inherit;padding:4px 6px;border-radius:6px}
+.hist{background:#15131C;border-radius:10px;padding:8px}
+.hist svg{display:block;width:100%;height:auto}
 .warn{color:#B0261D;font-size:14px;min-height:1.2em}
 </style></head><body><div class="w">
 <div><h1>Exposure Simulator</h1></div>
@@ -85,6 +87,14 @@ select{font:inherit;padding:4px 6px;border-radius:6px}
 </div>
 
 <div class="card">
+<h2>Histogram</h2>
+<p class="muted" style="margin:0 0 8px">A histogram illustrates the <b>frequency</b> of each tone in the photo: how many pixels are at each brightness, from <b>0 (pure black)</b> to <b>255 (pure white)</b>. It updates live as you change the settings.</p>
+<div class="hist"><svg id="hist" viewBox="0 0 640 206" role="img" aria-label="Histogram of the simulated photo"></svg></div>
+<div class="status" id="hs" style="font-size:16px"></div>
+<div class="muted" id="hs2"></div>
+</div>
+
+<div class="card">
 <h2>What each setting is doing right now</h2>
 <div class="effects">
 <div class="fx"><div class="t">Aperture → depth of field</div><div class="v" id="fa"></div></div>
@@ -123,6 +133,7 @@ function render(){
  const blur=[9,7.5,6,4.5,3.2,2,1.1,0.5,0.1,0][a];$('bg').style.filter=`blur(${blur}px)`;
  drawMover(s);drawNoise([0,0.03,0.07,0.12,0.19,0.28,0.4][i]);
  const b=Math.min(4.5,Math.max(0.06,Math.pow(2,o*0.75)));$('expo').style.filter=`brightness(${b})`+(o>1?` contrast(${Math.max(0.5,1-0.1*(o-1))})`:'');
+ drawHist(b,o>1?Math.max(0.5,1-0.1*(o-1)):1,[0,0.03,0.07,0.12,0.19,0.28,0.4][i]);
  // meter -3..+3
  const pos=v=>((Math.max(-3.4,Math.min(3.4,v))+3.5)/7*100)+'%';
  $('nd').style.left=pos(o);$('tl').style.left=pos(target);$('tt').style.left=pos(target);
@@ -143,6 +154,33 @@ function render(){
  $('eq').innerHTML=rows;
  last={a,s,i};
 }
+
+// ---- live histogram ----
+var HB=null;
+(function(){var W=192,H=108,c=document.createElement('canvas');c.width=W;c.height=H;var x=c.getContext('2d');
+ var ser=new XMLSerializer();var parts=['bg','subj'].map(function(id){var s=document.getElementById(id).cloneNode(true);s.removeAttribute('style');s.setAttribute('xmlns','http://www.w3.org/2000/svg');s.setAttribute('width',W);s.setAttribute('height',H);return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(ser.serializeToString(s));});
+ var n=0;var imgs=parts.map(function(u){var im=new Image();im.onload=function(){n++;if(n===parts.length){imgs.forEach(function(i){x.drawImage(i,0,0,W,H);});
+  try{var d=x.getImageData(0,0,W,H).data;HB=new Float32Array(W*H);for(var k=0,j=0;k<d.length;k+=4,j++)HB[j]=(0.2126*d[k]+0.7152*d[k+1]+0.0722*d[k+2])/255;}catch(e){HB=null;}render();}};im.src=u;return im;});})();
+function drawHist(b,con,noise){var svg=document.getElementById('hist');if(!svg)return;
+ var N=64,bins=new Array(N).fill(0),tot=0,sum=0;
+ if(HB){for(var j=0;j<HB.length;j++){var v=HB[j]*b;if(con!==1)v=(v-.5)*con+.5;if(noise)v=v*(1-noise)+Math.random()*noise;v=Math.max(0,Math.min(1,v));bins[Math.min(N-1,Math.floor(v*N))]++;tot++;sum+=v;}}
+ var mx=Math.max.apply(null,bins.slice(1,N-1).concat([1]));var X0=20,X1=620,Y0=150,Y1=10,bw=(X1-X0)/N,s='';
+ s+='<rect x="'+X0+'" y="'+Y1+'" width="'+(X1-X0)+'" height="'+(Y0-Y1)+'" fill="#1F1C28"/>';
+ [1,2].forEach(function(k){var xx=X0+(X1-X0)*k/3;s+='<line x1="'+xx+'" y1="'+Y1+'" x2="'+xx+'" y2="'+Y0+'" stroke="#3A3645" stroke-dasharray="3 3"/>';});
+ for(var i=0;i<N;i++){var hh=Math.min(1,bins[i]/mx)*(Y0-Y1-4);var clip=(i===0||i===N-1)&&tot&&bins[i]/tot>0.02;
+  s+='<rect x="'+(X0+i*bw+.5).toFixed(1)+'" y="'+(Y0-hh).toFixed(1)+'" width="'+(bw-1).toFixed(1)+'" height="'+hh.toFixed(1)+'" fill="'+(clip?'#FF5A4F':'#D9D2F5')+'"/>';}
+ s+='<rect x="'+X0+'" y="'+(Y0+4)+'" width="'+(X1-X0)+'" height="8" fill="url(#hg)"/><defs><linearGradient id="hg"><stop offset="0" stop-color="#000"/><stop offset="1" stop-color="#fff"/></linearGradient></defs>';
+ s+='<text x="'+X0+'" y="178" fill="#CFC6EE" font-size="13" font-weight="700">0 black</text><text x="'+((X0+X1)/6+X0/2)+'" y="198" fill="#9A93B5" font-size="13" text-anchor="middle">shadows</text><text x="320" y="198" fill="#9A93B5" font-size="13" text-anchor="middle">midtones</text><text x="'+(X1-(X1-X0)/6)+'" y="198" fill="#9A93B5" font-size="13" text-anchor="middle">highlights</text><text x="'+X1+'" y="178" fill="#CFC6EE" font-size="13" font-weight="700" text-anchor="end">255 white</text>';
+ svg.innerHTML=s;
+ if(!tot){return;}
+ var mean=sum/tot,lo=bins[0]/tot,hi=bins[N-1]/tot,hs=document.getElementById('hs'),hs2=document.getElementById('hs2'),t,cls,m2;
+ if(hi>0.02&&mean>0.55){t='Piled up on the right: overexposed';cls='status over';m2='The bars are crammed against 255 (red bar = clipped highlights). Those pure-white areas have lost all detail.';}
+ else if(lo>0.02&&mean<0.4){t='Piled up on the left: underexposed';cls='status under';m2='The bars are crammed against 0 (red bar = clipped shadows). Those pure-black areas have lost all detail.';}
+ else if(mean<0.33){t='Leaning left: a bit dark';cls='status under';m2='Most tones sit in the shadows. Give it more light (open the aperture, slow the shutter, or raise ISO).';}
+ else if(mean>0.62){t='Leaning right: a bit bright';cls='status over';m2='Most tones sit in the highlights. Watch the right edge so the whites don’t clip.';}
+ else{t='Spread across the middle: well exposed';cls='status good';m2='Tones run from shadows to highlights without piling up against either edge.';}
+ if(noise>0.15)m2+=' High ISO noise also makes the histogram rougher and more spread out.';
+ hs.className=cls;hs.textContent=t;hs2.textContent=m2;}
 function onMove(which){
  const w=$('warn');w.textContent='';
  if($('lock').checked){const c=$('comp').value;

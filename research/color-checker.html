@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Color Checker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+<style>
+:root{--bg:#F6F5FA;--card:#FFFFFF;--ink:#15131C;--muted:#5E5A6B;--line:#E2DEEE;--accent:#6D4AD9;--soft:#EFEAFD;--ok:#1F8A70;--okb:#E1F4EE}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55;padding:24px 16px 56px}
+.w{max-width:940px;margin:0 auto;display:grid;gap:22px}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(28px,6vw,40px);font-weight:900}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.intro p{margin:8px 0 0;color:var(--muted);max-width:64ch}
+button,input,select{font:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.toc{display:flex;gap:8px;flex-wrap:wrap}
+.toc a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:14px}
+.toc a:hover{border-color:var(--accent)}
+.topic{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 18px;display:grid;gap:16px;scroll-margin-top:12px}
+.th{display:flex;gap:14px;align-items:center}
+.num{font-size:40px;font-weight:900;line-height:1;color:transparent;-webkit-text-stroke:2px var(--accent);min-width:52px}
+.th h2{font-size:clamp(22px,4vw,28px)}
+.th p{margin:2px 0 0;color:var(--muted);font-weight:600;font-size:14px}
+.trick{display:flex;gap:10px;background:var(--bg);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:10px 12px}
+.trick b{color:var(--accent)}
+.note{font-size:12.5px;color:var(--muted);margin:0}
+/* chart */
+.chartwrap{display:grid;grid-template-columns:1.35fr 1fr;gap:16px;align-items:start}
+@media(max-width:760px){.chartwrap{grid-template-columns:1fr}}
+.chart{background:#1A1A1C;border-radius:14px;padding:10px;display:grid;grid-template-columns:repeat(6,1fr);gap:7px}
+.patch{aspect-ratio:1;border:0;border-radius:5px;cursor:pointer;position:relative;transition:transform .15s,box-shadow .15s}
+.patch:hover{transform:scale(1.05)}
+.patch[aria-pressed="true"]{box-shadow:0 0 0 3px #1A1A1C,0 0 0 6px #fff;z-index:1}
+.patch span{position:absolute;left:4px;top:3px;font-size:10px;font-weight:800;color:rgba(255,255,255,.75);text-shadow:0 1px 2px rgba(0,0,0,.5)}
+.info{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:10px}
+.info .nm{font-size:22px;font-weight:900}
+.info .grp{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.swrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sw{border-radius:10px;height:64px;border:1px solid var(--line)}
+.swl{font-size:12px;font-weight:700;color:var(--muted);margin-top:4px}
+.vals{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px}
+.vals dt{color:var(--muted);font-weight:600}.vals dd{margin:0;font-weight:700;font-family:ui-monospace,Menlo,Consolas,monospace}
+.info p{margin:0;font-size:14px}
+/* light picker */
+.lights{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media(max-width:560px){.lights{grid-template-columns:repeat(2,1fr)}}
+.lb{display:flex;align-items:center;gap:10px;text-align:left;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:8px 10px;min-height:56px;cursor:pointer;font-weight:700;font-size:14px;line-height:1.25}
+.lb i{width:22px;height:22px;border-radius:50%;flex:none;border:1px solid rgba(0,0,0,.15)}
+.lb small{display:block;font-weight:500;font-size:12px;color:var(--muted)}
+.lb[aria-pressed="true"]{border-color:var(--accent);background:var(--soft)}
+.toggle{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-weight:700}
+.sw-btn{position:relative;width:52px;height:30px;border-radius:999px;border:0;background:#CFCBDC;cursor:pointer;flex:none}
+.sw-btn::after{content:"";position:absolute;left:3px;top:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:left .15s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.sw-btn[aria-checked="true"]{background:var(--accent)}
+.sw-btn[aria-checked="true"]::after{left:25px}
+.sim{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.sim{grid-template-columns:1fr}}
+.sim h3{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.mini{background:#1A1A1C;border-radius:12px;padding:8px;display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.mini div{aspect-ratio:1;border-radius:4px}
+.says{background:var(--soft);border-radius:12px;padding:12px 14px;font-weight:600;font-size:14px}
+/* fixer */
+.fix{display:grid;gap:12px}
+.fixbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:none;background:var(--accent);color:#fff;font-weight:800;border-radius:10px;padding:0 16px;min-height:44px;cursor:pointer;text-decoration:none;font-size:14px}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
+.file input{position:absolute;width:1px;height:1px;opacity:0}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.stage{grid-template-columns:1fr}}
+.cv{position:relative;border-radius:12px;overflow:hidden;background:#111;border:1px solid var(--line)}
+.cv canvas{display:block;width:100%;height:auto}
+.cv .lab{position:absolute;left:8px;top:8px;font-size:11px;font-weight:800;letter-spacing:.1em;color:#fff;background:rgba(0,0,0,.5);padding:3px 8px;border-radius:999px}
+#before{cursor:crosshair}
+.status{font-weight:700;font-size:14px;color:var(--muted)}
+.status.ok{color:var(--ok)}
+.steps{margin:0;padding-left:20px;display:grid;gap:4px;font-size:14px}
+.stepper{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media(max-width:640px){.stepper{grid-template-columns:1fr}}
+.stepper li{display:flex;gap:10px;align-items:center;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--card);opacity:.55;transition:opacity .2s,border-color .2s,background .2s}
+.stepper li b{display:block;font-size:14px}.stepper li small{display:block;font-size:12px;color:var(--muted)}
+.stepper .sn{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:900;background:var(--bg);color:var(--muted)}
+.stepper li.now{opacity:1;border-color:var(--accent);background:var(--soft)}
+.stepper li.now .sn{background:var(--accent);color:#fff}
+.stepper li.done{opacity:1}
+.stepper li.done .sn{background:var(--ok);color:#fff;font-size:0}
+.stepper li.done .sn::after{content:"✓";font-size:15px}
+.chk{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;min-height:44px;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:var(--accent)}
+.callout{border-radius:12px;padding:12px 14px;font-weight:700;font-size:15px;background:var(--soft);color:var(--ink);border:1.5px solid var(--accent)}
+.callout.ok{background:var(--okb);border-color:var(--ok);color:#135C49}
+.callout small{display:block;font-weight:500;font-size:13px;margin-top:4px;color:inherit}
+#before{cursor:crosshair}
+.hint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:rgba(20,12,40,.82);color:#fff;font-weight:800;font-size:14px;padding:8px 14px;border-radius:999px;pointer-events:none;white-space:nowrap;animation:bob 1.6s ease-in-out infinite}
+.hint .hand{font-size:18px}
+@keyframes bob{50%{transform:translate(-50%,-4px)}}
+.ring{position:absolute;width:0;height:0;pointer-events:none;display:none}
+.ring::before,.ring::after{content:"";position:absolute;left:50%;top:50%;width:100%;height:100%;transform:translate(-50%,-50%);border:3px solid #FFE066;border-radius:8px;box-shadow:0 0 0 2px rgba(0,0,0,.4)}
+.ring::after{animation:pulse 1.4s ease-out infinite}
+@keyframes pulse{from{opacity:.9;width:100%;height:100%}to{opacity:0;width:190%;height:190%}}
+.cv.ready{box-shadow:0 0 0 3px var(--accent)}
+.wait{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:#fff;font-weight:700;font-size:14px;background:rgba(20,12,40,.55)}
+.wait[hidden],.hint[hidden]{display:none}
+.why{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--bg)}
+.why summary{cursor:pointer;font-weight:800;min-height:28px}
+.why p{margin:8px 0 0;font-size:14px}
+@media(prefers-reduced-motion:reduce){.hint,.ring::after{animation:none}}
+@media(prefers-reduced-motion:reduce){.patch,.sw-btn::after{transition:none}}
+</style></head><body>
+<div class="w">
+<header class="intro">
+<div class="eyebrow">Photographic Research</div>
+<h1>Color Checker</h1>
+<p>A color checker is a card of 24 carefully measured color patches. Photographers shoot it under their lighting to check color accuracy and set white balance. Explore the chart, see how different lights change it, and correct your own photo.</p>
+</header>
+<nav class="toc" aria-label="Sections"><a href="#t1">The chart</a><a href="#t2">Light simulator</a><a href="#t3">Fix my photo</a></nav>
+
+<!-- 1 CHART -->
+<section class="topic" id="t1" aria-labelledby="t1h">
+<div class="th"><div class="num" aria-hidden="true">01</div><div><h2 id="t1h">The 24-patch chart</h2><p>Tap any patch to see what it is and what it's for</p></div></div>
+<div class="chartwrap">
+<div class="chart" id="chart" role="group" aria-label="24 color patches"></div>
+<div class="info" id="info" aria-live="polite"></div>
+</div>
+<div class="trick"><span aria-hidden="true">💡</span><div><b>Row 1</b> = natural colors (skin, sky, foliage). <b>Row 2</b> = hard-to-reproduce colors. <b>Row 3</b> = primaries and secondaries. <b>Row 4</b> = <b>neutral grays</b> from white to black, used for white balance. Patch 22 (Neutral 5) is close to <b>18% gray</b>, the same middle gray your light meter aims for.</div></div>
+<p class="note">Colors are standard published sRGB reference values. Every screen shows them slightly differently, so for real color work, use a physical card.</p>
+</section>
+
+<!-- 2 SIMULATOR -->
+<section class="topic" id="t2" aria-labelledby="t2h">
+<div class="th"><div class="num" aria-hidden="true">02</div><div><h2 id="t2h">Light simulator</h2><p>How the same card looks under different lights</p></div></div>
+<div class="lights" id="lights" role="group" aria-label="Choose a light"></div>
+<div class="toggle"><button class="sw-btn" id="wb" type="button" role="switch" aria-checked="false" aria-labelledby="wbl"></button><span id="wbl">Apply white balance (using the Neutral 5 gray patch)</span></div>
+<div class="sim">
+<div><h3>Reference (daylight)</h3><div class="mini" id="ref"></div></div>
+<div><h3 id="simt">Under this light</h3><div class="mini" id="sim"></div></div>
+</div>
+<div class="says" id="says" aria-live="polite"></div>
+<div class="trick"><span aria-hidden="true">💡</span><div><b>White balance fixes the color cast from color temperature</b> (orange tungsten, blue shade). <b>It can't fix a low-CRI light:</b> the grays turn neutral, but the reds and skin tones still look dull. That's why photographers want high-CRI lights.</div></div>
+<p class="note">A simplified simulation for learning. Real lights shift colors in more complex ways.</p>
+</section>
+
+<!-- 3 FIXER -->
+<section class="topic" id="t3" aria-labelledby="t3h">
+<div class="th"><div class="num" aria-hidden="true">03</div><div><h2 id="t3h">Fix my photo</h2><p>Use the gray patch to correct color (white balance) and brightness (exposure)</p></div></div>
+<ol class="stepper" id="stepper" aria-label="Steps">
+<li data-s="1"><span class="sn">1</span><div><b>Choose a photo</b><small>Upload your own, or use the sample</small></div></li>
+<li data-s="2"><span class="sn">2</span><div><b>Tap the gray patch</b><small>The middle-gray square (Neutral 5)</small></div></li>
+<li data-s="3"><span class="sn">3</span><div><b>See the fix</b><small>Compare and download</small></div></li>
+</ol>
+<div class="fixbar">
+<label class="btn file">⬆ Upload a photo<input type="file" id="file" accept="image/*"></label>
+<button class="btn ghost" type="button" id="sample">Use sample photo</button>
+<label class="chk"><input type="checkbox" id="expo" checked> Also fix brightness (exposure)</label>
+</div>
+<div class="callout" id="status" aria-live="polite"></div>
+<div class="stage">
+<div class="cv" id="bwrap"><span class="lab">BEFORE</span><canvas id="before" aria-label="Original photo. Tap the middle-gray patch to correct it."></canvas>
+<div class="hint" id="hint"><span class="hand" aria-hidden="true">👆</span><span id="hintt">Tap the middle-gray patch</span></div>
+<div class="ring" id="ring" aria-hidden="true"></div></div>
+<div class="cv" id="awrap"><span class="lab">AFTER</span><canvas id="after" aria-label="Corrected photo"></canvas><div class="wait" id="wait">Your corrected photo<br>will appear here</div></div>
+</div>
+<div class="fixbar" id="done" hidden>
+<a class="btn" id="dl" href="#" download="corrected.jpg">⬇ Download corrected</a>
+<button class="btn ghost" type="button" id="again">Try another spot</button>
+</div>
+<details class="why"><summary>Why does tapping gray fix the photo?</summary>
+<p>The middle-gray patch is <b>perfectly neutral</b> (no color) and is <b>18% gray</b>, the same brightness a light meter aims for. If it looks orange, blue or green in your photo, the light added a color cast. The tool measures that patch and adjusts the red, green and blue channels until it's neutral again. That's <b>white balance</b>. With "Also fix brightness" on, it also brightens or darkens the whole photo until the patch is exactly middle gray. That's <b>exposure</b>.</p>
+<p>Tip: only tap a <b>gray or white</b> area. Tapping a colored patch would push the whole photo the wrong way. For brightness, use the <b>middle gray</b> patch, not white.</p></details>
+<p class="note">Your photo stays on your device. Nothing is uploaded anywhere.</p>
+</section>
+</div>
+
+<script>
+(function(){
+var P=[
+['Dark skin','#735244','Natural','Darker skin tones. Photographers check it to make sure skin looks natural.'],
+['Light skin','#C29682','Natural','Lighter skin tones. Skin is the color people notice first when it looks wrong.'],
+['Blue sky','#627A9D','Natural','A typical blue sky.'],
+['Foliage','#576C43','Natural','Green leaves and plants.'],
+['Blue flower','#8580B1','Natural','A blue-violet flower. Hard for cameras because of its mix of blue and red.'],
+['Bluish green','#67BDAA','Natural','A pale teal. Tests how the camera handles cyan-green colors.'],
+['Orange','#D67E2C','Hard to reproduce','A strong orange.'],
+['Purplish blue','#505BA6','Hard to reproduce','A deep purplish blue that cameras often get wrong.'],
+['Moderate red','#C15A63','Hard to reproduce','A soft red, close to many skin and lip tones.'],
+['Purple','#5E3C6C','Hard to reproduce','A dark purple.'],
+['Yellow green','#9DBC40','Hard to reproduce','A bright yellow-green.'],
+['Orange yellow','#E0A32E','Hard to reproduce','A warm golden yellow.'],
+['Blue','#383D96','Primary / secondary','Primary blue.'],
+['Green','#469449','Primary / secondary','Primary green.'],
+['Red','#AF363C','Primary / secondary','Primary red. Low-CRI lights often make this look dull.'],
+['Yellow','#E7C71F','Primary / secondary','Secondary yellow.'],
+['Magenta','#BB5695','Primary / secondary','Secondary magenta.'],
+['Cyan','#0885A1','Primary / secondary','Secondary cyan.'],
+['White','#F3F3F2','Neutral','The brightest neutral. Can be used for white balance, but it can clip (blow out).'],
+['Neutral 8','#C8C8C8','Neutral','Light gray.'],
+['Neutral 6.5','#A0A0A0','Neutral','Medium-light gray.'],
+['Neutral 5','#7A7A79','Neutral','Middle gray, close to 18% gray. The best patch for setting white balance and checking exposure.'],
+['Neutral 3.5','#555555','Neutral','Dark gray.'],
+['Black','#343434','Neutral','The darkest neutral. Shows how deep the shadows go.']];
+function hex2rgb(h){return[parseInt(h.substr(1,2),16),parseInt(h.substr(3,2),16),parseInt(h.substr(5,2),16)];}
+function s2l(c){c/=255;return c<=0.04045?c/12.92:Math.pow((c+0.055)/1.055,2.4);}
+function l2s(v){v=Math.max(0,Math.min(1,v));return Math.round(255*(v<=0.0031308?12.92*v:1.055*Math.pow(v,1/2.4)-0.055));}
+function rgbHex(c){return'#'+c.map(function(x){return('0'+x.toString(16)).slice(-2);}).join('').toUpperCase();}
+var LIN=P.map(function(p){return hex2rgb(p[1]).map(s2l);});
+
+/* ---- lights ---- */
+var LIGHTS=[
+ {n:'Daylight',s:'5500K · high CRI',g:[1,1,1],cri:0,dot:'#FFF6E6',say:'The reference. Colors look the way the card was designed to look.'},
+ {n:'Tungsten',s:'3200K · high CRI',g:[1,.74,.44],cri:0,dot:'#FFB870',say:'Everything turns warm orange. The grays aren’t gray anymore. Turn on white balance: tungsten has high CRI, so the colors come back almost perfectly.'},
+ {n:'Shade',s:'7500K · high CRI',g:[.82,.93,1.1],cri:0,dot:'#CFE0FF',say:'Open shade is lit by blue sky, so everything turns cool blue. White balance fixes it well.'},
+ {n:'Cheap fluorescent',s:'about 4000K · low CRI',g:[.9,1.08,.86],cri:.55,dot:'#E6FFE0',say:'A green-ish cast, and reds and skin look dull. Turn on white balance: the grays become neutral, but the reds stay dull. White balance can’t fix low CRI.'},
+ {n:'Cheap LED',s:'about 5000K · low CRI',g:[1,.97,.93],cri:.45,dot:'#FFF9F0',say:'It looks nearly white, but saturated colors (especially reds) are weak. That’s a low-CRI light.'},
+ {n:'High-CRI LED',s:'5600K · CRI 95+',g:[1.02,1,.97],cri:.04,dot:'#FFFFFF',say:'Very close to daylight. This is why high-CRI LEDs are used for photo and video.'}];
+LIGHTS.forEach(function(L){var y=.2126*L.g[0]+.7152*L.g[1]+.0722*L.g[2];L.g=L.g.map(function(v){return v/y;});});
+function render(lin,L){var r=lin[0],g=lin[1],b=lin[2];
+ if(L.cri){var Y=.2126*r+.7152*g+.0722*b,red=Math.max(0,r-Math.max(g,b))/(r+1e-6),w=L.cri*(.45+.55*red);r=Y+(r-Y)*(1-w);g=Y+(g-Y)*(1-w);b=Y+(b-Y)*(1-w);}
+ return[r*L.g[0],g*L.g[1],b*L.g[2]];}
+var cur=0,wbOn=false,sel=21;
+function simColors(){var L=LIGHTS[cur],out=LIN.map(function(c){return render(c,L);});
+ if(wbOn){var n=out[21],m=(n[0]+n[1]+n[2])/3,k=[m/n[0],m/n[1],m/n[2]];out=out.map(function(c){return[c[0]*k[0],c[1]*k[1],c[2]*k[2]];});}
+ return out.map(function(c){return c.map(l2s);});}
+
+/* ---- chart + info ---- */
+var chart=document.getElementById('chart'),info=document.getElementById('info'),pbtn=[];
+P.forEach(function(p,i){var b=document.createElement('button');b.type='button';b.className='patch';b.style.background=p[1];b.setAttribute('aria-label',(i+1)+'. '+p[0]);b.setAttribute('aria-pressed','false');b.innerHTML='<span>'+(i+1)+'</span>';
+ b.addEventListener('click',function(){sel=i;showInfo();});chart.appendChild(b);pbtn.push(b);});
+function showInfo(){var p=P[sel],rgb=hex2rgb(p[1]),sim=simColors()[sel],L=LIGHTS[cur];
+ pbtn.forEach(function(b,k){b.setAttribute('aria-pressed',k===sel?'true':'false');});
+ info.innerHTML='<div><div class="grp">Patch '+(sel+1)+' · '+p[2]+'</div><div class="nm">'+p[0]+'</div></div>'
+ +'<div class="swrow"><div><div class="sw" style="background:'+p[1]+'"></div><div class="swl">Reference</div></div><div><div class="sw" style="background:rgb('+sim.join(',')+')"></div><div class="swl">Under '+L.n+(wbOn?' + WB':'')+'</div></div></div>'
+ +'<dl class="vals"><dt>Hex</dt><dd>'+p[1]+'</dd><dt>RGB</dt><dd>'+rgb.join(', ')+'</dd></dl><p>'+p[3]+'</p>';}
+
+/* ---- simulator ---- */
+var lights=document.getElementById('lights'),lbtn=[],refG=document.getElementById('ref'),simG=document.getElementById('sim');
+P.forEach(function(p){var d=document.createElement('div');d.style.background=p[1];refG.appendChild(d);simG.appendChild(document.createElement('div'));});
+LIGHTS.forEach(function(L,i){var b=document.createElement('button');b.type='button';b.className='lb';b.setAttribute('aria-pressed','false');b.innerHTML='<i style="background:'+L.dot+'"></i><span>'+L.n+'<small>'+L.s+'</small></span>';b.addEventListener('click',function(){cur=i;update();});lights.appendChild(b);lbtn.push(b);});
+var wb=document.getElementById('wb');wb.addEventListener('click',function(){wbOn=!wbOn;wb.setAttribute('aria-checked',wbOn?'true':'false');update();});
+function update(){var s=simColors();Array.prototype.forEach.call(simG.children,function(d,i){d.style.background='rgb('+s[i].join(',')+')';});
+ lbtn.forEach(function(b,k){b.setAttribute('aria-pressed',k===cur?'true':'false');});
+ document.getElementById('simt').textContent='Under '+LIGHTS[cur].n+(wbOn?' + white balance':'');
+ document.getElementById('says').textContent=LIGHTS[cur].say;showInfo();}
+cur=1;update();
+
+/* ---- fixer ---- */
+var bc=document.getElementById('before'),ac=document.getElementById('after'),bx=bc.getContext('2d'),ax=ac.getContext('2d'),st=document.getElementById('status'),dl=document.getElementById('dl'),
+ hint=document.getElementById('hint'),hintt=document.getElementById('hintt'),ring=document.getElementById('ring'),wait=document.getElementById('wait'),done=document.getElementById('done'),expo=document.getElementById('expo'),
+ steps=document.querySelectorAll('#stepper li'),bwrap=document.getElementById('bwrap');
+var MAXW=1400,isSample=false,lastPick=null;
+function step(n){steps.forEach(function(li,i){li.classList.toggle('done',i+1<n);li.classList.toggle('now',i+1===n);if(i+1===n)li.setAttribute('aria-current','step');else li.removeAttribute('aria-current');});}
+function say(html,ok){st.innerHTML=html;st.className='callout'+(ok?' ok':'');}
+function ready(){ax.drawImage(bc,0,0);wait.hidden=false;done.hidden=true;hint.hidden=false;bwrap.classList.add('ready');lastPick=null;step(2);}
+function placeRing(){if(!isSample){ring.style.display='none';return;}/* sample's Neutral 5 patch: x 372-438, y 402-468 of 900x600 */
+ ring.style.display='block';ring.style.left=(372/900*100)+'%';ring.style.top=(402/600*100)+'%';ring.style.width=(66/900*100)+'%';ring.style.height=(66/600*100)+'%';}
+function sampleScene(){var W=900,H=600;bc.width=ac.width=W;bc.height=ac.height=H;
+ var T=LIGHTS[1];function tc(hex){var l=hex2rgb(hex).map(s2l);return'rgb('+render(l,T).map(function(v){return v*0.62;}).map(l2s).join(',')+')';}
+ bx.fillStyle=tc('#B9B4AC');bx.fillRect(0,0,W,H);bx.fillStyle=tc('#7B5B43');bx.fillRect(0,420,W,180);
+ bx.fillStyle=tc('#2E6B8F');bx.beginPath();bx.arc(760,210,110,0,Math.PI*2);bx.fill();
+ bx.fillStyle=tc('#C23B3B');bx.fillRect(700,300,120,140);
+ bx.fillStyle=tc('#1A1A1C');bx.fillRect(120,150,480,330);
+ var s=66,g=12;P.forEach(function(p,i){bx.fillStyle=tc(p[1]);bx.fillRect(132+(i%6)*(s+g)+6,162+Math.floor(i/6)*(s+g)+6,s,s);});
+ var img=bx.getImageData(0,0,W,H),d=img.data;for(var k=0;k<d.length;k+=4){var n=(Math.random()-.5)*10;d[k]+=n;d[k+1]+=n;d[k+2]+=n;}bx.putImageData(img,0,0);
+ isSample=true;ready();placeRing();hintt.textContent='Tap the glowing gray patch';
+ say('This sample was shot under <b>orange tungsten light</b> and is a bit <b>too dark</b>.<small>Step 2: tap the glowing yellow box, the middle-gray patch (bottom row, 4th from left), to fix both.</small>');}
+function loadFile(f){var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var k=Math.min(1,MAXW/im.width);bc.width=ac.width=Math.round(im.width*k);bc.height=ac.height=Math.round(im.height*k);bx.drawImage(im,0,0,bc.width,bc.height);
+  isSample=false;ready();placeRing();hintt.textContent='Tap the gray patch in your photo';
+  say('Your photo is loaded.<small>Step 2: tap the <b>middle-gray</b> patch of your color checker (or any gray card) in the Before photo.</small>');};
+ im.onerror=function(){say('That file couldn’t be opened as an image. Try a JPG or PNG.');};im.src=r.result;};r.readAsDataURL(f);}
+document.getElementById('file').addEventListener('change',function(e){if(e.target.files&&e.target.files[0])loadFile(e.target.files[0]);e.target.value='';});
+document.getElementById('sample').addEventListener('click',sampleScene);
+document.getElementById('again').addEventListener('click',function(){ready();placeRing();say('Pick another spot.<small>Tap a gray or white area in the Before photo.</small>');});
+expo.addEventListener('change',function(){if(lastPick)fix(lastPick[0],lastPick[1]);});
+function fix(x,y){lastPick=[x,y];
+ var R=Math.max(3,Math.round(bc.width/150)),x0=Math.max(0,x-R),y0=Math.max(0,y-R),w=Math.min(bc.width-x0,2*R+1),h=Math.min(bc.height-y0,2*R+1);
+ var d=bx.getImageData(x0,y0,w,h).data,s=[0,0,0],n=0;for(var k=0;k<d.length;k+=4){s[0]+=s2l(d[k]);s[1]+=s2l(d[k+1]);s[2]+=s2l(d[k+2]);n++;}
+ s=s.map(function(v){return v/n;});
+ if(Math.min(s[0],s[1],s[2])<0.004){say('That spot is too dark to measure.<small>Tap a gray or white area instead.</small>');return;}
+ var sat=(Math.max(s[0],s[1],s[2])-Math.min(s[0],s[1],s[2]))/Math.max(s[0],s[1],s[2]);
+ var m=(s[0]+s[1]+s[2])/3,target=0.184,e=expo.checked?target/m:1,g=[m/s[0]*e,m/s[1]*e,m/s[2]*e];
+ var LUT=[];for(var c=0;c<3;c++){LUT[c]=new Uint8ClampedArray(256);for(var v=0;v<256;v++)LUT[c][v]=l2s(s2l(v)*g[c]);}
+ var img=bx.getImageData(0,0,bc.width,bc.height),D=img.data;for(k=0;k<D.length;k+=4){D[k]=LUT[0][D[k]];D[k+1]=LUT[1][D[k+1]];D[k+2]=LUT[2][D[k+2]];}
+ ax.putImageData(img,0,0);
+ try{dl.href=ac.toDataURL('image/jpeg',.92);}catch(err){}
+ ax.strokeStyle='#FFE066';ax.lineWidth=Math.max(2,bc.width/300);ax.strokeRect(x0-2,y0-2,w+4,h+4);
+ hint.hidden=true;ring.style.display='none';wait.hidden=true;done.hidden=false;bwrap.classList.remove('ready');step(4);steps[2].classList.add('now');steps[2].classList.remove('done');
+ var stops=Math.log(e)/Math.LN2,cast=s[0]>s[2]*1.08?'an orange (warm)':s[2]>s[0]*1.08?'a blue (cool)':s[1]>Math.max(s[0],s[2])*1.05?'a green':'a slight';
+ var msg='✓ Fixed! <small><b>Color:</b> removed '+cast+' color cast, so the gray is now neutral.'+(expo.checked?' <b>Brightness:</b> '+(Math.abs(stops)<0.05?'already correct, no change.':(stops>0?'brightened':'darkened')+' by about '+Math.abs(stops).toFixed(1)+' stop'+(Math.abs(stops).toFixed(1)==='1.0'?'':'s')+' so the gray is exactly middle gray (18%).'):' Brightness was left as it was.')+'</small>';
+ if(sat>0.8)msg+='<small>⚠ That spot looks quite colorful. For best results, tap a gray or white patch.</small>';
+ say(msg,true);
+ document.getElementById('awrap').scrollIntoView({behavior:'smooth',block:'nearest'});}
+bc.addEventListener('click',function(e){var r=bc.getBoundingClientRect();fix(Math.round((e.clientX-r.left)/r.width*bc.width),Math.round((e.clientY-r.top)/r.height*bc.height));});
+sampleScene();
+document.querySelectorAll('.toc a').forEach(function(a){a.addEventListener('click',function(e){var t=document.getElementById(a.getAttribute('href').slice(1));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});});
+})();
+</script>
+</body></html>
