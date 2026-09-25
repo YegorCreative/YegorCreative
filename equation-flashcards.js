@@ -33,7 +33,7 @@ var CARDS=[
  note:"Messy numbers and no calculator? Stop at the setup: D = log(200 lux / 85 lux)",
  trick:"<b>D</b>ensity <b>D</b>oes the adding. Transmittance is NOT linear and additive.",
  q:"400 lux in, 100 lux out. What's the density?",a:"Opacity = 4 → log(4) = 0.6"},
-{g:"f",ic:"nd",name:"Neutral Density",formula:"0.3 = 1 stop",
+{g:"f",ic:"nd",name:"ND Filters (Neutral Density)",formula:"0.3 = 1 stop",
  what:"An ND filter is dark gray glass that cuts light without changing its color. Every 0.3 of density removes 1 stop (half the light).",
  parts:["ND → stops: divide by 0.3","Stops → ND: multiply by 0.3"],
  table:[["ND","Stops lost"],["0.3","1"],["0.6","2"],["0.9","3"],["1.2","4"]],
@@ -69,32 +69,62 @@ var CARDS=[
  trick:"<b>Bright minus dark</b> = stops.",
  q:"Highlights EV 11, shadows EV 6. What's the stop range?",a:"11 − 6 = 5 stops"}
 ];
+
+var LT='#F6C453';
+function beam(inL,outL,outH,label){return '<svg viewBox="0 0 440 175" role="img" aria-label="'+label+'">'
+ +'<text x="90" y="30" text-anchor="middle" class="b">'+inL+'</text><text x="90" y="48" text-anchor="middle" class="m">incident (in)</text>'
+ +'<rect x="10" y="60" width="165" height="60" rx="4" class="lt"/>'
+ +'<rect x="175" y="42" width="28" height="96" rx="5" class="cc" fill-opacity=".45" stroke="var(--c)" stroke-width="2"/>'
+ +'<text x="189" y="158" text-anchor="middle" class="m">filter</text>'
+ +'<rect x="203" y="'+(90-outH/2)+'" width="170" height="'+outH+'" rx="4" class="lt"/>'
+ +'<path d="M373 '+(90-outH/2-8)+' l22 '+(outH/2+8)+' l-22 '+(outH/2+8)+'z" class="lt"/>'
+ +'<text x="300" y="30" text-anchor="middle" class="b">'+outL+'</text><text x="300" y="48" text-anchor="middle" class="m">transmitted (out)</text></svg>';}
+var VIZ=[
+ beam('100 lux','50 lux',30,'100 lux goes in, 50 lux comes out')+'<p class="eqf-vcap">Half the beam gets through → transmittance = 50 ÷ 100 = <b>0.5</b></p>',
+ beam('100 lux','50 lux',30,'The filter blocks half the light')+'<p class="eqf-vcap">The filter blocks half → opacity = 100 ÷ 50 = <b>2</b> (the flip of 0.5)</p>',
+ (function(){var s='<svg viewBox="0 0 440 210" role="img" aria-label="Darker filters: density 0, 0.3, 0.6, 0.9; light out halves each time">',d=[0,.3,.6,.9],o=[100,50,25,12.5];
+  for(var i=0;i<4;i++){var x=30+i*105;s+='<rect x="'+x+'" y="10" width="70" height="46" rx="8" fill="var(--c)" fill-opacity="'+(0.06+d[i]*0.9)+'" stroke="var(--c)" stroke-width="1.5"/>'
+   +'<text x="'+(x+35)+'" y="76" text-anchor="middle" class="b">D = '+d[i]+'</text>'
+   +'<rect x="'+(x+15)+'" y="'+(180-o[i]*0.9)+'" width="40" height="'+(o[i]*0.9)+'" rx="4" class="lt"/>'
+   +'<text x="'+(x+35)+'" y="200" text-anchor="middle" class="m">'+o[i]+' lux</text>';}
+  return s+'</svg><p class="eqf-vcap">Each <b>+0.3</b> of density <b>halves</b> the light. Densities just add up: 0.3 + 0.6 = 0.9</p>';})(),
+ (function(){var s='<svg viewBox="0 0 440 215" role="img" aria-label="ND filters 0.3, 0.6, 0.9, 1.2 cut 1, 2, 3, 4 stops">',n=['none','0.3','0.6','0.9','1.2'],st=['0','−1','−2','−3','−4'];
+  for(var i=0;i<5;i++){var x=44+i*88;s+='<circle cx="'+x+'" cy="46" r="34" fill="#fff" stroke="var(--eqf-muted)" stroke-width="3"/>'
+   +'<circle cx="'+x+'" cy="46" r="26" fill="#2A2733" fill-opacity="'+(i*0.22)+'"/>'
+   +'<circle cx="'+(x-8)+'" cy="38" r="5" fill="#fff" fill-opacity=".7"/>'
+   +'<text x="'+x+'" y="102" text-anchor="middle" class="b">'+(i?n[i]+' ND':'no filter')+'</text>'
+   +'<text x="'+x+'" y="122" text-anchor="middle" class="m">'+st[i]+' stop'+(i===1?'':'s')+'</text>'
+   +'<rect x="'+(x-16)+'" y="'+(200-64/Math.pow(2,i))+'" width="32" height="'+(64/Math.pow(2,i))+'" rx="3" class="lt"/>';}
+  return s+'<text x="0" y="212" class="m" font-size="11">light that reaches the camera</text></svg><p class="eqf-vcap">An ND filter is dark glass over the lens. Every <b>0.3</b> cuts <b>1 stop</b> (half the light) without changing colors.</p>';})(),
+ (function(){var s='<svg viewBox="0 0 440 215" role="img" aria-label="Light from a point source spreads over 1, 4 and 9 squares at 1, 2 and 3 times the distance">';
+  s+='<path d="M30 105 L392 50.7 M30 105 L392 159.3" class="ln" stroke-dasharray="5 4"/><circle cx="30" cy="105" r="10" class="lt" stroke="#D9A21E" stroke-width="2"/>';
+  var X=[130,230,330],L=['d → all','2d → ¼','3d → 1/9'];
+  for(var i=0;i<3;i++){var n=i+1,sz=30*n,x=X[i]-sz/2,y=105-sz/2;
+   for(var r=0;r<n;r++)for(var c2=0;c2<n;c2++)s+='<rect x="'+(x+c2*30)+'" y="'+(y+r*30)+'" width="30" height="30" fill="var(--c)" fill-opacity="'+(0.55/(n*n)+0.05)+'" stroke="var(--c)" stroke-width="1.2"/>';
+   s+='<text x="'+X[i]+'" y="185" text-anchor="middle" class="b">'+L[i]+'</text>';}
+  return s+'<text x="30" y="135" text-anchor="middle" class="m">bulb</text></svg><p class="eqf-vcap">The same light spreads over <b>4×</b> the area at 2× the distance, and <b>9×</b> at 3×. Point sources only.</p>';})(),
+ (function(){var s='<svg viewBox="0 0 440 175" role="img" aria-label="Kelvin from warm to cool with mired values">',K=[2000,3200,5000,6500,10000],C=['#FF8A2A','#FFB870','#FFE6C2','#F2F5FF','#BFD3FF'],M=['500','312','200','154','100'];
+  for(var i=0;i<5;i++){var x=10+i*85;s+='<rect x="'+x+'" y="34" width="80" height="54" rx="8" fill="'+C[i]+'" stroke="var(--eqf-line)"/>'
+   +'<text x="'+(x+40)+'" y="24" text-anchor="middle" class="b">'+K[i]+'K</text>'
+   +'<text x="'+(x+40)+'" y="116" text-anchor="middle" class="b">'+M[i]+'</text>';}
+  return s+'<text x="10" y="140" class="m">mired ↑ warm</text><text x="430" y="140" text-anchor="end" class="m">cool ↓ mired</text>'
+   +'<path d="M120 158 H320" class="ln" marker-end="url(#eqfA)"/><defs><marker id="eqfA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--eqf-muted)"/></marker></defs>'
+   +'<text x="220" y="150" text-anchor="middle" class="m">Kelvin goes up → mired goes down</text></svg><p class="eqf-vcap">Mired = 1,000,000 ÷ K. For example 2000K → <b>500</b>, 5000K → <b>200</b></p>';})(),
+ (function(){var s='<svg viewBox="0 0 440 190" role="img" aria-label="Aperture openings from f/1.4 (big) to f/22 (tiny)">',F=['1.4','2.8','5.6','11','22'],R=[30,17,9,5,2.6];
+  for(var i=0;i<5;i++){var x=44+i*88;s+='<circle cx="'+x+'" cy="58" r="36" fill="#2A2733"/><circle cx="'+x+'" cy="58" r="'+R[i]+'" class="lt"/>'
+   +'<text x="'+x+'" y="118" text-anchor="middle" class="b">f/'+F[i]+'</text>';}
+  return s+'<text x="10" y="150" class="m">big opening</text><text x="10" y="168" class="m">more light · shallow DOF</text>'
+   +'<text x="430" y="150" text-anchor="end" class="m">tiny opening</text><text x="430" y="168" text-anchor="end" class="m">less light · deep DOF</text></svg>'
+   +'<p class="eqf-vcap">f-number = focal length ÷ opening. 100 mm ÷ 10 mm = <b>f/10</b>. Small number = big hole.</p>';})(),
+ (function(){var s='<svg viewBox="0 0 440 150" role="img" aria-label="EV scale: shadows at EV 4, highlights at EV 8, a 4-stop range">';
+  s+='<path d="M20 70 H420" class="ln"/>';
+  for(var e=0;e<=10;e++){var x=20+e*40;s+='<path d="M'+x+' 64 V76" class="ln"/><text x="'+x+'" y="96" text-anchor="middle" class="m">'+e+'</text>';}
+  s+='<rect x="180" y="40" width="160" height="18" rx="4" fill="var(--c)" fill-opacity=".25"/><text x="260" y="30" text-anchor="middle" class="b">4 stops</text>';
+  s+='<rect x="166" y="104" width="28" height="28" rx="5" fill="#2A2733"/><text x="180" y="146" text-anchor="middle" class="m">shadows EV 4</text>';
+  s+='<rect x="326" y="104" width="28" height="28" rx="5" fill="#FFF5D6" stroke="#D9A21E"/><text x="340" y="146" text-anchor="middle" class="m">highlights EV 8</text>';
+  return s+'</svg><p class="eqf-vcap">Count the stops between the darkest and brightest readings: 8 − 4 = <b>4 stops</b></p>';})()
+];
 var root=document.querySelector('.eqf');
-var scrollY=0,lockedFixed=false;
-function lockScroll(){
-  prevOverflow=document.body.style.overflow;
-  document.body.style.overflow='hidden';
-  if(window.matchMedia('(pointer: coarse)').matches){
-    scrollY=window.scrollY||document.documentElement.scrollTop||0;
-    document.body.style.position='fixed';
-    document.body.style.top='-'+scrollY+'px';
-    document.body.style.left='0';
-    document.body.style.right='0';
-    document.body.style.width='100%';
-    lockedFixed=true;
-  }
-}
-function unlockScroll(){
-  document.body.style.overflow=prevOverflow;
-  if(!lockedFixed)return;
-  document.body.style.position='';
-  document.body.style.top='';
-  document.body.style.left='';
-  document.body.style.right='';
-  document.body.style.width='';
-  lockedFixed=false;
-  window.scrollTo(0,scrollY);
-}
 var grid=document.getElementById('eqf-grid'),ov=document.getElementById('eqf-overlay'),modal=document.getElementById('eqf-modal'),mt=document.getElementById('eqf-mtitle'),mn=document.getElementById('eqf-mnum'),mi=document.getElementById('eqf-micon'),mb=document.getElementById('eqf-mbody'),xb=document.getElementById('eqf-x'),pv=document.getElementById('eqf-prev'),nx=document.getElementById('eqf-next'),dots=document.getElementById('eqf-dots');
 var cards=[],cur=-1,opener=null,prevOverflow='';
 function esc(s){return String(s).replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
@@ -107,6 +137,7 @@ CARDS.forEach(function(c,i){var b=document.createElement('button');b.className='
 function show(i){var c=CARDS[i];cur=i;colorize(modal,c.g);
  mt.textContent=c.name;mn.textContent=GROUPS[c.g].name.toUpperCase()+' · '+(i+1)+' OF 8';mi.innerHTML=ICONS[c.ic];
  var h='<div class="eqf-formula">'+esc(c.formula).replace(/\n/g,'<br>')+'</div>';
+ h+='<div class="eqf-viz">'+VIZ[i]+'</div>';
  h+='<div class="eqf-sec"><h4>What it means</h4><p>'+c.what+'</p></div>';
  h+='<div class="eqf-sec"><h4>The parts</h4><ul class="eqf-parts">'+c.parts.map(function(p){return'<li><span>'+p+'</span></li>';}).join('')+'</ul></div>';
  if(c.table){h+='<div class="eqf-sec"><table>'+c.table.map(function(r,ri){return'<tr>'+r.map(function(x){return ri?'<td>'+x+'</td>':'<th>'+x+'</th>';}).join('')+'</tr>';}).join('')+'</table></div>';}
@@ -117,14 +148,13 @@ function show(i){var c=CARDS[i];cur=i;colorize(modal,c.g);
  var rb=mb.querySelector('.eqf-reveal');rb.addEventListener('click',function(){rb.hidden=true;mb.querySelector('.eqf-ans').hidden=false;});
  Array.prototype.forEach.call(dots.children,function(d,k){d.className=k===i?'on':'';});
  cards[i].classList.add('is-seen');
- if(ov.hidden){ov.hidden=false;lockScroll();requestAnimationFrame(function(){ov.classList.add('eqf-open');});xb.focus();}
+ if(ov.hidden){ov.hidden=false;prevOverflow=document.body.style.overflow;document.body.style.overflow='hidden';requestAnimationFrame(function(){ov.classList.add('eqf-open');});xb.focus();}
 }
-function close(){if(ov.hidden)return;ov.classList.remove('eqf-open');unlockScroll();
+function close(){if(ov.hidden)return;ov.classList.remove('eqf-open');document.body.style.overflow=prevOverflow;
  setTimeout(function(){ov.hidden=true;mb.innerHTML='';},200);var o=cards[cur]||opener;if(o)o.focus();}
 function step(d){show((cur+d+CARDS.length)%CARDS.length);}
 xb.addEventListener('click',close);pv.addEventListener('click',function(){step(-1);});nx.addEventListener('click',function(){step(1);});
 ov.addEventListener('click',function(e){if(e.target===ov)close();});
-ov.addEventListener('touchmove',function(e){if(ov.hidden)return;var sc=document.getElementById('eqf-mbody');if(sc&&sc.contains(e.target))return;e.preventDefault();},{passive:false});
 document.addEventListener('keydown',function(e){if(ov.hidden)return;
  if(e.key==='Escape'){close();return;}
  if(e.key==='ArrowRight'){step(1);return;}if(e.key==='ArrowLeft'){step(-1);return;}

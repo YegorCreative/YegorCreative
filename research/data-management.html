@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+<style>
+:root{--bg:#F6F5FA;--card:#FFFFFF;--ink:#15131C;--muted:#5E5A6B;--line:#E2DEEE;--accent:#6D4AD9;--soft:#EFEAFD;
+ --d:#6D4AD9;--ds:#EFEAFD;--a:#C8701F;--as:#FCEFE0;--t:#1F8A70;--ts:#E1F4EE;--p:#C2417A;--ps:#FBE6EF;--ok:#1F8A70;--okb:#E1F4EE;--bad:#C0392B;--badb:#FBE3E0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55;padding:24px 16px 56px}
+.w{max-width:900px;margin:0 auto;display:grid;gap:22px}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(28px,6vw,40px);font-weight:900}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.intro p{margin:8px 0 0;color:var(--muted);max-width:62ch}
+button{font:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.toc{display:flex;gap:8px;flex-wrap:wrap}
+.toc a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:14px}
+.toc a:hover{border-color:var(--accent)}
+.topic{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 18px;display:grid;gap:16px;scroll-margin-top:12px}
+.th{display:flex;gap:14px;align-items:center}
+.num{font-size:40px;font-weight:900;line-height:1;color:transparent;-webkit-text-stroke:2px var(--accent);min-width:52px}
+.th h2{font-size:clamp(22px,4vw,28px)}
+.th p{margin:2px 0 0;color:var(--muted);font-weight:600;font-size:14px}
+.ans{background:var(--soft);border-radius:12px;padding:12px 14px;font-weight:700}
+.ans span{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:800;margin-bottom:2px}
+.viz{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px;overflow:hidden}
+.viz svg{display:block;width:100%;height:auto}
+.viz text{font-family:inherit;fill:var(--ink);font-size:15px}
+.viz .m{fill:var(--muted);font-size:13px}
+.viz .b{font-weight:800}
+.viz .w{fill:#fff;font-weight:800}
+.trick{display:flex;gap:10px;background:var(--bg);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:10px 12px}
+.trick b{color:var(--accent)}
+.check{border:1px dashed var(--accent);border-radius:12px;padding:12px 14px;display:grid;gap:10px}
+.check h4{margin:0;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.opt{border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 12px;min-height:44px;cursor:pointer;font-weight:600}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--okb);color:var(--ok)}
+.opt.wrong{border-color:var(--bad);background:var(--badb);color:var(--bad)}
+.fb{font-weight:700;min-height:1.3em;font-size:14px}
+.fb.ok{color:var(--ok)}.fb.no{color:var(--bad)}
+/* metadata */
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:700px){.mgrid{grid-template-columns:repeat(2,1fr)}}
+.mt{border-radius:14px;padding:12px;background:var(--cs);border:1.5px solid var(--c);display:grid;gap:4px;align-content:start}
+.mt b{color:var(--c);font-size:17px}
+.mt .q{font-size:13px;font-weight:700}
+.mt ul{margin:4px 0 0;padding-left:16px;font-size:13px;color:#34303F}
+.field{display:grid;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.field .fname{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:700;font-size:14px}
+.field .opt{padding:6px 10px;min-height:40px;font-size:13px}
+.score{font-weight:800;color:var(--accent)}
+/* raid */
+.disks{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.disks{grid-template-columns:1fr}}
+.sys{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--card);display:grid;gap:10px;align-content:start}
+.sys h3{font-size:18px}
+.sys .sub{font-size:13px;color:var(--muted);margin-top:-6px}
+.row{display:flex;gap:10px}
+.disk{flex:1;border-radius:12px;border:2px solid #3A3645;background:#2A2733;color:#fff;padding:10px;min-height:112px;display:grid;gap:6px;align-content:start;transition:opacity .25s,border-color .25s}
+.disk .dl{font-size:12px;font-weight:800;letter-spacing:.08em;color:#CFC6EE}
+.files{display:flex;flex-wrap:wrap;gap:4px}
+.file{font-size:12px;font-weight:700;background:#F6C453;color:#3A2A00;border-radius:6px;padding:3px 6px}
+.disk.dead{opacity:.4;border-color:var(--bad);border-style:dashed}
+.disk.dead .dl::after{content:" · FAILED";color:#FF8A80}
+.res{font-weight:800;border-radius:10px;padding:8px 10px;font-size:14px}
+.res.ok{background:var(--okb);color:var(--ok)}.res.no{background:var(--badb);color:var(--bad)}.res.idle{background:var(--bg);color:var(--muted)}
+.ctrl{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{border:none;background:var(--accent);color:#fff;font-weight:800;border-radius:10px;padding:0 16px;min-height:44px;cursor:pointer}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+/* 321 */
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:640px){.three{grid-template-columns:1fr}}
+.big{border-radius:14px;padding:14px;background:var(--bg);border:1px solid var(--line);display:grid;gap:6px;align-content:start}
+.big .n{font-size:52px;font-weight:900;line-height:1;color:var(--accent)}
+.big b{font-size:17px}
+.big p{margin:0;font-size:14px;color:var(--muted)}
+.big svg{width:100%;max-width:230px;height:auto;margin-top:4px}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+td,th{border-bottom:1px solid var(--line);padding:8px;text-align:left;font-size:14px;vertical-align:top}
+th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+/* archive */
+.ab{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.ab{grid-template-columns:1fr}}
+.abc{border-radius:14px;padding:14px;border:1.5px solid var(--c);background:var(--cs);display:grid;gap:6px;align-content:start}
+.abc .t{font-size:22px;font-weight:900;color:var(--c)}
+.abc .q{font-weight:800}
+.abc ul{margin:0;padding-left:18px;font-size:14px}
+.viz.hz text{font-size:19px}.viz.hz .m{font-size:14px}
+@media(max-width:640px){.viz.tl{display:none}.viz.hz{padding:8px}}
+@media(prefers-reduced-motion:reduce){.disk{transition:none}}
+</style></head><body>
+<div class="w">
+<header class="intro">
+<div class="eyebrow">Photographic Research</div>
+<h1>Data Management</h1>
+<p>How photographers describe, organize and protect their files: metadata, keywords, backups, drives and archives. Each topic has a diagram, a memory trick and a quick check.</p>
+</header>
+<nav class="toc" aria-label="Topics">
+<a href="#t1">Metadata</a><a href="#t2">Parents &amp; children</a><a href="#t3">3-2-1 rule</a><a href="#t4">JBOD vs RAID</a><a href="#t5">Archive vs backup</a>
+</nav>
+
+<!-- 1 METADATA -->
+<section class="topic" id="t1" aria-labelledby="t1h">
+<div class="th"><div class="num" aria-hidden="true">01</div><div><h2 id="t1h">The 4 types of metadata</h2><p>Metadata = data about data, stored inside every photo file</p></div></div>
+<div class="ans"><span>Exam answer</span>Descriptive, Administrative, Technical, Processing</div>
+<div class="mgrid">
+<div class="mt" style="--c:var(--d);--cs:var(--ds)"><b>Descriptive</b><span class="q">What's IN the photo?</span><ul><li>Keywords</li><li>Caption, title</li><li>Location, people</li></ul></div>
+<div class="mt" style="--c:var(--a);--cs:var(--as)"><b>Administrative</b><span class="q">Who OWNS it?</span><ul><li>Copyright ©</li><li>Creator name</li><li>Contact, usage rights</li></ul></div>
+<div class="mt" style="--c:var(--t);--cs:var(--ts)"><b>Technical</b><span class="q">How did the CAMERA take it?</span><ul><li>Shutter, aperture, ISO</li><li>Camera and lens</li><li>Date and time (EXIF)</li></ul></div>
+<div class="mt" style="--c:var(--p);--cs:var(--ps)"><b>Processing</b><span class="q">What EDITS were made?</span><ul><li>Exposure, contrast</li><li>Crop, white balance</li><li>Lightroom edit history</li></ul></div>
+</div>
+<div class="trick"><span aria-hidden="true">💡</span><div><b>D-A-T-P: "Dogs Always Take Pictures."</b> Spelling counts on the exam: <b>technical</b>, not "technial".</div></div>
+<div class="check"><h4>Quick check: which type is each field?</h4>
+<div id="fields" style="display:grid;gap:10px"></div>
+<div class="score" id="sscore" aria-live="polite"></div>
+<div><button class="btn ghost" type="button" id="sreset">Shuffle and try again</button></div>
+</div>
+</section>
+
+<!-- 2 HIERARCHY -->
+<section class="topic" id="t2" aria-labelledby="t2h">
+<div class="th"><div class="num" aria-hidden="true">02</div><div><h2 id="t2h">Keyword hierarchy: parents &amp; children</h2><p>How keywords are organized in Lightroom and Bridge</p></div></div>
+<div class="viz hz"><svg viewBox="0 0 520 250" role="img" aria-label="Two parent keywords, Colleges and Restaurants, each with two child keywords: RIT, U of R, Chick-fil-A, Shake Shack">
+<text x="105" y="14" text-anchor="middle" class="m">PARENTS (not indented)</text>
+<text x="325" y="14" text-anchor="middle" class="m">CHILDREN (indented)</text>
+<rect x="20" y="42" width="170" height="44" rx="10" fill="var(--accent)"/><text x="105" y="70" text-anchor="middle" class="w">Colleges</text>
+<path d="M190 64 H220 M220 43 V89 M220 43 H250 M220 89 H250" fill="none" stroke="var(--muted)" stroke-width="2"/>
+<rect x="250" y="26" width="150" height="34" rx="8" fill="var(--soft)" stroke="var(--accent)"/><text x="325" y="48" text-anchor="middle">RIT</text>
+<rect x="250" y="72" width="150" height="34" rx="8" fill="var(--soft)" stroke="var(--accent)"/><text x="325" y="94" text-anchor="middle">U of R</text>
+<rect x="20" y="164" width="170" height="44" rx="10" fill="var(--accent)"/><text x="105" y="192" text-anchor="middle" class="w">Restaurants</text>
+<path d="M190 186 H220 M220 165 V211 M220 165 H250 M220 211 H250" fill="none" stroke="var(--muted)" stroke-width="2"/>
+<rect x="250" y="148" width="150" height="34" rx="8" fill="var(--soft)" stroke="var(--accent)"/><text x="325" y="170" text-anchor="middle">Chick-fil-A</text>
+<rect x="250" y="194" width="150" height="34" rx="8" fill="var(--soft)" stroke="var(--accent)"/><text x="325" y="216" text-anchor="middle">Shake Shack</text>
+<text x="465" y="118" text-anchor="middle" class="b" style="font-size:22px;fill:var(--accent)">2</text><text x="465" y="136" text-anchor="middle" class="m">parents</text>
+<text x="465" y="168" text-anchor="middle" class="b" style="font-size:22px;fill:var(--accent)">4</text><text x="465" y="186" text-anchor="middle" class="m">children</text>
+</svg></div>
+<div class="trick"><span aria-hidden="true">💡</span><div><b>Parent = general category</b> (the line that isn't indented). <b>Child = specific keyword</b> nested under it. Count the non-indented lines for parents and the indented lines for children. Tagging a photo "RIT" also files it under "Colleges".</div></div>
+<div class="check" id="q2"><h4>Quick check</h4>
+<pre style="margin:0;background:var(--bg);border-radius:10px;padding:10px 12px;font-size:14px;line-height:1.5">Animals
+    Dog
+    Cat
+    Horse
+Cities
+    Rochester</pre>
+<div>How many parents and children?</div>
+<div class="opts" data-q="q2"><button class="opt" type="button" data-ok="1">2 parents, 4 children</button><button class="opt" type="button">4 parents, 2 children</button><button class="opt" type="button">6 parents, 0 children</button></div>
+<div class="fb" aria-live="polite"></div>
+</div>
+</section>
+
+<!-- 3 321 -->
+<section class="topic" id="t3" aria-labelledby="t3h">
+<div class="th"><div class="num" aria-hidden="true">03</div><div><h2 id="t3h">The 3&#8209;2&#8209;1 backup rule</h2><p>The standard way to never lose your photos</p></div></div>
+<div class="ans"><span>Exam answer</span>3 copies, 2 different media, 1 offsite</div>
+<div class="three">
+<div class="big"><div class="n">3</div><b>copies</b><p>The original plus 2 backups.</p>
+<svg viewBox="0 0 230 70" aria-hidden="true"><g fill="#F6C453" stroke="#B8860B" stroke-width="2"><path d="M14 10h34l12 12v40H14z"/><path d="M92 10h34l12 12v40H92z"/><path d="M170 10h34l12 12v40h-46z"/></g><text x="37" y="48" text-anchor="middle" style="font-size:12px;font-weight:800;fill:#5A3D00">1</text><text x="115" y="48" text-anchor="middle" style="font-size:12px;font-weight:800;fill:#5A3D00">2</text><text x="193" y="48" text-anchor="middle" style="font-size:12px;font-weight:800;fill:#5A3D00">3</text></svg></div>
+<div class="big"><div class="n">2</div><b>different media</b><p>For example, the computer's drive plus an external hard drive, so one problem can't wipe out both.</p>
+<svg viewBox="0 0 230 70" aria-hidden="true"><rect x="10" y="8" width="100" height="56" rx="8" fill="#2A2733"/><rect x="18" y="16" width="84" height="32" rx="4" fill="#6D4AD9" fill-opacity=".5"/><rect x="40" y="52" width="40" height="6" rx="3" fill="#8C88A0"/><rect x="130" y="14" width="90" height="48" rx="10" fill="#3A3645"/><circle cx="175" cy="38" r="14" fill="#8C88A0"/><circle cx="175" cy="38" r="4" fill="#3A3645"/></svg></div>
+<div class="big"><div class="n">1</div><b>offsite</b><p>Stored somewhere else, like the cloud or a drive at a family member's house.</p>
+<svg viewBox="0 0 230 70" aria-hidden="true"><path d="M60 58h110a24 24 0 0 0 0-48 34 34 0 0 0-64-4 26 26 0 0 0-46 26 13 13 0 0 0 0 26z" fill="#E4EEFB" stroke="#2F7FD0" stroke-width="2"/><path d="M115 48V24m-10 10 10-10 10 10" fill="none" stroke="#2F7FD0" stroke-width="3" stroke-linecap="round"/></svg></div>
+</div>
+<div class="tw"><table><thead><tr><th>If you skip…</th><th>What can go wrong</th></tr></thead><tbody>
+<tr><td><b>3 copies</b></td><td>One drive dies and there's no other copy.</td></tr>
+<tr><td><b>2 media</b></td><td>Drives of the same type can fail the same way.</td></tr>
+<tr><td><b>1 offsite</b></td><td>A fire, flood or theft at home destroys every copy at once.</td></tr>
+</tbody></table></div>
+<div class="trick"><span aria-hidden="true">💡</span><div><b>Count down 3 → 2 → 1:</b> 3 copies, on 2 types, 1 far away. Spelling: <b>copies</b> (one "p").</div></div>
+</section>
+
+<!-- 4 JBOD RAID -->
+<section class="topic" id="t4" aria-labelledby="t4h">
+<div class="th"><div class="num" aria-hidden="true">04</div><div><h2 id="t4h">JBOD vs RAID</h2><p>Two ways to use several hard drives together</p></div></div>
+<div class="ans"><span>Exam answer</span>JBOD (Just a Bunch Of Disks): disks work independently with no backup, so if one fails you lose its data. RAID (Redundant Array of Independent Disks): the same data is stored on multiple disks, so if one fails the data is still safe.</div>
+<div class="disks">
+<div class="sys"><h3>JBOD</h3><div class="sub">Just a Bunch Of Disks</div>
+<div class="row"><div class="disk" id="j1"><span class="dl">DISK 1</span><div class="files"><span class="file">Wedding</span><span class="file">Portraits</span></div></div>
+<div class="disk" id="j2"><span class="dl">DISK 2</span><div class="files"><span class="file">Travel</span><span class="file">Sports</span></div></div></div>
+<div class="res idle" id="jr">Different files on each disk, no copies.</div></div>
+<div class="sys"><h3>RAID</h3><div class="sub">Redundant Array of Independent Disks (mirrored)</div>
+<div class="row"><div class="disk" id="r1"><span class="dl">DISK 1</span><div class="files"><span class="file">Wedding</span><span class="file">Portraits</span><span class="file">Travel</span><span class="file">Sports</span></div></div>
+<div class="disk" id="r2"><span class="dl">DISK 2</span><div class="files"><span class="file">Wedding</span><span class="file">Portraits</span><span class="file">Travel</span><span class="file">Sports</span></div></div></div>
+<div class="res idle" id="rr">The same files are copied on both disks.</div></div>
+</div>
+<div class="ctrl"><button class="btn" type="button" id="fail">Make Disk 1 fail</button><button class="btn ghost" type="button" id="fix">Reset</button></div>
+<div class="trick"><span aria-hidden="true">💡</span><div><b>RAID = Redundant = Replacement copy.</b> JBOD = "just a bunch," with no safety net. (Beyond class: RAID 1, mirroring, is the backup type. RAID 0 is for speed and has no backup.)</div></div>
+</section>
+
+<!-- 5 ARCHIVE BACKUP -->
+<section class="topic" id="t5" aria-labelledby="t5h">
+<div class="th"><div class="num" aria-hidden="true">05</div><div><h2 id="t5h">Archive vs backup</h2><p>The difference is whether you're still working on the files</p></div></div>
+<div class="ab">
+<div class="abc" style="--c:var(--t);--cs:var(--ts)"><span class="t">Backup</span><span class="q">Files you're CURRENTLY working on</span><ul><li>A safety copy in case something breaks</li><li>Updated often as your work changes</li><li>Example: this week's shoot you're still editing</li></ul></div>
+<div class="abc" style="--c:var(--d);--cs:var(--ds)"><span class="t">Archive</span><span class="q">Files you're NO LONGER working on</span><ul><li>Long-term storage of finished work</li><li>Rarely changes, and frees up space</li><li>Example: last year's finished wedding photos</li></ul></div>
+</div>
+<div class="viz tl"><svg viewBox="0 0 520 120" role="img" aria-label="Timeline: shoot, edit (backed up often), finished, then archived long term">
+<path d="M20 60 H500" stroke="var(--muted)" stroke-width="2"/>
+<rect x="20" y="44" width="250" height="32" rx="16" fill="var(--ts)" stroke="var(--t)"/><text x="145" y="65" text-anchor="middle" class="b" style="fill:var(--t)">BACKUP while editing</text>
+<rect x="290" y="44" width="210" height="32" rx="16" fill="var(--ds)" stroke="var(--d)"/><text x="395" y="65" text-anchor="middle" class="b" style="fill:var(--d)">ARCHIVE when done</text>
+<text x="20" y="28" class="m">shoot</text><text x="280" y="28" text-anchor="middle" class="m">finished</text><text x="500" y="28" text-anchor="end" class="m">years later</text>
+<text x="145" y="104" text-anchor="middle" class="m">copied often, changes a lot</text><text x="395" y="104" text-anchor="middle" class="m">stored long term, rarely changes</text>
+</svg></div>
+<div class="trick"><span aria-hidden="true">💡</span><div><b>Back</b>up watches your <b>back</b> right now. An <b>archive</b> is like a museum for finished work.</div></div>
+<div class="check" id="q5"><h4>Quick check</h4>
+<div>True or false: an archive is used for files you are no longer working on.</div>
+<div class="opts"><button class="opt" type="button" data-ok="1">True</button><button class="opt" type="button">False</button></div>
+<div class="fb" aria-live="polite"></div>
+</div>
+</section>
+</div>
+
+<script>
+(function(){
+/* metadata sorter */
+var TYPES=['Descriptive','Administrative','Technical','Processing'];
+var FIELDS=[['ISO 400, f/5.6, 1/125','Technical'],['© Yegor Hambaryan 2026','Administrative'],['Keywords: beach, sunset','Descriptive'],['Exposure +0.5, cropped','Processing'],['Canon EOS R6, 50mm lens','Technical'],['Caption: Graduation day','Descriptive'],['Creator contact email','Administrative'],['White balance changed to 5500K','Processing']];
+var box=document.getElementById('fields'),sc=document.getElementById('sscore'),right=0,done=0,set=[];
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function buildSorter(){box.innerHTML='';right=0;done=0;sc.textContent='';set=shuffle(FIELDS).slice(0,5);
+ set.forEach(function(f){var d=document.createElement('div');d.className='field';
+  d.innerHTML='<span class="fname">'+f[0]+'</span><div class="opts">'+TYPES.map(function(t){return '<button class="opt" type="button">'+t+'</button>';}).join('')+'</div><div class="fb" aria-live="polite"></div>';
+  var bs=d.querySelectorAll('.opt'),fb=d.querySelector('.fb');
+  bs.forEach(function(b){b.addEventListener('click',function(){var ok=b.textContent===f[1];bs.forEach(function(x){x.disabled=true;if(x.textContent===f[1])x.classList.add('right');});if(!ok)b.classList.add('wrong');
+   fb.textContent=ok?'Correct!':'It’s '+f[1]+'.';fb.className='fb '+(ok?'ok':'no');done++;if(ok)right++;
+   if(done===set.length)sc.textContent='You got '+right+' out of '+set.length+(right===set.length?'. Perfect!':'.');});});
+  box.appendChild(d);});}
+buildSorter();document.getElementById('sreset').addEventListener('click',buildSorter);
+/* single-answer checks */
+document.querySelectorAll('#q2,#q5').forEach(function(q){var bs=q.querySelectorAll('.opt'),fb=q.querySelector('.fb');
+ bs.forEach(function(b){b.addEventListener('click',function(){var ok=b.hasAttribute('data-ok');bs.forEach(function(x){x.disabled=true;if(x.hasAttribute('data-ok'))x.classList.add('right');});if(!ok)b.classList.add('wrong');
+  fb.textContent=ok?'Correct!':'Not quite. The green answer is correct.';fb.className='fb '+(ok?'ok':'no');});});});
+/* JBOD vs RAID */
+var j1=document.getElementById('j1'),r1=document.getElementById('r1'),jr=document.getElementById('jr'),rr=document.getElementById('rr');
+document.getElementById('fail').addEventListener('click',function(){j1.classList.add('dead');r1.classList.add('dead');
+ jr.className='res no';jr.textContent='✗ Wedding and Portraits are LOST. There was no copy.';
+ rr.className='res ok';rr.textContent='✓ Nothing lost. Disk 2 still has every file.';});
+document.getElementById('fix').addEventListener('click',function(){j1.classList.remove('dead');r1.classList.remove('dead');
+ jr.className='res idle';jr.textContent='Different files on each disk, no copies.';rr.className='res idle';rr.textContent='The same files are copied on both disks.';});
+/* smooth jump links */
+document.querySelectorAll('.toc a').forEach(function(a){a.addEventListener('click',function(e){var t=document.getElementById(a.getAttribute('href').slice(1));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});});
+})();
+</script>
+</body></html>

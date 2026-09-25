@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Light Quality</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+<style>
+:root{--bg:#F6F5FA;--card:#FFFFFF;--ink:#15131C;--muted:#5E5A6B;--line:#E2DEEE;--accent:#6D4AD9;--soft:#EFEAFD;--lt:#F6C453;--ltd:#B8860B;
+ --f:#6D4AD9;--fs:#EFEAFD;--i:#C8701F;--is:#FCEFE0;--ok:#1F8A70;--okb:#E1F4EE;--bad:#C0392B;--badb:#FBE3E0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55;padding:24px 16px 56px}
+.w{max-width:900px;margin:0 auto;display:grid;gap:22px}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(28px,6vw,40px);font-weight:900}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.intro p{margin:8px 0 0;color:var(--muted);max-width:62ch}
+button{font:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.toc{display:flex;gap:8px;flex-wrap:wrap}
+.toc a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:14px}
+.toc a:hover{border-color:var(--accent)}
+.topic{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 18px;display:grid;gap:16px;scroll-margin-top:12px}
+.th{display:flex;gap:14px;align-items:center}
+.num{font-size:40px;font-weight:900;line-height:1;color:transparent;-webkit-text-stroke:2px var(--accent);min-width:52px}
+.th h2{font-size:clamp(22px,4vw,28px)}
+.th p{margin:2px 0 0;color:var(--muted);font-weight:600;font-size:14px}
+.ans{background:var(--soft);border-radius:12px;padding:12px 14px;font-weight:700}
+.ans span{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:800;margin-bottom:2px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.two{grid-template-columns:1fr}}
+.pane{border-radius:14px;padding:14px;border:1.5px solid var(--c);background:var(--cs);display:grid;gap:8px;align-content:start}
+.pane .t{font-size:22px;font-weight:900;color:var(--c)}
+.pane .q{font-weight:800}
+.pane .u{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--card);color:var(--c);border-radius:999px;padding:3px 10px;justify-self:start}
+.pane svg{width:100%;max-width:260px;height:auto;justify-self:center}
+.pane p{margin:0;font-size:14px}
+.trick{display:flex;gap:10px;background:var(--bg);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:10px 12px}
+.trick b{color:var(--accent)}
+.check{border:1px dashed var(--accent);border-radius:12px;padding:12px 14px;display:grid;gap:10px}
+.check h4{margin:0;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.opt{border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 12px;min-height:44px;cursor:pointer;font-weight:600}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--okb);color:var(--ok)}
+.opt.wrong{border-color:var(--bad);background:var(--badb);color:var(--bad)}
+.fb{font-weight:700;min-height:1.3em;font-size:14px}
+.fb.ok{color:var(--ok)}.fb.no{color:var(--bad)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+td,th{border-bottom:1px solid var(--line);padding:9px 8px;text-align:left;font-size:14px;vertical-align:top}
+th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+td b{color:var(--accent)}
+.units{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:640px){.units{grid-template-columns:1fr}}
+.unit{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:2px}
+.unit .n{font-weight:900;font-size:18px}
+.unit .v{font-weight:800;color:var(--accent)}
+.unit p{margin:0;font-size:13px;color:var(--muted)}
+/* TM-30 lab */
+.lab{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+@media(max-width:700px){.lab{grid-template-columns:1fr}}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pick button{text-align:left;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:10px 12px;min-height:56px;cursor:pointer;font-weight:700;font-size:14px;line-height:1.3}
+.pick button span{display:block;font-weight:500;font-size:12px;color:var(--muted)}
+.pick button[aria-pressed="true"]{border-color:var(--accent);background:var(--soft)}
+.readout{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ro{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.ro .k{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--muted)}
+.ro .v{font-size:34px;font-weight:900;line-height:1.1;color:var(--accent);font-variant-numeric:tabular-nums}
+.ro .d{font-size:13px;font-weight:600}
+.viz{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:10px}
+.viz svg{display:block;width:100%;height:auto}
+.viz text{font-family:inherit;fill:var(--ink);font-size:13px}
+.viz .m{fill:var(--muted);font-size:12px}
+.note{font-size:12px;color:var(--muted);margin:0}
+.says{background:var(--soft);border-radius:12px;padding:10px 12px;font-weight:600;font-size:14px}
+</style></head><body>
+<div class="w">
+<header class="intro">
+<div class="eyebrow">Photographic Research</div>
+<h1>Light Quality</h1>
+<p>How we measure light: flux vs intensity, and how we rate a light's color with CRI and the newer TM-30 (Rf and Rg).</p>
+</header>
+<nav class="toc" aria-label="Topics"><a href="#t1">Flux vs intensity</a><a href="#t2">CRI</a><a href="#t3">TM-30: Rf &amp; Rg</a><a href="#t4">CRI vs TM-30</a></nav>
+
+<!-- 1 FLUX INTENSITY -->
+<section class="topic" id="t1" aria-labelledby="t1h">
+<div class="th"><div class="num" aria-hidden="true">01</div><div><h2 id="t1h">Flux vs intensity</h2><p>All the light, or light in one direction?</p></div></div>
+<div class="two">
+<div class="pane" style="--c:var(--f);--cs:var(--fs)"><span class="t">Flux</span><span class="q">The rate a source emits light in ALL directions</span><span class="u">Lumens (lm)</span>
+<svg viewBox="0 0 240 150" aria-hidden="true"><g stroke="var(--f)" stroke-width="3" stroke-linecap="round">
+<path d="M120 75 L120 12"/><path d="M120 75 L120 138"/><path d="M120 75 L40 75"/><path d="M120 75 L200 75"/><path d="M120 75 L64 30"/><path d="M120 75 L176 30"/><path d="M120 75 L64 120"/><path d="M120 75 L176 120"/></g>
+<circle cx="120" cy="75" r="16" fill="var(--lt)" stroke="var(--ltd)" stroke-width="2"/></svg>
+<p>Think of the <b>full amount</b> of light pouring out of the bulb everywhere at once.</p></div>
+<div class="pane" style="--c:var(--i);--cs:var(--is)"><span class="t">Intensity</span><span class="q">Light coming from a source in a SINGLE direction</span><span class="u">Candelas (cd)</span>
+<svg viewBox="0 0 240 150" aria-hidden="true"><g stroke="var(--i)" stroke-width="3" stroke-linecap="round" opacity=".18"><path d="M60 75 L60 15"/><path d="M60 75 L60 135"/><path d="M60 75 L20 35"/><path d="M60 75 L20 115"/></g>
+<path d="M76 75 H212" stroke="var(--i)" stroke-width="7" stroke-linecap="round"/><path d="M204 62 L226 75 L204 88Z" fill="var(--i)"/>
+<circle cx="60" cy="75" r="16" fill="var(--lt)" stroke="var(--ltd)" stroke-width="2"/></svg>
+<p>Only the light heading <b>one way</b>, like toward your subject. It's the <b>I</b> in <b>E = I / d²</b>.</p></div>
+</div>
+<div class="units">
+<div class="unit"><span class="n">Flux</span><span class="v">lumens</span><p>total light, all directions</p></div>
+<div class="unit"><span class="n">Intensity</span><span class="v">candelas</span><p>light in one direction</p></div>
+<div class="unit"><span class="n">Illuminance</span><span class="v">lux</span><p>light landing on a surface</p></div>
+</div>
+<div class="trick"><span aria-hidden="true">💡</span><div><b>F</b>lux = <b>F</b>ull amount, everywhere. <b>I</b>ntensity = <b>I</b>n one direction. Trap on the test: "Flux measures light in one direction" is <b>False</b>.</div></div>
+<div class="check" id="q1"><h4>Quick check</h4><div>True or false: flux measures the rate of light emitted in one direction.</div>
+<div class="opts"><button class="opt" type="button">True</button><button class="opt" type="button" data-ok="1">False</button></div><div class="fb" aria-live="polite"></div></div>
+</section>
+
+<!-- 2 CRI -->
+<section class="topic" id="t2" aria-labelledby="t2h">
+<div class="th"><div class="num" aria-hidden="true">02</div><div><h2 id="t2h">CRI: Color Rendering Index</h2><p>The classic score for how true colors look</p></div></div>
+<div class="ans"><span>Exam answer</span>CRI = Color Rendering Index. A perfect CRI is 100 (not 80).</div>
+<div class="tw"><table><tbody>
+<tr><th scope="row">What it measures</th><td>How accurately a light shows colors compared with a reference light of the same color temperature</td></tr>
+<tr><th scope="row">Scale</th><td>0 to <b>100</b> (100 = perfect)</td></tr>
+<tr><th scope="row">Samples</th><td><b>8</b> pastel color samples, averaged into one number (Ra)</td></tr>
+<tr><th scope="row">For photo &amp; video</th><td><b>90+</b> is what professionals look for</td></tr>
+<tr><th scope="row">Weakness</th><td>Only 8 soft colors and one number. It barely tests <b>saturated reds</b> (important for skin), so two lights with the same CRI can look quite different.</td></tr>
+</tbody></table></div>
+<div class="trick"><span aria-hidden="true">💡</span><div>CRI is a <b>report card for color</b>, and 100 is a perfect score. Related: lights that act like a black body get a <b>color temperature</b>, and lights that don't (fluorescent, LED) get a <b>correlated color temperature (CCT)</b>.</div></div>
+</section>
+
+<!-- 3 TM-30 -->
+<section class="topic" id="t3" aria-labelledby="t3h">
+<div class="th"><div class="num" aria-hidden="true">03</div><div><h2 id="t3h">TM-30: Rf and Rg</h2><p>The newer, more detailed color rating from the IES (first published 2015)</p></div></div>
+<div class="two">
+<div class="pane" style="--c:var(--f);--cs:var(--fs)"><span class="t">Rf · Fidelity</span><span class="q">How ACCURATE are the colors?</span><span class="u">0 to 100 · perfect = 100</span><p>The upgraded version of CRI. It uses <b>99</b> color samples instead of 8.</p></div>
+<div class="pane" style="--c:var(--i);--cs:var(--is)"><span class="t">Rg · Gamut</span><span class="q">How SATURATED are the colors?</span><span class="u">about 60 to 140 · neutral = 100</span><p><b>Above 100</b> = more saturated · <b>100</b> = same as reference · <b>below 100</b> = duller</p></div>
+</div>
+
+<div class="lab">
+<div style="display:grid;gap:10px">
+<div class="pick" id="pick" role="group" aria-label="Choose an example light"></div>
+<div class="readout"><div class="ro"><div class="k">Rf · FIDELITY</div><div class="v" id="rf"></div><div class="d" id="rfd"></div></div><div class="ro"><div class="k">Rg · GAMUT</div><div class="v" id="rg"></div><div class="d" id="rgd"></div></div></div>
+<div class="says" id="says" aria-live="polite"></div>
+<p class="note">Example lights for learning, not measurements of real products.</p>
+</div>
+<div style="display:grid;gap:10px">
+<div class="viz"><svg id="cvg" viewBox="0 0 300 300" role="img" aria-label="Color vector graphic"></svg></div>
+<p class="note" style="text-align:center">Color vector graphic: the <b>dashed circle</b> is the reference light. The colored shape is the test light. <b>Outside</b> the circle = more saturated, <b>inside</b> = duller.</p>
+</div>
+</div>
+
+<div class="viz"><svg id="chart" style="max-width:560px;margin:0 auto" viewBox="0 0 440 250" role="img" aria-label="Rf versus Rg chart with the selected light marked"></svg></div>
+<div class="trick"><span aria-hidden="true">💡</span><div><b>R<u>f</u> = <u>F</u>idelity = <u>F</u>aithful</b> (accurate, max 100). <b>R<u>g</u> = <u>G</u>amut = <u>G</u>low</b> (saturation, 100 = normal). Always read them <b>together</b>: Rf 85 with Rg 110 means fairly accurate but a bit oversaturated.</div></div>
+<div class="check" id="q3"><h4>Quick check</h4><div>A light has <b>Rg = 120</b>. Its colors look…</div>
+<div class="opts"><button class="opt" type="button" data-ok="1">More saturated</button><button class="opt" type="button">Duller</button><button class="opt" type="button">Exactly the same</button></div><div class="fb" aria-live="polite"></div></div>
+<div class="check" id="q4"><h4>Quick check</h4><div>What does <b>Rf</b> measure?</div>
+<div class="opts"><button class="opt" type="button" data-ok="1">Color fidelity (accuracy)</button><button class="opt" type="button">Color saturation</button><button class="opt" type="button">Brightness</button></div><div class="fb" aria-live="polite"></div></div>
+</section>
+
+<!-- 4 COMPARE -->
+<section class="topic" id="t4" aria-labelledby="t4h">
+<div class="th"><div class="num" aria-hidden="true">04</div><div><h2 id="t4h">CRI vs TM-30</h2><p>Side by side</p></div></div>
+<div class="tw"><table><thead><tr><th></th><th>CRI</th><th>TM-30</th></tr></thead><tbody>
+<tr><th scope="row">Color samples</th><td>8</td><td><b>99</b></td></tr>
+<tr><th scope="row">Scores</th><td>1 number (Ra)</td><td><b>2 numbers</b>: Rf (fidelity) + Rg (gamut), plus a color vector graphic</td></tr>
+<tr><th scope="row">Perfect / neutral</th><td>100</td><td>Rf <b>100</b> = perfect · Rg <b>100</b> = neutral</td></tr>
+<tr><th scope="row">Shows saturation?</th><td>No</td><td><b>Yes</b> (Rg and the graphic)</td></tr>
+<tr><th scope="row">Shows which colors shift?</th><td>No</td><td><b>Yes</b> (the arrows in the graphic)</td></tr>
+</tbody></table></div>
+<div class="check" id="q5"><h4>Quick check</h4><div>How many color samples does TM-30 use?</div>
+<div class="opts"><button class="opt" type="button">8</button><button class="opt" type="button" data-ok="1">99</button><button class="opt" type="button">255</button></div><div class="fb" aria-live="polite"></div></div>
+</section>
+</div>
+
+<script>
+(function(){
+/* quick checks */
+document.querySelectorAll('.check').forEach(function(q){var bs=q.querySelectorAll('.opt'),fb=q.querySelector('.fb');
+ bs.forEach(function(b){b.addEventListener('click',function(){var ok=b.hasAttribute('data-ok');bs.forEach(function(x){x.disabled=true;if(x.hasAttribute('data-ok'))x.classList.add('right');});if(!ok)b.classList.add('wrong');
+  fb.textContent=ok?'Correct!':'Not quite. The green answer is correct.';fb.className='fb '+(ok?'ok':'no');});});});
+/* TM-30 lab: 16 hue bins, radius multipliers (1 = same as reference) */
+var HUES=['#E0473C','#E86A33','#EE8F2E','#E9B52B','#C9C62E','#8DBE3A','#47A94E','#2E9E7E','#2B9AA6','#2F86C4','#3F6CC9','#5A58C4','#7A4DB8','#9B45A7','#B84290','#D0436A'];
+var LIGHTS=[
+ {name:'Reference',sub:'Rf 100 · Rg 100',rf:100,m:[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],says:'The reference light: every color is perfectly accurate and normally saturated.'},
+ {name:'High-quality LED',sub:'accurate',rf:93,m:[.99,1.02,1.01,.98,.99,1.02,1.01,.99,1,1.02,1,.98,1,1.01,1.02,.99],says:'Very accurate and almost the same saturation as the reference. A great light for photography.'},
+ {name:'Punchy LED',sub:'extra saturated',rf:84,m:[1.2,1.14,1.05,1,.98,1.04,1.13,1.1,1.02,1,1.05,1.08,1.06,1.02,1.1,1.18],says:'Colors look extra bold, especially reds and greens. Fun to look at, but less accurate (lower Rf).'},
+ {name:'Cheap fluorescent',sub:'dull reds',rf:74,m:[.74,.8,.9,.97,1,1.02,.98,.94,.92,.95,.97,.96,.93,.88,.82,.76],says:'Reds look dull and muddy, a common problem with poor fluorescent light. Low Rf and Rg below 100.'}];
+function pts(m,R){return m.map(function(k,i){var a=(i+.5)/16*2*Math.PI-Math.PI/2;return[150+Math.cos(a)*R*k,150+Math.sin(a)*R*k];});}
+function area(p){var s=0;for(var i=0;i<p.length;i++){var a=p[i],b=p[(i+1)%p.length];s+=a[0]*b[1]-b[0]*a[1];}return Math.abs(s)/2;}
+var REF=pts(LIGHTS[0].m,100),REFA=area(REF);
+LIGHTS.forEach(function(L){L.rg=Math.round(area(pts(L.m,100))/REFA*100);});
+var pick=document.getElementById('pick'),cvg=document.getElementById('cvg'),chart=document.getElementById('chart'),btns=[];
+LIGHTS.forEach(function(L,i){var b=document.createElement('button');b.type='button';b.innerHTML=L.name+'<span>'+(i?('Rf '+L.rf+' · Rg '+L.rg):L.sub)+'</span>';b.setAttribute('aria-pressed','false');b.addEventListener('click',function(){show(i);});pick.appendChild(b);btns.push(b);});
+function show(i){var L=LIGHTS[i];btns.forEach(function(b,k){b.setAttribute('aria-pressed',k===i?'true':'false');});
+ document.getElementById('rf').textContent=L.rf;document.getElementById('rg').textContent=L.rg;
+ document.getElementById('rfd').textContent=L.rf>=90?'very accurate':L.rf>=80?'fairly accurate':'poor accuracy';
+ document.getElementById('rgd').textContent=L.rg>102?'more saturated':L.rg<98?'duller':'about the same';
+ document.getElementById('says').textContent=L.says;
+ /* color vector graphic */
+ var s='';for(var k=0;k<16;k++){var a0=k/16*2*Math.PI-Math.PI/2,a1=(k+1)/16*2*Math.PI-Math.PI/2;
+  s+='<path d="M150 150 L'+(150+Math.cos(a0)*140)+' '+(150+Math.sin(a0)*140)+' A140 140 0 0 1 '+(150+Math.cos(a1)*140)+' '+(150+Math.sin(a1)*140)+'Z" fill="'+HUES[k]+'" fill-opacity=".16"/>';}
+ var P=pts(L.m,100);
+ s+='<polygon points="'+P.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1);}).join(' ')+'" fill="var(--accent)" fill-opacity=".12" stroke="var(--accent)" stroke-width="2.5"/>';
+ s+='<circle cx="150" cy="150" r="100" fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="5 4"/>';
+ for(k=0;k<16;k++){var r=REF[k],p=P[k];if(Math.abs(L.m[k]-1)>0.015)s+='<line x1="'+r[0].toFixed(1)+'" y1="'+r[1].toFixed(1)+'" x2="'+p[0].toFixed(1)+'" y2="'+p[1].toFixed(1)+'" stroke="'+HUES[k]+'" stroke-width="3" stroke-linecap="round"/>';
+  s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="5" fill="'+HUES[k]+'" stroke="#fff" stroke-width="1.5"/>';}
+ s+='<text x="150" y="146" text-anchor="middle" class="m">reference</text><text x="150" y="162" text-anchor="middle" class="m">= dashed circle</text>';
+ cvg.innerHTML=s;
+ /* Rf-Rg chart: Rf 50..100 on x, Rg 60..140 on y */
+ var X=function(v){return 60+(v-50)/50*350},Y=function(v){return 210-(v-60)/80*190};
+ var c='<rect x="60" y="20" width="350" height="190" fill="var(--card)" stroke="var(--line)"/>';
+ [50,60,70,80,90,100].forEach(function(v){c+='<line x1="'+X(v)+'" y1="20" x2="'+X(v)+'" y2="210" stroke="var(--line)"/><text x="'+X(v)+'" y="228" text-anchor="middle" class="m">'+v+'</text>';});
+ [60,80,100,120,140].forEach(function(v){c+='<line x1="60" y1="'+Y(v)+'" x2="410" y2="'+Y(v)+'" stroke="var(--line)"/><text x="52" y="'+(Y(v)+4)+'" text-anchor="end" class="m">'+v+'</text>';});
+ c+='<line x1="60" y1="'+Y(100)+'" x2="410" y2="'+Y(100)+'" stroke="var(--muted)" stroke-dasharray="4 4"/>';
+ c+='<text x="235" y="246" text-anchor="middle" class="m">Rf (fidelity) →</text><text x="16" y="115" text-anchor="middle" class="m" transform="rotate(-90 16 115)">Rg (gamut) →</text>';
+ c+='<text x="68" y="36" class="m">more saturated</text><text x="68" y="202" class="m">duller</text>';
+ LIGHTS.forEach(function(M,k){if(k===0)return;c+='<circle cx="'+X(M.rf)+'" cy="'+Y(M.rg)+'" r="'+(k===i?9:5)+'" fill="'+(k===i?'var(--accent)':'var(--muted)')+'" fill-opacity="'+(k===i?1:.35)+'"/>';});
+ c+='<circle cx="'+X(100)+'" cy="'+Y(100)+'" r="'+(i===0?9:5)+'" fill="'+(i===0?'var(--accent)':'var(--ink)')+'"/><text x="'+(X(100)-8)+'" y="'+(Y(100)+22)+'" text-anchor="end" class="m">perfect (100, 100)</text>';
+ c+='<text x="'+X(L.rf)+'" y="'+(Y(L.rg)-15)+'" text-anchor="middle" style="font-weight:800">'+(i?L.name:'')+'</text>';
+ chart.innerHTML=c;}
+show(1);
+document.querySelectorAll('.toc a').forEach(function(a){a.addEventListener('click',function(e){var t=document.getElementById(a.getAttribute('href').slice(1));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});});
+})();
+</script>
+</body></html>
