@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Patch Meter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+<style>
+:root{--bg:#F6F5FA;--card:#FFFFFF;--ink:#15131C;--muted:#5E5A6B;--line:#E2DEEE;--accent:#6D4AD9;--soft:#EFEAFD;--ok:#1F8A70;--okb:#E1F4EE;--warn:#8A5A00;--warnb:#FFF4DC;--gray:#E0A800;--black:#2F7FD0}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55;padding:24px 16px 56px}
+.w{max-width:1040px;margin:0 auto;display:grid;gap:20px;grid-template-columns:minmax(0,1fr)}
+.card>*{min-width:0}.card{grid-template-columns:minmax(0,1fr)}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(28px,6vw,40px);font-weight:900}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.intro p{margin:8px 0 0;color:var(--muted);max-width:70ch}
+button,input,select{font:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 18px;display:grid;gap:14px}
+.sh{display:flex;gap:12px;align-items:center}
+.sn{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:900;flex:none}
+.sh h2{font-size:clamp(19px,3.5vw,24px)}
+.sh p{margin:0;color:var(--muted);font-size:14px;font-weight:600}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;background:var(--accent);color:#fff;font-weight:800;border-radius:10px;padding:0 16px;min-height:44px;cursor:pointer;text-decoration:none;font-size:14px}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn[aria-disabled="true"],.btn:disabled{opacity:.45;pointer-events:none}
+.file input{position:absolute;width:1px;height:1px;opacity:0}
+.note{font-size:12.5px;color:var(--muted);margin:0}
+.callout{border-radius:12px;padding:10px 14px;font-size:14px;font-weight:600;background:var(--soft);border:1.5px solid var(--accent)}
+.callout.warn{background:var(--warnb);border-color:#D9A21E;color:var(--warn)}
+/* photo list */
+.plist{display:grid;gap:8px;max-height:430px;overflow:auto;padding-right:2px}
+.pi{display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;border:1.5px solid var(--line);border-radius:12px;padding:8px;background:var(--card);cursor:pointer}
+.pi.sel{border-color:var(--accent);background:var(--soft)}
+.pi canvas{width:64px;height:44px;border-radius:6px;object-fit:cover;background:#111}
+.pi .nm{font-weight:800;font-size:13.5px;word-break:break-all}
+.pi .meta{font-size:12px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pi input,.pi select{font-size:13px;padding:4px 6px;border:1px solid var(--line);border-radius:6px;min-height:32px;background:#fff;color:var(--ink)}
+.pi input{width:76px}
+.pi .x{border:0;background:none;font-size:20px;color:var(--muted);cursor:pointer;min-width:36px;min-height:36px}
+@media(max-width:560px){.pi{grid-template-columns:54px 1fr auto}.pi canvas{width:54px;height:38px}}
+/* stage */
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tb{border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:0 12px;min-height:40px;cursor:pointer;font-weight:800;font-size:13.5px;display:inline-flex;align-items:center;gap:6px}
+.tb i{width:14px;height:14px;border-radius:3px;border:2px solid currentColor}
+.tb[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.stage{position:relative;background:#111;border-radius:12px;overflow:hidden;cursor:crosshair;touch-action:manipulation}
+.stage canvas{display:block;width:100%;height:auto}
+.box{position:absolute;border:3px solid var(--c);box-shadow:0 0 0 1px rgba(0,0,0,.7);pointer-events:none}
+.box span{position:absolute;left:-3px;top:-24px;background:var(--c);color:#111;font-size:11px;font-weight:900;padding:2px 6px;border-radius:4px;white-space:nowrap}
+.readout{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.readout{grid-template-columns:1fr}}
+.ro{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;border:1.5px solid var(--c);border-radius:12px;padding:10px;background:var(--card)}
+.ro canvas{width:96px;height:96px;image-rendering:pixelated;border-radius:6px;background:#111}
+.ro .t{font-weight:900;font-size:14px}
+.ro table{border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+.ro td{padding:1px 8px 1px 0}.ro td:last-child{font-weight:800}
+.lab{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+select.chan{padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;min-height:40px;background:#fff;color:var(--ink)}
+input.size{width:80px;padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;min-height:40px}
+/* results */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table.data{border-collapse:collapse;width:100%;min-width:640px;font-variant-numeric:tabular-nums}
+table.data th,table.data td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:right;font-size:13.5px}
+table.data th{background:var(--bg);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+table.data td:first-child,table.data th:first-child,table.data td:nth-child(2),table.data th:nth-child(2){text-align:left}
+table.data caption{caption-side:top;text-align:left;padding:8px 10px;font-weight:800}
+.chart{border:1px solid var(--line);border-radius:12px;padding:8px;background:#fff}
+.chart svg{display:block;width:100%;height:auto}
+.chart text{font-family:inherit;font-size:12px;fill:var(--muted)}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:760px){.charts{grid-template-columns:1fr}}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;font-weight:700}
+.legend span{display:inline-flex;align-items:center;gap:6px}.legend i{width:12px;height:12px;border-radius:50%}
+details.help{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--bg)}
+details.help summary{cursor:pointer;font-weight:800}
+details.help p,details.help li{font-size:14px}
+</style></head><body>
+<div class="w">
+<header class="intro">
+<div class="eyebrow">Photographic Research · Exam 2 · Lab tool</div>
+<h1>Patch Meter</h1>
+<p>Upload your ColorChecker photos, place a 100 × 100 px box on the gray and black patches, and get the <b>mean, standard deviation and SNR</b> for every photo at once, like Photoshop's Histogram in Expanded View. It fills the table, draws the ISO vs SNR graph, and exports a CSV for Excel.</p>
+</header>
+
+<section class="card" aria-labelledby="s1">
+<div class="sh"><span class="sn">1</span><div><h2 id="s1">Add your photos</h2><p>JPEG or PNG. ISO, shutter and f-number are read from the file when available.</p></div></div>
+<div class="row">
+<label class="btn file">⬆ Upload photos<input type="file" id="files" accept="image/jpeg,image/png,image/webp" multiple></label>
+<button class="btn ghost" type="button" id="demo">Try with sample photos</button>
+<button class="btn ghost" type="button" id="clear">Clear all</button>
+</div>
+<div class="callout warn" id="rawnote" hidden></div>
+<div class="plist" id="plist"></div>
+<p class="note">Set the <b>Series</b> for each photo (for example "No NR" or "With NR") so they're graphed as separate lines, like Tables 2 and 3. Photos stay on your device and nothing is uploaded anywhere.</p>
+</section>
+
+<section class="card" aria-labelledby="s2">
+<div class="sh"><span class="sn">2</span><div><h2 id="s2">Place the measuring boxes</h2><p>Choose a box, then tap the middle of that patch in the photo</p></div></div>
+<div class="tools">
+<button class="tb" type="button" id="tG" aria-pressed="true" style="color:#9A7400"><i style="background:var(--gray)"></i>Gray patch box</button>
+<button class="tb" type="button" id="tB" aria-pressed="false" style="color:var(--black)"><i style="background:var(--black)"></i>Black patch box</button>
+<label class="lab" for="size" style="margin-left:6px">Box size</label><input class="size" id="size" type="number" min="10" max="400" value="100"><span class="note">px</span>
+<label class="row" style="gap:6px;font-weight:700;font-size:14px"><input type="checkbox" id="same" checked style="width:18px;height:18px;accent-color:var(--accent)"> Use the same spots for every photo (tripod)</label>
+</div>
+<div class="stage" id="stage"><canvas id="view" aria-label="Selected photo. Tap to place the measuring box."></canvas><div class="box" id="bxG" style="--c:var(--gray)" hidden><span>GRAY</span></div><div class="box" id="bxB" style="--c:var(--black)" hidden><span>BLACK</span></div></div>
+<div class="row"><span class="lab">Channel</span><select class="chan" id="chan"><option value="rgb">RGB (Photoshop default)</option><option value="lum">Luminosity</option><option value="r">Red</option><option value="g">Green</option><option value="b">Blue</option></select><span class="note">Pick the same channel your Photoshop Histogram shows.</span></div>
+<div class="readout">
+<div class="ro" style="--c:var(--gray)"><canvas id="zG" width="100" height="100"></canvas><div><div class="t">Gray patch</div><table id="rG"></table></div></div>
+<div class="ro" style="--c:var(--black)"><canvas id="zB" width="100" height="100"></canvas><div><div class="t">Black patch</div><table id="rB"></table></div></div>
+</div>
+</section>
+
+<section class="card" aria-labelledby="s3">
+<div class="sh"><span class="sn">3</span><div><h2 id="s3">Results for all photos</h2><p>Sorted by series and ISO, in the same layout as your lab tables</p></div></div>
+<div id="tables"></div>
+<div class="charts"><div class="chart"><div class="lab" style="margin:4px">Gray patch · ISO vs SNR</div><svg id="cG" viewBox="0 0 420 260" role="img" aria-label="Gray patch SNR graph"></svg></div><div class="chart"><div class="lab" style="margin:4px">Black patch · ISO vs SNR</div><svg id="cB" viewBox="0 0 420 260" role="img" aria-label="Black patch SNR graph"></svg></div></div>
+<div class="legend" id="legend"></div>
+<div class="row"><a class="btn" id="csv" href="#" download="patch-meter-results.csv" aria-disabled="true">⬇ Download results (CSV for Excel)</a></div>
+<details class="help"><summary>How close is this to Photoshop?</summary>
+<ul>
+<li><b>Mean and Std Dev</b> use the same math as Photoshop's Histogram panel. <b>RGB</b> uses all red, green and blue values of the selection together (Photoshop's default). <b>Luminosity</b> weights them 30% red, 59% green, 11% blue.</li>
+<li>For <b>sRGB JPEGs</b> the numbers usually match Photoshop within about ±1. Photos saved in <b>Adobe RGB</b> or other color spaces may be converted by the browser and differ more, so shoot or export in sRGB.</li>
+<li><b>Raw files</b> (.NEF, .CR2, .ARW…) can't be opened in a browser. Measure them in Photoshop/Camera Raw as the lab says, or export them as JPEG first (the export adds processing, so the numbers won't match the lab's raw measurement exactly).</li>
+<li>For your graded lab, report the Photoshop values your professor asks for, and use this tool to check them and make the graphs faster.</li>
+</ul></details>
+</section>
+</div>
+
+<script>
+(function(){
+var PH=[];/* {name,bmp,w,h,iso,ss,fn,series,thumb} */
+var sel=-1,tool='G',BOX={G:null,B:null};/* fractional centers {x,y} for shared mode */
+var plist=document.getElementById('plist'),view=document.getElementById('view'),vx=view.getContext('2d'),stage=document.getElementById('stage');
+var SERIES=['No NR','With NR','Raw export','Other'],COLORS={'No NR':'#6D4AD9','With NR':'#D9822B','Raw export':'#1F8A70','Other':'#8C88A0'};
+function $(i){return document.getElementById(i);}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+/* ---- EXIF (JPEG) ---- */
+function exif(buf){try{var v=new DataView(buf);if(v.getUint16(0)!==0xFFD8)return{};var o=2;while(o<v.byteLength-4){var m=v.getUint16(o);if(m===0xFFE1){var s=o+4;if(v.getUint32(s)!==0x45786966)return{};var t=s+6,le=v.getUint16(t)===0x4949;
+ function u16(p){return v.getUint16(p,le);}function u32(p){return v.getUint32(p,le);}
+ function ifd(p){var n=u16(t+p),r={};for(var i=0;i<n;i++){var e=t+p+2+i*12,tag=u16(e),type=u16(e+2),cnt=u32(e+4),vo=e+8;
+  if(type===3)r[tag]=u16(vo);else if(type===4)r[tag]=u32(vo);else if(type===5){var q=t+u32(vo);r[tag]=u32(q)/u32(q+4);}else if(type===10){var q2=t+u32(vo);r[tag]=v.getInt32(q2,le)/v.getInt32(q2+4,le);}}return r;}
+ var i0=ifd(u32(t+4)),ex=i0[0x8769]?ifd(i0[0x8769]):{};return{iso:ex[0x8827],ss:ex[0x829A],fn:ex[0x829D]};}
+ if((m&0xFF00)!==0xFF00)return{};o+=2+v.getUint16(o+2);}}catch(e){}return{};}
+function fmtSS(s){if(!s)return'';return s>=0.3?(Math.round(s*10)/10)+' s':'1/'+Math.round(1/s);}
+/* ---- load ---- */
+function decode(file){if(window.createImageBitmap){return createImageBitmap(file,{colorSpaceConversion:'none',imageOrientation:'from-image'}).catch(function(){return createImageBitmap(file);});}
+ return new Promise(function(res,rej){var im=new Image();im.onload=function(){res(im);};im.onerror=rej;im.src=URL.createObjectURL(file);});}
+$('files').addEventListener('change',function(e){var fs=Array.prototype.slice.call(e.target.files||[]),raw=[];e.target.value='';
+ var jobs=fs.map(function(f){if(!/^image\/(jpeg|png|webp)$/.test(f.type)){raw.push(f.name);return Promise.resolve();}
+  return f.slice(0,262144).arrayBuffer().then(function(buf){var ex=f.type==='image/jpeg'?exif(buf):{};return decode(f).then(function(bmp){add({name:f.name,bmp:bmp,w:bmp.width,h:bmp.height,iso:ex.iso||'',ss:ex.ss,fn:ex.fn,series:'No NR'});});}).catch(function(){raw.push(f.name);});});
+ Promise.all(jobs).then(function(){var rn=$('rawnote');if(raw.length){rn.hidden=false;rn.textContent='⚠ Couldn’t open: '+raw.join(', ')+'. Browsers can’t read raw files (.NEF, .CR2, .ARW…). Measure those in Photoshop/Camera Raw, or export them as JPEG first.';}else rn.hidden=true;
+  PH.sort(function(a,b){return (a.iso||0)-(b.iso||0);});renderList();if(sel<0&&PH.length)select(0);else refresh();});});
+function add(p){var c=document.createElement('canvas');c.width=128;c.height=88;var x=c.getContext('2d'),k=Math.max(128/p.w,88/p.h);x.drawImage(p.bmp,(128-p.w*k)/2,(88-p.h*k)/2,p.w*k,p.h*k);p.thumb=c;PH.push(p);}
+$('clear').addEventListener('click',function(){PH=[];sel=-1;BOX={G:null,B:null};renderList();vx.clearRect(0,0,view.width,view.height);view.width=view.height=0;$('bxG').hidden=$('bxB').hidden=true;refresh();});
+/* ---- demo photos (simulated ColorChecker shots) ---- */
+var CC=['#735244','#C29682','#627A9D','#576C43','#8580B1','#67BDAA','#D67E2C','#505BA6','#C15A63','#5E3C6C','#9DBC40','#E0A32E','#383D96','#469449','#AF363C','#E7C71F','#BB5695','#0885A1','#F3F3F2','#C8C8C8','#A0A0A0','#7A7A79','#555555','#343434'];
+var sd=1;function rnd(){sd=(sd*1103515245+12345)&0x7fffffff;return sd/0x7fffffff;}function gauss(){var u=Math.max(1e-9,rnd()),v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+function demoShot(iso,nr){var W=1200,H=800,c=document.createElement('canvas');c.width=W;c.height=H;var x=c.getContext('2d');x.fillStyle='#6E6A64';x.fillRect(0,0,W,H);x.fillStyle='#161616';x.fillRect(150,120,900,600);
+ var s=130,g=16;CC.forEach(function(h,i){x.fillStyle=h;x.fillRect(172+(i%6)*(s+g),142+Math.floor(i/6)*(s+g),s,s);});
+ var img=x.getImageData(0,0,W,H),d=img.data,st=Math.log2(iso/100),base=0.8+1.05*Math.sqrt(iso/100),f=nr?1/(1+0.17*st):1;sd=iso*(nr?3:1);
+ for(var k=0;k<d.length;k+=4){var L=gauss()*base*f,cr=nr?.25:.6;d[k]=d[k]+L+gauss()*base*f*cr;d[k+1]=d[k+1]+L+gauss()*base*f*cr;d[k+2]=d[k+2]+L+gauss()*base*f*cr;}x.putImageData(img,0,0);return c;}
+$('demo').addEventListener('click',function(){PH=[];[100,200,400,800,1600,3200,6400].forEach(function(iso){[false,true].forEach(function(nr){var c=demoShot(iso,nr);
+  add({name:'sample_ISO'+iso+(nr?'_NR':'')+'.jpg',bmp:c,w:c.width,h:c.height,iso:iso,ss:1/(60*iso/100),fn:8,series:nr?'With NR':'No NR'});});});
+ BOX={G:{x:(172+3*146+65)/1200,y:(142+3*146+65)/800},B:{x:(172+5*146+65)/1200,y:(142+3*146+65)/800}};renderList();select(0);});
+/* ---- list ---- */
+function renderList(){plist.innerHTML='';PH.forEach(function(p,i){var d=document.createElement('div');d.className='pi'+(i===sel?' sel':'');d.setAttribute('role','button');d.tabIndex=0;
+ d.appendChild(p.thumb);var mid=document.createElement('div');
+ mid.innerHTML='<div class="nm">'+esc(p.name)+'</div><div class="meta"><label>ISO <input type="number" min="25" value="'+(p.iso||'')+'" aria-label="ISO for '+esc(p.name)+'"></label><select aria-label="Series for '+esc(p.name)+'">'+SERIES.map(function(s){return'<option'+(s===p.series?' selected':'')+'>'+s+'</option>';}).join('')+'</select><span>'+(p.fn?'f/'+(Math.round(p.fn*10)/10):'')+' '+fmtSS(p.ss)+' · '+p.w+'×'+p.h+'</span></div>';
+ d.appendChild(mid);var x=document.createElement('button');x.className='x';x.type='button';x.setAttribute('aria-label','Remove '+p.name);x.textContent='×';d.appendChild(x);
+ mid.querySelector('input').addEventListener('input',function(e){p.iso=parseFloat(e.target.value)||'';refresh();});
+ mid.querySelector('input').addEventListener('click',function(e){e.stopPropagation();});
+ mid.querySelector('select').addEventListener('change',function(e){p.series=e.target.value;refresh();});
+ mid.querySelector('select').addEventListener('click',function(e){e.stopPropagation();});
+ x.addEventListener('click',function(e){e.stopPropagation();PH.splice(i,1);if(sel>=PH.length)sel=PH.length-1;renderList();if(sel>=0)select(sel);else refresh();});
+ d.addEventListener('click',function(){select(i);});d.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();select(i);}});
+ plist.appendChild(d);});}
+function select(i){sel=i;Array.prototype.forEach.call(plist.children,function(c,k){c.classList.toggle('sel',k===i);});var p=PH[i];if(!p)return;
+ var W=Math.min(1400,p.w),k=W/p.w;view.width=Math.round(p.w*k);view.height=Math.round(p.h*k);vx.drawImage(p.bmp,0,0,view.width,view.height);refresh();}
+/* ---- boxes ---- */
+function boxFor(p,t){var b=$('same').checked?BOX[t]:(p['box'+t]||null);return b;}
+$('tG').addEventListener('click',function(){tool='G';$('tG').setAttribute('aria-pressed','true');$('tB').setAttribute('aria-pressed','false');});
+$('tB').addEventListener('click',function(){tool='B';$('tB').setAttribute('aria-pressed','true');$('tG').setAttribute('aria-pressed','false');});
+view.addEventListener('click',function(e){var p=PH[sel];if(!p)return;var r=view.getBoundingClientRect(),fx=(e.clientX-r.left)/r.width,fy=(e.clientY-r.top)/r.height,b={x:fx,y:fy};
+ if($('same').checked)BOX[tool]=b;else p['box'+tool]=b;if(tool==='G'){tool='B';$('tB').click();}refresh();});
+['size','chan','same'].forEach(function(id){$(id).addEventListener('change',refresh);});$('size').addEventListener('input',refresh);
+function sizePx(){return Math.max(10,Math.min(400,parseInt($('size').value,10)||100));}
+function rect(p,b){var s=sizePx(),cx=Math.round(b.x*p.w),cy=Math.round(b.y*p.h),x0=Math.max(0,Math.min(p.w-s,cx-Math.floor(s/2))),y0=Math.max(0,Math.min(p.h-s,cy-Math.floor(s/2)));return{x:x0,y:y0,s:Math.min(s,p.w,p.h)};}
+var mc=document.createElement('canvas'),mx=mc.getContext('2d',{willReadFrequently:true});
+function measure(p,b){var r=rect(p,b);mc.width=r.s;mc.height=r.s;mx.clearRect(0,0,r.s,r.s);mx.drawImage(p.bmp,r.x,r.y,r.s,r.s,0,0,r.s,r.s);
+ var d=mx.getImageData(0,0,r.s,r.s).data,ch=$('chan').value,sum=0,sq=0,n=0,clip=0;
+ for(var k=0;k<d.length;k+=4){var R=d[k],G=d[k+1],B=d[k+2];if(R>=255||G>=255||B>=255||(R===0&&G===0&&B===0))clip++;
+  if(ch==='rgb'){sum+=R+G+B;sq+=R*R+G*G+B*B;n+=3;}else{var v=ch==='lum'?(.30*R+.59*G+.11*B):ch==='r'?R:ch==='g'?G:B;sum+=v;sq+=v*v;n++;}}
+ var m=sum/n,s=Math.sqrt(Math.max(0,sq/n-m*m));return{mean:m,sd:s,snr:s>0?20*Math.log10(m/s):Infinity,px:r.s*r.s,clip:clip/(r.s*r.s),r:r};}
+function showBox(el,p,b){if(!b||!p){el.hidden=true;return;}var r=rect(p,b),k=view.getBoundingClientRect().width/p.w;el.hidden=false;
+ el.style.left=(r.x/p.w*100)+'%';el.style.top=(r.y/p.h*100)+'%';el.style.width=(r.s/p.w*100)+'%';el.style.height=(r.s/p.h*100)+'%';}
+function readout(t){var p=PH[sel],b=p&&boxFor(p,t),tb=$('r'+t),z=$('z'+t),zx=z.getContext('2d');zx.clearRect(0,0,100,100);
+ if(!p||!b){tb.innerHTML='<tr><td colspan="2" class="note">Tap the '+(t==='G'?'gray':'black')+' patch in the photo.</td></tr>';return;}
+ var m=measure(p,b);zx.imageSmoothingEnabled=false;zx.drawImage(p.bmp,m.r.x,m.r.y,m.r.s,m.r.s,0,0,100,100);
+ tb.innerHTML='<tr><td>Mean:</td><td>'+m.mean.toFixed(2)+'</td></tr><tr><td>Std Dev:</td><td>'+m.sd.toFixed(2)+'</td></tr><tr><td>Pixels:</td><td>'+m.px+'</td></tr><tr><td>SNR:</td><td>'+(isFinite(m.snr)?m.snr.toFixed(2)+' dB':'—')+'</td></tr>'+(m.clip>0.01?'<tr><td colspan="2" style="color:#B0261D;font-weight:700">⚠ '+Math.round(m.clip*100)+'% clipped pixels</td></tr>':'');}
+/* ---- results ---- */
+function results(){var rows=[];PH.forEach(function(p){var g=boxFor(p,'G'),b=boxFor(p,'B');if(!g&&!b)return;rows.push({p:p,g:g?measure(p,g):null,b:b?measure(p,b):null});});return rows;}
+function f2(v){return v==null||!isFinite(v)?'—':v.toFixed(2);}
+function drawChart(id,key,rows){var svg=$(id),X0=46,X1=405,Y0=220,Y1=14,sers={},maxY=10,minIso=100,maxIso=6400;
+ rows.forEach(function(r){var m=r[key];if(!m||!r.p.iso||!isFinite(m.snr))return;(sers[r.p.series]=sers[r.p.series]||[]).push({iso:r.p.iso,v:m.snr});maxY=Math.max(maxY,m.snr);minIso=Math.min(minIso,r.p.iso);maxIso=Math.max(maxIso,r.p.iso);});
+ var ymax=Math.ceil((maxY+2)/10)*10,l0=Math.log2(Math.max(1,minIso)),l1=Math.log2(maxIso);if(l1-l0<1)l1=l0+1;
+ function X(iso){return X0+(Math.log2(iso)-l0)/(l1-l0)*(X1-X0);}function Y(v){return Y0-v/ymax*(Y0-Y1);}
+ var s='<rect x="'+X0+'" y="'+Y1+'" width="'+(X1-X0)+'" height="'+(Y0-Y1)+'" fill="#FAFAFD" stroke="#E2DEEE"/>';
+ for(var v=0;v<=ymax;v+=10)s+='<line x1="'+X0+'" y1="'+Y(v)+'" x2="'+X1+'" y2="'+Y(v)+'" stroke="#ECE9F5"/><text x="'+(X0-6)+'" y="'+(Y(v)+4)+'" text-anchor="end">'+v+'</text>';
+ [25,50,100,200,400,800,1600,3200,6400,12800,25600,51200,102400].forEach(function(iso){var lg=Math.log2(iso);if(lg<l0-1e-6||lg>l1+1e-6)return;s+='<line x1="'+X(iso)+'" y1="'+Y0+'" x2="'+X(iso)+'" y2="'+(Y0+4)+'" stroke="#8C88A0"/><text x="'+X(iso)+'" y="'+(Y0+17)+'" text-anchor="middle">'+iso+'</text>';});
+ s+='<text x="'+((X0+X1)/2)+'" y="'+(Y0+34)+'" text-anchor="middle">ISO (log scale)</text><text x="12" y="'+((Y0+Y1)/2)+'" text-anchor="middle" transform="rotate(-90 12 '+((Y0+Y1)/2)+')">SNR (dB)</text>';
+ Object.keys(sers).forEach(function(k){var pts=sers[k].sort(function(a,b){return a.iso-b.iso;}),c=COLORS[k]||'#8C88A0';
+  s+='<polyline points="'+pts.map(function(q){return X(q.iso).toFixed(1)+','+Y(q.v).toFixed(1);}).join(' ')+'" fill="none" stroke="'+c+'" stroke-width="2.2"/>';
+  pts.forEach(function(q){s+='<circle cx="'+X(q.iso).toFixed(1)+'" cy="'+Y(q.v).toFixed(1)+'" r="4" fill="'+c+'" stroke="#fff" stroke-width="1.5"/>';});});
+ if(!Object.keys(sers).length)s+='<text x="'+((X0+X1)/2)+'" y="'+((Y0+Y1)/2)+'" text-anchor="middle">Add ISO values and place the boxes to see the graph</text>';
+ svg.innerHTML=s;return Object.keys(sers);}
+function refresh(){var p=PH[sel];showBox($('bxG'),p,p&&boxFor(p,'G'));showBox($('bxB'),p,p&&boxFor(p,'B'));readout('G');readout('B');
+ var rows=results(),by={};rows.forEach(function(r){(by[r.p.series]=by[r.p.series]||[]).push(r);});
+ var ch=$('chan').selectedOptions[0].textContent,h='';
+ Object.keys(by).forEach(function(k){var rs=by[k].sort(function(a,b){return (a.p.iso||0)-(b.p.iso||0);});
+  h+='<div class="tw" style="margin-bottom:10px"><table class="data"><caption>'+esc(k)+' · channel: '+esc(ch)+' · box '+sizePx()+'×'+sizePx()+' px</caption><thead><tr><th>ISO</th><th>Photo</th><th>Gray Mean</th><th>Gray Std Dev</th><th>Gray SNR</th><th>Black Mean</th><th>Black Std Dev</th><th>Black SNR</th></tr></thead><tbody>';
+  rs.forEach(function(r){h+='<tr><td>'+(r.p.iso||'?')+'</td><td>'+esc(r.p.name)+'</td><td>'+f2(r.g&&r.g.mean)+'</td><td>'+f2(r.g&&r.g.sd)+'</td><td>'+f2(r.g&&r.g.snr)+'</td><td>'+f2(r.b&&r.b.mean)+'</td><td>'+f2(r.b&&r.b.sd)+'</td><td>'+f2(r.b&&r.b.snr)+'</td></tr>';});
+  h+='</tbody></table></div>';});
+ $('tables').innerHTML=h||'<p class="note">Upload photos (or try the samples) and place both boxes to fill the table.</p>';
+ var s1=drawChart('cG','g',rows),s2=drawChart('cB','b',rows),all=s1.concat(s2).filter(function(v,i,a){return a.indexOf(v)===i;});
+ $('legend').innerHTML=all.map(function(k){return'<span><i style="background:'+(COLORS[k]||'#8C88A0')+'"></i>'+esc(k)+'</span>';}).join('');
+ var csv=['Series,Photo,ISO,Shutter,F-number,Channel,Box px,Gray Mean,Gray Std Dev,Gray SNR (dB),Black Mean,Black Std Dev,Black SNR (dB)'];
+ rows.forEach(function(r){csv.push(['"'+r.p.series+'"','"'+r.p.name.replace(/"/g,'')+'"',r.p.iso||'',fmtSS(r.p.ss),r.p.fn?Math.round(r.p.fn*10)/10:'',ch,sizePx(),f2(r.g&&r.g.mean),f2(r.g&&r.g.sd),f2(r.g&&r.g.snr),f2(r.b&&r.b.mean),f2(r.b&&r.b.sd),f2(r.b&&r.b.snr)].join(','));});
+ var a=$('csv');if(rows.length){a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv.join('\n'));a.setAttribute('aria-disabled','false');}else{a.href='#';a.setAttribute('aria-disabled','true');}}
+window.addEventListener('resize',function(){var p=PH[sel];if(p){showBox($('bxG'),p,boxFor(p,'G'));showBox($('bxB'),p,boxFor(p,'B'));}});
+$('demo').click();
+})();
+</script>
+</body></html>

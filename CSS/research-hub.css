@@ -16,6 +16,7 @@
 .rhub-tile:focus-visible{outline:3px solid var(--rh-accent);outline-offset:3px}
 .rhub-tile.is-open{border-color:var(--rh-accent);box-shadow:0 0 0 3px rgba(109,74,217,.25),0 16px 36px rgba(60,30,140,.16)}
 .rhub-feature{grid-column:span 2}
+@media(max-width:900px){.rhub-feature-sm{grid-column:span 2}}
 @media(max-width:560px){.rhub-tile{border-radius:18px}.rhub-art{height:86px}.rhub-feature .rhub-art{height:96px}.rhub-body{padding:10px 12px 12px}.rhub-title{font-size:15px;min-width:0;overflow-wrap:anywhere}.rhub-desc{display:none}.rhub-feature .rhub-desc{display:block;font-size:12.5px}.rhub-tag{font-size:9.5px;left:8px;top:8px;padding:3px 7px}}
 .rhub-art{position:relative;height:132px;overflow:hidden;background:var(--g)}
 .rhub-feature .rhub-art{height:132px}
