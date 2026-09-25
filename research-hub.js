@@ -1,6 +1,13 @@
 (function(){
 var W='fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"';
 var TOOLS=[
+ {id:'noise',group:'e2',title:'Noise & SNR Lab',desc:'Lab 1: shoot gray and black patches at every ISO, measure mean and std dev, calculate SNR, and graph it with and without noise reduction.',src:'research/noise-lab.html',tag:'Lab 1',feature:true,
+  g:'radial-gradient(80% 140% at 100% 100%,#F472B6 0%,transparent 55%),radial-gradient(70% 120% at 0% 0%,#818CF8 0%,transparent 55%),linear-gradient(120deg,#111827,#312E81 55%,#6D4AD9)',
+  art:'<svg viewBox="0 0 640 132" preserveAspectRatio="xMidYMid slice">'+(function(){var s='',sd=7;function r(){sd=(sd*9301+49297)%233280;return sd/233280;}for(var i=0;i<420;i++){var x=150+r()*150,y=14+r()*104,v=Math.round(90+r()*90);s+='<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="3" height="3" fill="rgb('+v+','+v+','+(v+10)+')" opacity=".9"/>';}return s;})()+'<rect x="150" y="14" width="150" height="104" fill="none" stroke="#FFE066" stroke-width="2.5" stroke-dasharray="7 5"/><g stroke="#fff" stroke-opacity=".35"><line x1="360" y1="116" x2="620" y2="116"/><line x1="360" y1="18" x2="360" y2="116"/></g><polyline points="370,30 410,40 450,52 490,64 530,78 570,92 610,104" fill="none" stroke="#fff" stroke-width="3"/><polyline points="370,30 410,36 450,44 490,52 530,60 570,70 610,78" fill="none" stroke="#FDBA74" stroke-width="3"/><g fill="#fff"><circle cx="370" cy="30" r="4"/><circle cx="450" cy="52" r="4"/><circle cx="530" cy="78" r="4"/><circle cx="610" cy="104" r="4"/></g></svg>'},
+ {id:'exam2',group:'e2',title:'Exam 2 Practice Test',desc:'One growing test for Exam 2. It gets new questions after every lab, with 7 scored attempts.',src:'research/exam2-prep.html',tag:'Test',
+  g:'radial-gradient(80% 120% at 0% 100%,#FB7185 0%,transparent 55%),linear-gradient(135deg,#4C1D95,#7C3AED 55%,#C026D3)',
+  art:'<svg viewBox="0 0 320 132" preserveAspectRatio="xMaxYMid meet"><g fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="170" y="22" width="110" height="92" rx="10"/><path d="M186 46 l7 7 13-14"/><path d="M186 72 l7 7 13-14"/><path d="M218 46 h46 M218 72 h46 M218 96 h36" stroke-opacity=".6"/></g><text x="74" y="84" fill="#fff" style="font:900 40px Inter,sans-serif">E2</text></svg>'},
+
  {id:'journals',title:'Photo Journals',desc:'My weekly research on two photographers, with six photographs each.',src:'research/photo-journals.html',tag:'Research',feature:true,
   g:'radial-gradient(90% 140% at 0% 100%,#FF7AB6 0%,transparent 55%),radial-gradient(80% 120% at 100% 0%,#8B5CF6 0%,transparent 60%),linear-gradient(120deg,#3B1E7A,#7A2E8E 60%,#C2417A)',
   art:'<svg viewBox="0 0 640 132" preserveAspectRatio="xMidYMid slice"><g opacity=".95"><rect x="150" y="26" width="520" height="80" rx="6" fill="#1B1426" fill-opacity=".55"/>'+(function(){var s='';for(var i=0;i<26;i++)s+='<rect x="'+(158+i*20)+'" y="31" width="10" height="7" rx="2" fill="#fff" fill-opacity=".85"/><rect x="'+(158+i*20)+'" y="94" width="10" height="7" rx="2" fill="#fff" fill-opacity=".85"/>';return s;})()+
@@ -11,7 +18,7 @@ var TOOLS=[
  {id:'meter',title:'Metering',desc:'18% gray, metering off white, gray and black cards, reflected vs incident, and metering modes.',src:'research/metering.html',tag:'Interactive',
   g:'radial-gradient(90% 120% at 0% 0%,#A5B4FC 0%,transparent 55%),linear-gradient(135deg,#334155,#475569 45%,#6D4AD9)',
   art:'<svg viewBox="0 0 320 132" preserveAspectRatio="xMaxYMid meet"><rect x="150" y="34" width="40" height="56" rx="4" fill="#F4F4F2"/><rect x="200" y="34" width="40" height="56" rx="4" fill="#777"/><rect x="250" y="34" width="40" height="56" rx="4" fill="#161616"/><path d="M150 112 A70 70 0 0 1 290 112" '+W+' stroke-opacity=".7"/><path d="M220 112 L244 84" stroke="#F6C453" stroke-width="4" stroke-linecap="round"/><circle cx="220" cy="112" r="5" fill="#F6C453"/></svg>'},
- {id:'test',title:'Practice Test',desc:'105 questions with 7 scored attempts, instant feedback and a review of your misses.',src:'research/practice-test.html',tag:'Test',
+ {id:'test',title:'Exam 1 Practice Test',desc:'105 questions with 7 scored attempts, instant feedback and a review of your misses.',src:'research/practice-test.html',tag:'Test',
   g:'radial-gradient(80% 120% at 100% 0%,#F0ABFC 0%,transparent 55%),linear-gradient(135deg,#5B21B6,#9333EA 55%,#DB2777)',
   art:'<svg viewBox="0 0 320 132" preserveAspectRatio="xMaxYMid meet"><g '+W+'><rect x="170" y="22" width="110" height="92" rx="10" stroke-opacity=".9"/><path d="M186 46 l7 7 13-14"/><path d="M186 72 l7 7 13-14"/><path d="M188 96 l12 0" stroke-opacity=".6"/><path d="M218 46 h46 M218 72 h46 M218 96 h36" stroke-opacity=".6"/></g><text x="72" y="84" fill="#fff" fill-opacity=".9" style="font:900 44px Inter,sans-serif">7×</text></svg>'},
  {id:'density',title:'Density Explorer',desc:'See how transmittance, opacity and density change as a filter gets darker.',src:'research/density-explorer.html',tag:'Interactive',
@@ -33,15 +40,15 @@ var TOOLS=[
   g:'radial-gradient(90% 130% at 100% 0%,#5EEAD4 0%,transparent 55%),linear-gradient(135deg,#134E4A,#0F766E 45%,#6D4AD9)',
   art:'<svg viewBox="0 0 320 132" preserveAspectRatio="xMaxYMid meet"><g '+W+'><rect x="170" y="20" width="120" height="26" rx="6"/><rect x="170" y="53" width="120" height="26" rx="6"/><rect x="170" y="86" width="120" height="26" rx="6"/></g><g fill="#5EEAD4"><circle cx="274" cy="33" r="4"/><circle cx="274" cy="66" r="4"/><circle cx="274" cy="99" r="4"/></g><g fill="#fff" fill-opacity=".75"><rect x="70" y="40" width="44" height="54" rx="4"/></g><path d="M100 40 l14 14 h-14z" fill="#fff" fill-opacity=".4"/></svg>'}
 ];
-var grid=document.getElementById('rhub-grid'),tiles=[],panels={},openId=null;
+var grid=document.getElementById('rhub-grid'),grid2=document.getElementById('rhub-grid-e2'),tiles=[],panels={},openId=null;
 TOOLS.forEach(function(t){
  var b=document.createElement('button');b.type='button';b.className='rhub-tile'+(t.feature?' rhub-feature':'');b.style.setProperty('--g',t.g);
  b.setAttribute('aria-expanded','false');b.setAttribute('aria-controls','rhub-p-'+t.id);
  b.innerHTML='<div class="rhub-art" aria-hidden="true"><span class="rhub-tag">'+t.tag+'</span>'+t.art+'</div><div class="rhub-body"><div class="rhub-row"><span class="rhub-title">'+t.title+'</span><span class="rhub-go" aria-hidden="true">→</span></div><span class="rhub-desc">'+t.desc+'</span></div>';
  b.addEventListener('click',function(){openId===t.id?close():open(t,b);});
- grid.appendChild(b);tiles.push({t:t,el:b});
+ (t.group==='e2'&&grid2?grid2:grid).appendChild(b);tiles.push({t:t,el:b});
 });
-function rowEnd(el){/* last tile in the same visual row as el */var top=el.offsetTop,last=el;tiles.forEach(function(x){if(Math.abs(x.el.offsetTop-top)<4&&x.el.offsetLeft>=last.offsetLeft)last=x.el;});return last;}
+function rowEnd(el){/* last tile in the same visual row (and same grid) as el */var top=el.offsetTop,last=el;tiles.forEach(function(x){if(x.el.parentNode===el.parentNode&&Math.abs(x.el.offsetTop-top)<4&&x.el.offsetLeft>=last.offsetLeft)last=x.el;});return last;}
 function getPanel(t){if(panels[t.id])return panels[t.id];
  var p=document.createElement('div');p.className='rhub-panel';p.id='rhub-p-'+t.id;p.hidden=true;p.setAttribute('role','region');p.setAttribute('aria-label',t.title);p.style.setProperty('--g',t.g);
  p.innerHTML='<div class="rhub-ph"><h3>'+t.title+'</h3><button class="rhub-x" type="button" aria-label="Close '+t.title+'">&times;</button></div>';

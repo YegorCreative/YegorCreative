@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Noise &amp; SNR Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+<style>
+:root{--bg:#F6F5FA;--card:#FFFFFF;--ink:#15131C;--muted:#5E5A6B;--line:#E2DEEE;--accent:#6D4AD9;--soft:#EFEAFD;--ok:#1F8A70;--okb:#E1F4EE;--bad:#C0392B;--badb:#FBE3E0;--nr:#D9822B}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55;padding:24px 16px 56px}
+.w{max-width:980px;margin:0 auto;display:grid;gap:22px}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(28px,6vw,40px);font-weight:900}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.intro p{margin:8px 0 0;color:var(--muted);max-width:68ch}
+button,input,select{font:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.toc{display:flex;gap:8px;flex-wrap:wrap}
+.toc a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:14px}
+.toc a:hover{border-color:var(--accent)}
+.topic{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 18px;display:grid;gap:16px;scroll-margin-top:12px}
+.th{display:flex;gap:14px;align-items:center}
+.num{font-size:40px;font-weight:900;line-height:1;color:transparent;-webkit-text-stroke:2px var(--accent);min-width:52px}
+.th h2{font-size:clamp(22px,4vw,28px)}
+.th p{margin:2px 0 0;color:var(--muted);font-weight:600;font-size:14px}
+.trick{display:flex;gap:10px;background:var(--bg);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:10px 12px}
+.trick b{color:var(--accent)}
+.note{font-size:12.5px;color:var(--muted);margin:0}
+.formula{border:2px solid var(--accent);border-radius:14px;padding:14px;text-align:center;font-weight:800;font-size:clamp(17px,3.2vw,22px);font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--soft)}
+/* controls */
+.ctrl{display:grid;gap:12px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.lbl{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);min-width:90px}
+.seg{display:inline-flex;flex-wrap:wrap;border:1.5px solid var(--line);border-radius:12px;overflow:hidden}
+.seg button{border:0;border-right:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:700;font-size:13px;padding:0 12px;min-height:40px;cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.isos button{min-width:52px}
+/* measure */
+.meas{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
+@media(max-width:700px){.meas{grid-template-columns:1fr}}
+.patches{display:flex;gap:12px;flex-wrap:wrap}
+.pbox{display:grid;gap:4px;justify-items:center}
+.pbox canvas{width:180px;height:180px;image-rendering:pixelated;border-radius:6px;border:3px dashed #FFE066;box-shadow:0 0 0 1px #15131C}
+@media(max-width:420px){.pbox canvas{width:140px;height:140px}}
+.pbox span{font-size:12px;font-weight:800;color:var(--muted)}
+.ps{background:#2B2A2E;color:#E8E8E8;border-radius:10px;padding:12px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;display:grid;gap:10px}
+.ps .hdr{font-family:Inter,sans-serif;font-weight:800;font-size:12px;letter-spacing:.08em;color:#AFAFB8}
+.ps table{border-collapse:collapse;width:100%}
+.ps td{padding:3px 6px;border:0}
+.ps td:nth-child(2),.ps td:nth-child(4){text-align:right;color:#fff;font-weight:700}
+.snrs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.snr{border-radius:12px;padding:10px 12px;background:var(--soft)}
+.snr .k{font-size:12px;font-weight:800;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.snr .v{font-size:28px;font-weight:900;color:var(--accent);font-variant-numeric:tabular-nums}
+.snr .w2{font-size:12.5px;font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:none;background:var(--accent);color:#fff;font-weight:800;border-radius:10px;padding:0 16px;min-height:44px;cursor:pointer;text-decoration:none;font-size:14px}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+/* tables */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table.data{border-collapse:collapse;width:100%;min-width:560px;font-variant-numeric:tabular-nums}
+table.data th,table.data td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:right;font-size:13.5px}
+table.data th{background:var(--bg);font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);text-align:right}
+table.data td:first-child,table.data th:first-child{text-align:left;font-weight:800}
+table.data tr.cur td{background:#FFF7D6}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+/* charts */
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:760px){.charts{grid-template-columns:1fr}}
+.chart{border:1px solid var(--line);border-radius:12px;padding:8px;background:#fff}
+.chart h3{font-size:15px;margin:2px 4px 4px}
+.chart svg{display:block;width:100%;height:auto}
+.chart text{font-family:inherit;font-size:12px;fill:var(--muted)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;font-weight:700;margin:4px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:50%}
+/* practice */
+.prac{display:grid;gap:10px;border:1px dashed var(--accent);border-radius:12px;padding:14px}
+.prac .q{font-weight:700;font-size:16px}
+.prac input{width:130px;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;font-size:16px}
+.fb{font-weight:700;min-height:1.3em;font-size:14px}.fb.ok{color:var(--ok)}.fb.no{color:var(--bad)}
+.steps{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;background:var(--bg);border-radius:10px;padding:10px 12px;white-space:pre-wrap}
+/* push */
+.push{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.push{grid-template-columns:1fr}}
+.pcard{border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;gap:8px;justify-items:center;text-align:center}
+.pcard canvas{width:100%;max-width:260px;aspect-ratio:1;image-rendering:pixelated;border-radius:8px}
+.pcard b{font-size:15px}
+.pcard .v{font-size:24px;font-weight:900;color:var(--accent)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.two{grid-template-columns:1fr}}
+.pane{border-radius:14px;padding:14px;border:1.5px solid var(--c);background:var(--cs);display:grid;gap:6px;align-content:start}
+.pane .t{font-size:18px;font-weight:900;color:var(--c)}
+.pane p{margin:0;font-size:14px}
+</style></head><body>
+<div class="w">
+<header class="intro">
+<div class="eyebrow">Photographic Research · Exam 2 · Lab 1</div>
+<h1>Noise &amp; SNR Lab</h1>
+<p>A simulator of the Sensor Performance and Noise lab. Shoot the gray and black ColorChecker patches at every ISO, measure the mean and standard deviation like Photoshop's Histogram, calculate SNR, and graph ISO vs SNR with and without noise reduction.</p>
+</header>
+<nav class="toc" aria-label="Sections"><a href="#t1">SNR basics</a><a href="#t2">Measure a patch</a><a href="#t3">Data tables &amp; graphs</a><a href="#t4">Practice</a><a href="#t5">ISO vs pushing in post</a><a href="#t6">Sensor size</a></nav>
+
+<!-- 1 -->
+<section class="topic" id="t1" aria-labelledby="t1h">
+<div class="th"><div class="num" aria-hidden="true">01</div><div><h2 id="t1h">SNR basics</h2><p>Signal compared with noise, in decibels</p></div></div>
+<div class="formula">SNR = 20 × log₁₀( Mean ÷ Std Dev )</div>
+<div class="two">
+<div class="pane" style="--c:#6D4AD9;--cs:#EFEAFD"><span class="t">Mean = signal</span><p>The average pixel value of the patch, which is its real brightness. The gray patch sits around the midtones and the black patch in the shadows.</p></div>
+<div class="pane" style="--c:#D9822B;--cs:#FCEFE0"><span class="t">Std Dev = noise</span><p>How much the pixels jump around the average. A perfectly smooth patch would have Std Dev 0. More grain means a bigger Std Dev.</p></div>
+</div>
+<div class="trick"><span aria-hidden="true">💡</span><div><b>High SNR = clean, low SNR = noisy.</b> Every time Mean ÷ Std Dev gets 10× bigger, SNR goes up by <b>20 dB</b>: a ratio of 10 = 20 dB, 100 = 40 dB, 1000 = 60 dB.</div></div>
+</section>
+
+<!-- 2 -->
+<section class="topic" id="t2" aria-labelledby="t2h">
+<div class="th"><div class="num" aria-hidden="true">02</div><div><h2 id="t2h">Measure a patch</h2><p>Like a 100 × 100 px marquee in Photoshop, with Window › Histogram in Expanded View</p></div></div>
+<div class="ctrl">
+<div class="row"><span class="lbl">ISO</span><div class="seg isos" id="isos" role="group" aria-label="ISO"></div></div>
+<div class="row"><span class="lbl">Mode</span><div class="seg" id="modes" role="group" aria-label="Capture mode"></div></div>
+<div class="row"><span class="lbl">Sensor</span><div class="seg" id="sensors" role="group" aria-label="Sensor size"></div></div>
+</div>
+<div class="meas">
+<div class="patches">
+<div class="pbox"><canvas id="cg" width="100" height="100" aria-label="Gray patch, 100 by 100 pixels"></canvas><span>Gray patch (midtones)</span></div>
+<div class="pbox"><canvas id="cb" width="100" height="100" aria-label="Black patch, 100 by 100 pixels"></canvas><span>Black patch (shadows)</span></div>
+</div>
+<div style="display:grid;gap:10px">
+<div class="ps" aria-live="polite"><div class="hdr">HISTOGRAM · EXPANDED VIEW (simulated)</div>
+<table><tr><td>Gray Mean:</td><td id="gm"></td><td>Black Mean:</td><td id="bm"></td></tr><tr><td>Gray Std Dev:</td><td id="gs"></td><td>Black Std Dev:</td><td id="bs"></td></tr><tr><td>Pixels:</td><td>10000</td><td>Pixels:</td><td>10000</td></tr></table></div>
+<div class="snrs"><div class="snr"><div class="k">Gray SNR</div><div class="v" id="gsnr"></div><div class="w2" id="gw"></div></div><div class="snr"><div class="k">Black SNR</div><div class="v" id="bsnr"></div><div class="w2" id="bw"></div></div></div>
+<div class="row"><button class="btn ghost" type="button" id="reshoot">↻ Re-shoot (new noise)</button></div>
+</div>
+</div>
+<p class="note">Simulated camera for learning. Real cameras differ, and your own lab data will have different numbers, but the patterns (SNR falls as ISO rises, black is noisier than gray, noise reduction raises SNR) are the same.</p>
+</section>
+
+<!-- 3 -->
+<section class="topic" id="t3" aria-labelledby="t3h">
+<div class="th"><div class="num" aria-hidden="true">03</div><div><h2 id="t3h">Data tables &amp; graphs</h2><p>Equivalent data in the same format as your lab's Tables 2–4</p></div></div>
+<div class="tabs" id="tabs" role="group" aria-label="Table"></div>
+<div class="tw"><table class="data" id="tbl"></table></div>
+<div class="charts">
+<div class="chart"><h3>Gray patch: ISO vs SNR</h3><svg id="chG" viewBox="0 0 420 260" role="img" aria-label="Gray patch SNR graph"></svg></div>
+<div class="chart"><h3>Black patch: ISO vs SNR</h3><svg id="chB" viewBox="0 0 420 260" role="img" aria-label="Black patch SNR graph"></svg></div>
+</div>
+<div class="legend"><span><i style="background:#6D4AD9"></i>JPEG, no noise reduction</span><span><i style="background:#D9822B"></i>JPEG, with noise reduction</span><span><i style="background:#1F8A70"></i>Raw (Camera Raw default NR)</span></div>
+<div class="row"><a class="btn" id="csv" href="#" download="noise-lab-practice-data.csv">⬇ Download practice data (CSV for Excel)</a></div>
+<div class="trick"><span aria-hidden="true">💡</span><div>Graph it like the lab: <b>x-axis = ISO on a log scale</b> (minimum 100), <b>y-axis = SNR</b>. On a log scale each stop (100, 200, 400…) is the same distance apart, so the points form a clean downward line.</div></div>
+</section>
+
+<!-- 4 -->
+<section class="topic" id="t4" aria-labelledby="t4h">
+<div class="th"><div class="num" aria-hidden="true">04</div><div><h2 id="t4h">Practice: calculate SNR yourself</h2><p>Use a calculator or Excel, just like in the lab</p></div></div>
+<div class="prac">
+<div class="q" id="pq"></div>
+<div class="row"><label for="pa" class="lbl" style="min-width:auto">SNR (dB)</label><input id="pa" inputmode="decimal" autocomplete="off"><button class="btn" type="button" id="pc">Check</button><button class="btn ghost" type="button" id="pn">New problem</button></div>
+<div class="fb" id="pf" aria-live="polite"></div>
+<div class="steps" id="ps" hidden></div>
+</div>
+<p class="note">Excel formula: <code>=20*LOG10(B2/C2)</code> where B2 is the mean and C2 is the std dev.</p>
+</section>
+
+<!-- 5 -->
+<section class="topic" id="t5" aria-labelledby="t5h">
+<div class="th"><div class="num" aria-hidden="true">05</div><div><h2 id="t5h">ISO vs pushing exposure in post</h2><p>Lab Part IV: a proper exposure at high ISO vs underexposing at low ISO and brightening later</p></div></div>
+<div class="push">
+<div class="pcard"><b>ISO 1600, metered exposure</b><canvas id="p1" width="120" height="120" aria-label="Shadow patch at ISO 1600"></canvas><div>Shadow SNR <span class="v" id="p1v"></span></div><span class="note">Nothing changed in post.</span></div>
+<div class="pcard"><b>ISO 200, same f/ &amp; shutter → 3 stops under, +3 in Lightroom</b><canvas id="p2" width="120" height="120" aria-label="Shadow patch at ISO 200 pushed 3 stops"></canvas><div>Shadow SNR <span class="v" id="p2v"></span></div><span class="note">1600 → 800 → 400 → 200 = 3 stops underexposed.</span></div>
+</div>
+<div class="trick"><span aria-hidden="true">💡</span><div>Both photos got the <b>same amount of light</b>, so the basic noise from the light itself is the same. But brightening in post also multiplies the camera's own electronic (read) noise, so the <b>shadows usually look worse</b> in the pushed image. On many cameras, using the higher ISO at the metered exposure gives cleaner shadows. Some newer sensors are nearly "ISO-invariant", so the difference is small.</div></div>
+</section>
+
+<!-- 6 -->
+<section class="topic" id="t6" aria-labelledby="t6h">
+<div class="th"><div class="num" aria-hidden="true">06</div><div><h2 id="t6h">Sensor size &amp; pixel size</h2><p>Why full frame usually has less noise</p></div></div>
+<div class="tw"><table class="data" style="min-width:520px"><thead><tr><th>Format</th><th>Size (approx.)</th><th>Crop factor</th><th>Pixel pitch at 24 MP (approx.)</th></tr></thead><tbody>
+<tr><td>Full frame</td><td>36 × 24 mm</td><td>1.0</td><td>≈ 6.0 µm</td></tr>
+<tr><td>APS-C</td><td>≈ 23.5 × 15.6 mm</td><td>1.5 (Canon 1.6)</td><td>≈ 3.9 µm</td></tr>
+<tr><td>Micro Four Thirds</td><td>17.3 × 13 mm</td><td>2.0</td><td>≈ 3.3 µm (at 20 MP)</td></tr>
+<tr><td>Phone (main camera)</td><td>≈ 8 × 6 mm</td><td>≈ 4–5</td><td>≈ 0.8–1.2 µm</td></tr>
+</tbody></table></div>
+<div class="trick"><span aria-hidden="true">💡</span><div><b>Bigger pixels catch more light</b> (like a wider bucket in the rain), so the signal is stronger compared with the noise and the SNR is higher. Switch the <b>Sensor</b> buttons in section 02 to see the same ISO get noisier on smaller sensors. To find your own camera's pixel size, divide the sensor width (mm) by the image width in pixels, then × 1000 to get µm.</div></div>
+</section>
+</div>
+
+<script>
+(function(){
+var ISOS=[100,200,400,800,1600,3200,6400];
+var MODES=[{id:'nonr',n:'JPEG · no NR',c:'#6D4AD9'},{id:'nr',n:'JPEG · with NR',c:'#D9822B'},{id:'raw',n:'Raw · ACR default',c:'#1F8A70'}];
+var SENS=[{id:'ff',n:'Full frame',k:1},{id:'apsc',n:'APS-C',k:1.5},{id:'mft',n:'Micro 4/3',k:2},{id:'phone',n:'Phone',k:4.2}];
+var st={iso:400,mode:'nonr',sen:'ff',seed:1};
+/* seeded random */
+var seed=12345;function rnd(){seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff;}
+function gauss(){var u=Math.max(1e-9,rnd()),v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+/* noise model (sRGB 0-255 output), tuned for learning */
+var MEAN={g:118,b:34};
+function sigma(patch,iso,mode,k){var s=Math.log2(iso/100),base=patch==='g'?(0.72+1.08*Math.sqrt(iso/100)):(0.9+0.78*Math.sqrt(iso/100));
+ base*=k;var f=mode==='nr'?1/(1+0.17*s):mode==='raw'?1/(1+0.09*s):1;return base*f;}
+/* simulate a 100x100 patch: returns pixels + mean + sd */
+function shoot(patch,iso,mode,k,sd0){seed=sd0;var sg=sigma(patch,iso,mode,k),m=MEAN[patch],px=new Float32Array(10000),sum=0,sq=0,chroma=mode==='nr'?0.25:mode==='raw'?0.45:0.7;
+ var ch=[];for(var i=0;i<10000;i++){var L=m+gauss()*sg;L=Math.max(0,Math.min(255,L));px[i]=L;sum+=L;sq+=L*L;ch.push([gauss()*sg*chroma,gauss()*sg*chroma,gauss()*sg*chroma]);}
+ var mean=sum/1e4,sd=Math.sqrt(Math.max(0,sq/1e4-mean*mean));return{px:px,ch:ch,mean:mean,sd:sd};}
+function snr(m,s){return 20*Math.log10(m/s);}
+function paint(cv,r,tint){var x=cv.getContext('2d'),W=cv.width,H=cv.height,img=x.createImageData(W,H),d=img.data;
+ for(var i=0;i<W*H;i++){var j=i%10000,L=r.px[j],c=r.ch[j];d[i*4]=Math.max(0,Math.min(255,L+c[0]));d[i*4+1]=Math.max(0,Math.min(255,L+c[1]));d[i*4+2]=Math.max(0,Math.min(255,L+c[2]));d[i*4+3]=255;}x.putImageData(img,0,0);}
+function kOf(){return SENS.filter(function(s){return s.id===st.sen;})[0].k;}
+/* ---- controls ---- */
+function segBuild(el,items,key,label){items.forEach(function(it){var b=document.createElement('button');b.type='button';b.textContent=label(it);b.addEventListener('click',function(){st[key]=it.id!==undefined?it.id:it;update();});el.appendChild(b);});}
+segBuild(document.getElementById('isos'),ISOS,'iso',function(i){return i;});
+segBuild(document.getElementById('modes'),MODES,'mode',function(m){return m.n;});
+segBuild(document.getElementById('sensors'),SENS,'sen',function(s){return s.n;});
+document.getElementById('reshoot').addEventListener('click',function(){st.seed++;update();});
+function mark(){[['isos',ISOS,'iso'],['modes',MODES,'mode'],['sensors',SENS,'sen']].forEach(function(a){Array.prototype.forEach.call(document.getElementById(a[0]).children,function(b,i){var v=a[1][i];v=v.id!==undefined?v.id:v;b.setAttribute('aria-pressed',v===st[a[2]]?'true':'false');});});}
+function sd0(patch,iso,mode,sen){return (st.seed*7919+ISOS.indexOf(iso)*131+(patch==='g'?1:2)*17+MODES.map(function(m){return m.id;}).indexOf(mode)*1013+SENS.map(function(s){return s.id;}).indexOf(sen)*3001)%2147483647+1;}
+function update(){mark();var k=kOf(),g=shoot('g',st.iso,st.mode,k,sd0('g',st.iso,st.mode,st.sen)),b=shoot('b',st.iso,st.mode,k,sd0('b',st.iso,st.mode,st.sen));
+ paint(document.getElementById('cg'),g);paint(document.getElementById('cb'),b);
+ document.getElementById('gm').textContent=g.mean.toFixed(2);document.getElementById('gs').textContent=g.sd.toFixed(2);
+ document.getElementById('bm').textContent=b.mean.toFixed(2);document.getElementById('bs').textContent=b.sd.toFixed(2);
+ var G=snr(g.mean,g.sd),B=snr(b.mean,b.sd);
+ document.getElementById('gsnr').textContent=G.toFixed(1)+' dB';document.getElementById('bsnr').textContent=B.toFixed(1)+' dB';
+ document.getElementById('gw').textContent='20·log('+g.mean.toFixed(1)+'÷'+g.sd.toFixed(2)+')';document.getElementById('bw').textContent='20·log('+b.mean.toFixed(1)+'÷'+b.sd.toFixed(2)+')';
+ buildData();}
+/* ---- tables ---- */
+var DATA={},tab='nonr';
+function buildData(){var k=kOf();MODES.forEach(function(m){DATA[m.id]=ISOS.map(function(iso){var g=shoot('g',iso,m.id,k,sd0('g',iso,m.id,st.sen)),b=shoot('b',iso,m.id,k,sd0('b',iso,m.id,st.sen));
+  return{iso:iso,gm:g.mean,gs:g.sd,gsn:snr(g.mean,g.sd),bm:b.mean,bs:b.sd,bsn:snr(b.mean,b.sd)};});});
+ drawTable();drawCharts();makeCSV();newProblem(true);}
+var tabs=document.getElementById('tabs');
+MODES.forEach(function(m,i){var b=document.createElement('button');b.type='button';b.className='btn ghost';b.textContent=['Table 2 · JPEG no NR','Table 3 · JPEG with NR','Table 4 · Raw'][i];b.addEventListener('click',function(){tab=m.id;drawTable();});tabs.appendChild(b);});
+function drawTable(){Array.prototype.forEach.call(tabs.children,function(b,i){b.style.background=MODES[i].id===tab?'var(--accent)':'';b.style.color=MODES[i].id===tab?'#fff':'';b.setAttribute('aria-pressed',MODES[i].id===tab?'true':'false');});
+ var sname=SENS.filter(function(s){return s.id===st.sen;})[0].n;
+ var h='<caption style="caption-side:top;text-align:left;padding:8px 10px;font-weight:800">Simulated '+sname+' camera · '+MODES.filter(function(m){return m.id===tab;})[0].n+'</caption><thead><tr><th>ISO</th><th>Gray Mean</th><th>Gray Std Dev</th><th>Gray SNR</th><th>Black Mean</th><th>Black Std Dev</th><th>Black SNR</th></tr></thead><tbody>';
+ DATA[tab].forEach(function(r){h+='<tr'+(r.iso===st.iso?' class="cur"':'')+'><td>'+r.iso+'</td><td>'+r.gm.toFixed(2)+'</td><td>'+r.gs.toFixed(2)+'</td><td>'+r.gsn.toFixed(1)+'</td><td>'+r.bm.toFixed(2)+'</td><td>'+r.bs.toFixed(2)+'</td><td>'+r.bsn.toFixed(1)+'</td></tr>';});
+ document.getElementById('tbl').innerHTML=h+'</tbody>';}
+/* ---- charts ---- */
+function drawChart(id,key){var svg=document.getElementById(id),X0=46,X1=405,Y0=220,Y1=14,ymin=0,ymax=45;
+ function X(iso){return X0+Math.log2(iso/100)/6*(X1-X0);}function Y(v){return Y0-(v-ymin)/(ymax-ymin)*(Y0-Y1);}
+ var s='<rect x="'+X0+'" y="'+Y1+'" width="'+(X1-X0)+'" height="'+(Y0-Y1)+'" fill="#FAFAFD" stroke="#E2DEEE"/>';
+ [0,10,20,30,40].forEach(function(v){s+='<line x1="'+X0+'" y1="'+Y(v)+'" x2="'+X1+'" y2="'+Y(v)+'" stroke="#ECE9F5"/><text x="'+(X0-6)+'" y="'+(Y(v)+4)+'" text-anchor="end">'+v+'</text>';});
+ ISOS.forEach(function(i){s+='<line x1="'+X(i)+'" y1="'+Y0+'" x2="'+X(i)+'" y2="'+(Y0+4)+'" stroke="#8C88A0"/><text x="'+X(i)+'" y="'+(Y0+17)+'" text-anchor="middle">'+i+'</text>';});
+ s+='<text x="'+((X0+X1)/2)+'" y="'+(Y0+34)+'" text-anchor="middle">ISO (log scale)</text><text x="12" y="'+((Y0+Y1)/2)+'" text-anchor="middle" transform="rotate(-90 12 '+((Y0+Y1)/2)+')">SNR (dB)</text>';
+ MODES.forEach(function(m){var pts=DATA[m.id].map(function(r){return X(r.iso).toFixed(1)+','+Y(r[key]).toFixed(1);});
+  s+='<polyline points="'+pts.join(' ')+'" fill="none" stroke="'+m.c+'" stroke-width="2.2"/>';
+  DATA[m.id].forEach(function(r){s+='<circle cx="'+X(r.iso).toFixed(1)+'" cy="'+Y(r[key]).toFixed(1)+'" r="'+(r.iso===st.iso?5.5:3.8)+'" fill="'+m.c+'" stroke="#fff" stroke-width="1.5"/>';});});
+ svg.innerHTML=s;}
+function drawCharts(){drawChart('chG','gsn');drawChart('chB','bsn');}
+function makeCSV(){var sname=SENS.filter(function(s){return s.id===st.sen;})[0].n,rows=['Camera,Mode,ISO,Gray Mean,Gray Std Dev,Gray SNR (dB),Black Mean,Black Std Dev,Black SNR (dB)'];
+ MODES.forEach(function(m){DATA[m.id].forEach(function(r){rows.push(['Simulated '+sname,m.n.replace(' · ',' - '),r.iso,r.gm.toFixed(2),r.gs.toFixed(2),r.gsn.toFixed(2),r.bm.toFixed(2),r.bs.toFixed(2),r.bsn.toFixed(2)].join(','));});});
+ document.getElementById('csv').href='data:text/csv;charset=utf-8,'+encodeURIComponent(rows.join('\n'));}
+/* ---- practice ---- */
+var cur=null;
+function newProblem(silent){var mode=MODES[Math.floor(Math.random()*3)],r=DATA[mode.id][Math.floor(Math.random()*7)],pt=Math.random()<.5?'g':'b';
+ cur={m:pt==='g'?r.gm:r.bm,s:pt==='g'?r.gs:r.bs,iso:r.iso,pt:pt,mode:mode.n};
+ document.getElementById('pq').innerHTML=(pt==='g'?'Gray':'Black')+' patch, ISO '+r.iso+' ('+mode.n+'): Mean = <b>'+cur.m.toFixed(2)+'</b>, Std Dev = <b>'+cur.s.toFixed(2)+'</b>. What is the SNR?';
+ if(!silent)document.getElementById('pa').focus();document.getElementById('pa').value='';document.getElementById('pf').textContent='';document.getElementById('ps').hidden=true;}
+function check(){var v=parseFloat(document.getElementById('pa').value.replace(',','.'));if(isNaN(v)){document.getElementById('pf').className='fb no';document.getElementById('pf').textContent='Type a number first.';return;}
+ var ratio=cur.m/cur.s,lg=Math.log10(ratio),ans=20*lg,ok=Math.abs(v-ans)<=0.2;
+ var pf=document.getElementById('pf');pf.className='fb '+(ok?'ok':'no');pf.textContent=ok?'✓ Correct! '+ans.toFixed(1)+' dB':'Not quite. The answer is '+ans.toFixed(1)+' dB.';
+ var ps=document.getElementById('ps');ps.hidden=false;ps.textContent='Step 1: Mean ÷ Std Dev = '+cur.m.toFixed(2)+' ÷ '+cur.s.toFixed(2)+' = '+ratio.toFixed(2)+'\nStep 2: log₁₀('+ratio.toFixed(2)+') = '+lg.toFixed(3)+'\nStep 3: 20 × '+lg.toFixed(3)+' = '+ans.toFixed(1)+' dB';}
+document.getElementById('pc').addEventListener('click',check);document.getElementById('pn').addEventListener('click',function(){newProblem(false);});
+document.getElementById('pa').addEventListener('keydown',function(e){if(e.key==='Enter')check();});
+/* ---- push demo ---- */
+(function(){var k=1,rS=sigma('b',1600,'nonr',k),g1=shoot('b',1600,'nonr',k,777);
+ var push=rS*1.42;seed=991;var px=new Float32Array(10000),sum=0,sq=0,ch=[];for(var i=0;i<1e4;i++){var L=Math.max(0,Math.min(255,MEAN.b+gauss()*push));px[i]=L;sum+=L;sq+=L*L;ch.push([gauss()*push*.9,gauss()*push*.9,gauss()*push*.9]);}
+ var m=sum/1e4,sd=Math.sqrt(sq/1e4-m*m),g2={px:px,ch:ch,mean:m,sd:sd};
+ paint(document.getElementById('p1'),g1);paint(document.getElementById('p2'),g2);
+ document.getElementById('p1v').textContent=snr(g1.mean,g1.sd).toFixed(1)+' dB';document.getElementById('p2v').textContent=snr(g2.mean,g2.sd).toFixed(1)+' dB';})();
+update();
+document.querySelectorAll('.toc a').forEach(function(a){a.addEventListener('click',function(e){var t=document.getElementById(a.getAttribute('href').slice(1));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});});
+})();
+</script>
+</body></html>

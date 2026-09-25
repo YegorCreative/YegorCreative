@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Exam 2 Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#E8EAED; --surface:#FFFFFF; --ink:#15181C; --muted:#59616B; --line:#D2D6DC;
+  --accent:#C4611A; --accent-ink:#FFFFFF; --accent-soft:#F6E4D6;
+  --good:#2B7A4B; --good-bg:#E2F1E7; --bad:#B0261D; --bad-bg:#F8E0DD; --warn:#8A6100;
+  --gray18:#777B7F;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#121417; --surface:#1B1E22; --ink:#E6E8EB; --muted:#9BA3AE; --line:#2D3238;
+    --accent:#F08A3C; --accent-ink:#1A0E04; --accent-soft:#3A2515;
+    --good:#72D09A; --good-bg:#142A1E; --bad:#FF8C82; --bad-bg:#301816; --warn:#E6B94F;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#121417; --surface:#1B1E22; --ink:#E6E8EB; --muted:#9BA3AE; --line:#2D3238;
+  --accent:#F08A3C; --accent-ink:#1A0E04; --accent-soft:#3A2515;
+  --good:#72D09A; --good-bg:#142A1E; --bad:#FF8C82; --bad-bg:#301816; --warn:#E6B94F;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;padding-inline:16px;padding-block:24px 64px}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1,h2{font-family:var(--display);font-weight:700;letter-spacing:.01em;line-height:1.05;margin:0;text-wrap:balance}
+h1{font-size:clamp(2.4rem,7vw,3.4rem);text-transform:uppercase}
+h2{font-size:1.6rem}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
+.head{display:flex;gap:16px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
+.chip18{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.75rem;color:var(--muted)}
+.chip18 i{display:block;width:28px;height:28px;border-radius:4px;background:var(--gray18)}
+/* attempts */
+.dots{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.dot{aspect-ratio:1;max-width:100%;border-radius:50%;border:2px dashed var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.dot.done{border-style:solid;border-color:var(--accent);color:var(--ink);background:var(--accent-soft)}
+.dot.next{border-style:solid;border-color:var(--ink);color:var(--ink)}
+.dot small{font-size:.62rem;color:var(--muted)}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+button{font:inherit;cursor:pointer;border-radius:8px}
+.btn{background:var(--accent);color:var(--accent-ink);border:none;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.45;cursor:default}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+/* mastery */
+.bars{display:grid;gap:10px}
+.bar{display:grid;grid-template-columns:150px 1fr 48px;gap:10px;align-items:center;font-size:.9rem}
+.track{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.fill{height:100%;background:var(--accent)}
+.bar .pct{font-family:var(--mono);font-size:.8rem;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+@media (max-width:480px){.bar{grid-template-columns:110px 1fr 40px}}
+.rules{margin:0;padding-left:18px;display:grid;gap:4px}
+/* quiz */
+.progress{height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.progress div{height:100%;background:var(--accent);transition:width .25s}
+.qmeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.tag{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;background:var(--accent-soft);color:var(--ink);padding:4px 8px;border-radius:4px}
+.qtext{font-size:1.2rem;font-weight:500;line-height:1.45}
+.opts{display:grid;gap:8px}
+.opt{text-align:left;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);padding:12px 14px;display:flex;gap:12px;align-items:flex-start}
+.opt .key{font-family:var(--mono);font-size:.8rem;color:var(--muted);min-width:1.2em;padding-top:2px}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.opt.right{border-color:var(--good);background:var(--good-bg)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.opt:disabled{cursor:default}
+input[type=text]{width:100%;font:inherit;font-size:1.05rem;padding:12px 14px;border:1.5px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+.hint{font-size:.85rem;color:var(--muted)}
+.fb{border-radius:8px;padding:14px 16px;display:grid;gap:6px}
+.fb.ok{background:var(--good-bg);border:1px solid var(--good)}
+.fb.no{background:var(--bad-bg);border:1px solid var(--bad)}
+.fb strong{font-family:var(--display);font-size:1.3rem;letter-spacing:.02em;text-transform:uppercase}
+.fb.ok strong{color:var(--good)} .fb.no strong{color:var(--bad)}
+.spell{color:var(--warn);font-weight:600}
+.spd{width:100%;max-width:420px;height:auto;color:var(--muted)}
+.spd .curve{fill:none;stroke:var(--accent);stroke-width:2}
+.spd .area{fill:var(--accent);fill-opacity:.15}
+.spd text{fill:var(--muted);font-family:var(--mono);font-size:10px}
+.spd line{stroke:var(--line)}
+/* results */
+.score{font-family:var(--display);font-size:clamp(3.5rem,14vw,5.5rem);font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.miss{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:4px}
+.miss .you{color:var(--bad)} .miss .ans{color:var(--good);font-weight:500}
+.stack{display:grid;gap:14px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head><body>
+
+<div class="wrap" id="app"></div>
+
+<script>
+const TOPICS={snr:"Noise & SNR",measure:"Measuring noise",iso:"ISO & noise reduction",sensor:"Sensor size",expo:"Exposure & bracketing"};
+const ISO=["100","200","400","800","1600","3200","6400"];
+const SHUT=["1","1/2","1/4","1/8","1/15","1/30","1/60","1/125","1/250","1/500","1/1000"];
+const APER=["1.4","2","2.8","4","5.6","8","11","16","22","32"];
+// first mc option is the correct one (shuffled on screen)
+const Q=[
+// ===== LAB 1: SENSOR PERFORMANCE AND NOISE =====
+// SNR & noise
+{id:"N1",t:"snr",k:"fill",q:"SNR stands for ________.",a:["signal-to-noise ratio","signal to noise ratio","signal-noise ratio"],e:"SNR = signal-to-noise ratio: how strong the real signal is compared with the noise."},
+{id:"N2",t:"snr",k:"mc",q:"The SNR formula used in the lab is…",o:["SNR = 20 × log(Mean ÷ Standard Deviation)","SNR = 20 × log(Standard Deviation ÷ Mean)","SNR = Mean × Standard Deviation","SNR = 10 × (Mean − Standard Deviation)"],e:"SNR = 20 × log₁₀(Mean ÷ Std Dev). Signal (mean) on top, noise (std dev) on the bottom."},
+{id:"N3",t:"snr",k:"mc",q:"A HIGHER SNR means the image is…",o:["Cleaner, with less noise","Noisier","Brighter","More saturated"],e:"High SNR = strong signal compared with the noise = clean image."},
+{id:"N4",t:"snr",k:"num",q:"Mean = 100, Std Dev = 10. What is the SNR in dB?",a:20,tol:0.1,d:"20 dB",e:"100 ÷ 10 = 10 → log₁₀(10) = 1 → 20 × 1 = 20 dB"},
+{id:"N5",t:"snr",k:"num",q:"Mean = 120, Std Dev = 1.2. What is the SNR in dB?",a:40,tol:0.1,d:"40 dB",e:"120 ÷ 1.2 = 100 → log₁₀(100) = 2 → 20 × 2 = 40 dB"},
+{id:"N6",t:"snr",k:"num",q:"Mean = 118, Std Dev = 2.4. What is the SNR in dB? (1 decimal)",a:33.8,tol:0.15,d:"33.8 dB",e:"118 ÷ 2.4 = 49.2 → log₁₀(49.2) ≈ 1.69 → 20 × 1.69 ≈ 33.8 dB"},
+{id:"N7",t:"snr",k:"mc",q:"SNR is measured in…",o:["Decibels (dB)","Lux","Stops","Kelvin"],e:"SNR uses decibels (dB), the same unit used for sound."},
+{id:"N8",t:"snr",k:"mc",q:"In Photoshop's histogram, which value represents the NOISE?",o:["Standard deviation","Mean","Median","Pixels"],e:"Std Dev = how much the pixels vary = noise. Mean = the signal."},
+{id:"N9",t:"snr",k:"tf",q:"For the same patch, a larger standard deviation means more noise.",a:true,e:"True. The pixels vary more, so there's more noise and the SNR drops."},
+{id:"N10",t:"snr",k:"mc",q:"Two patches have the same mean. Patch A has Std Dev 2, patch B has Std Dev 8. Which has the higher SNR?",o:["Patch A","Patch B","They are equal"],e:"Smaller std dev = less noise = higher SNR. A: mean÷2 is bigger than mean÷8."},
+// Measuring noise
+{id:"M1",t:"measure",k:"mc",q:"In the lab, where do you read the mean and standard deviation in Photoshop?",o:["Window > Histogram (Expanded View)","Image > Adjustments > Levels","Filter > Noise","The Layers panel"],e:"Window > Histogram, then choose Expanded View from the panel menu."},
+{id:"M2",t:"measure",k:"num",q:"What fixed size (in pixels) is the square selection used to measure each patch? (one side)",a:100,tol:0,d:"100 px (100 × 100)",e:"A fixed 100 × 100 px rectangular marquee selection."},
+{id:"M3",t:"measure",k:"mc",q:"Why use a FIXED-size selection for every image?",o:["So every measurement uses the same number of pixels and is a fair comparison","To make the image smaller","To remove noise","To find the brightest pixel"],e:"Same size = same sample for every ISO, so the numbers can be compared fairly."},
+{id:"M4",t:"measure",k:"mc",q:"While shooting the ISO series for this lab, which setting stays the SAME?",o:["Aperture (f/8)","Shutter speed","ISO","White balance only"],e:"Aperture stays at f/8. As ISO changes, the shutter speed changes to keep an equivalent exposure."},
+{id:"M5",t:"measure",k:"mc",q:"ISO goes from 100 to 200 with aperture fixed. To keep an equivalent exposure, the shutter speed must…",o:["Get 1 stop faster (for example 1/60 → 1/125)","Get 1 stop slower (for example 1/60 → 1/30)","Stay the same","Get 2 stops faster"],e:"ISO +1 stop means the shutter must let in 1 stop LESS light: twice as fast."},
+{id:"M6",t:"measure",k:"tf",q:"When shooting the ColorChecker, neither the white nor the black patch should be clipped.",a:true,e:"True. Clipped pixels are stuck at 0 or 255, so they can't show noise correctly."},
+{id:"M7",t:"measure",k:"mc",q:"On the SNR graph, the x-axis is ______ and the y-axis is ______.",o:["ISO (log scale), SNR","SNR, ISO","Mean, Std Dev","Shutter speed, ISO"],e:"x = ISO on a logarithmic scale (minimum 100), y = SNR in dB."},
+{id:"M8",t:"measure",k:"mc",q:"Why is the ISO axis set to a LOGARITHMIC scale?",o:["ISO doubles each step, so a log scale spaces the stops evenly","It makes the SNR bigger","Excel requires it","It removes noise from the data"],e:"100, 200, 400… each step is ×2. On a log scale every stop is the same distance apart."},
+{id:"M9",t:"measure",k:"num",q:"Whole-stop ISOs from 100 to 6400: how many images per series?",a:7,tol:0,d:"7 (100, 200, 400, 800, 1600, 3200, 6400)",e:"100, 200, 400, 800, 1600, 3200, 6400 = 7 images."},
+// ISO & noise reduction
+{id:"I1",t:"iso",k:"mc",q:"As ISO increases, SNR usually…",o:["Decreases (more noise)","Increases (less noise)","Stays the same","Doubles"],e:"Higher ISO amplifies the signal AND the noise, and less light reaches the sensor, so SNR drops."},
+{id:"I2",t:"iso",k:"mc",q:"Which area of an image usually has the LOWER SNR (more visible noise)?",o:["Shadows (black patch)","Midtones (gray patch)","Both are always equal"],e:"Shadows get very little light, so the signal is small compared with the noise and the SNR is lower."},
+{id:"I3",t:"iso",k:"tf",q:"When shooting JPEG, the camera applies its own noise reduction unless you turn it off.",a:true,e:"True. That's why the lab has you turn in-camera noise reduction off, and never assume the default is off."},
+{id:"I4",t:"iso",k:"mc",q:"What is the main DOWNSIDE of strong noise reduction?",o:["Loss of fine detail (smearing and blurring)","More noise","Wrong exposure","Bigger files"],e:"Noise reduction smooths pixels together, which also smooths away fine detail and texture."},
+{id:"I5",t:"iso",k:"mc",q:"Which two manual noise reduction sliders are in Camera Raw's Detail panel?",o:["Luminance and Color","Exposure and Contrast","Hue and Saturation","Clarity and Texture"],e:"Luminance NR smooths brightness grain. Color NR removes colored speckles."},
+{id:"I6",t:"iso",k:"mc",q:"Camera Raw's Denoise feature is…",o:["AI-driven noise reduction","A sharpening filter","A white balance tool","A lens correction"],e:"Denoise uses AI to remove noise while trying to keep detail."},
+{id:"I7",t:"iso",k:"mc",q:"Why turn OFF in-camera noise reduction for the lab measurements?",o:["To measure the sensor's true noise","To make the images brighter","To shoot faster","Because raw files need it off"],e:"With NR off, the std dev shows the sensor's real noise and isn't hidden by processing."},
+{id:"I8",t:"iso",k:"tf",q:"Raw files are not processed by in-camera JPEG noise reduction; noise reduction is applied later in software such as Camera Raw.",a:true,e:"True. Raw data is processed on the computer, where Camera Raw applies its own default NR."},
+{id:"I9",t:"iso",k:"mc",q:"Luminance noise looks like ______, and color noise looks like ______.",o:["grainy brightness speckles, colored red/green/blue blotches","colored blotches, grainy speckles","blur, sharpening halos","banding, vignetting"],e:"Luminance noise = gray grain. Color (chroma) noise = random colored specks."},
+// Sensor
+{id:"S1",t:"sensor",k:"mc",q:"Why do full-frame sensors usually have better noise performance than crop sensors?",o:["Larger pixels (photosites) collect more light, which gives a stronger signal and higher SNR","They have more megapixels","They use a different ISO scale","They always shoot raw"],e:"Bigger photosites catch more photons, so the signal is stronger compared with the noise."},
+{id:"S2",t:"sensor",k:"mc",q:"A full-frame sensor measures about…",o:["36 × 24 mm","24 × 16 mm","17 × 13 mm","6 × 4 mm"],e:"Full frame = 36 × 24 mm, the same size as 35 mm film."},
+{id:"S3",t:"sensor",k:"mc",q:"What is the crop factor of a full-frame sensor?",o:["1.0","1.5","1.6","2.0"],e:"Full frame is the reference: crop factor 1.0. APS-C is about 1.5 (1.6 for Canon), and Micro Four Thirds is 2.0."},
+{id:"S4",t:"sensor",k:"tf",q:"With the same number of megapixels, a smaller sensor has smaller pixels.",a:true,e:"True. The same number of pixels squeezed into less area means each pixel is smaller and collects less light."},
+{id:"S5",t:"sensor",k:"mc",q:"Pixel size (pixel pitch) is usually given in…",o:["Micrometers (µm)","Millimeters (mm)","Nanometers (nm)","Megapixels"],e:"Pixel pitch is in micrometers (µm), for example about 6 µm on many full-frame cameras."},
+// Exposure & bracketing (equivalent data, not the graded lab numbers)
+{id:"E1",t:"expo",k:"num",q:"You meter correctly at ISO 1600, then switch to ISO 100 with the SAME f-number and shutter speed. How many stops underexposed?",a:4,tol:0,d:"4 stops",e:"1600 → 800 → 400 → 200 → 100 = 4 stops less."},
+{id:"E2",t:"expo",k:"tf",q:"Brightening an underexposed photo in post-processing also brightens its noise, especially in the shadows.",a:true,e:"True. Pushing exposure in software amplifies the noise that's already there."},
+{id:"E3",t:"expo",k:"mc",q:"Base exposure N: 1/250, f/4, ISO 100. For N −4 (same shutter and ISO), use…",o:["f/16","f/11","f/22","f/8"],e:"Smaller aperture = less light: f/4 → 5.6 → 8 → 11 → 16 = 4 stops."},
+{id:"E4",t:"expo",k:"mc",q:"Base N: 1/250, f/4, ISO 100. For N +2 (same shutter and ISO), use…",o:["f/2","f/2.8","f/1.4","f/5.6"],e:"Bigger aperture = more light: f/4 → 2.8 → 2 = 2 stops."},
+{id:"E5",t:"expo",k:"mc",q:"Base N: 1/125, f/11, ISO 200. For N +1 using ISO 400 (same shutter), the f-number is…",o:["f/11","f/8","f/16","f/5.6"],e:"ISO 200 → 400 already gives +1 stop, so the aperture stays at f/11."},
+{id:"E6",t:"expo",k:"mc",q:"Base N: 1/125, f/11, ISO 200. For N −3 using ISO 100 (same shutter), the f-number is…",o:["f/22","f/16","f/32","f/8"],e:"ISO 100 gives −1 stop, and you need −2 more from the aperture: f/11 → 16 → 22."},
+{id:"E7",t:"expo",k:"mc",q:"Base N: 1/30, f/4, ISO 1600. For N +1 at f/4 (same ISO), the shutter speed is…",o:["1/15","1/60","1/8","1/30"],e:"A slower shutter lets in more light: 1/30 → 1/15 = +1 stop."},
+{id:"E8",t:"expo",k:"mc",q:"Base N: 1/30, f/4, ISO 1600. To keep the SAME exposure (N) at f/11, the shutter speed is…",o:["1/4","1/8","1/15","1/2"],e:"f/4 → 11 = 3 stops less light, so the shutter must give 3 stops more: 1/30 → 1/15 → 1/8 → 1/4."},
+{id:"E9",t:"expo",k:"mc",q:"Base N: 1/30, f/4, ISO 1600. For N −1 at f/8, the shutter speed is…",o:["1/15","1/30","1/60","1/8"],e:"f/4 → f/8 = −2 stops. You only want −1, so add 1 stop with the shutter: 1/30 → 1/15."},
+{id:"E10",t:"expo",k:"mc",q:"In bracketing notation, \"N\" means…",o:["The base (metered) exposure","Noise","Neutral density","Number of photos"],e:"N = your base exposure. N +1 = one stop brighter, N −2 = two stops darker."}
+];
+
+/* ---------- storage (per-viewer, best effort) ---------- */
+const KEY="exam2-prep-v1";
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.attempts)return s;}catch(e){}return{attempts:[],stats:{}};}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+let S=load();
+let run=null; let confirmReset=false;
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function norm(s){return String(s).toLowerCase().replace(/[–—]/g,"-").replace(/½/g,"1/2").replace(/¼/g,"1/4").replace(/⅛/g,"1/8").replace(/\s+/g," ").replace(/[.!]+$/,"").trim();}
+function lev(a,b){const m=[];for(let i=0;i<=a.length;i++){m[i]=[i];for(let j=1;j<=b.length;j++)m[i][j]=i?Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1)):j;}return m[a.length][b.length];}
+function seqTokens(s){return norm(s).replace(/f\s*\//g," ").replace(/\bsec(onds?)?\b/g," ").replace(/→|->|>/g," ").split(/[\s,;]+/).filter(t=>t&&t!=="-");}
+function answerText(q){
+  if(q.k==="mc"||q.k==="spd")return q.o[0];
+  if(q.k==="tf")return q.a?"True":"False";
+  if(q.k==="fill")return q.a[0].replace(/\b\w/g,c=>c.toUpperCase());
+  if(q.k==="num")return q.d;
+  if(q.k==="seq")return q.a.join(", ");
+  if(q.k==="multi")return q.c.map(i=>q.o[i]).join(", ");
+}
+
+/* ---------- SPD graphs ---------- */
+function spdSVG(kind){
+  const W=340,H=160,x0=36,x1=326,yb=130,yt=14,g=(l,c,w)=>Math.exp(-(((l-c)/w)**2));
+  const f={
+    tung:l=>0.04+0.96*((l-400)/300)**2.1,
+    day:l=>0.62+0.3*g(l,465,55)-0.18*((l-400)/300)+0.025*Math.sin(l/7),
+    fluor:l=>0.1+0.14*g(l,600,60)+0.08*g(l,480,40)+0.45*g(l,405,2.5)+0.8*g(l,436,2.5)+1*g(l,546,2.5)+0.35*g(l,578,3)+0.7*g(l,611,3)
+  }[kind];
+  const pts=[];let max=0;for(let l=400;l<=700;l++){const v=f(l);max=Math.max(max,v);pts.push([l,v]);}
+  const X=l=>x0+(l-400)/300*(x1-x0),Y=v=>yb-(v/max)*(yb-yt);
+  const line=pts.map(p=>X(p[0]).toFixed(1)+","+Y(p[1]).toFixed(1)).join(" ");
+  const area=`${x0},${yb} ${line} ${x1},${yb}`;
+  let ticks="";[400,500,600,700].forEach(l=>{ticks+=`<line x1="${X(l)}" y1="${yb}" x2="${X(l)}" y2="${yb+4}"/><text x="${X(l)}" y="${yb+16}" text-anchor="middle">${l}</text>`;});
+  return `<svg class="spd" viewBox="0 0 ${W} ${H}" role="img" aria-label="Spectral power distribution graph">
+    <line x1="${x0}" y1="${yb}" x2="${x1}" y2="${yb}"/><line x1="${x0}" y1="${yt}" x2="${x0}" y2="${yb}"/>
+    <polygon class="area" points="${area}"/><polyline class="curve" points="${line}"/>${ticks}
+    <text x="${(x0+x1)/2}" y="${H-2}" text-anchor="middle">wavelength (nm)</text>
+    <text x="12" y="${(yt+yb)/2}" text-anchor="middle" transform="rotate(-90 12 ${(yt+yb)/2})">power</text></svg>`;
+}
+
+/* ---------- picking questions ---------- */
+function pick(mode){
+  if(mode==="miss")return shuffle(Q.filter(q=>S.stats[q.id]&&S.stats[q.id].last==="w"));
+  if(mode==="all")return shuffle(Q);
+  let out=[];
+  for(const t in TOPICS){
+    const pool=shuffle(Q.filter(q=>q.t===t)).map(q=>{const s=S.stats[q.id];let p=Math.random();if(!s)p+=2;else{if(s.last==="w")p+=3;p+=s.wrong*0.5-s.right*0.3;}return{q,p};});
+    pool.sort((a,b)=>b.p-a.p);out=out.concat(pool.slice(0,5).map(x=>x.q));
+  }
+  return shuffle(out);
+}
+
+/* ---------- screens ---------- */
+function home(){
+  run=null;
+  const n=S.attempts.length;
+  let dots="";for(let i=0;i<7;i++){const a=S.attempts[i];
+    dots+=a?`<div class="dot done"><span>${Math.round(a.score/a.total*100)}%</span><small>#${i+1}</small></div>`
+           :`<div class="dot ${i===n?"next":""}"><span>#${i+1}</span></div>`;}
+  let bars="";for(const t in TOPICS){let r=0,s=0;Q.filter(q=>q.t===t).forEach(q=>{const st=S.stats[q.id];if(st){s++;if(st.last==="r")r++;}});
+    const total=Q.filter(q=>q.t===t).length,pct=Math.round(r/total*100);
+    bars+=`<div class="bar"><span>${TOPICS[t]}</span><div class="track"><div class="fill" style="width:${pct}%"></div></div><span class="pct">${pct}%</span></div>`;}
+  const misses=Q.filter(q=>S.stats[q.id]&&S.stats[q.id].last==="w").length;
+  const label=n<7?`Start attempt ${n+1} of 7`:"Extra round";
+  $("#app").innerHTML=`
+  <header class="head">
+    <div><div class="eyebrow">PHOSCIFUN · Exam 2 · Oct 30</div><h1>Exam 2 Prep</h1></div>
+    <div class="chip18"><i></i>18% gray</div>
+  </header>
+  <section class="card stack">
+    <div class="qmeta"><h2>Your 7 attempts</h2><span class="muted">${n} done${n>=7?" · all 7 complete":""}</span></div>
+    <div class="dots">${dots}</div>
+    <p class="muted" style="margin:0">Each attempt is ${Object.keys(TOPICS).length*5} questions, 5 from each topic, and it grows as new labs are added. Questions you miss come back more often in later attempts.</p>
+    <div class="btns">
+      <button class="btn" id="go">${label}</button>
+      <button class="btn ghost" id="miss" ${misses?"":"disabled"}>Redo my misses (${misses})</button>
+      <button class="btn ghost" id="all">All ${Q.length} questions</button>
+    </div>
+  </section>
+  <section class="card stack">
+    <h2>Mastery by topic</h2>
+    <div class="bars">${bars}</div>
+    <p class="hint" style="margin:0">Percent of each topic's questions you got right the last time you saw them.</p>
+  </section>
+  <section class="card stack">
+    <h2>Exam day rules</h2>
+    <ul class="rules">
+      <li><b>Labs covered so far:</b> Lab 1, Sensor Performance and Noise. More labs get added before Oct 30.</li>
+      <li><b>Know the SNR setup:</b> 20 × log(mean ÷ std dev). log(10) = 1, log(100) = 2.</li>
+      <li><b>Include units</b> (dB, stops, µm).</li>
+      <li><b>Spelling matters.</b> This quiz marks misspellings wrong too.</li>
+      <li>Charge your laptop to 100% and bring it.</li>
+    </ul>
+    <div class="btns"><button class="btn ghost" id="reset">${confirmReset?"Tap again to erase all progress":"Reset all attempts"}</button></div>
+  </section>`;
+  $("#go").onclick=()=>start("attempt");
+  $("#miss").onclick=()=>start("miss");
+  $("#all").onclick=()=>start("all");
+  $("#reset").onclick=()=>{if(confirmReset){S={attempts:[],stats:{}};save();confirmReset=false;}else confirmReset=true;home();};
+}
+
+function start(mode){confirmReset=false;run={mode,qs:pick(mode),i:0,results:[]};show();}
+
+function show(){
+  const q=run.qs[run.i],N=run.qs.length;
+  run.sel=null;run.done=false;
+  let body="";
+  if(q.k==="mc"||q.k==="spd"){run.order=shuffle(q.o.map((_,i)=>i));
+    body=(q.k==="spd"?spdSVG(q.g):"")+`<div class="opts">${run.order.map((oi,j)=>`<button class="opt" data-i="${oi}"><span class="key">${"ABCD"[j]}</span><span>${esc(q.o[oi])}</span></button>`).join("")}</div>`;}
+  else if(q.k==="tf"){body=`<div class="opts"><button class="opt" data-i="t"><span class="key">T</span><span>True</span></button><button class="opt" data-i="f"><span class="key">F</span><span>False</span></button></div><p class="hint" style="margin:0">If it's false, think about how you would fix it before you check.</p>`;}
+  else if(q.k==="multi"){run.order=shuffle(q.o.map((_,i)=>i));run.sel=new Set();
+    body=`<div class="opts">${run.order.map((oi,j)=>`<button class="opt" data-i="${oi}"><span class="key">${j+1}</span><span>${esc(q.o[oi])}</span></button>`).join("")}</div><p class="hint" style="margin:0">Select all that apply.</p>`;}
+  else{const hint=q.k==="seq"?"Separate with commas, e.g. 100, 200, 400 (the f/ is optional)":q.k==="num"?"Type the number. You can add units.":"Type your answer. Spelling counts.";
+    body=`<input type="text" id="ans" autocomplete="off" spellcheck="false" aria-label="Your answer"><p class="hint" style="margin:0">${hint}</p>`;}
+  $("#app").innerHTML=`
+  <div class="qmeta"><button class="btn ghost" id="quit">Quit</button><span class="eyebrow">${run.mode==="attempt"?`Attempt ${Math.min(S.attempts.length+1,99)}`:run.mode==="miss"?"Misses":"All questions"} · ${run.i+1} / ${N}</span></div>
+  <div class="progress"><div style="width:${run.i/N*100}%"></div></div>
+  <section class="card stack">
+    <div><span class="tag">${TOPICS[q.t]}</span></div>
+    <div class="qtext">${esc(q.q)}</div>
+    ${body}
+    <div id="fb"></div>
+    <div class="btns"><button class="btn" id="check">Check</button></div>
+  </section>`;
+  $("#quit").onclick=home;
+  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    if(run.done)return;
+    if(q.k==="multi"){const i=+b.dataset.i;run.sel.has(i)?run.sel.delete(i):run.sel.add(i);b.classList.toggle("sel");}
+    else{document.querySelectorAll(".opt").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");run.sel=b.dataset.i;}
+  });
+  $("#check").onclick=()=>run.done?next():check();
+  const inp=$("#ans");if(inp)inp.focus();
+}
+
+function check(){
+  const q=run.qs[run.i];let ok=false,given="",spell=false;
+  if(q.k==="mc"||q.k==="spd"){if(run.sel===null)return;ok=run.sel==="0";given=q.o[+run.sel];}
+  else if(q.k==="tf"){if(run.sel===null)return;ok=(run.sel==="t")===q.a;given=run.sel==="t"?"True":"False";}
+  else if(q.k==="multi"){if(!run.sel.size)return;ok=run.sel.size===q.c.length&&q.c.every(i=>run.sel.has(i));given=[...run.sel].map(i=>q.o[i]).join(", ");}
+  else{const v=$("#ans").value;if(!v.trim())return;given=v;
+    if(q.k==="num"){const m=v.replace(/,/g,"").match(/-?\d*\.?\d+/);ok=!!m&&Math.abs(parseFloat(m[0])-q.a)<=q.tol+1e-9;}
+    else if(q.k==="seq"){const t=seqTokens(v),a=q.a.map(x=>norm(x));ok=t.length===a.length&&t.every((x,i)=>x===a[i]);}
+    else{const n=norm(v).replace(/^(a|an|the) /,""),ns=n.replace(/\s/g,"");
+      ok=q.a.some(a=>norm(a).replace(/\s/g,"")===ns);
+      if(!ok)spell=q.a.some(a=>{const as=norm(a).replace(/\s/g,"");return as.length>4&&lev(as,ns)<=2;});}
+    $("#ans").disabled=true;}
+  run.done=true;
+  // mark options
+  document.querySelectorAll(".opt").forEach(b=>{b.disabled=true;const i=b.dataset.i;
+    const correct=(q.k==="mc"||q.k==="spd")?i==="0":q.k==="tf"?(i==="t")===q.a:q.k==="multi"?q.c.includes(+i):false;
+    if(correct)b.classList.add("right");else if(b.classList.contains("sel"))b.classList.add("wrong");});
+  const st=S.stats[q.id]||{right:0,wrong:0};ok?st.right++:st.wrong++;st.last=ok?"r":"w";S.stats[q.id]=st;save();
+  run.results.push({q,ok,given});
+  $("#fb").innerHTML=`<div class="fb ${ok?"ok":"no"}"><strong>${ok?"Correct":"Not quite"}</strong>
+    ${spell?`<div class="spell">Close. Check your spelling, because spelling counts on the exam.</div>`:""}
+    ${ok?"":`<div>Answer: <b>${esc(answerText(q))}</b></div>`}
+    <div>${esc(q.e)}</div></div>`;
+  $("#check").textContent=run.i+1<run.qs.length?"Next":"See results";
+  $("#check").focus();
+}
+
+function next(){run.i++;if(run.i<run.qs.length)show();else results();}
+
+function results(){
+  const r=run.results,score=r.filter(x=>x.ok).length,total=r.length,pct=Math.round(score/total*100);
+  if(run.mode==="attempt"){S.attempts.push({score,total,date:new Date().toISOString()});save();}
+  let byT="";for(const t in TOPICS){const x=r.filter(y=>y.q.t===t);if(!x.length)continue;const s=x.filter(y=>y.ok).length,p=Math.round(s/x.length*100);
+    byT+=`<div class="bar"><span>${TOPICS[t]}</span><div class="track"><div class="fill" style="width:${p}%"></div></div><span class="pct">${s}/${x.length}</span></div>`;}
+  const missed=r.filter(x=>!x.ok);
+  const verdict=pct>=90?"Exam ready on this set.":pct>=75?"Solid. Redo your misses, then take the next attempt.":"Review the misses below, then go again.";
+  $("#app").innerHTML=`
+  <header class="head"><div><div class="eyebrow">${run.mode==="attempt"?`Attempt ${S.attempts.length} of 7`:run.mode==="miss"?"Misses round":"All questions"}</div><h1>Results</h1></div></header>
+  <section class="card stack">
+    <div class="score">${score}<span class="muted" style="font-size:.45em">/${total}</span></div>
+    <p style="margin:0"><b>${pct}%</b>. ${verdict}</p>
+    <div class="bars">${byT}</div>
+    <div class="btns"><button class="btn" id="home">Back to attempts</button></div>
+  </section>
+  ${missed.length?`<section class="card stack"><h2>What you missed (${missed.length})</h2>
+    ${missed.map(x=>`<div class="miss"><div><span class="tag">${TOPICS[x.q.t]}</span></div><div>${esc(x.q.q)}</div>
+      <div class="you">You: ${esc(x.given)}</div><div class="ans">Answer: ${esc(answerText(x.q))}</div><div class="hint">${esc(x.q.e)}</div></div>`).join("")}
+  </section>`:""}`;
+  $("#home").onclick=home;
+  window.scrollTo(0,0);
+}
+
+document.addEventListener("keydown",e=>{
+  if(!run||e.key!=="Enter")return;
+  const b=$("#check");if(b){e.preventDefault();b.click();}
+});
+home();
+</script>
+
+</body></html>
