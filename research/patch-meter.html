@@ -76,6 +76,7 @@ table.data caption{caption-side:top;text-align:left;padding:8px 10px;font-weight
 details.help{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--bg)}
 details.help summary{cursor:pointer;font-weight:800}
 details.help p,details.help li{font-size:14px}
+@media(max-width:700px){input[type=number],input[type=text],select,.card select{min-height:42px!important;font-size:16px!important}input[type=checkbox]{width:22px;height:22px}}
 </style></head><body>
 <div class="w">
 <header class="intro">
@@ -111,7 +112,7 @@ details.help p,details.help li{font-size:14px}
 <button class="tb" type="button" id="tG" aria-pressed="true" style="color:#9A7400"><i style="background:var(--gray)"></i>Gray patch box</button>
 <button class="tb" type="button" id="tB" aria-pressed="false" style="color:var(--black)"><i style="background:var(--black)"></i>Black patch box</button>
 <label class="lab" for="size" style="margin-left:6px">Box size</label><input class="size" id="size" type="number" min="10" max="400" value="100"><span class="note">px</span>
-<label class="row" style="gap:6px;font-weight:700;font-size:14px"><input type="checkbox" id="same" checked style="width:18px;height:18px;accent-color:var(--accent)"> Use the same spots for every photo (tripod)</label>
+<label class="row" style="gap:6px;font-weight:700;font-size:14px"><input type="checkbox" id="same" checked style="width:22px;height:22px;accent-color:var(--accent)"> Use the same spots for every photo (tripod)</label>
 </div>
 <div class="stage" id="stage"><canvas id="view" aria-label="Selected photo. Tap to place the measuring box."></canvas><div class="box" id="bxG" style="--c:var(--gray)" hidden><span>GRAY</span></div><div class="box" id="bxB" style="--c:var(--black)" hidden><span>BLACK</span></div></div>
 <div class="row"><span class="lab">Channel</span><select class="chan" id="chan"><option value="rgb">RGB (Photoshop default)</option><option value="lum">Luminosity</option><option value="r">Red</option><option value="g">Green</option><option value="b">Blue</option></select><span class="note">Pick the same channel your Photoshop Histogram shows.</span></div>
