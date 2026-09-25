@@ -8,6 +8,8 @@
 .rhub-gt{margin:0;font-size:22px;font-weight:800;letter-spacing:-.01em}
 .rhub-gd{margin:0;color:var(--rh-muted);font-size:14px}
 .rhub-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.rhub-grid.rhub-grid-one{grid-template-columns:minmax(0,1fr)}
+.rhub-grid-one .rhub-feature{grid-column:1/-1}
 @media(max-width:900px){.rhub-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.rhub-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
 .rhub-tile{position:relative;display:flex;flex-direction:column;text-align:left;font:inherit;color:inherit;background:var(--rh-card);border:1px solid var(--rh-line);border-radius:22px;padding:0;overflow:hidden;cursor:pointer;
