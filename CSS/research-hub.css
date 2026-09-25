@@ -1,0 +1,43 @@
+/* ===== Research Hub: all styles scoped under .rhub ===== */
+.rhub{--rh-ink:#111827;--rh-muted:#4b5563;--rh-line:rgba(124,58,237,0.16);--rh-card:#FFFFFF;--rh-accent:#7C3AED;
+ font-family:Inter,sans-serif;color:var(--rh-ink);max-width:1100px;margin:0 auto;padding:8px 16px 32px}
+.rhub *{box-sizing:border-box}
+.rhub-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media(max-width:900px){.rhub-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.rhub-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
+.rhub-tile{position:relative;display:flex;flex-direction:column;text-align:left;font:inherit;color:inherit;background:var(--rh-card);border:1px solid var(--rh-line);border-radius:22px;padding:0;overflow:hidden;cursor:pointer;
+ box-shadow:0 1px 2px rgba(30,20,60,.04),0 8px 24px rgba(40,20,90,.06);transition:transform .2s,box-shadow .2s,border-color .2s}
+.rhub-tile:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(60,30,140,.16);border-color:#CFC4F5}
+.rhub-tile:focus-visible{outline:3px solid var(--rh-accent);outline-offset:3px}
+.rhub-tile.is-open{border-color:var(--rh-accent);box-shadow:0 0 0 3px rgba(109,74,217,.25),0 16px 36px rgba(60,30,140,.16)}
+.rhub-feature{grid-column:span 2}
+@media(max-width:900px){.rhub-last2{grid-column:span 2}}
+@media(max-width:560px){.rhub-tile{border-radius:18px}.rhub-art{height:86px}.rhub-feature .rhub-art{height:96px}.rhub-body{padding:10px 12px 12px}.rhub-title{font-size:15px}.rhub-desc{display:none}.rhub-feature .rhub-desc,.rhub-last2 .rhub-desc{display:block;font-size:12.5px}.rhub-go{width:28px;height:28px}.rhub-tag{font-size:9.5px;left:8px;top:8px;padding:3px 7px}}
+.rhub-art{position:relative;height:132px;overflow:hidden;background:var(--g)}
+.rhub-feature .rhub-art{height:132px}
+.rhub-art::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 100% 0%,rgba(255,255,255,.28),transparent 55%)}
+.rhub-art svg{position:absolute;inset:0;width:100%;height:100%}
+.rhub-body{display:grid;gap:4px;padding:14px 16px 16px}
+.rhub-row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.rhub-title{font-size:18px;font-weight:800;letter-spacing:-.01em;line-height:1.25}
+.rhub-desc{font-size:13.5px;color:var(--rh-muted);line-height:1.45}
+.rhub-go{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#F1EDFD;color:var(--rh-accent);font-weight:900;transition:transform .2s,background .2s}
+.rhub-tile:hover .rhub-go{transform:translateX(3px)}
+.rhub-tile.is-open .rhub-go{background:var(--rh-accent);color:#fff;transform:rotate(90deg)}
+.rhub-tag{position:absolute;left:12px;top:12px;z-index:2;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(20,10,40,.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:4px 9px;border-radius:999px}
+/* expanded panel */
+.rhub-panel{grid-column:1/-1;background:var(--rh-card);border:1px solid var(--rh-line);border-radius:22px;overflow:hidden;box-shadow:0 12px 40px rgba(40,20,90,.10);scroll-margin-top:16px;animation:rhubIn .28s ease}
+.rhub-panel[hidden]{display:none}
+@keyframes rhubIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.rhub-ph{display:flex;align-items:center;gap:12px;padding:12px 12px 12px 18px;background:var(--g);color:#fff}
+.rhub-ph h3{margin:0;font-size:18px;font-weight:800;flex:1;min-width:0}
+.rhub-x{width:44px;height:44px;flex:none;border-radius:50%;border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.18);color:#fff;font-size:26px;line-height:1;cursor:pointer;transition:transform .15s,background .15s}
+.rhub-x:hover{background:rgba(255,255,255,.3);transform:rotate(90deg)}
+.rhub-x:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.rhub-frame{display:block;width:100%;border:0;min-height:320px;background:#F6F5FA}
+@media(prefers-reduced-motion:reduce){.rhub-tile,.rhub-go,.rhub-x{transition:none}.rhub-panel{animation:none}}
+
+.rhub h3{
+  font-family:Inter,sans-serif !important;
+  color:#fff !important;
+}
