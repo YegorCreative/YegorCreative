@@ -72,6 +72,7 @@ td b{color:var(--accent)}
 .viz svg{display:block;width:100%;height:auto}
 .viz text{font-family:inherit;fill:var(--ink);font-size:13px}
 .viz .m{fill:var(--muted);font-size:12px}
+.viz.big text{font-size:19px}.viz.big .m{font-size:16px}
 .note{font-size:12px;color:var(--muted);margin:0}
 .says{background:var(--soft);border-radius:12px;padding:10px 12px;font-weight:600;font-size:14px}
 </style></head><body>
@@ -79,13 +80,58 @@ td b{color:var(--accent)}
 <header class="intro">
 <div class="eyebrow">Photographic Research</div>
 <h1>Light Quality</h1>
-<p>How we measure light: flux vs intensity, and how we rate a light's color with CRI and the newer TM-30 (Rf and Rg).</p>
+<p>The visible spectrum, color temperature and CCT, flux vs intensity, and how we rate a light's color with CRI and the newer TM-30 (Rf and Rg).</p>
 </header>
-<nav class="toc" aria-label="Topics"><a href="#t1">Flux vs intensity</a><a href="#t2">CRI</a><a href="#t3">TM-30: Rf &amp; Rg</a><a href="#t4">CRI vs TM-30</a></nav>
+<nav class="toc" aria-label="Topics"><a href="#s1">Visible spectrum</a><a href="#s2">Color temperature &amp; CCT</a><a href="#t1">Flux vs intensity</a><a href="#t2">CRI</a><a href="#t3">TM-30: Rf &amp; Rg</a><a href="#t4">CRI vs TM-30</a></nav>
+
+<!-- A VISIBLE SPECTRUM -->
+<section class="topic" id="s1" aria-labelledby="s1h">
+<div class="th"><div class="num" aria-hidden="true">01</div><div><h2 id="s1h">The visible spectrum</h2><p>The slice of light your eyes can see</p></div></div>
+<div class="ans"><span>Exam answer</span>The range of the visible spectrum is 400–700 nm (nanometers).</div>
+<div class="viz big"><svg viewBox="0 0 520 190" role="img" aria-label="Visible light runs from 400 nanometers (violet and blue) to 700 nanometers (red), between invisible UV and infrared">
+<rect x="10" y="20" width="80" height="44" rx="6" fill="#D6D3DE"/><text x="50" y="47" text-anchor="middle" class="m" style="font-weight:700">UV</text>
+<rect x="430" y="20" width="80" height="44" rx="6" fill="#D6D3DE"/><text x="470" y="47" text-anchor="middle" class="m" style="font-weight:700">Infrared</text>
+<g><rect x="95" y="20" width="48" height="44" fill="#6A4BC4"/><rect x="143" y="20" width="48" height="44" fill="#3F6CC9"/><rect x="191" y="20" width="48" height="44" fill="#2B9AA6"/><rect x="239" y="20" width="48" height="44" fill="#47A94E"/><rect x="287" y="20" width="48" height="44" fill="#E9C62B"/><rect x="335" y="20" width="48" height="44" fill="#EE8F2E"/><rect x="383" y="20" width="42" height="44" fill="#E0473C"/></g>
+<path d="M95 70 V84 M260 70 V84 M425 70 V84" stroke="var(--muted)" stroke-width="2"/>
+<text x="95" y="104" text-anchor="middle" style="font-weight:800">400 nm</text><text x="260" y="104" text-anchor="middle" class="m">550 nm</text><text x="425" y="104" text-anchor="middle" style="font-weight:800">700 nm</text>
+<text x="95" y="124" text-anchor="middle" class="m">violet / blue</text><text x="425" y="124" text-anchor="middle" class="m">red</text>
+<text x="50" y="84" text-anchor="middle" class="m">invisible</text><text x="470" y="84" text-anchor="middle" class="m">invisible</text>
+<text x="260" y="160" text-anchor="middle" class="m">shorter wavelength ←                     → longer wavelength</text>
+<text x="260" y="182" text-anchor="middle" style="font-weight:700;fill:var(--accent);font-size:16px">Blue at the Beginning (400) · Red at the Rear (700)</text>
+</svg></div>
+<div class="two">
+<div class="pane" style="--c:var(--f);--cs:var(--fs)"><span class="t">What's a nanometer?</span><p>One billionth of a meter. Light waves are tiny, so we measure their length in <b>nm</b>. The wavelength decides the color.</p></div>
+<div class="pane" style="--c:var(--i);--cs:var(--is)"><span class="t">Where you'll see it</span><p>Every <b>SPD graph</b> uses 400–700 nm along the bottom. Tungsten climbs smoothly toward red, daylight is full and even, and fluorescent has tall spikes.</p></div>
+</div>
+<div class="check" id="qs1"><h4>Quick check</h4><div>Which end of the visible spectrum is red?</div>
+<div class="opts"><button class="opt" type="button">400 nm</button><button class="opt" type="button" data-ok="1">700 nm</button><button class="opt" type="button">550 nm</button></div><div class="fb" aria-live="polite"></div></div>
+</section>
+
+<!-- B COLOR TEMPERATURE & CCT -->
+<section class="topic" id="s2" aria-labelledby="s2h">
+<div class="th"><div class="num" aria-hidden="true">02</div><div><h2 id="s2h">Color temperature &amp; CCT</h2><p>How warm or cool a light looks, measured in Kelvin (not percent)</p></div></div>
+<div class="ans"><span>Exam answers</span>Color temperature is measured in degrees Kelvin (K) → True. To get a color temperature, a light must simulate a black body radiator → True. If it doesn't, it gets a correlated color temperature (CCT).</div>
+<div class="viz big"><svg viewBox="0 0 520 170" role="img" aria-label="Kelvin scale from warm candle light at 1900K to cool blue sky at 10000K">
+<g stroke="var(--line)"><rect x="10" y="30" width="92" height="60" rx="8" fill="#FF8A2A"/><rect x="112" y="30" width="92" height="60" rx="8" fill="#FFB870"/><rect x="214" y="30" width="92" height="60" rx="8" fill="#FFF1DA"/><rect x="316" y="30" width="92" height="60" rx="8" fill="#EEF3FF"/><rect x="418" y="30" width="92" height="60" rx="8" fill="#BFD3FF"/></g>
+<text x="56" y="20" text-anchor="middle" style="font-weight:800">1900K</text><text x="158" y="20" text-anchor="middle" style="font-weight:800">3200K</text><text x="260" y="20" text-anchor="middle" style="font-weight:800">5500K</text><text x="362" y="20" text-anchor="middle" style="font-weight:800">6500K</text><text x="464" y="20" text-anchor="middle" style="font-weight:800">10,000K</text>
+<text x="56" y="110" text-anchor="middle" class="m">candle</text><text x="158" y="110" text-anchor="middle" class="m">tungsten</text><text x="260" y="110" text-anchor="middle" class="m">daylight</text><text x="362" y="110" text-anchor="middle" class="m">overcast</text><text x="464" y="110" text-anchor="middle" class="m">blue sky</text>
+<path d="M60 140 H460" stroke="var(--muted)" stroke-width="2"/><path d="M452 133 L464 140 L452 147Z" fill="var(--muted)"/>
+<text x="10" y="162" style="font-weight:800;fill:#C8701F">WARM (orange)</text><text x="510" y="162" text-anchor="end" style="font-weight:800;fill:#2F7FD0">COOL (blue)</text>
+<text x="260" y="162" text-anchor="middle" class="m">higher K = cooler</text>
+</svg></div>
+<div class="tw"><table><thead><tr><th>Light</th><th>Makes light from…</th><th>Gets a…</th></tr></thead><tbody>
+<tr><td>Tungsten / incandescent</td><td><b>Heat</b> (a glowing filament)</td><td><b>Color temperature</b></td></tr>
+<tr><td>The sun</td><td><b>Heat</b></td><td><b>Color temperature</b></td></tr>
+<tr><td>Fluorescent, LED</td><td>Electricity, not heat</td><td><b>Correlated color temperature (CCT)</b></td></tr>
+</tbody></table></div>
+<div class="trick"><span aria-hidden="true">💡</span><div><b>Heat = real temperature. No heat = "correlated"</b> (a look-alike). <b>Hotter = bluer</b>, like a blue gas flame vs an orange campfire. Don't mix them up: <b>CRI</b> has a perfect score of <b>100</b>, while <b>CCT</b> is a <b>Kelvin</b> number and has no "perfect" score.</div></div>
+<div class="check" id="qs2"><h4>Quick check</h4><div>A light with a color temperature of 6500K will appear…</div>
+<div class="opts"><button class="opt" type="button" data-ok="1">Cooler / blue</button><button class="opt" type="button">Warmer / orange</button><button class="opt" type="button">100% accurate</button></div><div class="fb" aria-live="polite"></div></div>
+</section>
 
 <!-- 1 FLUX INTENSITY -->
 <section class="topic" id="t1" aria-labelledby="t1h">
-<div class="th"><div class="num" aria-hidden="true">01</div><div><h2 id="t1h">Flux vs intensity</h2><p>All the light, or light in one direction?</p></div></div>
+<div class="th"><div class="num" aria-hidden="true">03</div><div><h2 id="t1h">Flux vs intensity</h2><p>All the light, or light in one direction?</p></div></div>
 <div class="two">
 <div class="pane" style="--c:var(--f);--cs:var(--fs)"><span class="t">Flux</span><span class="q">The rate a source emits light in ALL directions</span><span class="u">Lumens (lm)</span>
 <svg viewBox="0 0 240 150" aria-hidden="true"><g stroke="var(--f)" stroke-width="3" stroke-linecap="round">
@@ -110,7 +156,7 @@ td b{color:var(--accent)}
 
 <!-- 2 CRI -->
 <section class="topic" id="t2" aria-labelledby="t2h">
-<div class="th"><div class="num" aria-hidden="true">02</div><div><h2 id="t2h">CRI: Color Rendering Index</h2><p>The classic score for how true colors look</p></div></div>
+<div class="th"><div class="num" aria-hidden="true">04</div><div><h2 id="t2h">CRI: Color Rendering Index</h2><p>The classic score for how true colors look</p></div></div>
 <div class="ans"><span>Exam answer</span>CRI = Color Rendering Index. A perfect CRI is 100 (not 80).</div>
 <div class="tw"><table><tbody>
 <tr><th scope="row">What it measures</th><td>How accurately a light shows colors compared with a reference light of the same color temperature</td></tr>
@@ -124,7 +170,7 @@ td b{color:var(--accent)}
 
 <!-- 3 TM-30 -->
 <section class="topic" id="t3" aria-labelledby="t3h">
-<div class="th"><div class="num" aria-hidden="true">03</div><div><h2 id="t3h">TM-30: Rf and Rg</h2><p>The newer, more detailed color rating from the IES (first published 2015)</p></div></div>
+<div class="th"><div class="num" aria-hidden="true">05</div><div><h2 id="t3h">TM-30: Rf and Rg</h2><p>The newer, more detailed color rating from the IES (first published 2015)</p></div></div>
 <div class="two">
 <div class="pane" style="--c:var(--f);--cs:var(--fs)"><span class="t">Rf · Fidelity</span><span class="q">How ACCURATE are the colors?</span><span class="u">0 to 100 · perfect = 100</span><p>The upgraded version of CRI. It uses <b>99</b> color samples instead of 8.</p></div>
 <div class="pane" style="--c:var(--i);--cs:var(--is)"><span class="t">Rg · Gamut</span><span class="q">How SATURATED are the colors?</span><span class="u">about 60 to 140 · neutral = 100</span><p><b>Above 100</b> = more saturated · <b>100</b> = same as reference · <b>below 100</b> = duller</p></div>
@@ -153,7 +199,7 @@ td b{color:var(--accent)}
 
 <!-- 4 COMPARE -->
 <section class="topic" id="t4" aria-labelledby="t4h">
-<div class="th"><div class="num" aria-hidden="true">04</div><div><h2 id="t4h">CRI vs TM-30</h2><p>Side by side</p></div></div>
+<div class="th"><div class="num" aria-hidden="true">06</div><div><h2 id="t4h">CRI vs TM-30</h2><p>Side by side</p></div></div>
 <div class="tw"><table><thead><tr><th></th><th>CRI</th><th>TM-30</th></tr></thead><tbody>
 <tr><th scope="row">Color samples</th><td>8</td><td><b>99</b></td></tr>
 <tr><th scope="row">Scores</th><td>1 number (Ra)</td><td><b>2 numbers</b>: Rf (fidelity) + Rg (gamut), plus a color vector graphic</td></tr>
