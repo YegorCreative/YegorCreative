@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nodal Points & Lens Types Lab</title>
+<style>
+body *{min-width:0}
+:root{--bg:#F6F5FA;--card:#FFFFFF;--ink:#15131C;--muted:#5E5A6B;--line:#E2DEEE;--accent:#6D4AD9;--soft:#EFEAFD;--ok:#1F8A70;--okb:#E1F4EE;--bad:#C0392B;--badb:#FBE3E0;--warm:#D9822B;--warmb:#FCEFE0;--R:#E0473C;--G:#3FA34D;--B:#3F6CC9}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55;padding:24px 16px 56px}
+.w{max-width:980px;margin:0 auto;display:grid;gap:22px}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(28px,6vw,40px);font-weight:900}
+h3{font-size:17px}
+p{margin:0}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.intro{display:grid;gap:8px}
+.intro p{color:var(--muted);max-width:68ch}
+button,input,select{font:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.toc{display:flex;gap:8px;flex-wrap:wrap}
+.toc a{display:inline-flex;align-items:center;min-height:40px;padding:0 13px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:13.5px}
+.toc a:hover{border-color:var(--accent)}
+.topic{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 18px;display:grid;gap:16px;scroll-margin-top:12px}
+.th{display:flex;gap:14px;align-items:center}
+.num{font-size:40px;font-weight:900;line-height:1;color:transparent;-webkit-text-stroke:2px var(--accent);flex:none}
+.th h2{font-size:clamp(21px,4vw,28px)}
+.th p{margin-top:2px;color:var(--muted);font-weight:600;font-size:14px}
+.trick{display:flex;gap:10px;background:var(--bg);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:10px 12px}
+.trick b{color:var(--accent)}
+.beyond{background:var(--warmb);border-radius:12px;padding:12px 14px;font-size:14.5px}
+.beyond b:first-child{color:var(--warm);display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.formula{border:2px solid var(--accent);border-radius:14px;padding:14px;text-align:center;font-weight:800;font-size:clamp(16px,3.2vw,22px);font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--soft)}
+.note{font-size:13px;color:var(--muted)}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media(max-width:700px){.two,.three{grid-template-columns:minmax(0,1fr)}}
+.box{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:8px;align-content:start}
+.box h3{display:flex;gap:8px;align-items:center}
+.tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--soft);color:var(--accent)}
+.seg{display:inline-flex;flex-wrap:wrap;border:1.5px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+.seg button{border:0;border-right:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:700;font-size:13.5px;padding:0 12px;min-height:44px;cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+canvas,svg.v{display:block;width:100%;height:auto;border-radius:12px}
+.pix{image-rendering:pixelated}
+.stage{background:#0F0D16;border-radius:14px;padding:10px}
+.cap{font-size:13.5px;color:var(--muted);text-align:center}
+.cfa{display:grid;gap:2px;width:100%;max-width:190px;aspect-ratio:1;margin:0 auto}
+.cfa i{border-radius:3px;display:grid;place-items:center;font:800 11px/1 Inter,system-ui,sans-serif;color:#fff;font-style:normal}
+.stat{display:flex;justify-content:space-between;gap:8px;font-size:13.5px;border-top:1px solid var(--line);padding-top:6px}
+.stat b{font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--accent);min-height:36px}
+.meter{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:14px}
+.meter b{font-variant-numeric:tabular-nums}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-weight:800;font-size:12.5px}
+.pill.ok{background:var(--okb);color:var(--ok)}.pill.bad{background:var(--badb);color:var(--bad)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:14px}
+td,th{border-bottom:1px solid var(--line);padding:7px 6px;text-align:left}
+th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tw{overflow-x:auto}
+.spell{display:flex;flex-wrap:wrap;gap:8px}
+.spell span{background:var(--okb);color:var(--ok);font-weight:800;padding:6px 10px;border-radius:10px}
+.spell s{background:var(--badb);color:var(--bad);font-weight:700;padding:6px 10px;border-radius:10px}
+ul.clean{margin:0;padding-left:18px;display:grid;gap:4px}
+.check{border:1.5px dashed var(--accent);border-radius:14px;padding:14px;display:grid;gap:10px}
+.check .q{font-weight:700}
+.opts{display:grid;gap:8px}
+.opts button{text-align:left;border:1.5px solid var(--line);background:var(--card);border-radius:10px;padding:10px 12px;min-height:44px;cursor:pointer;font-weight:600;color:var(--ink)}
+.opts button.right{border-color:var(--ok);background:var(--okb)}
+.opts button.wrong{border-color:var(--bad);background:var(--badb)}
+.fb{font-size:14px;font-weight:600}
+.lecs{display:flex;width:100%}
+.lecs button{flex:1 1 140px;min-height:48px;font-size:13.5px;line-height:1.2;padding:6px 10px;border-bottom:1px solid var(--line)}
+.lec{display:grid;gap:22px}
+.inp{width:100%;min-height:44px;font-size:16px;padding:6px 10px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);margin-top:4px}
+.btn{font-weight:700;border:1.5px solid var(--accent);background:var(--card);color:var(--accent);border-radius:10px;padding:0 14px;min-height:44px;cursor:pointer}
+.btn:hover{background:var(--soft)}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chain span{background:var(--soft);color:var(--accent);font-weight:800;font-size:13px;padding:7px 10px;border-radius:10px}
+.chain span.alt{background:var(--warmb);color:var(--warm)}
+.chain i{font-style:normal;color:var(--muted);font-weight:800}
+.qe{display:grid;gap:8px}.qerow{display:grid;grid-template-columns:90px 1fr 54px;gap:8px;align-items:center;font-size:14px}.qetrack{height:14px;background:var(--line);border-radius:7px;overflow:hidden}.qetrack i{display:block;height:100%;border-radius:7px}
+@media(max-width:600px){.cmp thead{display:none}.cmp tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-bottom:1px solid var(--line)}.cmp td{border:0}.cmp td:first-child{grid-column:1/-1;font-weight:800;background:var(--soft);border-radius:8px;margin-top:8px}.cmp td:nth-child(2)::before{content:"CCD";display:block;font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--accent)}.cmp td:nth-child(3)::before{content:"CMOS";display:block;font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--warm)}}
+@media(max-width:600px){.cmp.tele td:nth-child(2)::before{content:"TELEPHOTO"}.cmp.tele td:nth-child(3)::before{content:"WIDE ANGLE"}}
+.rle{display:flex;flex-wrap:wrap;gap:2px}
+.rle b{width:16px;height:16px;border-radius:3px;display:inline-block}
+ol.steps{margin:0;padding:0;list-style:none;display:grid;gap:6px;counter-reset:s}
+ol.steps li{counter-increment:s;display:flex;gap:10px;align-items:baseline;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14.5px;background:var(--bg);border-radius:10px;padding:9px 12px}
+ol.steps li::before{content:counter(s);flex:none;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font:700 12px/22px system-ui,sans-serif;text-align:center}
+ol.steps li.last{background:var(--soft);font-weight:700}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head><body>
+<div class="w">
+<header class="intro">
+<span class="eyebrow">Exam 2 · Lab 2 · Lens Types</span>
+<h1>Nodal Points &amp; Lens Types Lab</h1>
+<p>Everything from the Lens Types Lab and Dan's lab video, with a virtual nodal slide to practice on. All numbers here are <b>practice numbers</b>, different from the real lab equipment, so you learn the method, not the answers.</p>
+<nav class="toc" aria-label="Sections"><a href="#k1">What a nodal point is</a><a href="#k2">Virtual nodal slide</a><a href="#k3">Combined lenses</a><a href="#k4">Complex lens</a><a href="#k5">Close-up lens</a><a href="#k6">Handheld rule</a><a href="#k7">Holding the camera</a></nav>
+</header>
+
+<section class="topic" id="k1" aria-labelledby="kh1">
+<div class="th"><span class="num">01</span><div><h2 id="kh1">What is a nodal point?</h2><p>The lens's "pivot point" for light</p></div></div>
+<p>A lens has two <b>nodal points</b> on its optical axis: a <b>front (object)</b> one and a <b>rear (image)</b> one. A ray aimed at the front nodal point comes out <b>as if from the rear nodal point, parallel to its original direction</b>. In a thin simple lens both sit together at the <b>center</b>. In a complex lens (several separated elements) they're in <b>different places</b>.</p>
+<svg class="v" viewBox="0 0 460 200" role="img" aria-label="A ray enters toward the front nodal point and leaves from the rear nodal point, parallel to how it entered">
+<line x1="10" y1="100" x2="450" y2="100" stroke="#9A95A8" stroke-dasharray="4 4"/>
+<path d="M180 20 Q235 100 180 180 L280 180 Q225 100 280 20 Z" fill="#6D4AD9" fill-opacity=".14" stroke="#6D4AD9" stroke-width="2"/>
+<path d="M20 40 L190 88" stroke="#E0A21E" stroke-width="3"/><path d="M190 88 L270 112" stroke="#E0A21E" stroke-width="3" stroke-dasharray="5 4"/><path d="M270 112 L440 160" stroke="#E0A21E" stroke-width="3"/>
+<path d="M190 88 L148 100" stroke="#E0A21E" stroke-dasharray="3 3"/><path d="M270 112 L312 100" stroke="#E0A21E" stroke-dasharray="3 3"/>
+<circle cx="148" cy="100" r="6" fill="#1F8A70"/><circle cx="312" cy="100" r="6" fill="#C0392B"/>
+<g font-size="12" text-anchor="middle" font-weight="800"><text x="140" y="125" fill="#1F8A70">front (object)</text><text x="320" y="125" fill="#C0392B">rear (image)</text></g>
+<text x="230" y="196" text-anchor="middle" font-size="11" fill="#5E5A6B">in parallel → out parallel, just shifted</text></svg>
+<div class="two">
+<div class="box"><h3>Why the image doesn't move</h3><p>Light from a far-away bulb arrives <b>parallel</b>. If you rotate the lens around its <b>rear nodal point</b>, the focused spot stays put on the screen. Rotate around any other point and the lens slides sideways, so the spot <b>moves</b>.</p></div>
+<div class="box"><h3>Why we care</h3><p><b>Focal length</b> = distance from the <b>rear nodal point</b> to the sharp image when the object is at infinity. Find the nodal point and you can measure f. And for <b>panoramas</b>, rotating on the rear nodal point (on a nodal slide) gives less distortion than rotating on the tripod screw.</p></div>
+</div>
+<div class="trick"><span>🎯</span><span><b>Wiggle test:</b> image <b>still</b> = you're on the nodal point. Image <b>moves</b> = slide the lens and try again. If it moves <b>more</b>, you went the wrong way.</span></div>
+<div class="check" data-q="k1"></div>
+</section>
+
+<section class="topic" id="k2" aria-labelledby="kh2">
+<div class="th"><span class="num">02</span><div><h2 id="kh2">Virtual nodal slide</h2><p>Practice the lab before the lab</p></div></div>
+<div class="seg" role="group" aria-label="Lens setup" id="setup"><button type="button" aria-pressed="true" data-s="0">Plano-convex · curve → light</button><button type="button" aria-pressed="false" data-s="1">Plano-convex · curve → screen</button><button type="button" aria-pressed="false" data-s="2">Two plano-convex, flat sides touching</button><button type="button" aria-pressed="false" data-s="3">Complex lens · front → light</button><button type="button" aria-pressed="false" data-s="4">Complex lens · front → screen</button></div>
+<div class="stage" style="background:#0F0D16"><canvas id="slide" width="680" height="300" aria-label="Top view of the nodal slide: light, lens on a pivoting slide, and focusing screen"></canvas></div>
+<label for="off"><b>Slide the lens on the nodal slide:</b> <span id="offv"></span></label>
+<input type="range" id="off" min="-120" max="120" step="1" value="0" aria-label="Lens position relative to the pivot">
+<div class="row" style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn" id="wig">↔ Wiggle (pivot)</button><button type="button" class="btn" id="hint">Show the answer</button></div>
+<div class="meter"><span>Image movement when wiggled: <b id="mv">–</b></span><span>Pivot → screen: <b id="ps">–</b></span></div>
+<p class="cap" id="slcap"></p>
+<p class="note">The bench is refocused for you automatically (in the lab, you slide the whole bench on the table to focus). Practice lenses: plano-convex f = 100 mm, 8 mm thick, glass n = 1.5. Portrait lens: 300 mm, made-up nodal positions.</p>
+<div class="check" data-q="k2"></div>
+</section>
+
+<section class="topic" id="k3" aria-labelledby="kh3">
+<div class="th"><span class="num">03</span><div><h2 id="kh3">Combined lenses (Part I)</h2><p>Two lenses touching act like one stronger lens</p></div></div>
+<div class="formula">1 / f<sub>combined</sub> = 1 / f₁ + 1 / f₂</div>
+<div class="box"><h3>Calculator</h3><div class="two"><label>f₁ (mm)<input type="number" id="f1" value="100" min="1" step="any" class="inp"></label><label>f₂ (mm)<input type="number" id="f2" value="100" min="1" step="any" class="inp"></label></div><ol class="steps" id="cs"></ol></div>
+<ul class="clean"><li>Flipping a plano-convex lens (curve to the light vs curve to the screen) gives the <b>same focal length</b>, but its <b>nodal point sits in a different spot</b>, so it ends up in a different place relative to the pivot. Mark the lens position on your lab drawing.</li><li>Putting two plano-convex lenses <b>flat to flat</b> makes a <b>double convex</b> lens with about <b>half</b> the focal length (twice the power).</li></ul>
+<div class="beyond"><b>Why measured ≠ calculated (and it's not "human error")</b>The formula assumes <b>infinitely thin lenses touching at one point</b>. Real lenses have <b>thickness</b>, so their nodal (principal) planes are <b>separated</b>. With our practice lenses (8 mm thick each) the true combined focal length is about <b>52.8 mm</b>, not 50. Other real causes: the bulb isn't truly at infinity, and the slide wobbles.</div>
+<div class="check" data-q="k3"></div>
+</section>
+
+<section class="topic" id="k4" aria-labelledby="kh4">
+<div class="th"><span class="num">04</span><div><h2 id="kh4">Nodal points of a complex lens (Part II)</h2><p>Front and rear are NOT in the same place</p></div></div>
+<svg class="v" viewBox="0 0 460 170" role="img" aria-label="A long portrait lens barrel with the object nodal point and image nodal point at different distances from the front edge">
+<rect x="60" y="45" width="300" height="80" rx="10" fill="#C9A86A" stroke="#7A6A55" stroke-width="2"/><rect x="60" y="45" width="28" height="80" fill="#3F6CC9"/><text x="74" y="90" text-anchor="middle" font-size="9" fill="#fff" transform="rotate(-90 74 90)">FRONT</text>
+<g fill="#6D4AD9" fill-opacity=".35" stroke="#6D4AD9"><ellipse cx="95" cy="85" rx="10" ry="34"/><ellipse cx="130" cy="85" rx="8" ry="30"/><ellipse cx="300" cy="85" rx="10" ry="32"/><ellipse cx="330" cy="85" rx="8" ry="30"/></g>
+<line x1="20" y1="85" x2="440" y2="85" stroke="#9A95A8" stroke-dasharray="4 4"/>
+<circle cx="190" cy="85" r="6" fill="#1F8A70"/><circle cx="235" cy="85" r="6" fill="#C0392B"/>
+<path d="M60 145 H190" stroke="#1F8A70" stroke-width="2"/><path d="M60 160 H235" stroke="#C0392B" stroke-width="2"/>
+<g font-size="11" font-weight="800"><text x="196" y="149" fill="#1F8A70">object nodal (example 130 mm)</text><text x="241" y="164" fill="#C0392B">image nodal (example 175 mm)</text></g>
+<text x="210" y="30" text-anchor="middle" font-size="11" fill="#5E5A6B">measure both from the FRONT EDGE of the barrel</text></svg>
+<ol class="clean"><li><b>Front of lens facing the bulb</b> → find the stationary image → that's the <b>image (rear) nodal point</b> over the pivot. Measure <b>front edge of barrel → pivot</b>.</li><li><b>Reverse it</b> (front facing the screen) → light now goes through backwards → you find the <b>object (front) nodal point</b>. Measure front edge → pivot again.</li><li>The two distances <b>differ</b>, because the lens has <b>separated element groups</b>, so its two nodal points sit in different places. If you got the <b>same</b> number, you weren't critical enough with the wiggle, so do it again.</li></ol>
+<p class="note">The lab lens is an old Eastman Kodak portrait lens, about 12 inches (~305 mm), f/4, with a 180 mm barrel, so your measurements can't be more than 180 mm. The numbers in the drawing above are made up for practice.</p>
+<div class="check" data-q="k4"></div>
+</section>
+
+<section class="topic" id="k5" aria-labelledby="kh5">
+<div class="th"><span class="num">05</span><div><h2 id="kh5">Close-up supplementary lens (Part III)</h2><p>Scale of reproduction with a ruler</p></div></div>
+<svg class="v" viewBox="0 0 460 150" role="img" aria-label="The camera frame's 24 mm short side fills with however many millimeters of ruler you can see">
+<rect x="40" y="20" width="150" height="100" fill="#fff" stroke="#15131C" stroke-width="2"/><text x="115" y="140" text-anchor="middle" font-size="11">frame 36 × 24 mm</text>
+<rect x="100" y="20" width="30" height="100" fill="#F6C453" stroke="#B4600F"/><g stroke="#15131C">
+<line x1="100" y1="30" x2="112" y2="30"/><line x1="100" y1="50" x2="118" y2="50"/><line x1="100" y1="70" x2="112" y2="70"/><line x1="100" y1="90" x2="118" y2="90"/><line x1="100" y1="110" x2="112" y2="110"/></g>
+<path d="M30 20 V120" stroke="#6D4AD9" stroke-width="2"/><text x="24" y="74" text-anchor="end" font-size="11" fill="#6D4AD9" font-weight="800">24 mm</text>
+<text x="230" y="50" font-size="13" font-weight="800">R = image size ÷ object size</text><text x="230" y="72" font-size="12">image size = 24 mm (frame filled top to bottom)</text><text x="230" y="92" font-size="12">object size = mm of ruler you can see</text></svg>
+<div class="box"><h3>Calculator (practice numbers)</h3>
+<div class="three"><label>Ruler mm visible<input type="number" id="ob" value="240" min="1" step="any" class="inp"></label><label>Camera lens f (mm)<input type="number" id="fl" value="135" min="1" step="any" class="inp"></label><label>Supplemental (+diopters)<input type="number" id="sd" value="2" min="0" step="0.5" class="inp"></label></div>
+<ol class="steps" id="ss"></ol></div>
+<ul class="clean"><li>The camera is focused at <b>8 ft</b> (the green 8 on the depth-of-field scale), so stand about <b>8 floor tiles</b> back (each tile is 12 in), then fine-tune.</li><li>Add the <b>+2</b> and you must move <b>closer</b> to focus. You see fewer mm of ruler, so <b>R gets bigger</b>.</li><li>The <b>52 mm</b> printed on the supplemental lens is its <b>filter diameter</b>, not its focal length. Screw it on thumb-tight, with a hand under it.</li></ul>
+<div class="check" data-q="k5"></div>
+</section>
+
+<section class="topic" id="k6" aria-labelledby="kh6">
+<div class="th"><span class="num">06</span><div><h2 id="kh6">Handheld shutter speed rule (Part IV)</h2><p>Slowest speed you can hold steady</p></div></div>
+<div class="formula">slowest handheld shutter ≈ 1 / (focal length × crop factor)</div>
+<div class="box"><h3>Rule calculator (practice numbers)</h3><div class="three"><label>Focal length (mm)<input type="number" id="hf" value="70" min="1" step="any" class="inp"></label><label>Crop factor<input type="number" id="hc" value="1.5" min="1" step="0.1" class="inp"></label><label>Image stabilization (stops)<input type="number" id="his" value="0" min="0" max="6" step="1" class="inp"></label></div><ol class="steps" id="hs"></ol></div>
+<p class="note">Whole-stop shutter speeds: 1/1000 · 1/500 · 1/250 · 1/125 · 1/60 · 1/30 · 1/15 · 1/8 · 1/4 · 1/2 · 1 s. The lab's own example: full frame + 50 mm → 1/50 → closest whole stop 1/60 → start one stop faster at 1/125, then go slower one stop at a time until it's blurry.</p>
+<div class="box"><h3>Shake simulator</h3><label for="sh"><b>Shutter: <span id="shv">1/60</span></b></label><input type="range" id="sh" min="0" max="8" value="4" aria-label="Shutter speed"><div class="row" style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn" id="isbtn" aria-pressed="false">Image stabilization: OFF</button></div><canvas id="shk" width="400" height="160" aria-label="Target that blurs as the shutter gets slower than the handheld limit"></canvas><p class="cap" id="shcap"></p></div>
+<ul class="clean"><li><b>Longer lens → harder to hold steady</b>, so you need faster speeds. A shorter, lighter lens lets you go slower.</li><li><b>Image stabilization</b> (in the lens, the body, or both) buys several stops.</li><li><b>On a tripod, turn IS off.</b> Mechanical IS can "correct" movement that isn't there and cause vibration.</li></ul>
+<div class="check" data-q="k6"></div>
+</section>
+
+<section class="topic" id="k7" aria-labelledby="kh7">
+<div class="th"><span class="num">07</span><div><h2 id="kh7">How to hold the camera steady</h2><p>From the lab sheet and Dan's demo</p></div></div>
+<div class="three" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
+<div class="box"><h3>🤲 Make a shelf</h3><p>Both hands on. Rest the body in your left palm and cradle the lens, using thumb and finger to zoom and focus.</p></div>
+<div class="box"><h3>👁 Eye to the viewfinder</h3><p>Rest the eyepiece against your face. Don't shoot on live view at arm's length, because pressing the shutter pushes the camera down.</p></div>
+<div class="box"><h3>🌬 Exhale, then shoot</h3><p>Breathe out, press, then breathe again. Never inhale and hold.</p></div>
+<div class="box"><h3>💪 Elbows in</h3><p>Tuck your arms against your body. Don't "fly like a bird".</p></div>
+<div class="box"><h3>🦶 Bipod stance</h3><p>One foot in front of the other. Feet together, you start to sway.</p></div>
+<div class="box"><h3>🧎 Go low</h3><p>For a low angle, put one knee on the ground. Wrap the strap around your wrist.</p></div>
+</div>
+<div class="check" data-q="k7"></div>
+</section>
+<p class="note" style="text-align:center">Rewritten in my own words from the PHPS-106 Lens Types Lab sheet and lab video, for study use. Practice numbers only.</p>
+</div>
+<script>
+(function(){
+var Q={
+k1:["A ray aimed at the FRONT nodal point leaves the lens…",["As if from the rear nodal point, parallel to its original direction","Bent toward the focal point","Reflected back","Through the center undeviated in a thick lens only"],"In parallel → out parallel. That's what defines the nodal points."],
+k2:["During the wiggle test the image on the screen stays still. What does that mean?",["The rear (image) nodal point is over the pivot, so measure pivot → screen = focal length","The lens is out of focus","You must move the lens farther away","The light isn't at infinity"],"Stationary image = you've found the nodal point. Measure in millimeters."],
+k3:["Two lenses of f = 200 mm each touch. What is the combined focal length?",["100 mm","400 mm","200 mm","50 mm"],"1/f = 1/200 + 1/200 = 0.01 → f = 100 mm."],
+k4:["Why are the object and image nodal-point distances different for the portrait lens?",["It's a complex lens with separated elements, so its two nodal points are in different places","Human error","The light changed","The barrel is 180 mm long"],"Simple lens: one spot. Complex lens: front and rear nodal points are separated."],
+k5:["You see 120 mm of ruler filling the 24 mm side of the frame. What is the scale of reproduction?",["0.2 (1:5)","5","2.4","0.5"],"R = image ÷ object = 24 ÷ 120 = 0.2."],
+k6:["A 70 mm lens on a 1.5× crop camera, no IS. Slowest handheld shutter by the rule?",["About 1/105, so round to 1/125","1/70","1/60","1/30"],"70 × 1.5 = 105 → 1/105 → the next faster whole stop is 1/125."],
+k7:["Which technique HURTS sharpness when handholding?",["Holding the camera at arm's length on live view","Exhaling before pressing","Elbows tucked in","One foot in front of the other"],"Pressing the shutter pushes a camera held out at arm's length. Use the viewfinder."]};
+document.querySelectorAll('.check').forEach(function(el){var q=Q[el.dataset.q];if(!q)return;var order=[0,1,2,3].sort(function(){return Math.random()-.5;});
+ el.innerHTML='<span class="tag">Quick check</span><div class="q">'+q[0]+'</div><div class="opts">'+order.map(function(i){return '<button type="button" data-i="'+i+'">'+q[1][i]+'</button>';}).join('')+'</div><div class="fb" aria-live="polite"></div>';
+ el.querySelectorAll('.opts button').forEach(function(b){b.addEventListener('click',function(){var ok=b.dataset.i==='0';b.classList.add(ok?'right':'wrong');if(!ok)el.querySelector('[data-i="0"]').classList.add('right');el.querySelectorAll('.opts button').forEach(function(x){x.disabled=true;});el.querySelector('.fb').innerHTML=(ok?'✅ Correct. ':'❌ Not quite. ')+q[2];});});});
+document.querySelectorAll('.toc a').forEach(function(a){a.addEventListener('click',function(e){var t=document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();
+ try{if(window.frameElement&&window.parent!==window){var fr=window.frameElement.getBoundingClientRect();window.parent.scrollTo({top:window.parent.scrollY+fr.top+t.getBoundingClientRect().top-12,behavior:'smooth'});return;}}catch(err){}t.scrollIntoView({behavior:'smooth',block:'start'});});});
+var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ===== virtual nodal slide ===== */
+var S=[
+ {name:'Plano-convex, curved side toward the light',f:100,sc:2,rng:40,kind:'pc',curve:'L',np:-1.33,nf:null,thick:8},
+ {name:'Plano-convex, curved side toward the screen',f:100,sc:2,rng:40,kind:'pc',curve:'R',np:4,nf:null,thick:8},
+ {name:'Two plano-convex lenses, flat sides touching',f:52.8,sc:2,rng:40,kind:'bi',np:2.37,nf:null,thick:16},
+ {name:'Complex portrait lens, front toward the light',f:300,sc:0.85,rng:120,kind:'cx',front:'L',np:85,nf:40},
+ {name:'Complex portrait lens, front toward the screen',f:300,sc:0.85,rng:120,kind:'cx',front:'R',np:-40,nf:-85}];
+var cv=document.getElementById('slide'),cx=cv.getContext('2d'),off=document.getElementById('off'),cur=0,ang=0,anim=null;
+var PX=230,CY=150;
+function setS(i){cur=i;var s=S[i];off.min=-s.rng;off.max=s.rng;off.value=(i===0?18:(i===1?-14:(i===2?10:(i===3?-30:30))));draw();}
+function draw(){var s=S[cur],o=+off.value,sc=s.sc,c=PX+o*sc,npx=c+s.np*sc,scr=npx+s.f*sc,d=s.np+o;
+ cx.clearRect(0,0,680,300);cx.save();
+ /* light + parallel rays */
+ cx.fillStyle='#FFE59A';cx.beginPath();cx.arc(22,CY,12,0,7);cx.fill();cx.fillStyle='#9A95A8';cx.font='17px Inter,sans-serif';cx.fillText('bulb (∞)',2,CY+40);
+ /* screen (fixed, auto-focused) */
+ var shift=d*Math.sin(ang)*sc; /* image moves when rotating about pivot */
+ cx.fillStyle='#E9E6F2';cx.fillRect(Math.min(scr,670),40,6,220);cx.fillStyle='#9A95A8';cx.fillText('screen',Math.min(scr,650)-14,32);
+ /* rotate bench around pivot */
+ cx.translate(PX,CY+40);cx.rotate(ang);cx.translate(-PX,-(CY+40));
+ cx.fillStyle='#5E5A6B';cx.fillRect(c-(s.kind==='cx'?100*sc:30),CY+36,(s.kind==='cx'?200*sc:60),8);
+ /* rays to the lens */
+ cx.strokeStyle='rgba(246,196,83,.75)';cx.lineWidth=1.5;var h=s.kind==='cx'?30:26;[-h,0,h].forEach(function(y){cx.beginPath();cx.moveTo(34,CY+y);cx.lineTo(c,CY+y);cx.stroke();});
+ /* lens drawing */
+ cx.fillStyle='rgba(155,130,240,.45)';cx.strokeStyle='#B9A6FF';cx.lineWidth=2;
+ if(s.kind==='pc'){var t=s.thick*sc,L=c-t/2,R=c+t/2;cx.beginPath();if(s.curve==='L'){cx.moveTo(R,CY-40);cx.lineTo(R,CY+40);cx.quadraticCurveTo(L-22,CY,R,CY-40);}else{cx.moveTo(L,CY-40);cx.lineTo(L,CY+40);cx.quadraticCurveTo(R+22,CY,L,CY-40);}cx.fill();cx.stroke();}
+ else if(s.kind==='bi'){var t2=s.thick*sc;cx.beginPath();cx.moveTo(c,CY-40);cx.quadraticCurveTo(c-t2/2-22,CY,c,CY+40);cx.quadraticCurveTo(c+t2/2+22,CY,c,CY-40);cx.fill();cx.stroke();cx.strokeStyle='#fff';cx.setLineDash([3,3]);cx.beginPath();cx.moveTo(c,CY-40);cx.lineTo(c,CY+40);cx.stroke();cx.setLineDash([]);}
+ else{var bl=180*sc,x0=c-bl/2;cx.fillStyle='#C9A86A';cx.fillRect(x0,CY-34,bl,68);var fx=s.front==='L'?x0:x0+bl-12;cx.fillStyle='#3F6CC9';cx.fillRect(fx,CY-34,12,68);cx.fillStyle='#fff';cx.font='12px Inter,sans-serif';cx.save();cx.translate(fx+8,CY+18);cx.rotate(-Math.PI/2);cx.fillText('FRONT',0,0);cx.restore();
+  cx.fillStyle='#15131C';cx.font='15px Inter,sans-serif';}
+ /* nodal points */
+ cx.fillStyle='#FF6B6B';cx.beginPath();cx.arc(npx,CY,5,0,7);cx.fill();
+ if(s.nf!==null){cx.fillStyle='#4ADE80';cx.beginPath();cx.arc(c+s.nf*sc,CY,5,0,7);cx.fill();}
+ cx.restore();
+ /* converging rays to the image spot (screen fixed) */
+ cx.strokeStyle='rgba(246,196,83,.75)';cx.lineWidth=1.5;[-h,0,h].forEach(function(y){cx.beginPath();cx.moveTo(npx,CY+y*0.9);cx.lineTo(Math.min(scr,670),CY+shift);cx.stroke();});
+ cx.fillStyle='#FFE59A';cx.beginPath();cx.arc(Math.min(scr,670)+3,CY+shift,5,0,7);cx.fill();
+ /* pivot marker (fixed) */
+ cx.fillStyle='#F6C453';cx.beginPath();cx.moveTo(PX,CY+48);cx.lineTo(PX-9,CY+64);cx.lineTo(PX+9,CY+64);cx.closePath();cx.fill();cx.fillStyle='#F6C453';cx.font='17px Inter,sans-serif';cx.fillText('pivot',PX-18,CY+84);
+ cx.fillStyle='#FF6B6B';cx.fillText('● rear (image) nodal',420,286);if(s.nf!==null){cx.fillStyle='#4ADE80';cx.fillText('● front (object) nodal',200,286);}
+ /* dimension pivot → screen */
+ cx.strokeStyle='#9A95A8';cx.setLineDash([4,4]);cx.beginPath();cx.moveTo(PX,CY+96);cx.lineTo(Math.min(scr,670),CY+96);cx.stroke();cx.setLineDash([]);
+ var meas=d+s.f;document.getElementById('ps').textContent=Math.round(meas)+' mm';
+ var mv=Math.abs(d)*Math.sin(6*Math.PI/180);document.getElementById('mv').textContent=(mv<0.15?'none ✓':'≈ '+mv.toFixed(1)+' mm');
+ document.getElementById('offv').textContent=(o===0?'centered on the pivot':(o>0?o+' mm toward the screen':(-o)+' mm toward the light'));
+ var cap=document.getElementById('slcap');
+ if(Math.abs(d)<0.8){cap.innerHTML='<b>Stationary ✓</b> The rear (image) nodal point is over the pivot. Pivot → screen = <b>'+s.f+' mm = focal length</b>.'+(s.kind==='cx'?' Now measure the <b>front edge of the barrel → pivot</b>: <b>'+(s.front==='L'?175:130)+' mm</b> in this practice lens'+(s.front==='L'?' (image nodal point).':' (object nodal point, since the lens is reversed).'):(s.kind==='pc'?' Notice the lens is <b>not</b> exactly centered on the pivot: a real lens has thickness.':''));}
+ else cap.innerHTML='<b>The image moves</b> when you wiggle, so you\'re '+Math.abs(d).toFixed(1)+' mm off the nodal point. Slide the lens '+(d>0?'<b>toward the light</b>':'<b>toward the screen</b>')+' and wiggle again. (Pivot → screen now reads '+meas.toFixed(1)+' mm, which is wrong.)';}
+off.addEventListener('input',draw);
+document.querySelectorAll('#setup button').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('#setup button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});setS(+b.dataset.s);});});
+document.getElementById('wig').addEventListener('click',function(){if(anim)return;var t0=performance.now(),dur=RM?600:1600;function step(t){var k=(t-t0)/dur;if(k>=1){ang=0;draw();anim=null;return;}ang=Math.sin(k*Math.PI*4)*6*Math.PI/180;draw();anim=requestAnimationFrame(step);}anim=requestAnimationFrame(step);});
+document.getElementById('hint').addEventListener('click',function(){var s=S[cur];off.value=Math.round(-s.np);draw();});
+setS(0);
+
+/* ===== combined lens ===== */
+function r1(n){return Math.round(n*10)/10;}
+function comb(){var a=+document.getElementById('f1').value,b=+document.getElementById('f2').value,o=document.getElementById('cs');if(!(a>0&&b>0)){o.innerHTML='<li>Enter values above 0</li>';return;}var inv=1/a+1/b;
+ o.innerHTML='<li>1/f = 1/'+a+' + 1/'+b+'</li><li>1/f = '+inv.toFixed(5)+'  ← that\'s 1/f, not f!</li><li class="last">f = 1 ÷ '+inv.toFixed(5)+' = '+r1(1/inv)+' mm</li>';}
+['f1','f2'].forEach(function(i){document.getElementById(i).addEventListener('input',comb);});comb();
+
+/* ===== supplemental ===== */
+function supp(){var ob=+document.getElementById('ob').value,f=+document.getElementById('fl').value,d=+document.getElementById('sd').value,o=document.getElementById('ss');if(!(ob>0&&f>0&&d>=0)){o.innerHTML='<li>Enter valid values</li>';return;}
+ var R=24/ob,Dl=1000/f,Dc=Dl+d,fc=1000/Dc;
+ o.innerHTML='<li>R = 24 ÷ '+ob+' = '+R.toFixed(3)+' (about 1:'+r1(1/R)+')</li><li>Lens power: D = 1 ÷ f(m) = 1 ÷ '+(f/1000)+' = '+Dl.toFixed(2)+' diopters</li><li>Diopters add: '+Dl.toFixed(2)+' + '+d+' = '+Dc.toFixed(2)+' D</li><li class="last">Combined f = 1 ÷ '+Dc.toFixed(2)+' m = '+r1(fc)+' mm</li>';}
+['ob','fl','sd'].forEach(function(i){document.getElementById(i).addEventListener('input',supp);});supp();
+
+/* ===== handheld rule ===== */
+var STOPS=[1,2,4,8,15,30,60,125,250,500,1000,2000,4000];
+function hand(){var f=+document.getElementById('hf').value,c=+document.getElementById('hc').value,is=+document.getElementById('his').value,o=document.getElementById('hs');if(!(f>0&&c>=1)){o.innerHTML='<li>Enter valid values</li>';return;}
+ var lim=f*c,i=STOPS.findIndex(function(x){return x>=lim-0.5;});if(i<0)i=STOPS.length-1;var start=STOPS[Math.min(i+1,STOPS.length-1)],withIS=STOPS[Math.max(0,i-is)];
+ o.innerHTML='<li>1 / ('+f+' × '+c+') = 1/'+r1(lim)+'</li><li>Closest whole stop faster: <b>1/'+STOPS[i]+'</b> = slowest handheld speed</li><li>Lab start (one stop faster): 1/'+start+', then go slower one stop at a time</li><li class="last">'+(is?'With '+is+' stops of IS: about 1/'+withIS+' may still be sharp':'Turn IS on and you can often go several stops slower')+'</li>';
+ shake();}
+['hf','hc','his'].forEach(function(i){document.getElementById(i).addEventListener('input',hand);});
+var SH=[500,250,125,60,30,15,8,4,2],isOn=false,sk=document.getElementById('shk'),skx=sk.getContext('2d');
+function shake(){var idx=+document.getElementById('sh').value,den=SH[idx],f=+document.getElementById('hf').value||50,c=+document.getElementById('hc').value||1,lim=f*c,stops=isOn?4:0;
+ document.getElementById('shv').textContent='1/'+den;var ratio=lim/den/Math.pow(2,stops);var blur=Math.max(0,ratio-1)*3;
+ skx.fillStyle='#fff';skx.fillRect(0,0,400,160);var n=Math.max(1,Math.round(blur*2));skx.globalAlpha=1/Math.min(n,12);
+ for(var k=0;k<Math.min(n,12);k++){var dx=(k/(Math.min(n,12)-1||1)-0.5)*blur*2,dy=(k%2?1:-1)*blur*0.4;skx.save();skx.translate(dx,dy);
+  [50,36,22,8].forEach(function(r,j){skx.beginPath();skx.arc(110,80,r,0,7);skx.fillStyle=j%2?'#fff':'#15131C';skx.fill();});
+  skx.fillStyle='#15131C';skx.font='800 26px Inter,sans-serif';skx.fillText('YEGOR',200,70);skx.font='13px Inter,sans-serif';skx.fillText('fine text 1/'+den+' s',200,100);skx.restore();}
+ skx.globalAlpha=1;
+ document.getElementById('shcap').innerHTML=(ratio<=1?'<b>Sharp ✓</b> 1/'+den+' is at or faster than your limit (1/'+Math.round(lim)+(isOn?', minus 4 stops of IS':'')+').':'<b>Blurry.</b> 1/'+den+' is about '+r1(Math.log2(ratio))+' stop(s) slower than your handheld limit'+(isOn?' even with IS':'')+'.')+' (Simulated with '+r1(lim)+' mm effective focal length.)';}
+document.getElementById('sh').addEventListener('input',shake);
+document.getElementById('isbtn').addEventListener('click',function(){isOn=!isOn;this.textContent='Image stabilization: '+(isOn?'ON (≈4 stops)':'OFF');this.setAttribute('aria-pressed',isOn);shake();});
+hand();
+})();
+</script>
+</body></html>
