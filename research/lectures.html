@@ -82,6 +82,7 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px}
 .chain i{font-style:normal;color:var(--muted);font-weight:800}
 .qe{display:grid;gap:8px}.qerow{display:grid;grid-template-columns:90px 1fr 54px;gap:8px;align-items:center;font-size:14px}.qetrack{height:14px;background:var(--line);border-radius:7px;overflow:hidden}.qetrack i{display:block;height:100%;border-radius:7px}
 @media(max-width:600px){.cmp thead{display:none}.cmp tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-bottom:1px solid var(--line)}.cmp td{border:0}.cmp td:first-child{grid-column:1/-1;font-weight:800;background:var(--soft);border-radius:8px;margin-top:8px}.cmp td:nth-child(2)::before{content:"CCD";display:block;font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--accent)}.cmp td:nth-child(3)::before{content:"CMOS";display:block;font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--warm)}}
+@media(max-width:600px){.cmp.tele td:nth-child(2)::before{content:"TELEPHOTO"}.cmp.tele td:nth-child(3)::before{content:"WIDE ANGLE"}}
 .rle{display:flex;flex-wrap:wrap;gap:2px}
 .rle b{width:16px;height:16px;border-radius:3px;display:inline-block}
 ol.steps{margin:0;padding:0;list-style:none;display:grid;gap:6px;counter-reset:s}
@@ -95,7 +96,7 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <span class="eyebrow">Exam 2 · Oct 30 · Lecture notes</span>
 <h1>Lecture Notes</h1>
 <p>Every PHPS-106 lecture for Exam 2, redesigned with diagrams you can play with and checked against the lecture slides. Each section ends with a quick check.</p>
-<div class="seg lecs" role="tablist" aria-label="Lectures" id="lecs"><button role="tab" aria-selected="false" aria-pressed="false" data-l="L0">Sep 21 · Digital sensors</button><button role="tab" aria-selected="true" aria-pressed="true" data-l="L1">Sep 28 · Sensors &amp; noise</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L2">Oct 2 · RAW &amp; files</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L3">Oct 5 · Formats &amp; compression</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L4">Oct 16 · Lenses</button></div>
+<div class="seg lecs" role="tablist" aria-label="Lectures" id="lecs"><button role="tab" aria-selected="false" aria-pressed="false" data-l="L0">Sep 21 · Digital sensors</button><button role="tab" aria-selected="true" aria-pressed="true" data-l="L1">Sep 28 · Sensors &amp; noise</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L2">Oct 2 · RAW &amp; files</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L3">Oct 5 · Formats &amp; compression</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L4">Oct 16 · Lenses</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L5">Oct 19 · Lens types</button></div>
 </header>
 <!-- ================= LECTURE 0 · SEP 21 ================= -->
 <div class="lec" id="L0" hidden>
@@ -134,6 +135,13 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 </div>
 <ul class="clean"><li><b>Dithering</b> mixes black and white dots to fake gray tones (newspaper style).</li><li>Why 8 bits if 5 looks OK? <b>Editing</b> a low-bit image shows artifacts right away. Fewer bits only make sense for small web or phone images where <b>bandwidth</b> matters.</li></ul>
 <div class="beyond"><b>Spotted on the slides</b>One slide says "8 bits – <b>265</b> levels per channel". That's a typo: 2⁸ = <b>256</b>. Write 256 on the exam.</div>
+<div class="box"><h3>A bitonal image is just 0s and 1s</h3>
+<div class="seg" role="group" aria-label="Bitonal view" id="btv"><button type="button" aria-pressed="true" data-v="img">Image</button><button type="button" aria-pressed="false" data-v="num">Numbers</button></div>
+<svg class="v" id="bitonal" viewBox="0 0 330 330" role="img" aria-label="An 11 by 11 bitonal grid forming the letter H, 0 = black, 1 = white" style="max-width:300px;margin:0 auto"></svg>
+<p class="cap">1 bit per pixel: <b>0 = black</b>, <b>1 = white</b>. Fine for black-and-white text, tiny files.</p></div>
+<div class="box"><h3>Gray levels per number of bits</h3><canvas id="bitbars" width="560" height="260" aria-label="Bar chart: gray levels explode as bits increase, 256 at 8 bits, 65,536 at 16 bits"></canvas><p class="cap">Each extra bit <b>doubles</b> the levels, so the bars barely show until about 12 bits, then they explode: 4,096 → 65,536.</p></div>
+<div class="box"><h3>Where you notice too few bits</h3><label for="lfb"><b><span id="lfbv">3</span> bits = <span id="lfbl">8</span> levels</b></label><input type="range" id="lfb" min="1" max="8" value="3" aria-label="Bits">
+<div class="two"><div><canvas id="lfa" class="pix" width="160" height="110" aria-label="Smooth wall"></canvas><p class="cap"><b>Low frequency</b> (smooth wall): bands show</p></div><div><canvas id="lfc" class="pix" width="160" height="110" aria-label="Busy grass texture"></canvas><p class="cap"><b>High frequency</b> (grass, fur): steps hide</p></div></div></div>
 <div class="check" data-q="d3"></div>
 </section>
 
@@ -159,6 +167,24 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 </tbody></table></div>
 <div class="box"><h3>Quantum efficiency: how much light becomes signal</h3><div class="qe" id="qe"></div><p class="note">That's why <b>astronomers</b> adopted CCDs so fast.</p></div>
 <p class="note">Fun facts: 1970 = the first digital image (the photoelectric effect). 1974: Fairchild's first 2-D device was only 100 × 100 pixels. Sensors are made on silicon <b>wafers</b> in clean rooms; one piece of lint ruins one.</p>
+<div class="box"><h3>Readout race: CCD conveyor belt vs CMOS</h3>
+<div class="row" style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn" id="rdccd">▶ Read out CCD</button><button type="button" class="btn" id="rdcmos">▶ Read out CMOS</button><button type="button" class="btn" id="rdreset">Reset</button></div>
+<canvas id="readout" width="560" height="250" aria-label="Animated readout: CCD shifts rows down and reads one pixel at a time; CMOS reads every photosite at once"></canvas>
+<p class="cap" id="rdcap">Each square is one photosite's charge. Press a button.</p></div>
+<div class="box"><h3>Why CMOS needs microlenses</h3>
+<svg class="v" viewBox="0 0 440 200" role="img" aria-label="Without a microlens, light hitting the circuitry is lost; with a microlens, it is bent into the light-sensitive area">
+<g font-size="12" text-anchor="middle">
+<g transform="translate(0 0)"><text x="110" y="16" font-weight="800">Without microlens</text>
+<rect x="40" y="130" width="140" height="40" fill="#E2DEEE"/><rect x="40" y="130" width="40" height="40" fill="#9A95A8"/><rect x="140" y="130" width="40" height="40" fill="#9A95A8"/><rect x="80" y="130" width="60" height="40" fill="#F6C453"/>
+<text x="60" y="190" font-size="10">circuitry</text><text x="110" y="190" font-size="10">light-sensitive</text>
+<g stroke="#E0A21E" stroke-width="2.5"><path d="M55 30 V128"/><path d="M85 30 V128"/><path d="M110 30 V128"/><path d="M135 30 V128"/><path d="M165 30 V128"/></g>
+<g fill="#C0392B" font-size="16" font-weight="900"><text x="55" y="124">✕</text><text x="165" y="124">✕</text></g></g>
+<g transform="translate(220 0)"><text x="110" y="16" font-weight="800">With microlens</text>
+<rect x="40" y="130" width="140" height="40" fill="#E2DEEE"/><rect x="40" y="130" width="40" height="40" fill="#9A95A8"/><rect x="140" y="130" width="40" height="40" fill="#9A95A8"/><rect x="80" y="130" width="60" height="40" fill="#F6C453"/>
+<path d="M40 100 Q110 50 180 100 Z" fill="#6D4AD9" fill-opacity=".25" stroke="#6D4AD9" stroke-width="2"/>
+<g stroke="#E0A21E" stroke-width="2.5" fill="none"><path d="M55 30 V88 L95 128"/><path d="M85 30 V76 L102 128"/><path d="M110 30 V128"/><path d="M135 30 V76 L118 128"/><path d="M165 30 V88 L125 128"/></g>
+<text x="110" y="190" font-size="10" fill="#1F8A70" font-weight="800">all light collected ✓</text></g></g></svg>
+<p class="cap">CMOS puts an A/D converter at each photosite, and that circuitry takes up space. A tiny lens on top funnels the light into the sensitive part.</p></div>
 <div class="check" data-q="d5"></div>
 </section>
 
@@ -322,6 +348,8 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <div class="box"><h3>Kilobyte</h3><p>Decimal: <b>1,000</b> bytes. Binary: <b>1,024</b> bytes.</p></div>
 </div>
 <div class="box"><label for="tb"><b>Drive size on the box: <span id="tbv">1</span> TB</b></label><input type="range" id="tb" min="1" max="8" value="1" aria-label="Drive size in TB"><p id="tbout" class="formula" style="font-size:16px"></p><p class="note">Storage makers advertise in <b>decimal</b> (1 TB = 1,000,000,000,000 bytes). Your operating system often counts in <b>binary</b> (1,024 steps), so the same drive looks "smaller". Nothing is missing.</p></div>
+<div class="tw"><table><thead><tr><th></th><th>Decimal (on the box)</th><th>Binary (computer)</th></tr></thead><tbody>
+<tr><td>1 kB</td><td>1,000 bytes</td><td>1,024 bytes</td></tr><tr><td>1 MB</td><td>1,000,000 bytes</td><td>1,024 kB</td></tr><tr><td>1 GB</td><td>1,000,000,000 bytes</td><td>1,024 MB</td></tr><tr><td>1 TB</td><td>1,000,000,000,000 bytes</td><td>1,024 GB</td></tr></tbody></table></div>
 <p class="note">Storage history: tape → cassette → floppy disk → CD → DVD → memory cards → terabyte drives.</p>
 <div class="check" data-q="r1"></div>
 </section>
@@ -445,6 +473,9 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <div class="box"><label for="jq"><b>JPEG quality: <span id="jqv">50</span></b> · re-saves: <span id="jgv">1</span></label><input type="range" id="jq" min="1" max="100" value="50" aria-label="JPEG quality"><div class="row" style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" class="btn" id="jresave">Re-save again</button><button type="button" class="btn" id="jreset">Start over</button></div>
 <div class="two"><div><canvas id="jsrc" class="pix" width="96" height="96" aria-label="Original detail"></canvas><p class="cap">Original (zoomed)</p></div><div><canvas id="jout" class="pix" width="96" height="96" aria-label="JPEG result"></canvas><p class="cap" id="jcap"></p></div></div></div>
 <div class="tw"><table><thead><tr><th></th><th>TIFF</th><th>JPEG</th></tr></thead><tbody><tr><td>Typical use</td><td>Editing, printing, archiving</td><td>Sharing, web, quick delivery</td></tr><tr><td>Compression</td><td>None, lossless or lossy</td><td>Lossy</td></tr><tr><td>Bit depth</td><td>8, 16, 32 per channel</td><td>8 per channel</td></tr><tr><td>File size</td><td>Large</td><td>Small</td></tr><tr><td>Repeated editing</td><td><b>Better suited</b></td><td>Degrades each save</td></tr><tr><td>Transparency</td><td>Possible</td><td>No</td></tr></tbody></table></div>
+<div class="box"><h3>Bit depth and editing: rescue the bright moon</h3><label for="moon"><b>Pull highlights down: −<span id="moonv">0</span> stops</b></label><input type="range" id="moon" min="0" max="2" step="0.25" value="0" aria-label="Highlight recovery in stops">
+<div class="two"><div><canvas id="moonj" width="180" height="180" aria-label="Camera JPEG moon"></canvas><p class="cap"><b>Camera JPEG</b>: the bright moon clipped at 255 and the detail is gone</p></div><div><canvas id="moonr" width="180" height="180" aria-label="Raw file moon"></canvas><p class="cap"><b>Raw file</b>: more bits kept the highlight detail</p></div></div>
+<p class="note">Her slide: "More numerical precision provides more room for processing." But <b>clipped is still clipped</b>: if even the raw overflows, nothing comes back.</p></div>
 <div class="check" data-q="f4"></div>
 </section>
 
@@ -491,12 +522,26 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <div class="box"><h3>Pixelation = NOT an artifact</h3><p>Zooming to 3200% just magnifies pixels. That's magnification, not damage.</p></div>
 </div>
 <div class="beyond"><b>Beyond the lecture</b>On the exam, use "posterization is a JPEG artifact". In practice, banding can also appear when an 8-bit image is pushed hard in editing. That's one more reason to edit at 16 bits.</div>
+<div class="box"><h3>See aliasing (moiré) happen</h3><label for="alias"><b>Pixels across: <span id="aliasv">400</span></b></label><input type="range" id="alias" min="40" max="400" step="10" value="400" aria-label="Sampling resolution">
+<canvas id="aliasc" class="pix" width="400" height="400" aria-label="Fine circular pattern that develops false moiré rings when under-sampled" style="max-width:360px;margin:0 auto"></canvas>
+<p class="cap" id="aliascap">Fine rings sampled with enough pixels look right. Lower the pixels and <b>false patterns (moiré)</b> appear that aren't really there.</p></div>
 <div class="check" data-q="f7"></div>
 </section>
 
 <section class="topic" id="f8" aria-labelledby="fh8">
 <div class="th"><span class="num">08</span><div><h2 id="fh8">Parametric editing &amp; virtual copies</h2><p>One original, many versions</p></div></div>
 <ul class="clean"><li>Edits are saved as <b>instructions</b>, so you can change your mind, try alternative looks, sync settings across many images, revisit old edits and export several versions.</li><li>A <b>virtual copy</b> is another set of instructions on the same original. You can have a black and white version, a warm version and a masked version without filling your hard drive.</li></ul>
+<div class="box"><h3>Rendering engine: one source, many interpretations</h3>
+<svg class="v" viewBox="0 0 460 210" role="img" aria-label="One raw image plus instructions renders as color, black and white, and warm versions">
+<defs><linearGradient id="rsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7FB2E5"/><stop offset="1" stop-color="#F6D7A7"/></linearGradient>
+<symbol id="rpic" viewBox="0 0 100 70"><rect width="100" height="70" fill="url(#rsky)"/><circle cx="72" cy="22" r="9" fill="#FFE59A"/><path d="M0 50 L25 32 L45 46 L65 30 L100 52 V70 H0Z" fill="#3E7B4F"/><rect x="18" y="44" width="6" height="14" fill="#6B4B2B"/></symbol>
+<filter id="rbw"><feColorMatrix type="saturate" values="0"/></filter><filter id="rwarm"><feColorMatrix type="matrix" values="1.15 0 0 0 0.05  0 1 0 0 0.02  0 0 0.75 0 0  0 0 0 1 0"/></filter></defs>
+<use href="#rpic" x="10" y="60" width="100" height="70"/><text x="60" y="150" text-anchor="middle" font-size="12" font-weight="800">Image data (raw)</text>
+<rect x="135" y="55" width="110" height="80" rx="8" fill="#EFEAFD" stroke="#6D4AD9"/><text x="190" y="80" text-anchor="middle" font-size="11">• metadata</text><text x="190" y="98" text-anchor="middle" font-size="11">• edit instructions</text><text x="190" y="116" text-anchor="middle" font-size="11">• color management</text>
+<path d="M112 95 H133" stroke="#6D4AD9" stroke-width="2"/><path d="M247 95 L300 35 M247 95 H300 M247 95 L300 160" stroke="#6D4AD9" stroke-width="2" fill="none"/>
+<use href="#rpic" x="305" y="5" width="80" height="56"/><use href="#rpic" x="305" y="70" width="80" height="56" filter="url(#rbw)"/><use href="#rpic" x="305" y="135" width="80" height="56" filter="url(#rwarm)"/>
+<g font-size="11"><text x="392" y="36">color</text><text x="392" y="101">B&amp;W</text><text x="392" y="166">warm</text></g></svg>
+<p class="cap">Her slide: <b>one source file can produce many interpretations without creating multiple RAW originals.</b> Each version is just a set of instructions (a virtual copy).</p></div>
 <div class="check" data-q="f8"></div>
 </section>
 </div>
@@ -540,6 +585,19 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <div class="box"><h3>Lens</h3><ul class="clean"><li><b>Collects light</b> much more efficiently.</li><li>Brings the image to a <b>point of focus</b>.</li><li>Lets you <b>control depth of field</b>.</li></ul></div>
 </div>
 <div class="box"><h3>The image is upside down and backwards</h3><p>Every real lens image is <b>inverted</b>. A DSLR flips it back with a mirror and <b>pentaprism</b>. A mirrorless camera flips it in <b>software</b>. A 4×5 camera's ground glass shows it upside down and backwards, so to move the image left you move right.</p></div>
+<div class="box"><h3>Pinhole camera: size of the hole</h3><label for="ph"><b>Pinhole: <span id="phv">medium</span></b></label><input type="range" id="ph" min="1" max="5" value="2" aria-label="Pinhole size">
+<svg class="v" id="phsvg" viewBox="0 0 460 200" role="img" aria-label="Rays from an upright arrow pass through a pinhole and form an upside-down image"></svg>
+<p class="cap" id="phcap"></p></div>
+<div class="box"><h3>How a DSLR shows the image right-side up</h3>
+<svg class="v" viewBox="0 0 460 210" role="img" aria-label="Light through the lens hits a mirror, goes up into a pentaprism and out to the eyepiece">
+<rect x="150" y="120" width="160" height="70" rx="6" fill="#F4F5F7" stroke="#9A95A8"/><text x="230" y="205" text-anchor="middle" font-size="11" fill="#5E5A6B">camera body</text>
+<path d="M40 115 Q60 145 40 175 Q20 145 40 115Z" fill="#6D4AD9" fill-opacity=".25" stroke="#6D4AD9" stroke-width="2"/><text x="40" y="198" text-anchor="middle" font-size="11">lens</text>
+<line x1="210" y1="175" x2="250" y2="130" stroke="#15131C" stroke-width="3"/><text x="262" y="168" font-size="11">mirror</text>
+<rect x="296" y="125" width="4" height="60" fill="#D9822B"/><text x="326" y="160" font-size="11" fill="#D9822B">sensor</text>
+<path d="M180 40 L280 40 L300 70 L230 110 L160 70 Z" fill="#9CC9F0" fill-opacity=".45" stroke="#3F6CC9" stroke-width="2"/><text x="230" y="30" text-anchor="middle" font-size="11" fill="#3F6CC9" font-weight="800">pentaprism</text>
+<rect x="160" y="108" width="140" height="6" fill="#C9C3DA"/><text x="370" y="114" font-size="10.5" fill="#5E5A6B">focusing screen</text>
+<path d="M0 145 H230 L230 115 L230 80 L170 60 L130 60 L90 60" fill="none" stroke="#E0A21E" stroke-width="3"/><circle cx="80" cy="60" r="10" fill="#fff" stroke="#15131C" stroke-width="2"/><circle cx="80" cy="60" r="4" fill="#15131C"/><text x="80" y="88" text-anchor="middle" font-size="11">eyepiece 👁</text></svg>
+<p class="cap">The lens image is upside down and backwards. The <b>mirror</b> sends it up, and the <b>pentaprism</b> flips it right-side up for the optical viewfinder. When you press the shutter, the mirror swings up and light reaches the sensor. Mirrorless cameras flip the image in software instead.</p></div>
 <div class="check" data-q="o3"></div>
 </section>
 
@@ -574,6 +632,22 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <div class="trick"><span>🔤</span><span><b>U → O:</b> close the top of the <b>U</b> and it becomes an <b>O</b> for <b>O</b>bject distance. That leaves <b>V</b> for image distance.</span></div>
 <div class="box"><h3>Nodal slide (lab)</h3><p>Focus a distant bare bulb, then pivot the lens slightly. If the point of light <b>doesn't move</b>, you're on the nodal point, so measure the focal length. If it moves, slide the lens and try again.</p><p><b>Why it matters:</b> for <b>panoramas</b>, rotate the camera on the lens's nodal point (panoramic head) for less distortion when stitching.</p></div>
 <div class="beyond"><b>Not on the test</b>Two lenses touching: 1/f = 1/f₁ + 1/f₂. With air between them it gets more complicated.</div>
+<div class="box"><h3>Nodal points: in parallel, out parallel</h3>
+<svg class="v" viewBox="0 0 460 220" role="img" aria-label="A ray enters a thick lens, passes through the optical center and leaves parallel to its original direction; extended to the axis it marks the front and back nodal points">
+<line x1="10" y1="110" x2="450" y2="110" stroke="#9A95A8" stroke-dasharray="4 4"/><text x="18" y="102" font-size="10.5" fill="#5E5A6B">optical axis</text>
+<path d="M190 20 Q250 110 190 200 L270 200 Q210 110 270 20 Z" fill="#6D4AD9" fill-opacity=".14" stroke="#6D4AD9" stroke-width="2"/>
+<path d="M20 30 L205 95" stroke="#E0A21E" stroke-width="3"/><path d="M205 95 L255 125" stroke="#E0A21E" stroke-width="3"/><path d="M255 125 L440 190" stroke="#E0A21E" stroke-width="3"/>
+<path d="M205 95 L162 110" stroke="#E0A21E" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M255 125 L298 110" stroke="#E0A21E" stroke-width="1.5" stroke-dasharray="4 3"/>
+<circle cx="162" cy="110" r="5" fill="#C0392B"/><circle cx="298" cy="110" r="5" fill="#C0392B"/><circle cx="230" cy="110" r="4" fill="#15131C"/>
+<g font-size="11" text-anchor="middle"><text x="150" y="132" fill="#C0392B" font-weight="800">front nodal</text><text x="310" y="132" fill="#C0392B" font-weight="800">back nodal</text><text x="230" y="150">optical center</text></g></svg>
+<p class="cap">A ray aimed at the <b>front nodal point</b> leaves as if from the <b>back nodal point</b>, parallel to how it came in. On her nodal slide: pivot the lens, and if the image doesn't move, you're on the nodal point.</p></div>
+<div class="box"><h3>Measuring focal length: convex, concave, mirror</h3>
+<svg class="v" viewBox="0 0 470 170" role="img" aria-label="Three diagrams: convex lens focuses parallel rays behind it; concave lens rays traced back to a virtual focus in front; concave mirror focuses rays in front of the mirror">
+<g font-size="11" text-anchor="middle">
+<g><line x1="5" y1="70" x2="150" y2="70" stroke="#9A95A8" stroke-dasharray="3 3"/><path d="M50 30 Q60 70 50 110 Q40 70 50 30Z" fill="#6D4AD9" fill-opacity=".25" stroke="#6D4AD9"/><path d="M5 45 H50 L120 70 M5 95 H50 L120 70" stroke="#E0473C" stroke-width="2" fill="none"/><circle cx="120" cy="70" r="4" fill="#15131C"/><text x="120" y="60">F</text><path d="M50 125 H120" stroke="#15131C"/><text x="85" y="140">f</text><text x="75" y="162" font-weight="800">Convex (positive)</text></g>
+<g transform="translate(160 0)"><line x1="5" y1="70" x2="150" y2="70" stroke="#9A95A8" stroke-dasharray="3 3"/><path d="M80 30 H90 Q82 70 90 110 H80 Q88 70 80 30Z" fill="#D9822B" fill-opacity=".25" stroke="#D9822B"/><path d="M5 50 H85 L145 30 M5 90 H85 L145 110" stroke="#E0473C" stroke-width="2" fill="none"/><path d="M85 50 L30 70 M85 90 L30 70" stroke="#E0473C" stroke-dasharray="3 3"/><circle cx="30" cy="70" r="4" fill="#15131C"/><text x="30" y="60">F</text><path d="M30 125 H85" stroke="#15131C"/><text x="57" y="140">f (traced back)</text><text x="75" y="162" font-weight="800">Concave (negative)</text></g>
+<g transform="translate(320 0)"><line x1="5" y1="70" x2="145" y2="70" stroke="#9A95A8" stroke-dasharray="3 3"/><path d="M125 25 Q105 70 125 115" fill="none" stroke="#15131C" stroke-width="4"/><path d="M5 45 H118 L55 70 M5 95 H118 L55 70" stroke="#E0473C" stroke-width="2" fill="none"/><circle cx="55" cy="70" r="4" fill="#15131C"/><text x="55" y="60">F</text><path d="M55 125 H118" stroke="#15131C"/><text x="86" y="140">f</text><text x="75" y="162" font-weight="800">Concave mirror</text></g></g></svg>
+<p class="cap"><b>F</b> = principal focal point, where parallel rays come into focus. For a negative lens you trace the spreading rays <b>backward</b>. Concave mirrors are used in <b>catadioptric</b> lenses.</p></div>
 <div class="check" data-q="o5"></div>
 </section>
 
@@ -615,7 +689,137 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 </section>
 </div>
 
-<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures (Sep 28 – Oct 16, 2026), for study use.</p>
+<!-- ================= LECTURE 5 · OCT 19 ================= -->
+<div class="lec" id="L5" hidden>
+<nav class="toc" aria-label="Oct 19 sections"><a href="#n1">Normal lens &amp; crop factor</a><a href="#n2">FF vs crop lenses</a><a href="#n3">Telephoto vs wide</a><a href="#n4">Retrofocus</a><a href="#n5">Framing vs perspective</a><a href="#n6">Prime vs zoom</a><a href="#n7">Macro 1:1</a><a href="#n8">Diopters</a><a href="#n9">Specialty lenses</a></nav>
+
+<section class="topic" id="n1" aria-labelledby="nh1">
+<div class="th"><span class="num">01</span><div><h2 id="nh1">Normal lens &amp; crop factor</h2><p>"Normal" depends on the sensor size</p></div></div>
+<ul class="clean"><li>A <b>normal lens</b> reproduces a field of view that looks <b>natural</b> to a human: about <b>47°</b>, measured on the <b>diagonal</b>.</li><li>Normal focal length ≈ the <b>diagonal of the film or sensor</b>: about <b>50 mm</b> for 35 mm/full frame and about <b>150 mm</b> for 4×5. For digital, it <b>depends on the size of the chip</b>.</li></ul>
+<div class="formula">crop factor = 43.3 mm ÷ sensor diagonal<br>diagonal = √(width² + height²)</div>
+<div class="box"><h3>Crop factor calculator</h3>
+<div class="three"><label>Sensor width (mm)<input type="number" id="cw" value="17.3" step="any" min="1" class="inp"></label><label>Sensor height (mm)<input type="number" id="ch" value="13" step="any" min="1" class="inp"></label><label>Lens focal length (mm)<input type="number" id="cf" value="50" step="any" min="1" class="inp"></label></div>
+<ol class="steps" id="csteps"></ol>
+<div class="row" style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn" data-s="36,24">Full frame</button><button type="button" class="btn" data-s="23.5,15.6">APS-C (Nikon/Sony)</button><button type="button" class="btn" data-s="22.3,14.9">APS-C (Canon)</button><button type="button" class="btn" data-s="17.3,13">Four Thirds</button></div></div>
+<div class="tw"><table><thead><tr><th>Full frame</th><th>Same view on 1.6×</th><th>Same view on 2× (MFT)</th><th>Angle</th></tr></thead><tbody><tr><td>20 mm</td><td>13 mm</td><td>10 mm</td><td>94°</td></tr><tr><td>50 mm</td><td>31 mm</td><td>25 mm</td><td>47°</td></tr><tr><td>100 mm</td><td>62 mm</td><td>50 mm</td><td>24°</td></tr></tbody></table></div>
+<div class="check" data-q="n1"></div>
+</section>
+
+<section class="topic" id="n2" aria-labelledby="nh2">
+<div class="th"><span class="num">02</span><div><h2 id="nh2">Full-frame lens vs crop lens</h2><p>Will the image circle cover the sensor?</p></div></div>
+<svg class="v" viewBox="0 0 440 200" role="img" aria-label="Four cases of lens image circles on full-frame and crop sensors">
+<g font-size="11" text-anchor="middle" fill="#15131C">
+<g transform="translate(60 60)"><circle r="52" fill="#6D4AD9" fill-opacity=".12" stroke="#6D4AD9" stroke-width="2"/><rect x="-43" y="-29" width="86" height="58" fill="#D9822B" fill-opacity=".8"/><text y="74">FF lens · FF sensor ✅</text></g>
+<g transform="translate(170 60)"><circle r="52" fill="#6D4AD9" fill-opacity=".12" stroke="#6D4AD9" stroke-width="2"/><rect x="-28" y="-19" width="56" height="38" fill="#D9822B" fill-opacity=".8"/><text y="74">FF lens · crop sensor ✅</text></g>
+<g transform="translate(280 60)"><rect x="-43" y="-29" width="86" height="58" fill="#D9822B" fill-opacity=".8"/><circle r="34" fill="none" stroke="#C0392B" stroke-width="2.5"/><text y="74" fill="#C0392B" font-weight="800">crop lens · FF sensor ❌</text></g>
+<g transform="translate(385 60)"><circle r="34" fill="#6D4AD9" fill-opacity=".12" stroke="#6D4AD9" stroke-width="2"/><rect x="-28" y="-19" width="56" height="38" fill="#D9822B" fill-opacity=".8"/><text y="74">crop lens · crop ✅</text></g></g>
+<text x="220" y="170" text-anchor="middle" font-size="12" fill="#5E5A6B">circle = what the lens projects · orange = sensor</text></svg>
+<ul class="clean"><li>A <b>full-frame lens works on a crop body</b> (same mount or with an adapter), and it acts longer: a 50 mm on a 2× body looks like <b>100 mm</b>.</li><li>A <b>crop lens on a full-frame body ❌</b>: its image circle is too small, so the corners go dark. Upgrade to full frame later and you have to <b>rebuy your lenses</b>.</li><li>Her advice: <i>"If you buy cheap, you buy twice."</i> Borrow good gear from the cage.</li></ul>
+<div class="check" data-q="n2"></div>
+</section>
+
+<section class="topic" id="n3" aria-labelledby="nh3">
+<div class="th"><span class="num">03</span><div><h2 id="nh3">Telephoto vs wide angle</h2><p>Longer or shorter than normal</p></div></div>
+<div class="tw"><table class="cmp tele"><thead><tr><th></th><th>Telephoto (long)</th><th>Wide angle (short)</th></tr></thead><tbody>
+<tr><td>Focal length</td><td><b>Longer</b> than normal (e.g. 150 mm on FF; normal on 4×5!)</td><td><b>Shorter</b> than normal (&lt;50 mm FF, &lt;150 mm 4×5)</td></tr>
+<tr><td>Magnification</td><td>Increased</td><td>Decreased</td></tr>
+<tr><td>Field of view</td><td>Narrower</td><td>Wider (door peephole)</td></tr>
+<tr><td>Depth of field</td><td>Less</td><td>Great amount (most of the image sharp)</td></tr>
+<tr><td>Perspective look</td><td>"Compressed"</td><td>Can be distorted: perspective and <b>barrel</b> distortion</td></tr>
+<tr><td>Good for</td><td>Subjects you can't or shouldn't get close to (a grizzly bear), <b>portraits</b> (she loves an 85 mm)</td><td>Spaces, landscapes. Extreme wide = <b>fisheye</b> (always use its hood)</td></tr></tbody></table></div>
+<div class="trick"><span>🛡️</span><span>Put a good <b>UV or clear protective filter</b> on expensive lenses. A cheap one causes ghosting.</span></div>
+<div class="box"><h3>Same spot, different focal lengths</h3><label for="zf"><b>Focal length: <span id="zfv">18</span> mm</b> <span class="note" id="zfa"></span></label><input type="range" id="zf" min="18" max="200" value="18" aria-label="Focal length">
+<canvas id="zoomc" width="600" height="400" aria-label="A shoreline scene that gets cropped tighter as focal length increases"></canvas>
+<p class="cap">The camera never moves: only the <b>framing</b> changes. At 18 mm you see the whole shore. At 200 mm the far ships fill the frame. Her slide used 18, 24, 35, 55, 70, 85, 100, 135 and 200 mm.</p></div>
+<div class="check" data-q="n3"></div>
+</section>
+
+<section class="topic" id="n4" aria-labelledby="nh4">
+<div class="th"><span class="num">04</span><div><h2 id="nh4">Telephoto vs reverse telephoto (retrofocus)</h2><p>"A very good test question"</p></div></div>
+<svg class="v" viewBox="0 0 440 190" role="img" aria-label="Normal telephoto: positive then negative element, back nodal plane in front. Retrofocus: negative then positive, back nodal plane behind the lens">
+<g font-size="12" fill="#15131C"><text x="105" y="16" text-anchor="middle" font-weight="800">Normal telephoto</text><text x="330" y="16" text-anchor="middle" font-weight="800">Reverse telephoto (retrofocus)</text></g>
+<g transform="translate(0 30)"><line x1="10" y1="60" x2="210" y2="60" stroke="#9A95A8" stroke-dasharray="3 3"/>
+<path d="M80 15 Q92 60 80 105 Q68 60 80 15Z" fill="#6D4AD9" fill-opacity=".25" stroke="#6D4AD9" stroke-width="2"/><text x="80" y="122" font-size="11" text-anchor="middle" fill="#6D4AD9">+ front</text>
+<path d="M112 20 H122 Q114 60 122 100 H112 Q120 60 112 20Z" fill="#D9822B" fill-opacity=".25" stroke="#D9822B" stroke-width="2"/><text x="117" y="122" font-size="11" text-anchor="middle" fill="#D9822B">− rear</text>
+<line x1="45" y1="10" x2="45" y2="110" stroke="#C0392B" stroke-width="2" stroke-dasharray="4 3"/><text x="45" y="140" font-size="10.5" text-anchor="middle" fill="#C0392B">back nodal plane</text><text x="45" y="153" font-size="10.5" text-anchor="middle" fill="#C0392B">IN FRONT of lens</text>
+<path d="M10 30 H80 L117 45 L200 60 M10 90 H80 L117 75 L200 60" stroke="#15131C" fill="none" stroke-width="1.5"/></g>
+<g transform="translate(225 30)"><line x1="10" y1="60" x2="210" y2="60" stroke="#9A95A8" stroke-dasharray="3 3"/>
+<path d="M60 20 H70 Q62 60 70 100 H60 Q68 60 60 20Z" fill="#D9822B" fill-opacity=".25" stroke="#D9822B" stroke-width="2"/><text x="65" y="122" font-size="11" text-anchor="middle" fill="#D9822B">− front</text>
+<path d="M100 10 Q114 60 100 110 Q86 60 100 10Z" fill="#6D4AD9" fill-opacity=".25" stroke="#6D4AD9" stroke-width="2"/><text x="100" y="122" font-size="11" text-anchor="middle" fill="#6D4AD9">+ rear</text>
+<line x1="150" y1="10" x2="150" y2="110" stroke="#C0392B" stroke-width="2" stroke-dasharray="4 3"/><text x="155" y="140" font-size="10.5" text-anchor="middle" fill="#C0392B">back nodal plane</text><text x="155" y="153" font-size="10.5" text-anchor="middle" fill="#C0392B">BEHIND the lens</text>
+<path d="M10 40 H65 L100 32 L200 60 M10 80 H65 L100 88 L200 60" stroke="#15131C" fill="none" stroke-width="1.5"/></g></svg>
+<div class="two">
+<div class="box"><h3>Normal telephoto</h3><p><b>Positive</b> element in front, <b>negative</b> behind. The <b>back nodal point falls in front</b> of the lens, so a long focal length fits in a shorter barrel. The lens sits close to the sensor and mirror.</p></div>
+<div class="box"><h3>Reverse telephoto = retrofocus</h3><p>Elements <b>swapped</b>: negative in front, positive behind. The <b>back nodal point moves behind</b> the lens group, so the lens sits <b>farther from the mirror</b> and doesn't hit it. Her slide calls it the <b>"Reverse Telephoto <i>Wide Angle</i> Lens"</b>.</p></div>
+</div>
+<div class="beyond"><b>Beyond the lecture</b>Retrofocus is <b>how wide-angle lenses for DSLRs are built</b>. A plain 20 mm lens would have to sit 20 mm from the sensor, inside the mirror's swing. Retrofocus gives a short focal length with a long back-focus distance. Telephotos do the opposite: a long focal length in a short lens.</div>
+<div class="check" data-q="n4"></div>
+</section>
+
+<section class="topic" id="n5" aria-labelledby="nh5">
+<div class="th"><span class="num">05</span><div><h2 id="nh5">Framing vs perspective</h2><p>She "can't impose upon that enough"</p></div></div>
+<div class="formula" style="font-size:16px">Change the LENS → change FRAMING<br>Move the CAMERA → change PERSPECTIVE</div>
+<ul class="clean"><li><b>Perspective</b> = the relative size of objects in a scene, and it's controlled by <b>camera position</b> (distance).</li><li>Move closer and foreground objects become relatively larger. Everything at the same distance scales together.</li><li>Why people think lenses change perspective: with a telephoto you usually stand <b>far away</b>, and with a wide angle <b>close</b>. The <b>distance</b> is what changes the look.</li></ul>
+<div class="check" data-q="n5"></div>
+</section>
+
+<section class="topic" id="n6" aria-labelledby="nh6">
+<div class="th"><span class="num">06</span><div><h2 id="nh6">Prime vs zoom</h2><p>One focal length or many</p></div></div>
+<div class="two">
+<div class="box"><h3>Prime</h3><p><b>Fixed</b> focal length, often a large maximum aperture (<b>"fast"</b>), optimized for that one focal length.</p></div>
+<div class="box"><h3>Zoom (variable focal length)</h3><p>Moves lens groups inside to change the angle of view. Flexible framing, no lens swaps, but a <b>more complex optical design</b>. It <i>may</i> be less well corrected for aberrations, slower (smaller max aperture), and less sharp than a prime.</p></div>
+</div>
+<p class="note">Her slide: image quality, maximum aperture, size and cost depend on the specific lens design.</p>
+<div class="check" data-q="n6"></div>
+</section>
+
+<section class="topic" id="n7" aria-labelledby="nh7">
+<div class="th"><span class="num">07</span><div><h2 id="nh7">Macro lenses &amp; reproduction ratio</h2><p>True macro = 1:1 or more</p></div></div>
+<svg class="v" viewBox="0 0 440 150" role="img" aria-label="A 20 mm object rendered at 1:2, 1:1 and 2:1 on the sensor">
+<g font-size="12" text-anchor="middle"><rect x="30" y="60" width="40" height="40" rx="6" fill="#9A95A8"/><text x="50" y="120">object</text><text x="50" y="136" fill="#5E5A6B">20 mm</text>
+<rect x="140" y="70" width="20" height="20" rx="4" fill="#D9822B"/><text x="150" y="120" font-weight="800">1:2</text><text x="150" y="136" fill="#5E5A6B">10 mm · half size</text>
+<rect x="230" y="60" width="40" height="40" rx="6" fill="#6D4AD9"/><text x="250" y="120" font-weight="800">1:1</text><text x="250" y="136" fill="#5E5A6B">20 mm · life size</text>
+<rect x="330" y="40" width="80" height="80" rx="8" fill="#1F8A70"/><text x="370" y="136" font-weight="800">2:1 · 40 mm</text></g></svg>
+<ul class="clean"><li>A <b>macro lens</b> focuses at very short distances for high magnification, and it's built to minimize <b>distortion</b> and correct <b>flatness of field</b> up close.</li><li><b>1:1 (life size)</b>: a 15 mm ladybug is 15 mm on the sensor. Only lenses that reach <b>1:1 or more</b> are true macro lenses.</li><li><b>1:2</b>: half life size. <b>2:1</b>: twice life size.</li><li>The macro scale on the lens barrel shows 1:1, 1:2 and so on.</li></ul>
+<div class="check" data-q="n7"></div>
+</section>
+
+<section class="topic" id="n8" aria-labelledby="nh8">
+<div class="th"><span class="num">08</span><div><h2 id="nh8">Supplemental lenses &amp; diopters</h2><p>A cheap way to get closer</p></div></div>
+<div class="formula">D = 1 / f (f in METERS) · f = 1 / D<br>diopters add: D<sub>c</sub> = D + D<sub>s</sub></div>
+<div class="box"><h3>Diopter calculator</h3><div class="row" style="display:flex;gap:8px;flex-wrap:wrap" id="dbtns"></div><p id="dout" class="formula" style="font-size:16px"></p></div>
+<ul class="clean"><li>A <b>supplemental (close-up) lens</b> screws onto the front of a lens. Its power is given in <b>diopters</b>, which are defined in <b>meters</b>.</li><li>Examples from her slide: 2 diopters → f = ½ m = <b>500 mm</b>. 4 diopters → ¼ m = <b>250 mm</b>.</li><li>A cheap, light option (great for travel), but its distortion correction is limited, and quality depends on the glass.</li><li>The number on the ring (e.g. <b>49 mm</b>) is the <b>thread diameter</b>, not the focal length.</li><li>Lab: with one added you must move the camera <b>closer</b> to focus (her floor tiles are 1 ft each!).</li></ul>
+<div class="beyond"><b>Beyond the lecture</b>Her slide says a supplemental lens is a "cheap way of increasing focal length". Use her words on the exam. Strictly, a <b>+ diopter</b> adds power, so the combined focal length gets <b>shorter</b>. That's what lets you focus closer, and the result is <b>more magnification</b>.</div>
+<div class="check" data-q="n8"></div>
+</section>
+
+<section class="topic" id="n9" aria-labelledby="nh9">
+<div class="th"><span class="num">09</span><div><h2 id="nh9">Specialty lenses</h2><p>Tilt-shift, mirror and soft focus</p></div></div>
+<div class="three" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+<div class="box"><h3>Tilt-shift (perspective control)</h3><p>Shifts up and down or side to side to <b>prevent converging lines</b> (tall buildings leaning in). It's like a small piece of a 4×5 camera's movements, great for <b>architecture and real estate</b>. It can also fake "miniature" scenes in camera.</p></div>
+<div class="box"><h3>Catadioptric (mirror, folded optics)</h3><p>Curved <b>mirrors</b> plus glass fold the light path, so you get a <b>long focal length in a short, light lens</b> (like telescopes). Drawbacks: usually <b>one fixed f-stop</b> (no depth-of-field control), the f-number ignores the light lost to the center mirror, so metering can be off, and you may need ND filters.</p></div>
+<div class="box"><h3>Soft focus (portrait)</h3><p>Made by <b>under-correcting spherical aberration</b>. The softness is only around the <b>edges</b>; the <b>center stays sharp</b>. The effect shrinks as you <b>stop down</b>. It's <b>not</b> the same as defocusing (that's just blur).</p></div>
+</div>
+<div class="trick"><span>👁️</span><span>Portraits: <b>the eyes must be sharp.</b> The rest can fall off.</span></div>
+<div class="box"><h3>Tilt-shift: fix converging lines</h3>
+<div class="seg" role="group" aria-label="Perspective control" id="tsv"><button type="button" aria-pressed="true" data-v="0">Camera tilted up</button><button type="button" aria-pressed="false" data-v="1">Shift lens (camera level)</button></div>
+<svg class="v" id="tssvg" viewBox="0 0 440 260" role="img" aria-label="A tall building whose sides lean inward when the camera tilts up, and stay straight with a shift lens" style="max-width:420px;margin:0 auto"></svg>
+<p class="cap" id="tscap"></p></div>
+<div class="box"><h3>Catadioptric (mirror) lens: folded light path</h3>
+<svg class="v" viewBox="0 0 460 190" role="img" aria-label="Light enters a ring opening, bounces off a large rear mirror to a small front mirror, then back through a center hole to the sensor">
+<line x1="10" y1="95" x2="450" y2="95" stroke="#9A95A8" stroke-dasharray="4 4"/>
+<rect x="60" y="20" width="10" height="150" rx="3" fill="#9CC9F0" stroke="#3F6CC9"/><text x="65" y="186" text-anchor="middle" font-size="10.5">corrector plate</text>
+<rect x="60" y="75" width="14" height="40" fill="#15131C"/><text x="67" y="70" text-anchor="middle" font-size="10.5" fill="#15131C">secondary mirror</text>
+<path d="M300 20 Q285 95 300 170" fill="none" stroke="#15131C" stroke-width="6"/><rect x="290" y="85" width="16" height="20" fill="#fff"/><text x="305" y="186" text-anchor="middle" font-size="10.5">primary mirror (hole in center)</text>
+<g stroke="#E0A21E" stroke-width="2.5" fill="none"><path d="M10 35 H292 L74 85 L420 95"/><path d="M10 155 H292 L74 105 L420 95"/></g>
+<rect x="420" y="70" width="6" height="50" fill="#D9822B"/><text x="423" y="62" text-anchor="middle" font-size="10.5" fill="#D9822B">sensor</text>
+<text x="190" y="128" text-anchor="middle" font-size="11" fill="#5E5A6B">light travels the tube 3 times → long focal length, short lens</text></svg>
+<p class="cap">The dark secondary mirror blocks the <b>center</b>. That's why there's only one fixed f-stop, why the f-number doesn't account for the lost light, and why out-of-focus highlights look like little <b>donuts</b>.</p></div>
+<div class="check" data-q="n9"></div>
+</section>
+</div>
+
+<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures (Sep 21 – Oct 19, 2026), for study use.</p>
 </div>
 
 <script>
@@ -709,6 +913,15 @@ function drawETTR(){var e=+evS.value;document.getElementById('evv').textContent=
 evS.addEventListener('input',drawETTR);drawETTR();
 /* ===== extra quick checks ===== */
 Object.assign(Q,{
+n1:["Which lens is \"normal\" on a full-frame camera?",["About 50 mm (≈ the sensor diagonal)","About 150 mm","About 24 mm","About 85 mm"],"Normal ≈ the diagonal: ~50 mm for full frame, ~150 mm for 4×5. It gives about 47°, like the eye."],
+n2:["Which combination does NOT work?",["A crop-sensor lens on a full-frame camera","A full-frame lens on a crop camera","A full-frame lens on a full-frame camera","A crop lens on a crop camera"],"A crop lens's image circle is too small for a full-frame sensor."],
+n3:["A telephoto lens gives…",["More magnification, a narrower view and less depth of field","A wider view and more depth of field","Barrel distortion","Less magnification"],"Telephoto = longer than normal."],
+n4:["In a reverse telephoto (retrofocus) lens, where is the back nodal point?",["Behind the lens group, so the lens sits away from the mirror","In front of the lens","Exactly at the sensor","There isn't one"],"Swapping the elements moves the back nodal point behind the group. It's the wide-angle design."],
+n5:["What changes perspective?",["Moving the camera closer or farther","Zooming the lens","Changing the aperture","Changing the ISO"],"Lens → framing. Camera position → perspective."],
+n6:["A prime lens is…",["A fixed focal length lens, often with a large maximum aperture","A variable focal length lens","Always a telephoto","A lens with a built-in mirror"],"Prime = one focal length, usually fast."],
+n7:["To be a TRUE macro lens, it must reach at least…",["1:1 (life size)","1:2 (half size)","1:10","2:1"],"Only lenses that reach 1:1 or more are true macro lenses."],
+n8:["A +4 diopter supplemental lens has a focal length of…",["250 mm","4 mm","400 mm","40 mm"],"f = 1/D = 1/4 m = 0.25 m = 250 mm."],
+n9:["How does a soft-focus lens make its effect?",["By under-correcting spherical aberration, so the edges are soft and the center is sharp","By defocusing the lens","With a mirror","With a blur filter on the sensor"],"It's not defocus. The center stays sharp, and stopping down reduces the effect."],
 d1:["On the camera it's a photosite. In the file it's a…",["Pixel","Photodiode","Bit","Voxel"],"Photosite = on the sensor. Pixel = in the file."],
 d2:["What turns the photosite's analog voltage into a digital count?",["The A/D (analog-to-digital) converter","The Bayer filter","The microlens","The shutter"],"The A/D converter. The number of possible counts is limited by bit depth."],
 d3:["How many colors can a 24-bit image show?",["About 16.7 million","256","65,536","4,096"],"2²⁴ ≈ 16.7 million (8 bits each for R, G and B)."],
@@ -752,6 +965,19 @@ document.querySelectorAll('.toc a').forEach(function(a){if(a._b)return;a._b=1;a.
  try{if(window.frameElement&&window.parent!==window){var fr=window.frameElement.getBoundingClientRect();window.parent.scrollTo({top:window.parent.scrollY+fr.top+t.getBoundingClientRect().top-12,behavior:'smooth'});return;}}catch(err){}
  t.scrollIntoView({behavior:'smooth',block:'start'});});});
 try{var saved=localStorage.getItem('e2-lec');if(saved&&document.getElementById(saved))showLec(saved,false);}catch(e){}
+
+/* ===== crop factor & diopters (Oct 19) ===== */
+(function(){var cw=document.getElementById('cw'),ch=document.getElementById('ch'),cf=document.getElementById('cf'),o=document.getElementById('csteps');if(!cw)return;
+function r1(n){return Math.round(n*10)/10;}
+function calc(){var w=+cw.value,h=+ch.value,f=+cf.value;if(!(w>0&&h>0&&f>0)){o.innerHTML='<li>Enter values above 0</li>';return;}var d=Math.sqrt(w*w+h*h),c=43.3/d,aov=2*Math.atan(d/(2*f))*180/Math.PI;
+ o.innerHTML='<li>diagonal = √('+w+'² + '+h+'²) = '+r1(d)+' mm</li><li>crop = 43.3 ÷ '+r1(d)+' = '+(Math.round(c*100)/100)+'×</li><li>normal lens ≈ the diagonal ≈ '+Math.round(d)+' mm'+(c>0.95&&c<1.05?' (for full frame, class rounds this to 50 mm)':'')+'</li><li class="last">'+f+' mm acts like '+Math.round(f*c)+' mm on full frame · '+r1(aov)+'° diagonal</li>';}
+[cw,ch,cf].forEach(function(e){e.addEventListener('input',calc);});
+document.querySelectorAll('#n1 .btn[data-s]').forEach(function(b){b.addEventListener('click',function(){var v=b.dataset.s.split(',');cw.value=v[0];ch.value=v[1];calc();});});calc();
+var sel={1:false,2:true,4:false},db=document.getElementById('dbtns'),dout=document.getElementById('dout');
+function dr(){var D=0;Object.keys(sel).forEach(function(k){if(sel[k])D+=+k;});var parts=Object.keys(sel).filter(function(k){return sel[k];}).map(function(k){return '+'+k;});
+ dout.innerHTML=D?('D = '+parts.join(' ')+' = <b>'+D+' diopters</b> → f = 1/'+D+' m = <b>'+Math.round(1000/D)+' mm</b>'):'Tap a lens to add it';
+ db.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',sel[b.dataset.d]?'true':'false');b.style.background=sel[b.dataset.d]?'var(--accent)':'';b.style.color=sel[b.dataset.d]?'#fff':'';});}
+[1,2,4].forEach(function(k){var b=document.createElement('button');b.type='button';b.className='btn';b.dataset.d=k;b.textContent='+'+k+' diopter';b.addEventListener('click',function(){sel[k]=!sel[k];dr();});db.appendChild(b);});dr();})();
 
 /* ===== bytes ===== */
 var tb=document.getElementById('tb');function tbf(){var n=+tb.value;document.getElementById('tbv').textContent=n;var bytes=n*1e12,gib=bytes/Math.pow(1024,3);document.getElementById('tbout').textContent=n+' TB = '+(n*1e12).toLocaleString()+' bytes → shows as ≈ '+Math.round(gib).toLocaleString()+' GB on a computer that counts in 1,024s';}tb.addEventListener('input',tbf);tbf();
@@ -806,6 +1032,93 @@ function aovf(){var f=+document.getElementById('fl').value,d=+document.getElemen
  ax.fillStyle='#15131C';ax.fillRect(cx-18,cy-12,18,24);ax.font='800 16px Inter,sans-serif';ax.fillText(deg.toFixed(1)+'°',cx+40,cy+6);
  var crop=(43.27/d);document.getElementById('aovcap').textContent=f+' mm on '+(crop>1.05?'a '+crop.toFixed(1)+'× crop sensor (looks like '+Math.round(f*crop)+' mm on full frame)':'full frame')+' → '+deg.toFixed(1)+'° diagonal'+(deg>60?' · wide angle':deg<25?' · telephoto':' · normal-ish');}
 document.getElementById('fl').addEventListener('input',aovf);document.getElementById('sens').addEventListener('change',aovf);aovf();
+
+
+/* ===== extra visuals (slide pass) ===== */
+(function(){
+var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function seg(id,cb){var g=document.getElementById(id);if(!g)return;g.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){g.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});cb(b.dataset.v);});});}
+/* bitonal H */
+(function(){var svg=document.getElementById('bitonal');if(!svg)return;var H=['11111111111','10001110001','11011111011','11011111011','11011111011','11000000011','11011111011','11011111011','11011111011','10001110001','11111111111'];
+ function draw(mode){var s='';for(var y=0;y<11;y++)for(var x=0;x<11;x++){var v=H[y][x];s+='<rect x="'+(x*30)+'" y="'+(y*30)+'" width="30" height="30" fill="'+(mode==='num'?'#fff':(v==='1'?'#fff':'#15131C'))+'" stroke="#C9C3DA"/>';if(mode==='num')s+='<text x="'+(x*30+15)+'" y="'+(y*30+20)+'" text-anchor="middle" font-size="14" font-weight="800" fill="'+(v==='1'?'#9A95A8':'#15131C')+'">'+v+'</text>';}svg.innerHTML=s;}
+ draw('img');seg('btv',draw);})();
+/* bits bar chart */
+(function(){var c=document.getElementById('bitbars');if(!c)return;var x=c.getContext('2d'),W=560,H=260,L=72,B=215,T=24,bw=(W-L-10)/16;
+ x.font='16px Inter,sans-serif';x.fillStyle='#5E5A6B';x.strokeStyle='#E2DEEE';
+ [0,20000,40000,60000].forEach(function(v){var y=B-(v/65536)*(B-T);x.beginPath();x.moveTo(L,y);x.lineTo(W-10,y);x.stroke();x.textAlign='right';x.fillText(v.toLocaleString(),L-6,y+4);});
+ for(var b=1;b<=16;b++){var v=Math.pow(2,b),h=Math.max(1,(v/65536)*(B-T)),X=L+(b-1)*bw+3;x.fillStyle=b===8?'#D9822B':(b===16?'#6D4AD9':'#9C8BE0');x.fillRect(X,B-h,bw-6,h);x.fillStyle='#5E5A6B';x.textAlign='center';x.fillText(b,X+(bw-6)/2,B+16);}
+ x.fillStyle='#15131C';x.font='800 17px Inter,sans-serif';x.textAlign='center';x.fillText('number of bits',L+(W-L)/2,B+32);
+ x.fillStyle='#D9822B';x.fillText('8 bits = 256',L+7.5*bw,B-30);x.fillStyle='#6D4AD9';x.textAlign='right';x.fillText('16 bits = 65,536',W-14,T+10);})();
+/* low vs high frequency */
+(function(){var a=document.getElementById('lfa'),cc=document.getElementById('lfc'),s=document.getElementById('lfb');if(!a)return;var W=160,H=110,wall=[],grass=[],sd=3;function r(){sd=(sd*9301+49297)%233280;return sd/233280;}
+ for(var y=0;y<H;y++)for(var x=0;x<W;x++){var d=Math.hypot(x-40,y-20);wall.push(Math.max(0,Math.min(1,0.95-d/190)));var g=0.45+0.25*Math.sin(x*1.7+Math.sin(y*0.9)*2)+0.3*(r()-0.5)+0.15*Math.sin(y*0.6);grass.push(Math.max(0,Math.min(1,g)));}
+ function q(cv,data,L,tint){var ctx=cv.getContext('2d'),im=ctx.createImageData(W,H);for(var i=0;i<data.length;i++){var v=Math.round(data[i]*(L-1))/(L-1);im.data[i*4]=Math.round(v*tint[0]);im.data[i*4+1]=Math.round(v*tint[1]);im.data[i*4+2]=Math.round(v*tint[2]);im.data[i*4+3]=255;}ctx.putImageData(im,0,0);}
+ function draw(){var b=+s.value,L=Math.pow(2,b);document.getElementById('lfbv').textContent=b;document.getElementById('lfbl').textContent=L;q(a,wall,L,[250,244,236]);q(cc,grass,L,[150,215,120]);}
+ s.addEventListener('input',draw);draw();})();
+/* readout race */
+(function(){var c=document.getElementById('readout');if(!c)return;var x=c.getContext('2d'),N=4,cap=document.getElementById('rdcap'),grid,out,ticks,timer=null,mode='';
+ function reset(){grid=[];for(var r=0;r<N;r++){grid.push([]);for(var k=0;k<N;k++)grid[r].push(30+Math.round(Math.random()*200));}out=[];ticks=0;mode='';draw();cap.textContent='Each square is one photosite’s charge. Press a button.';}
+ function draw(){x.clearRect(0,0,560,250);var S=40,X0=40,Y0=20;for(var r=0;r<N;r++)for(var k=0;k<N;k++){var v=grid[r][k];x.fillStyle=v==null?'#F4F5F7':'rgb('+v+','+v+','+(v+20>255?255:v+20)+')';x.fillRect(X0+k*S,Y0+r*S,S-4,S-4);}
+  x.strokeStyle='#D9822B';x.lineWidth=2;x.strokeRect(X0-4,Y0+(N-1)*S-4,N*S+4,S+4);x.fillStyle='#D9822B';x.font='15px Inter,sans-serif';x.fillText(mode==='ccd'?'readout row':'',X0,Y0+N*S+14);
+  x.fillStyle='#6D4AD9';x.fillRect(260,Y0+(N-1)*S,70,S-4);x.fillStyle='#fff';x.font='800 18px Inter,sans-serif';x.fillText('A/D',278,Y0+(N-1)*S+23);
+  x.fillStyle='#15131C';x.font='800 19px Inter,sans-serif';x.fillText('Read: '+out.length+' / 16',350,40);x.fillText('Steps: '+ticks,350,68);
+  out.slice(-16).forEach(function(v,i){x.fillStyle='rgb('+v+','+v+','+v+')';x.fillRect(350+(i%8)*24,90+Math.floor(i/8)*24,20,20);});}
+ function stop(){if(timer){clearInterval(timer);timer=null;}}
+ function ccdTick(){var bottom=grid[N-1],has=bottom.some(function(v){return v!=null;});
+  if(has){var v=bottom.pop();bottom.unshift(null);if(v!=null)out.push(v);}
+  else{var any=false;for(var r=0;r<N-1;r++)for(var k=0;k<N;k++)if(grid[r][k]!=null)any=true;
+   if(!any){stop();cap.innerHTML='<b>CCD finished in '+ticks+' steps.</b> Every row shifts down one at a time and each pixel goes through the same single A/D converter. That\u2019s uniform, but slow and power-hungry.';draw();return;}
+   for(var r2=N-1;r2>0;r2--)grid[r2]=grid[r2-1].slice();grid[0]=[null,null,null,null];}
+  ticks++;draw();}
+ function readCCD(){stop();reset();mode='ccd';cap.textContent='CCD: shift the bottom row out one pixel at a time, then move every row down…';timer=setInterval(ccdTick,RM?40:220);}
+ function readCMOS(){stop();reset();mode='cmos';ticks=1;for(var r=0;r<N;r++)for(var k=0;k<N;k++){out.push(grid[r][k]);grid[r][k]=null;}draw();cap.innerHTML='<b>CMOS finished in 1 step.</b> Every photosite has its own A/D converter, so all of them are read at once: fast, with low power.';}
+ document.getElementById('rdccd').addEventListener('click',readCCD);document.getElementById('rdcmos').addEventListener('click',readCMOS);document.getElementById('rdreset').addEventListener('click',function(){stop();reset();});reset();})();
+/* moon */
+(function(){var s=document.getElementById('moon');if(!s)return;var Wd=180,rad=[];for(var y=0;y<Wd;y++)for(var x=0;x<Wd;x++){var d=Math.hypot(x-90,y-90),v=0;if(d<70){v=1.9;[[70,70,14],[110,95,18],[85,125,10],[118,60,8],[60,105,9]].forEach(function(c){var e=Math.hypot(x-c[0],y-c[1]);if(e<c[2])v-=0.7*(1-0.5*e/c[2]);});v*=1-0.15*(d/70);}rad.push(v);}
+ function paint(id,raw,stops){var ctx=document.getElementById(id).getContext('2d'),im=ctx.createImageData(Wd,Wd),k=Math.pow(2,-stops);for(var i=0;i<rad.length;i++){var stored=raw?Math.min(4.0,rad[i]):Math.min(1,rad[i]);var v=Math.round(Math.min(1,stored*k)*255);if(raw&&stops===0)v=Math.round(Math.min(1,rad[i])*255);im.data[i*4]=v;im.data[i*4+1]=v;im.data[i*4+2]=Math.round(v*0.97);im.data[i*4+3]=255;}ctx.putImageData(im,0,0);}
+ function draw(){var st=+s.value;document.getElementById('moonv').textContent=st;paint('moonj',false,st);paint('moonr',true,st);}s.addEventListener('input',draw);draw();})();
+/* aliasing */
+(function(){var c=document.getElementById('aliasc'),s=document.getElementById('alias');if(!c)return;var ctx=c.getContext('2d'),N=400,src=new Float32Array(N*N);for(var y=0;y<N;y++)for(var x=0;x<N;x++){var dx=x-N/2,dy=y-N/2;src[y*N+x]=0.5+0.5*Math.cos((dx*dx+dy*dy)*0.0105);}
+ function draw(){var n=+s.value;document.getElementById('aliasv').textContent=n;var small=document.createElement('canvas');small.width=small.height=n;var sc=small.getContext('2d'),im=sc.createImageData(n,n);
+  for(var y=0;y<n;y++)for(var x=0;x<n;x++){var sx=Math.floor((x+0.5)*N/n),sy=Math.floor((y+0.5)*N/n),v=Math.round(src[sy*N+sx]*255),i=(y*n+x)*4;im.data[i]=v;im.data[i+1]=v;im.data[i+2]=v;im.data[i+3]=255;}
+  sc.putImageData(im,0,0);ctx.imageSmoothingEnabled=false;ctx.drawImage(small,0,0,N,N);
+  document.getElementById('aliascap').innerHTML=n>=360?'Enough samples: the rings look right.':'Under-sampled: <b>false rings (moiré)</b> appear in the corners that aren’t in the real pattern. That’s aliasing, a sampling problem, not only a JPEG problem.';}
+ s.addEventListener('input',draw);draw();})();
+/* pinhole */
+(function(){var s=document.getElementById('ph'),svg=document.getElementById('phsvg');if(!s)return;var names=['tiny','small','medium','large','huge'];
+ function draw(){var k=+s.value,hole=k*4,blur=k*1.6,bright=0.25+k*0.17;document.getElementById('phv').textContent=names[k-1];
+  var g='<line x1="10" y1="110" x2="450" y2="110" stroke="#9A95A8" stroke-dasharray="4 4"/><path d="M70 110 V40" stroke="#6D4AD9" stroke-width="6"/><path d="M60 52 L70 34 L80 52" fill="#6D4AD9"/><text x="70" y="135" text-anchor="middle" font-size="11">object</text>';
+  g+='<rect x="236" y="20" width="8" height="'+(90-hole/2)+'" fill="#15131C"/><rect x="236" y="'+(110+hole/2)+'" width="8" height="'+(90-hole/2)+'" fill="#15131C"/><text x="240" y="14" text-anchor="middle" font-size="11">pinhole</text>';
+  g+='<path d="M70 40 L410 180 M70 110 L410 110" stroke="#E0A21E" stroke-width="'+(1+hole/3)+'" stroke-opacity=".55"/>';
+  g+='<rect x="404" y="20" width="6" height="180" fill="#C9C3DA"/><g opacity="'+bright.toFixed(2)+'"><path d="M394 110 V176" stroke="#6D4AD9" stroke-width="'+(6+blur)+'" stroke-opacity="'+(1-k*0.12).toFixed(2)+'"/><path d="M384 166 L394 184 L404 166" fill="#6D4AD9"/></g><text x="380" y="210" text-anchor="middle" font-size="11">upside-down image on the back</text>';
+  g+='<path d="M70 150 H236" stroke="#15131C"/><text x="153" y="166" text-anchor="middle" font-size="11">object distance</text><path d="M244 195 H404" stroke="#15131C"/><text x="324" y="190" text-anchor="middle" font-size="11">image distance</text>';
+  svg.innerHTML=g;document.getElementById('phcap').innerHTML=k<=2?'Small hole: <b>sharper but dim</b>, so you need a very long exposure.':(k===3?'Medium hole: a balance between sharpness and brightness.':'Big hole: <b>brighter but blurry</b>, because each point spreads into a big spot.')+' Either way, the image is <b>upside down</b>, and there’s only one sharp image distance for each hole size.';}
+ s.addEventListener('input',draw);draw();})();
+/* focal-length zoom */
+(function(){var c=document.getElementById('zoomc'),s=document.getElementById('zf');if(!c)return;var ctx=c.getContext('2d'),base=document.createElement('canvas');base.width=1800;base.height=1200;var b=base.getContext('2d');
+ var gr=b.createLinearGradient(0,0,0,700);gr.addColorStop(0,'#8EC1EE');gr.addColorStop(1,'#DCEBF6');b.fillStyle=gr;b.fillRect(0,0,1800,700);
+ b.fillStyle='#9DB4C8';b.beginPath();b.moveTo(0,640);for(var x=0;x<=1800;x+=60)b.lineTo(x,600-40*Math.sin(x/170)-20*Math.sin(x/53));b.lineTo(1800,700);b.lineTo(0,700);b.fill();
+ b.fillStyle='#5C8DB3';b.fillRect(0,690,1800,180);
+ function ship(x,y,w,col){b.fillStyle=col;b.fillRect(x,y,w,w*0.16);b.fillStyle='#E9ECEF';b.fillRect(x+w*0.7,y-w*0.12,w*0.16,w*0.12);b.fillStyle='#2B2B30';b.fillRect(x+w*0.75,y-w*0.2,w*0.04,w*0.08);}
+ ship(830,718,120,'#B23A3A');ship(990,722,90,'#3A3F55');ship(700,726,60,'#C4572B');
+ b.fillStyle='#6DA34D';b.fillRect(0,860,1800,340);b.fillStyle='#4E7F38';for(var i=0;i<60;i++){b.fillRect(Math.random()*1800,880+Math.random()*300,4,14);}
+ b.fillStyle='#8B8F96';b.fillRect(780,930,200,14);b.fillRect(800,944,10,30);b.fillRect(950,944,10,30);
+ function tree(x,y,s){b.fillStyle='#5A3E25';b.fillRect(x-s*0.06,y-s*0.6,s*0.12,s*0.7);b.fillStyle='#2F6B32';[[0,-0.9,0.45],[-0.3,-0.7,0.35],[0.3,-0.7,0.35],[0,-1.2,0.32]].forEach(function(t){b.beginPath();b.arc(x+t[0]*s,y+t[1]*s,t[2]*s,0,7);b.fill();});}
+ tree(120,1050,420);tree(1700,1080,460);tree(1420,880,220);tree(380,880,200);
+ function draw(){var f=+s.value;document.getElementById('zfv').textContent=f;var a=2*Math.atan(43.3/(2*f))*180/Math.PI;document.getElementById('zfa').textContent='≈ '+a.toFixed(0)+'° view';
+  var k=18/f,w=1800*k,h=1200*k,cx=900,cy=760;var sx=Math.max(0,Math.min(1800-w,cx-w/2)),sy=Math.max(0,Math.min(1200-h,cy-h/2));ctx.drawImage(base,sx,sy,w,h,0,0,600,400);
+  ctx.fillStyle='rgba(0,0,0,.55)';ctx.fillRect(10,360,90,30);ctx.fillStyle='#fff';ctx.font='800 16px Inter,sans-serif';ctx.fillText(f+' mm',20,381);}
+ s.addEventListener('input',draw);draw();})();
+/* tilt-shift */
+(function(){var svg=document.getElementById('tssvg');if(!svg)return;
+ function draw(v){var shift=v==='1';var topW=shift?160:96,bw=160,cx=220;var g='<rect width="440" height="260" fill="#DCEBF6"/><rect y="220" width="440" height="40" fill="#8FA88A"/>';
+  var tl=cx-topW/2,tr=cx+topW/2,bl=cx-bw/2,br=cx+bw/2;g+='<path d="M'+bl+' 222 L'+tl+' 28 L'+tr+' 28 L'+br+' 222Z" fill="#C9B79C" stroke="#7A6A55" stroke-width="2"/>';
+  for(var r=0;r<7;r++){var t=0.1+r*0.125,y=222-(222-28)*t,lw=bw+(topW-bw)*t;for(var k=0;k<3;k++){var x=cx-lw/2+lw*(0.15+k*0.28),ww=lw*0.16;g+='<rect x="'+x.toFixed(1)+'" y="'+(y-14).toFixed(1)+'" width="'+ww.toFixed(1)+'" height="14" fill="#5C8DB3"/>';}}
+  if(!shift){g+='<path d="M'+tl+' 28 L'+(cx-14)+' -120 M'+tr+' 28 L'+(cx+14)+' -120" stroke="#C0392B" stroke-width="2" stroke-dasharray="6 5"/><text x="220" y="250" text-anchor="middle" font-size="12" fill="#C0392B" font-weight="800">sides lean in (converge)</text>';}
+  else g+='<text x="220" y="250" text-anchor="middle" font-size="12" fill="#1F8A70" font-weight="800">verticals stay parallel ✓</text>';
+  svg.innerHTML=g;document.getElementById('tscap').innerHTML=shift?'Camera kept <b>level</b>, lens <b>shifted up</b>: the whole building fits and the verticals stay straight. Great for architecture and real estate.':'Tilting the camera up to fit the building makes the top look narrower and the bottom "fat" (keystone distortion).';}
+ draw('0');seg('tsv',draw);})();
+})();
 
 })();
 </script>
