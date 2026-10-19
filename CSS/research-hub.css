@@ -42,7 +42,8 @@
 .rhub-x{width:44px;height:44px;flex:none;border-radius:50%;border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.18);color:#fff;font-size:26px;line-height:1;cursor:pointer;transition:transform .15s,background .15s}
 .rhub-x:hover{background:rgba(255,255,255,.3);transform:rotate(90deg)}
 .rhub-x:focus-visible{outline:3px solid #fff;outline-offset:2px}
-.rhub-frame{display:block;width:100%;border:0;min-height:320px;background:#F6F5FA}
+.rhub-frame{display:block;width:1px;min-width:100%;max-width:100%;border:0;min-height:320px;background:#F6F5FA}
+.rhub,.rhub-panel{max-width:100%;overflow-x:clip}
 @media(prefers-reduced-motion:reduce){.rhub-tile,.rhub-go,.rhub-x{transition:none}.rhub-panel{animation:none}}
 
 .rhub h3{

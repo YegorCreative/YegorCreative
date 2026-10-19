@@ -119,11 +119,15 @@
 <script>
 (function(){
 /* To add a lab: add a group below, then push cards with g:"<group>" and a matching VIZ entry. */
-var GROUPS={l1:{name:"Lab 1 · Noise",c:"--eqf-c1",cs:"--eqf-c1s"},l2:{name:"Lab 2",c:"--eqf-c2",cs:"--eqf-c2s"},l3:{name:"Lab 3",c:"--eqf-c3",cs:"--eqf-c3s"}};
+var GROUPS={l1:{name:"Lab 1 · Noise",c:"--eqf-c1",cs:"--eqf-c1s"},lec:{name:"Lectures",c:"--eqf-c2",cs:"--eqf-c2s"},l3:{name:"Lab 3",c:"--eqf-c3",cs:"--eqf-c3s"}};
 var S='fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
 var ICONS={
  snr:'<svg viewBox="0 0 32 32" '+S+'><path d="M3 24 C8 24 10 6 16 6 S24 24 29 24"/><path d="M16 6v20" stroke-dasharray="2 2"/><path d="M11 18h10"/></svg>',
  stops:'<svg viewBox="0 0 32 32" '+S+'><path d="M4 26h6v-6h6v-6h6V8h6"/><path d="M24 4l4 4-4 4" /></svg>',
+ bits:'<svg viewBox="0 0 32 32" '+S+'><rect x="4" y="20" width="5" height="8"/><rect x="11" y="15" width="5" height="13"/><rect x="18" y="9" width="5" height="19"/><rect x="25" y="4" width="4" height="24"/></svg>',
+ lens:'<svg viewBox="0 0 32 32" '+S+'><path d="M16 4 Q22 16 16 28 Q10 16 16 4Z"/><path d="M2 10 L16 10 L30 22"/><path d="M2 16 H30" stroke-dasharray="2 2"/></svg>',
+ scale:'<svg viewBox="0 0 32 32" '+S+'><rect x="3" y="18" width="7" height="10"/><rect x="14" y="4" width="15" height="24"/><path d="M10 23 L14 16"/></svg>',
+ aov:'<svg viewBox="0 0 32 32" '+S+'><path d="M4 16 L28 4 M4 16 L28 28"/><path d="M12 12 Q15 16 12 20"/><rect x="2" y="13" width="4" height="6"/></svg>',
  crop:'<svg viewBox="0 0 32 32" '+S+'><rect x="3" y="6" width="26" height="20" rx="2"/><rect x="9" y="10.5" width="14" height="11" rx="1.5" fill="currentColor" fill-opacity=".3"/></svg>'
 };
 var BULB='<svg class="eqf-bulb" viewBox="0 0 24 24" '+S+'><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg>';
@@ -151,7 +155,37 @@ var CARDS=[
  steps:["Diagonal = √(23.5² + 15.6²) = 28.2 mm","Crop = 43.3 ÷ 28.2 ≈ 1.5","Pixel = 23.5 mm ÷ 6000 px = 0.0039 mm","= 3.9 µm"],given:"APS-C sensor 23.5 × 15.6 mm, 6000 px across",
  note:"Same megapixels on a bigger sensor = bigger pixels. That's why full frame usually has less noise at the same ISO.",
  trick:"<b>Big bucket, more rain.</b> A bigger pixel is a bigger bucket: it catches more light (signal) for the same noise.",
- q:"A sensor is 36 mm wide with 7200 px across. What's the pixel size?",a:"36 ÷ 7200 = 0.005 mm = 5.0 µm"}
+ q:"A sensor is 36 mm wide with 7200 px across. What's the pixel size?",a:"36 ÷ 7200 = 0.005 mm = 5.0 µm"},
+{g:"lec",ic:"bits",name:"Bit Depth: Gray Levels",formula:"levels = 2^bits\nvalues = 0 … (2^bits − 1)",
+ what:"Bit depth is how many gray levels each channel can record. Each extra bit DOUBLES the levels. It's not the same thing as dynamic range (the useful range from darkest to brightest detail).",
+ parts:["<b>8-bit</b> (JPEG) = 256 levels, values <b>0–255</b>","<b>12-bit</b> (typical raw) = 4,096 levels","<b>16-bit</b> = 65,536 levels","Printing is done at 8 bits, so edit at more bits to avoid banding"],
+ table:[["Bits","Levels","Values"],["1","2","0–1"],["8","256","0–255"],["12","4,096","0–4,095"],["14","16,384","0–16,383"],["16","65,536","0–65,535"]],
+ steps:["levels = 2^bits","= 2^10","= 1,024 levels","values 0 – 1,023"],given:"A 10-bit image",
+ note:"8 bits = 1 byte. Kilobyte: 1,000 bytes (decimal) or 1,024 bytes (binary).",
+ trick:"<b>Each bit doubles.</b> 8 bits → 256, so 0–255 (not 1–256!). A favorite test question.",
+ q:"How many levels does a 14-bit raw have?",a:"2^14 = 16,384 levels (0–16,383)"},
+{g:"lec",ic:"lens",name:"Lens Equation",formula:"1/f = 1/u + 1/v",
+ what:"Connects the focal length (f) with the object distance (u) and the image distance (v). Measure u and v, add the reciprocals, and FLIP the result to get f.",
+ parts:["<b>u</b> = object distance (subject → lens). Trick: close the <b>U</b> into an <b>O</b> = Object","<b>v</b> = image distance (lens → sharp image)","<b>f</b> = focal length (object at infinity → v = f)"],
+ steps:["1/f = 1/300 + 1/150","= 0.00333 + 0.00667","= 0.01  ← this is 1/f, not f!","press 1/x → f = 100 mm"],given:"u = 300 mm, v = 150 mm",
+ note:"About 60% of students stop at 0.01. A focal length of 0.01 mm makes no sense, so always invert.",
+ trick:"<b>Add the flips, then flip the answer.</b> Check that it makes sense.",
+ q:"u = 200 mm, v = 200 mm. What is f?",a:"1/200 + 1/200 = 0.01 → f = 100 mm (that's 1:1, u = v = 2f)"},
+{g:"lec",ic:"scale",name:"Scale of Reproduction",formula:"R = v / u = (v − f) / f\nv = f (R + 1)\nR = f / (u − f)",
+ what:"R (or M, magnification) = how big the image is compared to the real object. R = 3 (3:1) = 3× life size. R = 1 (1:1) = life size. You can also use image size ÷ object size.",
+ parts:["Know <b>f and R</b>? Find v with <b>v = f(R + 1)</b>, then u = v ÷ R","Know <b>u and v</b>? R = v ÷ u","Know <b>v and f</b>? R = (v − f) ÷ f","Know <b>u and f</b>? R = f ÷ (u − f)"],
+ steps:["v = f (R + 1) = 100 × (3 + 1)","v = 400 mm","R = v / u → 3 = 400 / u","u = 400 / 3 ≈ 133.3 mm"],given:"f = 100 mm, R = 3 (3:1)",
+ note:"1:1 → v = u = 2f. In lab you'll set a 4×5 camera to a given R.",
+ trick:"<b>R = v/u</b>: Image over Object. When R goes up, v gets longer (bellows out).",
+ q:"f = 150 mm, R = 1. What are v and u?",a:"v = 150 × 2 = 300 mm, u = 300 mm"},
+{g:"lec",ic:"aov",name:"Angle of View",formula:"AOV = 2 × arctan(d ÷ 2f)",
+ what:"How much of the scene the lens sees, usually measured on the sensor DIAGONAL (d). Longer focal length = narrower view and bigger subject. Perspective is controlled by camera distance, NOT focal length.",
+ parts:["<b>d</b> = sensor diagonal (43.3 mm full frame)","<b>f</b> = focal length","A crop sensor narrows the view (APS-C ≈ ×1.5)"],
+ table:[["Full frame","Angle (diagonal)"],["20 mm","≈ 94°"],["50 mm","≈ 47°"],["300 mm","≈ 8°"]],
+ steps:["AOV = 2 × arctan(43.3 ÷ (2 × 50))","= 2 × arctan(0.433)","= 2 × 23.4°","≈ 47°"],given:"50 mm lens on full frame",
+ note:"Formula = beyond the lecture. On the exam, know the table and the ideas.",
+ trick:"<b>Zoom in = see less.</b> Walk closer = change perspective.",
+ q:"Which lens sees more of the scene: 28 mm or 200 mm?",a:"28 mm (wider angle of view)"}
 ];
 function rnd(seed){var s=seed;return function(){s=(s*9301+49297)%233280;return s/233280;};}
 function gauss(r){return (r()+r()+r()+r()-2)*1.2;}
@@ -175,6 +209,11 @@ var VIZ=[
   S2.forEach(function(o){var w=o[2]*k,h=o[3]*k;s+='<rect x="'+(20)+'" y="'+(10+(24*k-h))+'" width="'+w+'" height="'+h+'" fill="'+o[4]+'" fill-opacity=".14" stroke="'+o[4]+'" stroke-width="2.5"/>';});
   S2.forEach(function(o,i){s+='<rect x="250" y="'+(22+i*44)+'" width="14" height="14" rx="3" fill="'+o[4]+'"/><text x="272" y="'+(34+i*44)+'" class="b">'+o[0]+' · '+o[1]+'</text><text x="272" y="'+(52+i*44)+'" class="m">'+o[2]+' × '+o[3]+' mm</text>';});
   return s+'</svg><p class="eqf-vcap">Drawn to scale. Same number of pixels on a smaller sensor → each pixel is smaller → less light each → more noise.</p>';})()
+ ,(function(){var s='<svg viewBox="0 0 440 150" role="img" aria-label="Gradients at 1, 2, 3 and 8 bits">',B=[1,2,3,8];B.forEach(function(b,r){var L=Math.pow(2,b),y=8+r*34;for(var i=0;i<L;i++){var v=L===1?0:Math.round(i/(L-1)*255);s+='<rect x="'+(70+i*360/L).toFixed(2)+'" y="'+y+'" width="'+(360/L+0.6).toFixed(2)+'" height="26" fill="rgb('+v+','+v+','+v+')"/>';}s+='<text x="62" y="'+(y+18)+'" text-anchor="end" class="b">'+b+'-bit</text>';});return s+'</svg><p class="eqf-vcap">1 bit = 2 levels, 2 bits = 4, 3 bits = 8, 8 bits = <b>256</b> (looks smooth).</p>';})()
+ ,(function(){return '<svg viewBox="0 0 440 170" role="img" aria-label="Object at distance u, lens, inverted image at distance v"><line x1="10" y1="90" x2="430" y2="90" class="ln" stroke-dasharray="4 4"/><path d="M60 90 V40" stroke="var(--c)" stroke-width="5"/><path d="M200 25 Q215 90 200 155 Q185 90 200 25Z" fill="var(--cs)" stroke="var(--c)" stroke-width="2"/><path d="M60 40 L340 136" stroke="#E0473C" stroke-width="2"/><path d="M60 40 H200 L340 136" stroke="#3F6CC9" stroke-width="2" fill="none"/><path d="M340 90 V136" stroke="var(--c)" stroke-width="5"/><path d="M60 68 H198" stroke="var(--eqf-ink)"/><text x="130" y="62" text-anchor="middle" class="b">u (object)</text><path d="M202 68 H340" stroke="var(--eqf-ink)"/><text x="270" y="62" text-anchor="middle" class="b">v (image)</text><text x="340" y="160" text-anchor="middle" class="m">sharp, upside-down image</text></svg><p class="eqf-vcap">1/f = 1/u + 1/v. Then <b>flip</b> the result to get f.</p>';})()
+ ,(function(){var s='<svg viewBox="0 0 440 160" role="img" aria-label="Object and its image at 1:1 and 3:1">';s+='<rect x="30" y="100" width="24" height="30" rx="3" fill="#9A95A8"/><text x="42" y="150" text-anchor="middle" class="m">object</text>';s+='<rect x="120" y="100" width="24" height="30" rx="3" fill="var(--c)"/><text x="132" y="150" text-anchor="middle" class="b">1:1</text>';s+='<rect x="230" y="40" width="72" height="90" rx="5" fill="var(--c)"/><text x="266" y="150" text-anchor="middle" class="b">3:1 (3× life size)</text>';s+='<text x="380" y="80" text-anchor="middle" class="m">R = v / u</text><text x="380" y="100" text-anchor="middle" class="m">= image ÷ object</text>';return s+'</svg><p class="eqf-vcap">Higher R = bigger image = the lens must sit farther from the sensor (longer v).</p>';})()
+ ,(function(){var s='<svg viewBox="0 0 440 180" role="img" aria-label="Angle of view cones for 20, 50 and 300 mm">',F=[[20,94,'#E0473C'],[50,47,'var(--c)'],[300,8,'#1F8A70']];F.forEach(function(o){var a=o[1]/2*Math.PI/180,L=380,h=Math.min(85,Math.tan(a)*L);s+='<path d="M30 90 L'+(30+L)+' '+(90-h).toFixed(1)+' L'+(30+L)+' '+(90+h).toFixed(1)+'Z" fill="'+o[2]+'" fill-opacity=".12" stroke="'+o[2]+'" stroke-width="2"/>';});s+='<rect x="14" y="82" width="16" height="16" fill="var(--eqf-ink)"/>';F.forEach(function(o,i){s+='<text x="420" y="'+(30+i*22)+'" text-anchor="end" class="b" fill="'+o[2]+'" style="fill:'+o[2]+'">'+o[0]+' mm ≈ '+o[1]+'°</text>';});return s+'</svg><p class="eqf-vcap">Longer lens → narrower view. Distance to the subject controls perspective.</p>';})()
+
 ];
 var grid=document.getElementById('eqf-grid'),panel=document.getElementById('eqf-panel'),mt=document.getElementById('eqf-mtitle'),mn=document.getElementById('eqf-mnum'),mi=document.getElementById('eqf-micon'),mb=document.getElementById('eqf-mbody'),xb=document.getElementById('eqf-x'),pv=document.getElementById('eqf-prev'),nx=document.getElementById('eqf-next'),cnt=document.getElementById('eqf-count');
 var cards=[],cur=-1,N=CARDS.length;
@@ -184,9 +223,9 @@ var used={};CARDS.forEach(function(c){used[c.g]=1;});
 var lg=document.getElementById('eqf-legend');Object.keys(used).forEach(function(k){var s=document.createElement('span');s.className='eqf-chip';s.textContent=GROUPS[k].name;colorize(s,k);lg.appendChild(s);});
 function pad(n){return (n<10?'0':'')+n;}
 CARDS.forEach(function(c,i){var b=document.createElement('button');b.className='eqf-card';b.type='button';colorize(b,c.g);b.setAttribute('aria-expanded','false');b.setAttribute('aria-controls','eqf-panel');
- b.innerHTML='<div class="eqf-row"><span class="eqf-ico" aria-hidden="true">'+ICONS[c.ic]+'</span><span class="eqf-num">'+pad(i+1)+' / '+pad(N)+'</span></div><span class="eqf-name">'+c.name+'</span><span class="eqf-hint">Tap to reveal <span aria-hidden="true">→</span></span><span class="eqf-seen">✓ Reviewed</span>';
- b.addEventListener('click',function(){cur===i&&!panel.hidden?close():show(i,true);});grid.appendChild(b);cards.push(b);});
-var soon=document.createElement('div');soon.className='eqf-soon';soon.textContent='Lab 2 cards are added after the next lab.';grid.appendChild(soon);
+ b.innerHTML='<div class="eqf-row"><span class="eqf-ico" aria-hidden="true">'+ICONS[c.ic]+'</span><span class="eqf-num">'+pad(i+1)+' / '+pad(N)+'</span></div><span class="eqf-name">'+c.name+'</span><span class="eqf-hint">Tap to open below <span aria-hidden="true">↓</span></span><span class="eqf-seen">✓ Reviewed</span>';
+ b.addEventListener('click',function(){show(i,true);});grid.appendChild(b);cards.push(b);});
+var soon=document.createElement('div');soon.className='eqf-soon';soon.textContent='More cards are added after every lab and lecture.';grid.appendChild(soon);
 function show(i,scroll){var c=CARDS[i];cur=i;colorize(panel,c.g);
  mt.textContent=c.name;mn.textContent=GROUPS[c.g].name.toUpperCase();mi.innerHTML=ICONS[c.ic];cnt.textContent=(i+1)+' of '+N;
  var h='<div class="eqf-formula">'+esc(c.formula).replace(/\n/g,'<br>')+'</div>';
@@ -201,7 +240,7 @@ function show(i,scroll){var c=CARDS[i];cur=i;colorize(panel,c.g);
  var rb=mb.querySelector('.eqf-reveal');rb.addEventListener('click',function(){rb.hidden=true;mb.querySelector('.eqf-ans').hidden=false;});
  cards.forEach(function(b,k){b.classList.toggle('is-open',k===i);b.setAttribute('aria-expanded',k===i?'true':'false');});
  cards[i].classList.add('is-seen');panel.hidden=false;
- if(scroll)panel.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+ if(scroll){var sm=matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';try{if(window.frameElement&&window.parent!==window){var fr=window.frameElement.getBoundingClientRect();window.parent.scrollTo({top:window.parent.scrollY+fr.top+panel.getBoundingClientRect().top-12,behavior:sm});return;}}catch(e){}panel.scrollIntoView({behavior:sm,block:'start'});}
 }
 function close(){panel.hidden=true;mb.innerHTML='';cards.forEach(function(b){b.classList.remove('is-open');b.setAttribute('aria-expanded','false');});if(cards[cur])cards[cur].focus({preventScroll:true});cur=-1;}
 function step(d){show((cur+d+N)%N,false);}

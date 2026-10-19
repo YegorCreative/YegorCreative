@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Exam 2 Lecture Notes</title>
+<style>
+body *{min-width:0}
+:root{--bg:#F6F5FA;--card:#FFFFFF;--ink:#15131C;--muted:#5E5A6B;--line:#E2DEEE;--accent:#6D4AD9;--soft:#EFEAFD;--ok:#1F8A70;--okb:#E1F4EE;--bad:#C0392B;--badb:#FBE3E0;--warm:#D9822B;--warmb:#FCEFE0;--R:#E0473C;--G:#3FA34D;--B:#3F6CC9}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55;padding:24px 16px 56px}
+.w{max-width:980px;margin:0 auto;display:grid;gap:22px}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(28px,6vw,40px);font-weight:900}
+h3{font-size:17px}
+p{margin:0}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.intro{display:grid;gap:8px}
+.intro p{color:var(--muted);max-width:68ch}
+button,input,select{font:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.toc{display:flex;gap:8px;flex-wrap:wrap}
+.toc a{display:inline-flex;align-items:center;min-height:40px;padding:0 13px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:13.5px}
+.toc a:hover{border-color:var(--accent)}
+.topic{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 18px;display:grid;gap:16px;scroll-margin-top:12px}
+.th{display:flex;gap:14px;align-items:center}
+.num{font-size:40px;font-weight:900;line-height:1;color:transparent;-webkit-text-stroke:2px var(--accent);flex:none}
+.th h2{font-size:clamp(21px,4vw,28px)}
+.th p{margin-top:2px;color:var(--muted);font-weight:600;font-size:14px}
+.trick{display:flex;gap:10px;background:var(--bg);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:10px 12px}
+.trick b{color:var(--accent)}
+.beyond{background:var(--warmb);border-radius:12px;padding:12px 14px;font-size:14.5px}
+.beyond b:first-child{color:var(--warm);display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.formula{border:2px solid var(--accent);border-radius:14px;padding:14px;text-align:center;font-weight:800;font-size:clamp(16px,3.2vw,22px);font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--soft)}
+.note{font-size:13px;color:var(--muted)}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media(max-width:700px){.two,.three{grid-template-columns:minmax(0,1fr)}}
+.box{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:8px;align-content:start}
+.box h3{display:flex;gap:8px;align-items:center}
+.tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--soft);color:var(--accent)}
+.seg{display:inline-flex;flex-wrap:wrap;border:1.5px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+.seg button{border:0;border-right:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:700;font-size:13.5px;padding:0 12px;min-height:44px;cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+canvas,svg.v{display:block;width:100%;height:auto;border-radius:12px}
+.pix{image-rendering:pixelated}
+.stage{background:#0F0D16;border-radius:14px;padding:10px}
+.cap{font-size:13.5px;color:var(--muted);text-align:center}
+.cfa{display:grid;gap:2px;width:100%;max-width:190px;aspect-ratio:1;margin:0 auto}
+.cfa i{border-radius:3px;display:grid;place-items:center;font:800 11px/1 Inter,system-ui,sans-serif;color:#fff;font-style:normal}
+.stat{display:flex;justify-content:space-between;gap:8px;font-size:13.5px;border-top:1px solid var(--line);padding-top:6px}
+.stat b{font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--accent);min-height:36px}
+.meter{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:14px}
+.meter b{font-variant-numeric:tabular-nums}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-weight:800;font-size:12.5px}
+.pill.ok{background:var(--okb);color:var(--ok)}.pill.bad{background:var(--badb);color:var(--bad)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:14px}
+td,th{border-bottom:1px solid var(--line);padding:7px 6px;text-align:left}
+th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tw{overflow-x:auto}
+.spell{display:flex;flex-wrap:wrap;gap:8px}
+.spell span{background:var(--okb);color:var(--ok);font-weight:800;padding:6px 10px;border-radius:10px}
+.spell s{background:var(--badb);color:var(--bad);font-weight:700;padding:6px 10px;border-radius:10px}
+ul.clean{margin:0;padding-left:18px;display:grid;gap:4px}
+.check{border:1.5px dashed var(--accent);border-radius:14px;padding:14px;display:grid;gap:10px}
+.check .q{font-weight:700}
+.opts{display:grid;gap:8px}
+.opts button{text-align:left;border:1.5px solid var(--line);background:var(--card);border-radius:10px;padding:10px 12px;min-height:44px;cursor:pointer;font-weight:600;color:var(--ink)}
+.opts button.right{border-color:var(--ok);background:var(--okb)}
+.opts button.wrong{border-color:var(--bad);background:var(--badb)}
+.fb{font-size:14px;font-weight:600}
+.lecs{display:flex;width:100%}
+.lecs button{flex:1 1 140px;min-height:48px;font-size:13.5px;line-height:1.2;padding:6px 10px;border-bottom:1px solid var(--line)}
+.lec{display:grid;gap:22px}
+.inp{width:100%;min-height:44px;font-size:16px;padding:6px 10px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);margin-top:4px}
+.btn{font-weight:700;border:1.5px solid var(--accent);background:var(--card);color:var(--accent);border-radius:10px;padding:0 14px;min-height:44px;cursor:pointer}
+.btn:hover{background:var(--soft)}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chain span{background:var(--soft);color:var(--accent);font-weight:800;font-size:13px;padding:7px 10px;border-radius:10px}
+.chain span.alt{background:var(--warmb);color:var(--warm)}
+.chain i{font-style:normal;color:var(--muted);font-weight:800}
+.qe{display:grid;gap:8px}.qerow{display:grid;grid-template-columns:90px 1fr 54px;gap:8px;align-items:center;font-size:14px}.qetrack{height:14px;background:var(--line);border-radius:7px;overflow:hidden}.qetrack i{display:block;height:100%;border-radius:7px}
+@media(max-width:600px){.cmp thead{display:none}.cmp tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-bottom:1px solid var(--line)}.cmp td{border:0}.cmp td:first-child{grid-column:1/-1;font-weight:800;background:var(--soft);border-radius:8px;margin-top:8px}.cmp td:nth-child(2)::before{content:"CCD";display:block;font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--accent)}.cmp td:nth-child(3)::before{content:"CMOS";display:block;font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--warm)}}
+.rle{display:flex;flex-wrap:wrap;gap:2px}
+.rle b{width:16px;height:16px;border-radius:3px;display:inline-block}
+ol.steps{margin:0;padding:0;list-style:none;display:grid;gap:6px;counter-reset:s}
+ol.steps li{counter-increment:s;display:flex;gap:10px;align-items:baseline;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14.5px;background:var(--bg);border-radius:10px;padding:9px 12px}
+ol.steps li::before{content:counter(s);flex:none;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font:700 12px/22px system-ui,sans-serif;text-align:center}
+ol.steps li.last{background:var(--soft);font-weight:700}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head><body>
+<div class="w">
+<header class="intro">
+<span class="eyebrow">Exam 2 · Oct 30 · Lecture notes</span>
+<h1>Lecture Notes</h1>
+<p>Every PHPS-106 lecture for Exam 2, redesigned with diagrams you can play with and checked against the lecture slides. Each section ends with a quick check.</p>
+<div class="seg lecs" role="tablist" aria-label="Lectures" id="lecs"><button role="tab" aria-selected="false" aria-pressed="false" data-l="L0">Sep 21 · Digital sensors</button><button role="tab" aria-selected="true" aria-pressed="true" data-l="L1">Sep 28 · Sensors &amp; noise</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L2">Oct 2 · RAW &amp; files</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L3">Oct 5 · Formats &amp; compression</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L4">Oct 16 · Lenses</button></div>
+</header>
+<!-- ================= LECTURE 0 · SEP 21 ================= -->
+<div class="lec" id="L0" hidden>
+<nav class="toc" aria-label="Sep 21 sections"><a href="#d1">Photosite → pixel</a><a href="#d2">Analog → digital</a><a href="#d3">Bit depth</a><a href="#d4">Histograms</a><a href="#d5">CCD vs CMOS</a><a href="#d6">Bayer history</a></nav>
+
+<section class="topic" id="d1" aria-labelledby="dh1">
+<div class="th"><span class="num">01</span><div><h2 id="dh1">How a digital camera works</h2><p>A film camera with a sensor where the film was</p></div></div>
+<ul class="clean"><li>Same lens, shutter and aperture as a film camera. The <b>sensor replaced the film</b> and translates the <b>optical image into an electrical signal</b>.</li><li>The <b>⦶ mark</b> on top of your camera (a circle with a line through it) shows where the sensor (film plane) sits. It's handy for measuring image distance.</li><li>A sensor is a <b>2-D array of photodiodes (photosites)</b>. Each one collects photons and builds up a <b>charge</b>.</li></ul>
+<div class="two">
+<div class="box"><h3>Photosite</h3><p>On the <b>sensor</b>. It catches light.</p></div>
+<div class="box"><h3>Pixel</h3><p>In the <b>file</b>. It's the number the photosite becomes after processing.</p></div>
+</div>
+<div class="trick"><span>🎨</span><span><b>Photosites are colorblind.</b> A photon is a photon. They only "see" brightness, which is why we need a color filter array.</span></div>
+<div class="check" data-q="d1"></div>
+</section>
+
+<section class="topic" id="d2" aria-labelledby="dh2">
+<div class="th"><span class="num">02</span><div><h2 id="dh2">Analog → digital (A/D conversion)</h2><p>Smooth voltage becomes steps</p></div></div>
+<div class="chain" id="adchain"></div>
+<svg class="v" viewBox="0 0 440 170" role="img" aria-label="A smooth voltage line next to stepped digital counts">
+<g fill="#6D4AD9" fill-opacity=".18" stroke="#6D4AD9" stroke-opacity=".5">
+<rect x="40" y="130" width="45" height="20"/><rect x="85" y="110" width="45" height="40"/><rect x="130" y="90" width="45" height="60"/><rect x="175" y="70" width="45" height="80"/><rect x="220" y="50" width="45" height="100"/><rect x="265" y="30" width="45" height="120"/><rect x="310" y="10" width="45" height="140"/></g>
+<path d="M40 150 L355 10" stroke="#E0473C" stroke-width="3"/>
+<text x="370" y="30" font-size="12" fill="#E0473C" font-weight="800">voltage (analog)</text><text x="370" y="48" font-size="12" fill="#6D4AD9" font-weight="800">digital counts</text><text x="40" y="166" font-size="11" fill="#5E5A6B">more light → more voltage → higher count</text></svg>
+<ul class="clean"><li>More light → more <b>voltage</b>. Voltage is <b>analog</b>: unlimited levels (1.375647 V is fine).</li><li>The <b>analog-to-digital (A/D) converter</b> sorts each voltage into a <b>digital count</b>. The number of counts is limited by the <b>bit depth</b>.</li><li>Every voltage in a range gets the same count. That's where <b>stair-steps</b> on smooth edges come from (you don't see them with enough pixels).</li></ul>
+<div class="check" data-q="d2"></div>
+</section>
+
+<section class="topic" id="d3" aria-labelledby="dh3">
+<div class="th"><span class="num">03</span><div><h2 id="dh3">Bit depth: how many tones?</h2><p>Each extra bit doubles the tones</p></div></div>
+<div class="tw"><table><thead><tr><th>Bits</th><th>Tones</th><th>Notes</th></tr></thead><tbody>
+<tr><td>1 (2¹)</td><td>2</td><td>black or white (bitonal: 0 = black, 1 = white)</td></tr><tr><td>2 (2²)</td><td>4</td><td></td></tr><tr><td>3 (2³)</td><td>8</td><td></td></tr><tr><td>4 (2⁴)</td><td>16</td><td>OK on busy (high-frequency) subjects</td></tr><tr><td>5 (2⁵)</td><td>32</td><td>looks fine to most people on a photo</td></tr><tr><td><b>8 (2⁸)</b></td><td><b>256</b></td><td>per channel; room for processing</td></tr><tr><td>16 (2¹⁶)</td><td>65,536</td><td></td></tr><tr><td><b>24 (2²⁴)</b></td><td><b>16.7 million</b></td><td>color: 8 bits × R, G, B</td></tr></tbody></table></div>
+<div class="two">
+<div class="box"><h3>Low-frequency areas show problems</h3><p>Smooth, flat areas (a plain wall, sky) change slowly, so too few bits shows as <b>banding</b>.</p></div>
+<div class="box"><h3>High-frequency areas hide problems</h3><p>Busy detail (hair, lace, grass, fur) changes a lot from pixel to pixel, so a low bit depth is hard to notice.</p></div>
+</div>
+<ul class="clean"><li><b>Dithering</b> mixes black and white dots to fake gray tones (newspaper style).</li><li>Why 8 bits if 5 looks OK? <b>Editing</b> a low-bit image shows artifacts right away. Fewer bits only make sense for small web or phone images where <b>bandwidth</b> matters.</li></ul>
+<div class="beyond"><b>Spotted on the slides</b>One slide says "8 bits – <b>265</b> levels per channel". That's a typo: 2⁸ = <b>256</b>. Write 256 on the exam.</div>
+<div class="check" data-q="d3"></div>
+</section>
+
+<section class="topic" id="d4" aria-labelledby="dh4">
+<div class="th"><span class="num">04</span><div><h2 id="dh4">Histograms: check all four</h2><p>Luminance + red, green and blue</p></div></div>
+<p>Cameras show a <b>luminance (composite)</b> histogram, and often the separate <b>R, G and B</b> histograms. The in-camera histogram is based on the <b>JPEG</b>, even when you shoot raw.</p>
+<div class="trick"><span>📊</span><span><b>Look at all of them.</b> The combined brightness can look fine while one color channel is clipped.</span></div>
+<div class="box"><h3>Expose to the right (her slide)</h3><ul class="clean"><li>Applies specifically to <b>digital raw capture</b></li><li>Base proper exposure on the <b>highlights</b></li><li>Get the histogram snug against the right (255) <b>without going over</b></li><li>It may look bright, but that's solved in editing</li><li>A raw sensor has a <b>linear response</b> (not true for JPEG): less visible noise in the highlights, more in the shadows</li></ul></div>
+<div class="check" data-q="d4"></div>
+</section>
+
+<section class="topic" id="d5" aria-labelledby="dh5">
+<div class="th"><span class="num">05</span><div><h2 id="dh5">CCD vs CMOS</h2><p>Two ways to build a sensor (plus Foveon X3)</p></div></div>
+<div class="tw"><table class="cmp"><thead><tr><th></th><th>CCD<br><span class="note">Charge-Coupled Device</span></th><th>CMOS<br><span class="note">Complementary Metal-Oxide Semiconductor</span></th></tr></thead><tbody>
+<tr><td>Invented</td><td><b>1969</b>, Willard Boyle &amp; George Smith, AT&amp;T Bell Labs (Nobel Prize 2009)</td><td><b>1963</b>, Frank Wanlass, Fairchild (patented 1967), before CCD</td></tr>
+<tr><td>Readout</td><td><b>Shift register</b>: rows shift down and are read one pixel at a time, like a conveyor belt → <b>slow</b></td><td><b>A/D converter at every photosite</b> → instant readout</td></tr>
+<tr><td>Power</td><td>High</td><td>Low (up to <b>100× less</b>) → better battery life</td></tr>
+<tr><td>Cost</td><td>Higher</td><td>Lower</td></tr>
+<tr><td>Quality</td><td>High uniformity, low fixed-pattern noise, excellent dynamic range (~10⁵ electrons/pixel), linear (scientific)</td><td>Early versions had <b>large fixed-pattern noise</b>; now matches CCD. Needs more calibration</td></tr>
+<tr><td>Light area</td><td>Whole photosite is a "bucket"</td><td>Circuitry takes space → <b>microlenses</b> funnel light into each photosite</td></tr>
+<tr><td>Other</td><td>Sensitive to <b>infrared</b> (IR-blocking filter); heat → <b>dark current</b>, so often cooled; <b>blooming</b> when a photosite overflows</td><td>Works from <b>−55 °C to +125 °C</b> (−67 °F to 257 °F)</td></tr>
+<tr><td>Used in</td><td>Early low-end point-and-shoots, high-end digital backs (<b>Phase One, Leaf, Hasselblad</b>), astronomy</td><td>Almost every camera today, including pro DSLRs and mirrorless</td></tr>
+</tbody></table></div>
+<div class="box"><h3>Quantum efficiency: how much light becomes signal</h3><div class="qe" id="qe"></div><p class="note">That's why <b>astronomers</b> adopted CCDs so fast.</p></div>
+<p class="note">Fun facts: 1970 = the first digital image (the photoelectric effect). 1974: Fairchild's first 2-D device was only 100 × 100 pixels. Sensors are made on silicon <b>wafers</b> in clean rooms; one piece of lint ruins one.</p>
+<div class="check" data-q="d5"></div>
+</section>
+
+<section class="topic" id="d6" aria-labelledby="dh6">
+<div class="th"><span class="num">06</span><div><h2 id="dh6">The Bayer pattern: where it came from</h2><p>Kodak, 1976</p></div></div>
+<ul class="clean"><li>Invented by <b>Bryce Bayer</b> of <b>Kodak</b> (patent <b>1976</b>). Say "BUY-er", not "bear".</li><li>A <b>color filter array (CFA)</b> of red, green and blue filters over the photosites, with <b>twice as many green</b> to match the eye's sensitivity.</li><li>Won an <b>Emmy</b> in <b>2001</b> (National Academy of Television Arts and Sciences).</li><li>Each filter throws away about 2/3 of the light, so <b>2/3 of every color image is made-up data</b> → demosaicing (see the Sep 28 tab).</li></ul>
+<div class="beyond"><b>Kodak story</b>Kodak led early digital imaging but held onto film (about 800% markup). Its sensor division even made Leica's sensors.</div>
+<div class="check" data-q="d6"></div>
+</section>
+</div>
+
+<div class="lec" id="L1">
+<nav class="toc" aria-label="Sep 28 sections"><a href="#s1">Bayer &amp; demosaicing</a><a href="#s2">Other color filters</a><a href="#s3">ISO &amp; grain</a><a href="#s4">3 noise types</a><a href="#s5">SNR</a><a href="#s6">Sensor size</a><a href="#s7">Expose to the right</a><a href="#s8">HDR</a><a href="#s9">Exam rules</a></nav>
+
+
+<!-- 1 BAYER -->
+<section class="topic" id="s1" aria-labelledby="h1">
+<div class="th"><span class="num">01</span><div><h2 id="h1">Bayer pattern &amp; demosaicing</h2><p>Each photosite sees only one color</p></div></div>
+<p>A sensor only measures <b>brightness</b>. To get color, a <b>Bayer filter</b> (color filter array, CFA) puts a red, green or blue filter over each photosite: <b>50% green, 25% red, 25% blue</b>. So every pixel is missing <b>two thirds</b> of its color data. <b>Demosaicing</b> is the processing that fills in the missing colors from the neighbors.</p>
+<div class="seg" role="group" aria-label="Demosaicing view" id="dmv"><button aria-pressed="true" data-v="0">1 · Sensor sees</button><button aria-pressed="false" data-v="1">2 · Filter colors</button><button aria-pressed="false" data-v="2">3 · Demosaiced</button><button aria-pressed="false" data-v="3">Original</button></div>
+<div class="stage"><canvas id="dm" class="pix" width="96" height="64" aria-label="Demosaicing demo"></canvas></div>
+<p class="cap" id="dmcap"></p>
+<div class="two">
+<div class="box"><h3>How the standard method works</h3><ul class="clean"><li><b>Green first:</b> most data (50%) and where we're most sensitive, so it builds the <b>luminance</b> (brightness) image.</li><li><b>Then red and blue</b> become the <b>chrominance</b> (color) images. Blue gets the biggest boost, so blue has the <b>most noise</b>.</li><li>Good algorithms look for <b>edges</b> and weight pixels along the edge more.</li></ul></div>
+<div class="box"><h3>Why white needs all three</h3><p>On white areas, the red, green and blue photosites are all "on". White = all colors of light together.</p><p class="note">Armenian: demosaicing ≈ գույների վերականգնում (rebuilding colors), photosite = լուսազգայուն բջիջ.</p></div>
+</div>
+<div class="check" data-q="1"></div>
+</section>
+
+<!-- 2 CFAs -->
+<section class="topic" id="s2" aria-labelledby="h2">
+<div class="th"><span class="num">02</span><div><h2 id="h2">Other color filter arrays</h2><p>Bayer isn't the only pattern</p></div></div>
+<div class="three" id="cfas"></div>
+<div class="box"><h3><span class="tag">No filter</span> Foveon X3 (Sigma)</h3>
+<svg class="v" viewBox="0 0 440 150" role="img" aria-label="Foveon layers: blue absorbed near the top, green in the middle, red deepest">
+<rect x="150" y="20" width="270" height="36" fill="#3F6CC9" fill-opacity=".85"/><rect x="150" y="58" width="270" height="36" fill="#3FA34D" fill-opacity=".85"/><rect x="150" y="96" width="270" height="36" fill="#E0473C" fill-opacity=".85"/>
+<text x="285" y="43" text-anchor="middle" fill="#fff" font-weight="800" font-size="14">blue layer (shallow)</text><text x="285" y="81" text-anchor="middle" fill="#fff" font-weight="800" font-size="14">green layer</text><text x="285" y="119" text-anchor="middle" fill="#fff" font-weight="800" font-size="14">red layer (deepest)</text>
+<g stroke-width="4" stroke-linecap="round"><path d="M40 6 L40 40" stroke="#3F6CC9"/><path d="M80 6 L80 78" stroke="#3FA34D"/><path d="M120 6 L120 116" stroke="#E0473C"/></g>
+<text x="80" y="146" text-anchor="middle" font-size="12" fill="#5E5A6B">light goes deeper into silicon</text></svg>
+<ul class="clean"><li>A <b>direct image sensor</b>: records red, green and blue at <b>every</b> photosite, using how deep each color goes into the silicon. Like color film's 3 layers.</li><li><b>Pros:</b> no demosaicing (no interpolation), sharper still lifes, less processing.</li><li><b>Cons:</b> <b>blur on moving subjects</b>, and "funky" colors under some lights.</li><li>Sigma bought Foveon in <b>2008</b>, and it's the only company using it. No camera currently in production.</li></ul></div>
+<div class="check" data-q="2"></div>
+</section>
+
+<!-- 3 ISO -->
+<section class="topic" id="s3" aria-labelledby="h3">
+<div class="th"><span class="num">03</span><div><h2 id="h3">ISO is gain, and noise is not grain</h2><p>You can't change how sensitive the sensor is</p></div></div>
+<p>The photodiode's sensitivity is fixed. Raising ISO just <b>amplifies the signal</b> (more <b>gain</b>), and the noise gets amplified with it.</p>
+<div class="box">
+<label for="iso"><b>ISO <span id="isov">100</span></b> · gain ×<span id="gainv">1</span></label>
+<input type="range" id="iso" min="0" max="6" value="0" aria-label="ISO">
+<canvas id="isoc" width="440" height="120" aria-label="Signal and noise bars amplified by ISO"></canvas>
+<p class="cap" id="isocap"></p>
+</div>
+<div class="two">
+<div class="box"><h3>Low ISO</h3><p>Longer exposure time for the same light, <b>less noise</b>.</p></div>
+<div class="box"><h3>High ISO</h3><p>Shorter exposure time, <b>more noise</b>. Having a high ISO available doesn't mean you'll like using it.</p></div>
+</div>
+<div class="two">
+<div class="box"><h3><span class="tag">Film</span> Grain</h3><p>Real <b>silver halide crystals</b> (or dye particles). Faster film = bigger crystals = a bigger target for photons = visible grain.</p></div>
+<div class="box"><h3><span class="tag">Digital</span> Noise</h3><p><b>Electronic</b> noise. It has nothing to do with crystals. Don't call digital noise "grain".</p></div>
+</div>
+<div class="beyond"><b>Beyond the lecture</b>The professor says ISO = "International Standards Organization", so use her wording on the exam. The official English name is the <b>International Organization for Standardization</b>, and "ISO" comes from Greek <i>isos</i> = equal.</div>
+<div class="check" data-q="3"></div>
+</section>
+
+<!-- 4 NOISE TYPES -->
+<section class="topic" id="s4" aria-labelledby="h4">
+<div class="th"><span class="num">04</span><div><h2 id="h4">Three types of noise</h2><p>Noise = a mismatch between the light that hits the sensor and the electronic signal</p></div></div>
+<p class="note">Her slide quotes Galer &amp; Horvat (<i>Digital Imaging Essential Skills</i>): noise comes from random electrical activity on the sensor, and <b>the lower the light, the greater the inconsistency</b>.</p>
+<div class="three">
+<div class="box"><h3><span class="tag">Most common</span></h3><h3>Photon noise</h3><p>Light itself isn't perfectly even. Photons arrive <b>randomly</b>, so the <b>input</b> is already noisy.</p><p class="note">Like rain: even steady rain doesn't drop the same number of drops in every cup.</p></div>
+<div class="box"><h3><span class="tag">Heat</span></h3><h3>Thermal noise</h3><p><b>Heat</b> from the camera's electronics makes the photosite "see" fake photons. Fix: <b>cooled sensors</b> (used for IR and science cameras).</p><p class="note">Hotter camera, long exposures → more thermal noise.</p></div>
+<div class="box"><h3><span class="tag">Readout</span></h3><h3>Transfer noise</h3><p>Happens during <b>readout</b>: some charge gets left behind, or neighboring photosites interfere (like blooming).</p><p class="note">Like pouring syrup from a can: you need a scraper to get the rest.</p></div>
+</div>
+<div class="trick"><span>💡</span><span><b>P-T-T: "Please Turn on the Tripod."</b> Photon, Thermal, Transfer. Photon noise comes from the light, thermal from heat, transfer from readout.</span></div>
+<div class="check" data-q="4"></div>
+</section>
+
+<!-- 5 SNR -->
+<section class="topic" id="s5" aria-labelledby="h5">
+<div class="th"><span class="num">05</span><div><h2 id="h5">Signal-to-noise ratio</h2><p>How strong the signal is compared to the noise</p></div></div>
+<div class="formula">SNR = 20 × log₁₀(Mean ÷ Std Dev)</div>
+<ul class="clean"><li><b>Higher SNR = better</b> (cleaner). A <b>low standard deviation</b> is what you want: less spread around the mean.</li><li>Units are <b>dB</b> (decibels: small d, capital B), borrowed from audio. On a lab answer the dB is often left off, but it is a dB.</li><li>SNR doesn't depend on amplification: if the mean and std dev are both multiplied by the same gain, the ratio stays the same.</li></ul>
+<div class="box"><div class="two"><label>Mean <input type="number" id="sm" value="120" min="0" step="any" style="width:100%;min-height:44px;font-size:16px;padding:6px 10px;border:1.5px solid var(--line);border-radius:10px"></label><label>Std Dev <input type="number" id="ss" value="4" min="0.01" step="any" style="width:100%;min-height:44px;font-size:16px;padding:6px 10px;border:1.5px solid var(--line);border-radius:10px"></label></div><p id="sout" class="formula" style="font-size:17px"></p></div>
+<p class="note">For practice with real patches and graphs, open the <b>Noise &amp; SNR Lab</b> and <b>Patch Meter</b> tiles.</p>
+<div class="check" data-q="5"></div>
+</section>
+
+<!-- 6 SENSOR SIZE -->
+<section class="topic" id="s6" aria-labelledby="h6">
+<div class="th"><span class="num">06</span><div><h2 id="h6">Sensor size</h2><p>Bigger photosite = bigger target for photons</p></div></div>
+<svg class="v" viewBox="0 0 440 200" role="img" aria-label="Sensor sizes drawn to scale: full frame, APS-C, Micro Four Thirds, phone">
+<g transform="translate(14 14)"><rect width="201.6" height="134.4" fill="#6D4AD9" fill-opacity=".12" stroke="#6D4AD9" stroke-width="2.5"/><rect y="47" width="131.6" height="87.4" fill="#D9822B" fill-opacity=".15" stroke="#D9822B" stroke-width="2.5"/><rect y="61.6" width="96.9" height="72.8" fill="#1F8A70" fill-opacity=".18" stroke="#1F8A70" stroke-width="2.5"/><rect y="113" width="32" height="21.4" fill="#C0392B" fill-opacity=".25" stroke="#C0392B" stroke-width="2.5"/></g>
+<g font-size="13.5"><rect x="240" y="20" width="12" height="12" rx="3" fill="#6D4AD9"/><text x="258" y="31" font-weight="800">Full frame 36 × 24 mm</text><text x="258" y="48" fill="#5E5A6B">= 35 mm film · pros · $$$</text>
+<rect x="240" y="62" width="12" height="12" rx="3" fill="#D9822B"/><text x="258" y="73" font-weight="800">APS-C ≈ 23.5 × 15.6 mm</text><text x="258" y="90" fill="#5E5A6B">crop sensor · "prosumer"</text>
+<rect x="240" y="104" width="12" height="12" rx="3" fill="#1F8A70"/><text x="258" y="115" font-weight="800">Micro Four Thirds 17.3 × 13</text><text x="258" y="132" fill="#5E5A6B">smaller, lighter lenses</text>
+<rect x="240" y="146" width="12" height="12" rx="3" fill="#C0392B"/><text x="258" y="157" font-weight="800">Phone / compact</text><text x="258" y="174" fill="#5E5A6B">tiny photosites · consumer</text></g>
+<text x="14" y="190" font-size="12" fill="#5E5A6B">drawn to scale</text></svg>
+<ul class="clean"><li><b>Larger photosite → more light-gathering ability</b> → less amplification needed → <b>less noise</b>. Crop sensors tend to have more noise.</li><li>More photosites (a larger array) → <b>higher resolution</b>.</li><li>A bigger sensor needs <b>bigger, heavier, pricier lenses</b>, and only a few full-frame sensors fit on one silicon wafer, so they cost more.</li><li><b>Pixel density is not tied to ISO.</b></li><li>Her target users: full frame → <b>professionals</b>; APS-C → professionals and <b>"prosumers"</b>; Four Thirds → "???"; anything smaller → <b>consumer</b>.</li></ul>
+<div class="trick"><span>🏓</span><span><b>Ping-pong ball test:</b> throw it at a small bucket or a big barrel. You hit the barrel more often. Bigger photosite = more photons caught.</span></div>
+<div class="beyond"><b>Beyond the lecture</b>In class, Four Thirds was called "about 30–40% smaller" than full frame. Measured by area it's actually about <b>74% smaller</b> (crop factor 2 → ¼ the area). If the exam asks, use the class answer, but now you know the real math: area shrinks by the crop factor squared.</div>
+<div class="check" data-q="6"></div>
+</section>
+
+<!-- 7 ETTR -->
+<section class="topic" id="s7" aria-labelledby="h7">
+<div class="th"><span class="num">07</span><div><h2 id="h7">Expose to the right (ETTR)</h2><p>Move dark tones up, away from the noise</p></div></div>
+<p>A raw sensor responds <b>linearly</b>: the brightest stop gets <b>half</b> of all the levels, the next stop half of what's left, and so on. Shadows get very few levels <b>and</b> sit close to the noise. ETTR means exposing brighter so the histogram moves <b>right</b> (without clipping), then darkening it again in post.</p>
+<div class="box">
+<label for="ev"><b>Exposure: <span id="evv">+0</span> stops</b></label>
+<input type="range" id="ev" min="0" max="4" step="1" value="0" aria-label="Exposure in stops">
+<canvas id="ettr" width="460" height="230" aria-label="12-bit levels per stop with a low-key histogram"></canvas>
+<div class="meter"><span>Shadow levels: <b id="lv">–</b></span><span>Clipping: <b id="clip">–</b></span></div>
+<p class="cap" id="ettrcap"></p>
+</div>
+<div class="tw"><table><thead><tr><th>Stop (12-bit raw)</th><th>Levels</th></tr></thead><tbody id="ltab"></tbody></table></div>
+<div class="two">
+<div class="box"><h3>✅ Works for</h3><p><b>Low-key</b> and mid-to-dark scenes that don't fill the whole dynamic range.</p></div>
+<div class="box"><h3>❌ Not for</h3><p>Scenes with bright highlights <b>and</b> dark shadows: a white cat and a black cat, a bride and a groom, a bright day with clouds. The bright parts would clip.</p></div>
+</div>
+<div class="trick"><span>📸</span><span><b>Rules:</b> shoot <b>raw</b> (JPEGs aren't linear and throw data away), watch the <b>luminance histogram</b>, and never clip what matters.</span></div>
+<div class="check" data-q="7"></div>
+</section>
+
+<!-- 8 HDR -->
+<section class="topic" id="s8" aria-labelledby="h8">
+<div class="th"><span class="num">08</span><div><h2 id="h8">HDR (high dynamic range)</h2><p>When the scene is too contrasty for one shot</p></div></div>
+<svg class="v" viewBox="0 0 440 150" role="img" aria-label="Dark exposure for highlights plus bright exposure for shadows merge into one HDR image">
+<defs><linearGradient id="win" x1="0" x2="1"><stop offset="0" stop-color="#9CC9F0"/><stop offset="1" stop-color="#E9F3FB"/></linearGradient></defs>
+<g><rect x="6" y="20" width="110" height="78" rx="6" fill="#151320"/><rect x="40" y="32" width="64" height="46" fill="url(#win)"/><text x="61" y="116" text-anchor="middle" font-size="12.5" font-weight="800">dark shot</text><text x="61" y="132" text-anchor="middle" font-size="11.5" fill="#5E5A6B">keeps highlights</text></g>
+<text x="132" y="64" font-size="22" font-weight="900" fill="#6D4AD9">+</text>
+<g><rect x="152" y="20" width="110" height="78" rx="6" fill="#B79670"/><rect x="186" y="32" width="64" height="46" fill="#fff"/><text x="207" y="116" text-anchor="middle" font-size="12.5" font-weight="800">bright shot</text><text x="207" y="132" text-anchor="middle" font-size="11.5" fill="#5E5A6B">keeps shadows</text></g>
+<text x="276" y="64" font-size="22" font-weight="900" fill="#6D4AD9">=</text>
+<g><rect x="300" y="20" width="132" height="78" rx="6" fill="#B79670"/><rect x="340" y="32" width="76" height="46" fill="url(#win)"/><text x="366" y="116" text-anchor="middle" font-size="12.5" font-weight="800">HDR merge</text><text x="366" y="132" text-anchor="middle" font-size="11.5" fill="#5E5A6B">room + view outside</text></g></svg>
+<ul class="clean"><li>Camera on a <b>sturdy tripod</b> (if it moves, the merge fails). Shoot <b>several exposures</b>: one for the highlights, one for the shadows, maybe more in between.</li><li>Merge in <b>Photoshop or Lightroom</b> (or dedicated tools). Don't "overbake" it.</li><li>Used for: <b>architecture and real estate</b> (a room plus the view through the windows), <b>night</b> venues with bright lights, sunny scenes with deep shadows.</li></ul>
+<div class="trick"><span>⚖️</span><span><b>ETTR vs HDR:</b> ETTR = <b>one</b> shot, for scenes that <i>fit</i> the sensor. HDR = <b>many</b> shots, for scenes that <i>don't fit</i>.</span></div>
+<div class="check" data-q="8"></div>
+</section>
+
+<!-- 9 EXAM RULES -->
+<section class="topic" id="s9" aria-labelledby="h9">
+<div class="th"><span class="num">09</span><div><h2 id="h9">How the professor grades</h2><p>Easy points people lost on Exam 1</p></div></div>
+<div class="box"><h3>Spelling counts, with no credit if it's wrong</h3><div class="spell"><span>aperture</span><s>apperture</s><s>aperature</s><span>shutter speed</span><s>shudder speed</s><span>demosaicing</span><span>Bayer</span><span>panchromatic</span><span>photosite</span></div><p class="note">No "d" in shutter, no "rat" in aperture.</p></div>
+<div class="three">
+<div class="box"><h3>"Number only"</h3><p>Write <b>4.5</b>, not f/4.5. Write <b>1/2</b> or <b>2</b>, not "1/2 seconds".</p></div>
+<div class="box"><h3>Don't over-answer</h3><p>Extra wrong information next to the right answer <b>loses points</b>. Answer only what's asked.</p></div>
+<div class="box"><h3>Whole stops of ISO</h3><p>Just keep doubling: <b>100, 200, 400, 800, 1600…</b></p></div>
+</div>
+<div class="box"><h3>Her "see it 5 times" method</h3><p><b>1</b> lab reading · <b>2</b> lecture · <b>3</b> lab · <b>4</b> SI session · <b>5</b> your own review. Re-read old notes before each new lecture, like a song you know by heart.</p></div>
+</section>
+</div>
+<!-- ================= LECTURE 2 · OCT 2 ================= -->
+<div class="lec" id="L2" hidden>
+<nav class="toc" aria-label="Oct 2 sections"><a href="#r1">Bits &amp; bytes</a><a href="#r2">Raster vs vector</a><a href="#r3">Captured vs rendered</a><a href="#r4">What's in a RAW</a><a href="#r5">RAW vs JPEG</a><a href="#r6">Bit depth</a><a href="#r7">Non-destructive &amp; XMP</a><a href="#r8">DNG</a></nav>
+
+<section class="topic" id="r1" aria-labelledby="rh1">
+<div class="th"><span class="num">01</span><div><h2 id="rh1">Bits &amp; bytes</h2><p>The smallest pieces of digital memory</p></div></div>
+<div class="three">
+<div class="box"><h3>Bit</h3><p>The smallest unit: <b>0 or 1</b> (off or on).</p></div>
+<div class="box"><h3>Byte</h3><p><b>8 bits</b> together. Most file sizes are counted in bytes.</p></div>
+<div class="box"><h3>Kilobyte</h3><p>Decimal: <b>1,000</b> bytes. Binary: <b>1,024</b> bytes.</p></div>
+</div>
+<div class="box"><label for="tb"><b>Drive size on the box: <span id="tbv">1</span> TB</b></label><input type="range" id="tb" min="1" max="8" value="1" aria-label="Drive size in TB"><p id="tbout" class="formula" style="font-size:16px"></p><p class="note">Storage makers advertise in <b>decimal</b> (1 TB = 1,000,000,000,000 bytes). Your operating system often counts in <b>binary</b> (1,024 steps), so the same drive looks "smaller". Nothing is missing.</p></div>
+<p class="note">Storage history: tape → cassette → floppy disk → CD → DVD → memory cards → terabyte drives.</p>
+<div class="check" data-q="r1"></div>
+</section>
+
+<section class="topic" id="r2" aria-labelledby="rh2">
+<div class="th"><span class="num">02</span><div><h2 id="rh2">Raster vs vector</h2><p>Pixels vs math</p></div></div>
+<div class="box"><label for="zoom"><b>Zoom: <span id="zv">1</span>×</b></label><input type="range" id="zoom" min="1" max="8" value="1" aria-label="Zoom">
+<div class="two"><div><canvas id="rast" class="pix" width="200" height="200" aria-label="Raster letter A zoomed"></canvas><p class="cap"><b>Raster</b>: the pixels just get bigger</p></div><div><svg class="v" id="vect" viewBox="0 0 200 200" role="img" aria-label="Vector letter A zoomed" style="background:#fff;border:1px solid var(--line)"><g id="vg"><text x="100" y="140" text-anchor="middle" font-size="120" font-weight="900" fill="#6D4AD9" font-family="Inter,Arial,sans-serif">A</text></g></svg><p class="cap"><b>Vector</b>: redrawn from math, always sharp</p></div></div></div>
+<div class="two">
+<div class="box"><h3>Raster</h3><ul class="clean"><li>Image = a grid of <b>pixel values</b> (samples).</li><li>Fixed size, so <b>resolution matters</b>: a small file can't be enlarged much.</li><li>Used for <b>photographs</b>.</li></ul></div>
+<div class="box"><h3>Vector</h3><ul class="clean"><li>Shapes, lines and curves stored as <b>geometry</b> (instructions).</li><li><b>Scales</b> to any size without changing.</li><li>Logos, illustrations, diagrams, typography, graphs. Example: <b>EPS</b> (Encapsulated PostScript).</li></ul></div>
+</div>
+<div class="check" data-q="r2"></div>
+</section>
+
+<section class="topic" id="r3" aria-labelledby="rh3">
+<div class="th"><span class="num">03</span><div><h2 id="rh3">Captured vs rendered images</h2><p>The digital image file landscape</p></div></div>
+<div class="two">
+<div class="box"><h3><span class="tag">Captured</span></h3><p><b>RAW</b> and <b>DNG</b>: sensor data straight from the camera.</p></div>
+<div class="box"><h3><span class="tag">Rendered</span></h3><p>Something was done to it before saving: <b>TIFF, JPEG, JPEG XL, HEIF, PNG, WebP, AVIF</b>.</p></div>
+</div>
+<p>Every file, captured or rendered, has a <b>bit depth</b>, a <b>color encoding</b>, maybe <b>compression</b>, <b>metadata</b>, <b>processing</b> and an <b>output</b>.</p>
+<div class="beyond"><b>WebP</b>A modern raster format made by <b>Google</b> for the web. It can be lossless or lossy, and it competes with JPEG and PNG.</div>
+</section>
+
+<section class="topic" id="r4" aria-labelledby="rh4">
+<div class="th"><span class="num">04</span><div><h2 id="rh4">What's inside a RAW file</h2><p>Sensor data plus metadata, and not one single format</p></div></div>
+<div class="two">
+<div class="box"><h3>A RAW file can contain</h3><ul class="clean"><li>Mosaic (Bayer) sensor data</li><li>Image dimensions (rows × columns) and the <b>CFA pattern</b></li><li>Black level and white level</li><li>Camera, exposure and lens metadata</li><li>The <b>white balance setting</b></li><li>Calibration and profile info</li><li>An <b>embedded JPEG preview</b></li><li>Possibly compressed data</li></ul></div>
+<div class="box"><h3>Proprietary extensions</h3><div class="tw"><table><thead><tr><th>Maker</th><th>RAW</th></tr></thead><tbody><tr><td>Canon</td><td>.CR2, .CR3</td></tr><tr><td>Nikon</td><td>.NEF, .NRW</td></tr><tr><td>Sony</td><td>.ARW</td></tr><tr><td>Fujifilm</td><td>.RAF</td></tr><tr><td>OM System / Olympus</td><td>.ORF</td></tr><tr><td>Panasonic</td><td>.RW2</td></tr><tr><td>Pentax</td><td>.PEF</td></tr><tr><td>Leica</td><td>.RWL, .DNG</td></tr><tr><td>Hasselblad</td><td>.3FR</td></tr><tr><td>Phase One</td><td>.IIQ</td></tr><tr><td>Sigma</td><td>.X3F</td></tr><tr><td>Adobe (open)</td><td>.DNG</td></tr></tbody></table></div></div>
+</div>
+<div class="box"><h3>Which settings change the RAW data?</h3><div class="tw"><table><thead><tr><th>Setting</th><th>Effect on RAW</th></tr></thead><tbody><tr><td>Aperture, shutter speed, exposure</td><td><span class="pill ok">changes the data</span></td></tr><tr><td>ISO</td><td><span class="pill ok">changes it</span> (how depends on the camera)</td></tr><tr><td>White balance</td><td>just <b>metadata</b> (interpretation)</td></tr><tr><td>Picture style, saturation, contrast, sharpening</td><td><span class="pill bad">no</span>: only the JPEG and preview</td></tr></tbody></table></div></div>
+<div class="beyond"><b>RAW does NOT guarantee</b>Uncompressed data (some cameras have compressed or even <b>lossy</b> raw), all of the sensor's information, the maximum dynamic range, or the same look in every converter. Photoshop/ACR, Capture One Pro and DxO each demosaic differently.</div>
+<div class="check" data-q="r4"></div>
+</section>
+
+<section class="topic" id="r5" aria-labelledby="rh5">
+<div class="th"><span class="num">05</span><div><h2 id="rh5">RAW vs JPEG</h2><p>"A really good test question"</p></div></div>
+<div class="tw"><table><thead><tr><th></th><th>RAW (before processing)</th><th>JPEG</th></tr></thead><tbody>
+<tr><td>Dynamic range</td><td><b>Higher</b></td><td>Lower</td></tr>
+<tr><td>Contrast</td><td><b>Lower</b></td><td>Higher (added in processing)</td></tr>
+<tr><td>Sharpness</td><td><b>Less sharp</b></td><td>Sharpened</td></tr>
+<tr><td>Ready for output?</td><td><b>No</b></td><td>Yes</td></tr>
+<tr><td>Bit depth</td><td>16-bit container, about <b>12 bits</b> used</td><td><b>8 bits</b></td></tr>
+<tr><td>Editing room</td><td>Lots: fewer artifacts</td><td>Little: settings are baked in</td></tr>
+</tbody></table></div>
+<div class="box"><h3>Why is RAW less sharp?</h3><p>Many cameras have an <b>anti-aliasing filter</b>, which is really a <b>blur filter</b>. It softens edges to prevent aliasing (stair-stepping), and processing sharpens the image back. Some very high-resolution cameras leave the filter out.</p></div>
+<div class="box"><h3>Which file is bigger: RAW or demosaiced?</h3><p>The <b>demosaiced</b> image. RAW has <b>1 channel</b> (one gray value per photosite), and a demosaiced image has <b>3 channels</b> (red, green and blue at every pixel).</p></div>
+<div class="box"><h3>Raw processing <i>may</i> include (her slide)</h3><p>Black-level correction · bad-pixel correction · white-level normalization · demosaicing · noise reduction · white balance · color correction · tone mapping · color-space encoding · sharpening · output encoding. <b>The exact sequence varies among cameras and software.</b></p><p class="note">Default slider settings come from psychophysics studies: experts and regular people adjust many images, and the average becomes the preset.</p></div>
+<div class="check" data-q="r5"></div>
+</section>
+
+<section class="topic" id="r6" aria-labelledby="rh6">
+<div class="th"><span class="num">06</span><div><h2 id="rh6">Bit depth ≠ dynamic range</h2><p>Levels vs the useful range</p></div></div>
+<div class="formula">gray levels = 2<sup>bits</sup></div>
+<div class="box"><label for="bits"><b><span id="bv">8</span> bits → <span id="blv">256</span> levels</b> <span class="note" id="brange"></span></label><input type="range" id="bits" min="1" max="16" value="8" aria-label="Bit depth"><canvas id="bitc" width="480" height="70" aria-label="Gradient at the chosen bit depth"></canvas><p class="cap" id="bcap"></p></div>
+<div class="tw"><table><thead><tr><th>Bits</th><th>Levels</th><th>Values</th></tr></thead><tbody><tr><td>1</td><td>2</td><td>0–1</td></tr><tr><td><b>8 (JPEG)</b></td><td><b>256</b></td><td><b>0–255</b></td></tr><tr><td>12 (raw)</td><td>4,096</td><td>0–4,095</td></tr><tr><td>14</td><td>16,384</td><td>0–16,383</td></tr><tr><td>16</td><td>65,536</td><td>0–65,535</td></tr></tbody></table></div>
+<ul class="clean"><li><b>Bit depth</b> = how many levels are available to describe the tones.</li><li><b>Dynamic range</b> = the range between the smallest and largest <b>useful</b> values: max − min, or from the brightest detailed highlight to the darkest detailed shadow (a specular highlight isn't useful detail).</li><li>Printing is done at <b>8 bits</b> because the eye can't tell more levels apart. <b>Edit at more bits</b> to avoid artifacts.</li></ul>
+<div class="check" data-q="r6"></div>
+</section>
+
+<section class="topic" id="r7" aria-labelledby="rh7">
+<div class="th"><span class="num">07</span><div><h2 id="rh7">Non-destructive editing &amp; the .xmp sidecar</h2><p>The original pixels never change</p></div></div>
+<p><b>Non-destructive</b> means the original image data stays available, and edits are stored <b>separately as instructions</b>. The image is rendered when it's displayed or exported.</p>
+<p class="note">Her slide lists: raw adjustments · XMP instructions · catalog adjustments · virtual copies · adjustment layers · masks.</p>
+<div class="three">
+<div class="box"><h3>Raw adjustments</h3><p>Exposure, contrast, color, noise reduction, sharpening, crop and masks are saved as instructions.</p></div>
+<div class="box"><h3>Catalog &amp; virtual copies</h3><p>Lightroom keeps instructions in its catalog. A virtual copy = another set of instructions on the same file.</p></div>
+<div class="box"><h3>Photoshop layers</h3><p>Turn a layer off and the base image is untouched.</p></div>
+</div>
+<div class="box"><h3>.xmp sidecar file</h3><p>Created next to a proprietary RAW when you edit in Adobe Camera Raw. It holds the <b>metadata and edit instructions</b>. Delete it and your edits are gone. Always keep the RAW and its .xmp <b>together</b>.</p></div>
+<div class="trick"><span>💾</span><span><b>Back up!</b> A senior lost three months of capstone work to one failed hard drive with no backup. Remember 3-2-1 from Exam 1.</span></div>
+<div class="check" data-q="r7"></div>
+</section>
+
+<section class="topic" id="r8" aria-labelledby="rh8">
+<div class="th"><span class="num">08</span><div><h2 id="rh8">DNG (Digital Negative)</h2><p>Adobe's open raw format</p></div></div>
+<ul class="clean"><li>Introduced by <b>Adobe in 2004</b>, based on the <b>TIFF 6.0</b> structure, current spec <b>1.7.1</b>, <b>publicly documented</b> and open (royalty-free). Only a few cameras write it natively.</li><li><b>Legacy and versionable:</b> Adobe guarantees an old DNG will still open years from now. No camera maker promises that for their own raw format.</li><li>About <b>10–15% smaller</b> than the original raw, and works best in Adobe software.</li><li>After edits, a DNG <b>updates its embedded preview</b>. The original raw keeps the preview from capture.</li><li>Makers keep their "secret sauce" in <b>private maker notes</b>.</li></ul>
+<div class="two">
+<div class="box"><h3>✅ Advantages</h3><p>Public spec · broad software support · one consistent format · archival · simpler workflow</p></div>
+<div class="box"><h3>⚖️ Trade-offs</h3><p>Converting takes time · maker-specific info may not transfer identically · you may still want the original raw · size depends on the settings</p></div>
+</div>
+<p class="note">Convert with the <b>Adobe DNG Converter</b> (it can batch a whole folder), Lightroom or Bridge.</p>
+<div class="check" data-q="r8"></div>
+</section>
+</div>
+
+<!-- ================= LECTURE 3 · OCT 5 ================= -->
+<div class="lec" id="L3" hidden>
+<nav class="toc" aria-label="Oct 5 sections"><a href="#f1">Archiving</a><a href="#f2">Processing chain</a><a href="#f3">TIFF</a><a href="#f4">JPEG</a><a href="#f5">Other formats</a><a href="#f6">How compression works</a><a href="#f7">Artifacts</a><a href="#f8">Virtual copies</a></nav>
+
+<section class="topic" id="f1" aria-labelledby="fh1">
+<div class="th"><span class="num">01</span><div><h2 id="fh1">Archiving isn't just a file format</h2><p>Should you convert to DNG?</p></div></div>
+<div class="formula">preservation = redundancy + documentation + validation + migration plan</div>
+<div class="three">
+<div class="box"><h3>Redundancy</h3><p>Several copies, for example a <b>RAID</b> (redundant array of independent disks). Put it behind a <b>surge protector</b>.</p></div>
+<div class="box"><h3>Documentation &amp; validation</h3><p>A README with your naming convention. Run a <b>checksum</b> to prove each copy matches.</p></div>
+<div class="box"><h3>Migration plan</h3><p>Move files off dying media before you can't read them (floppies, old disks, CDs).</p></div>
+</div>
+<p class="note">DNG today: version <b>1.7.1</b>. Adobe keeps the DNG <b>SDK</b> (software development kit) available. DNG was originally lossless, but <b>lossy DNG</b> has been possible since <b>Lightroom 4</b>, and DNG is popular on <b>smartphones</b> with raw capture, and it defeats much of the point of raw.</p>
+<div class="check" data-q="f1"></div>
+</section>
+
+<section class="topic" id="f2" aria-labelledby="fh2">
+<div class="th"><span class="num">02</span><div><h2 id="fh2">The processing chain</h2><p>From photons to a file</p></div></div>
+<div class="chain" id="chain"></div>
+<ul class="clean"><li><b>White balance in raw</b> is read from the metadata and applied, not baked in. Shot under fluorescent with the camera set to tungsten? Fix it in Camera Raw with no loss.</li><li><b>Tone mapping</b> ≈ the gamma curve. A sensor is <b>linear</b> (twice the photons = twice the signal), which is good for science. Our vision isn't linear, so photos get a tone curve to look natural.</li><li>You can <b>render</b> one raw many ways: TIFF, JPEG, HEIF, PSD…</li></ul>
+<div class="check" data-q="f2"></div>
+</section>
+
+<section class="topic" id="f3" aria-labelledby="fh3">
+<div class="th"><span class="num">03</span><div><h2 id="fh3">TIFF</h2><p>Tagged Image File Format</p></div></div>
+<ul class="clean"><li>Created by <b>Aldus</b> in <b>1986</b>, owned by <b>Adobe</b> since <b>1994</b>. Originally made for <b>scanners</b> and desktop publishing.</li><li>Flexible raster format: <b>grayscale, RGB, CMYK, CIELAB, indexed</b> color; <b>8, 16 or 32 bits per channel</b>; <b>layers</b>; <b>alpha channels</b>.</li><li>Compression: <b>none, lossless, or lossy</b>, your choice.</li><li>Classic TIFF uses <b>32-bit offsets</b>, so the max is <b>4 GB</b>. <b>BigTIFF</b> uses <b>64-bit offsets</b> for bigger files (scientific and medical images).</li></ul>
+<div class="beyond"><b>Beyond the lecture</b>In class: Adobe charges a licensing fee, so not every program offers TIFF (use that on the exam). For reference, the TIFF 6.0 specification itself is published openly.</div>
+<div class="check" data-q="f3"></div>
+</section>
+
+<section class="topic" id="f4" aria-labelledby="fh4">
+<div class="th"><span class="num">04</span><div><h2 id="fh4">JPEG</h2><p>Joint Photographic Experts Group</p></div></div>
+<ul class="clean"><li>JPEG is <b>both a file format and a lossy compression method</b>. Lossy = data thrown away is gone.</li><li><b>8 bits per channel only.</b> Can embed a color profile. Small files (about <b>500 KB – 8 MB</b>). <b>.jpg = .jpeg</b>. Designed for efficient <b>distribution</b>.</li><li><b>Generational degradation:</b> every re-save compresses an already compressed file, and artifacts pile up fast. Editing a JPEG? Save it as TIFF or PSD first.</li><li>In-camera JPEG: <b>white balance, tone, color, sharpening, noise reduction and compression are baked in</b>. Get it right in camera (custom white balance, User 1/User 2 settings).</li></ul>
+<div class="box"><label for="jq"><b>JPEG quality: <span id="jqv">50</span></b> · re-saves: <span id="jgv">1</span></label><input type="range" id="jq" min="1" max="100" value="50" aria-label="JPEG quality"><div class="row" style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" class="btn" id="jresave">Re-save again</button><button type="button" class="btn" id="jreset">Start over</button></div>
+<div class="two"><div><canvas id="jsrc" class="pix" width="96" height="96" aria-label="Original detail"></canvas><p class="cap">Original (zoomed)</p></div><div><canvas id="jout" class="pix" width="96" height="96" aria-label="JPEG result"></canvas><p class="cap" id="jcap"></p></div></div></div>
+<div class="tw"><table><thead><tr><th></th><th>TIFF</th><th>JPEG</th></tr></thead><tbody><tr><td>Typical use</td><td>Editing, printing, archiving</td><td>Sharing, web, quick delivery</td></tr><tr><td>Compression</td><td>None, lossless or lossy</td><td>Lossy</td></tr><tr><td>Bit depth</td><td>8, 16, 32 per channel</td><td>8 per channel</td></tr><tr><td>File size</td><td>Large</td><td>Small</td></tr><tr><td>Repeated editing</td><td><b>Better suited</b></td><td>Degrades each save</td></tr><tr><td>Transparency</td><td>Possible</td><td>No</td></tr></tbody></table></div>
+<div class="check" data-q="f4"></div>
+</section>
+
+<section class="topic" id="f5" aria-labelledby="fh5">
+<div class="th"><span class="num">05</span><div><h2 id="fh5">Other formats</h2><p>Know what each one is for</p></div></div>
+<div class="tw"><table><thead><tr><th>Format</th><th>Key facts</th><th>Best for</th></tr></thead><tbody>
+<tr><td><b>JPEG XL</b></td><td>Lossy <i>or</i> lossless, progressive, animation, alpha, high bit depth, HDR, wide gamut, <b>lossless JPEG recompression</b></td><td>Pro photography + web</td></tr>
+<tr><td><b>PNG</b><br><span class="note">Portable Network Graphics</span></td><td><b>Lossless</b>, RGB + grayscale, <b>alpha transparency</b>, 8 or 16 bits/channel, no generational loss</td><td>Screenshots, diagrams, text, sharp edges, flat color</td></tr>
+<tr><td><b>GIF</b></td><td><b>Indexed color: max 256 colors</b> picked from the image, LZW compression, <b>animation</b>, transparency</td><td>Simple web graphics, animations. Not photos</td></tr>
+<tr><td><b>BMP</b><br><span class="note">(device-independent) bitmap</span></td><td>Raster, 1–32 bit, alpha, color profiles, compressed or not; bigger than JPEG</td><td>Rarely used by photographers</td></tr>
+<tr><td><b>HEIF</b><br><span class="note">High Efficiency Image File Format</span></td><td>From <b>MPEG</b>, finalized <b>2015</b>. A <b>container</b>: single images, collections, <b>sequences</b>, metadata, auxiliary data; HDR, wide gamut, high bit depth</td><td>Phones (iPhone Live Photos), computational imaging</td></tr>
+<tr><td><b>HEIC</b></td><td>A HEIF file holding <b>HEVC</b>-encoded image data</td><td>iPhone photos</td></tr>
+</tbody></table></div>
+<div class="box"><h3>Choosing a format: ask about</h3><p>Encoding and decoding support · browser and app support · your workflow · archival needs · <b>your audience</b>. Never send a client something they can't open.</p></div>
+<div class="beyond"><b>From the slides</b>GIF = <b>Graphics Interchange Format</b> (that's how it's written on her slide). HEIF is standard ISO/IEC 23008-12. JPEG XL is ISO/IEC 18181 and uses the <b>.jxl</b> extension.</div>
+<div class="check" data-q="f5"></div>
+</section>
+
+<section class="topic" id="f6" aria-labelledby="fh6">
+<div class="th"><span class="num">06</span><div><h2 id="fh6">How compression works</h2><p>Images are full of redundancy</p></div></div>
+<div class="two">
+<div class="box"><h3><span class="tag">Lossless</span></h3><p>Smaller file, and decompressing gives back the <b>exact original</b>. Nothing wrong with it.</p></div>
+<div class="box"><h3><span class="tag">Lossy</span></h3><p>Throws away data it thinks you won't see. You get back an <b>approximation</b>, not the original.</p></div>
+</div>
+<div class="three">
+<div class="box"><h3>Statistical</h3><p>Repeated values: store <b>"red ×4, blue ×7, green ×2"</b> instead of 13 separate pixels.</p><div id="rle" class="rle"></div></div>
+<div class="box"><h3>Interpixel / spatial</h3><p>Neighbors are similar. Store 100 and then the differences: <b>100, +1, 0, +2, +1, 0</b>. Lossy: just call them all 100.</p></div>
+<div class="box"><h3>Psychovisual</h3><p>We're easy to fool. Drop what the eye barely sees: fine detail, small color changes, contrast we can't notice.</p></div>
+</div>
+<div class="box"><h3>How a JPEG is made</h3><div class="chain" id="jchain"></div><p class="note">Y = brightness, Cb = blue–yellow, Cr = red–green. We see brightness much better than color, so cutting the color channels in half already saves lots of space.</p></div>
+<div class="check" data-q="f6"></div>
+</section>
+
+<section class="topic" id="f7" aria-labelledby="fh7">
+<div class="th"><span class="num">07</span><div><h2 id="fh7">Compression artifacts</h2><p>Use the right words</p></div></div>
+<div class="formula" style="font-size:16px">Compression changes FILE SIZE, not RESOLUTION</div>
+<p class="note">Example: 600 × 800 px TIFF = 1.5 MB. Same 600 × 800 px JPEG = 119 KB.</p>
+<div class="three">
+<div class="box"><h3>Blocking</h3><p>The <b>8 × 8 blocks</b> become visible because variation inside each block was squeezed out.</p></div>
+<div class="box"><h3>Posterization / banding</h3><p>Smooth tones become steps because there are <b>too few tonal levels</b>. (Class: "exclusively a JPEG artifact".)</p></div>
+<div class="box"><h3>Ringing &amp; detail loss</h3><p>Halos next to edges, fine texture smoothed away, color errors, soft edges.</p></div>
+<div class="box"><h3>Aliasing</h3><p>A <b>sampling</b> problem: detail too fine for the pixels gives <b>moiré</b>, false detail and color artifacts. Not only JPEG: downsampling causes it too.</p></div>
+<div class="box"><h3>Stair-stepping</h3><p>Diagonal edges turn into steps. Say <b>"stair-stepping"</b>, not "jaggies" (sounds amateur).</p></div>
+<div class="box"><h3>Pixelation = NOT an artifact</h3><p>Zooming to 3200% just magnifies pixels. That's magnification, not damage.</p></div>
+</div>
+<div class="beyond"><b>Beyond the lecture</b>On the exam, use "posterization is a JPEG artifact". In practice, banding can also appear when an 8-bit image is pushed hard in editing. That's one more reason to edit at 16 bits.</div>
+<div class="check" data-q="f7"></div>
+</section>
+
+<section class="topic" id="f8" aria-labelledby="fh8">
+<div class="th"><span class="num">08</span><div><h2 id="fh8">Parametric editing &amp; virtual copies</h2><p>One original, many versions</p></div></div>
+<ul class="clean"><li>Edits are saved as <b>instructions</b>, so you can change your mind, try alternative looks, sync settings across many images, revisit old edits and export several versions.</li><li>A <b>virtual copy</b> is another set of instructions on the same original. You can have a black and white version, a warm version and a masked version without filling your hard drive.</li></ul>
+<div class="check" data-q="f8"></div>
+</section>
+</div>
+
+<!-- ================= LECTURE 4 · OCT 16 ================= -->
+<div class="lec" id="L4" hidden>
+<nav class="toc" aria-label="Oct 16 sections"><a href="#o1">What you need</a><a href="#o2">RATS</a><a href="#o3">Pinhole vs lens</a><a href="#o4">Positive &amp; negative</a><a href="#o5">u, v, f &amp; nodal points</a><a href="#o6">Scale of reproduction</a><a href="#o7">Refraction</a><a href="#o8">Angle of view</a></nav>
+
+<section class="topic" id="o1" aria-labelledby="oh1">
+<div class="th"><span class="num">01</span><div><h2 id="oh1">What you need to make an image</h2><p>Four ingredients</p></div></div>
+<div class="three" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+<div class="box"><h3>1 · Subject</h3><p>Anything from microscopic to a volcano.</p></div>
+<div class="box"><h3>2 · Light</h3><p>No light, no photograph.</p></div>
+<div class="box"><h3>3 · Image-forming system</h3><p>A compound lens, a simple lens, or a <b>pinhole</b>.</p></div>
+<div class="box"><h3>4 · Detector</h3><p>Ground glass, focusing screen, film or a digital sensor.</p></div>
+</div>
+</section>
+
+<section class="topic" id="o2" aria-labelledby="oh2">
+<div class="th"><span class="num">02</span><div><h2 id="oh2">RATS: what happens to light</h2><p>"Excellent test question" 🎆</p></div></div>
+<svg class="v" viewBox="0 0 440 210" role="img" aria-label="Incident light on a glass: reflected, absorbed, transmitted and scattered">
+<rect x="190" y="30" width="44" height="150" rx="6" fill="#6D4AD9" fill-opacity=".15" stroke="#6D4AD9" stroke-width="2"/>
+<path d="M20 50 L190 105" stroke="#E0A21E" stroke-width="5" stroke-linecap="round"/><text x="20" y="40" font-size="13" font-weight="800">incident light</text>
+<path d="M190 105 L40 165" stroke="#E0473C" stroke-width="4" stroke-dasharray="7 5"/><text x="20" y="190" font-size="14" font-weight="900" fill="#E0473C">R · reflected</text>
+<path d="M234 112 L420 140" stroke="#3FA34D" stroke-width="4"/><text x="300" y="160" font-size="14" font-weight="900" fill="#3FA34D">T · transmitted</text>
+<g stroke="#3F6CC9" stroke-width="3" stroke-linecap="round"><path d="M234 100 L300 60"/><path d="M234 100 L320 90"/><path d="M234 100 L280 40"/></g><text x="300" y="40" font-size="14" font-weight="900" fill="#3F6CC9">S · scattered</text>
+<circle cx="212" cy="140" r="9" fill="#D9822B"/><text x="212" y="205" text-anchor="middle" font-size="14" font-weight="900" fill="#D9822B">A · absorbed → heat</text></svg>
+<div class="three" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
+<div class="box"><h3>R · Reflected</h3><p><b>Specular</b> reflection: bounces off at the same angle the other way, like a flashlight on a mirror. Even matte surfaces reflect a little.</p></div>
+<div class="box"><h3>A · Absorbed</h3><p>Taken in and turned into <b>heat</b>. A black shirt gets hotter than a white one.</p></div>
+<div class="box"><h3>T · Transmitted</h3><p>Whatever actually <b>passes through</b>.</p></div>
+<div class="box"><h3>S · Scattered</h3><p>Redirected by dust or water in the air (headlights in fog, wildfire smoke). Causes <b>flare</b> and forms no image.</p></div>
+</div>
+<div class="check" data-q="o2"></div>
+</section>
+
+<section class="topic" id="o3" aria-labelledby="oh3">
+<div class="th"><span class="num">03</span><div><h2 id="oh3">Pinhole vs lens</h2><p>Without focusing, every pixel gets the same light, so there's no image</p></div></div>
+<div class="two">
+<div class="box"><h3>Pinhole</h3><ul class="clean"><li>Can be very sharp, but only at <b>one exact image distance</b> for that pinhole size.</li><li>Tiny opening, so <b>very long exposures</b>.</li><li>See pinhole.org.</li></ul></div>
+<div class="box"><h3>Lens</h3><ul class="clean"><li><b>Collects light</b> much more efficiently.</li><li>Brings the image to a <b>point of focus</b>.</li><li>Lets you <b>control depth of field</b>.</li></ul></div>
+</div>
+<div class="box"><h3>The image is upside down and backwards</h3><p>Every real lens image is <b>inverted</b>. A DSLR flips it back with a mirror and <b>pentaprism</b>. A mirrorless camera flips it in <b>software</b>. A 4×5 camera's ground glass shows it upside down and backwards, so to move the image left you move right.</p></div>
+<div class="check" data-q="o3"></div>
+</section>
+
+<section class="topic" id="o4" aria-labelledby="oh4">
+<div class="th"><span class="num">04</span><div><h2 id="oh4">Positive vs negative lenses</h2><p>Converge or diverge</p></div></div>
+<svg class="v" viewBox="0 0 440 170" role="img" aria-label="Positive lens converges parallel rays to a point; negative lens spreads them apart">
+<g transform="translate(0 10)"><path d="M100 10 Q125 75 100 140 Q75 75 100 10Z" fill="#6D4AD9" fill-opacity=".2" stroke="#6D4AD9" stroke-width="2"/>
+<g stroke-width="2.5" fill="none"><path d="M10 40 H100 L190 75" stroke="#E0473C"/><path d="M10 75 H190" stroke="#3FA34D"/><path d="M10 110 H100 L190 75" stroke="#E0473C"/></g><circle cx="190" cy="75" r="4" fill="#15131C"/><text x="100" y="160" text-anchor="middle" font-size="13" font-weight="800">positive: converges</text></g>
+<g transform="translate(220 10)"><path d="M90 10 H110 Q98 75 110 140 H90 Q102 75 90 10Z" fill="#D9822B" fill-opacity=".2" stroke="#D9822B" stroke-width="2"/>
+<g stroke-width="2.5" fill="none"><path d="M10 40 H100 L210 10" stroke="#E0473C"/><path d="M10 75 H210" stroke="#3FA34D"/><path d="M10 110 H100 L210 140" stroke="#E0473C"/></g><text x="100" y="160" text-anchor="middle" font-size="13" font-weight="800">negative: diverges</text></g></svg>
+<div class="two">
+<div class="box"><h3>➕ Positive (convex)</h3><ul class="clean"><li><b>Thicker in the center</b> than at the edges, with at least one <b>convex</b> (outward-curved) side.</li><li>Makes light <b>converge</b> and <b>forms a real image by itself</b>. It can start a fire with sunlight.</li><li>Types: double convex, plano-convex (one flat side).</li></ul></div>
+<div class="box"><h3>➖ Negative (concave)</h3><ul class="clean"><li><b>Thinner in the center</b>, with concave sides.</li><li>Makes light <b>diverge</b> and <b>cannot form a real image alone</b>.</li><li>Used <b>with</b> positive lenses. Every camera lens has some, for example the <b>achromatic doublet</b> (a positive and a negative cemented together).</li></ul></div>
+</div>
+<p>The green ray goes through the <b>optical axis</b> (the center of the lens) <b>undeviated</b>. Rays parallel to it come "from infinity". In the lab, a table's length is far enough.</p>
+<div class="check" data-q="o4"></div>
+</section>
+
+<section class="topic" id="o5" aria-labelledby="oh5">
+<div class="th"><span class="num">05</span><div><h2 id="oh5">u, v, f and nodal points</h2><p>The vocabulary of a lens</p></div></div>
+<svg class="v" viewBox="0 0 440 170" role="img" aria-label="Object at distance u from the lens, image at distance v behind it, upside down">
+<line x1="10" y1="90" x2="430" y2="90" stroke="#9A95A8" stroke-dasharray="4 4"/>
+<path d="M60 90 V40" stroke="#6D4AD9" stroke-width="5"/><path d="M52 50 L60 36 L68 50" fill="#6D4AD9"/><text x="60" y="110" text-anchor="middle" font-size="12">object</text>
+<path d="M200 25 Q215 90 200 155 Q185 90 200 25Z" fill="#6D4AD9" fill-opacity=".18" stroke="#6D4AD9" stroke-width="2"/>
+<path d="M60 40 L340 136" stroke="#E0473C" stroke-width="2"/><path d="M60 40 H200 L340 136" stroke="#3F6CC9" stroke-width="2" fill="none"/>
+<path d="M340 90 V136" stroke="#6D4AD9" stroke-width="5"/><path d="M332 126 L340 140 L348 126" fill="#6D4AD9"/><text x="340" y="160" text-anchor="middle" font-size="12">image (inverted)</text>
+<line x1="340" y1="20" x2="340" y2="80" stroke="#15131C" stroke-dasharray="3 3"/><text x="340" y="16" text-anchor="middle" font-size="11">focal plane</text>
+<path d="M60 70 H198" stroke="#15131C"/><text x="130" y="64" text-anchor="middle" font-size="15" font-weight="900">u</text>
+<path d="M202 70 H340" stroke="#15131C"/><text x="270" y="64" text-anchor="middle" font-size="15" font-weight="900">v</text></svg>
+<div class="formula">1/f = 1/u + 1/v</div>
+<ul class="clean"><li><b>u</b> = object distance (subject → lens). <b>v</b> = image distance (lens → image). The <b>focal plane</b> is where the sensor goes.</li><li><b>Focal length</b> = the distance from the <b>back nodal point</b> to the focal plane when the object is at <b>infinity</b>.</li><li>Parallel rays meet at the <b>principal focal point</b>. Light through the front gives the <b>back</b> focal point. Turn the lens around to find the <b>front</b> one.</li><li><b>Nodal points:</b> a ray that leaves the lens parallel to how it entered; extend it to the axis to find the front and back nodal points. In a thin simple lens they sit together at the center. In compound lenses they're apart.</li></ul>
+<div class="trick"><span>🔤</span><span><b>U → O:</b> close the top of the <b>U</b> and it becomes an <b>O</b> for <b>O</b>bject distance. That leaves <b>V</b> for image distance.</span></div>
+<div class="box"><h3>Nodal slide (lab)</h3><p>Focus a distant bare bulb, then pivot the lens slightly. If the point of light <b>doesn't move</b>, you're on the nodal point, so measure the focal length. If it moves, slide the lens and try again.</p><p><b>Why it matters:</b> for <b>panoramas</b>, rotate the camera on the lens's nodal point (panoramic head) for less distortion when stitching.</p></div>
+<div class="beyond"><b>Not on the test</b>Two lenses touching: 1/f = 1/f₁ + 1/f₂. With air between them it gets more complicated.</div>
+<div class="check" data-q="o5"></div>
+</section>
+
+<section class="topic" id="o6" aria-labelledby="oh6">
+<div class="th"><span class="num">06</span><div><h2 id="oh6">Scale of reproduction (R or M)</h2><p>The 5 formulas from myCourses</p></div></div>
+<div class="tw"><table><thead><tr><th>#</th><th>Formula</th><th>Use when you know</th></tr></thead><tbody>
+<tr><td>1</td><td><b>1/f = 1/u + 1/v</b></td><td>two of f, u, v</td></tr>
+<tr><td>2</td><td><b>R = v / u</b></td><td>both distances (or image size ÷ object size)</td></tr>
+<tr><td>3</td><td><b>R = (v − f) / f</b></td><td>v and f</td></tr>
+<tr><td>4</td><td><b>v = f (R + 1)</b></td><td>f and R → find v</td></tr>
+<tr><td>5</td><td><b>R = f / (u − f)</b></td><td>u and f</td></tr></tbody></table></div>
+<div class="box"><h3>Lens calculator</h3>
+<div class="two"><label>Focal length f (mm)<input type="number" id="lf" value="100" min="1" step="any" class="inp"></label><label>Scale of reproduction R (e.g. 3 = 3:1)<input type="number" id="lr" value="3" min="0.01" step="any" class="inp"></label></div>
+<ol class="steps" id="lsteps"></ol></div>
+<div class="box" style="border-color:var(--bad)"><h3>⚠️ Calculator trap</h3><p>1/u + 1/v gives <b>1/f</b> (like 0.02), not f. Press <b>1/x</b> to flip it: 1/0.02 = <b>50 mm</b>. A focal length of 0.02 mm makes no sense, so always check that your answer is logical.</p></div>
+<div class="box"><h3>Find f from u and v</h3><div class="two"><label>u (mm)<input type="number" id="fu" value="150" min="1" step="any" class="inp"></label><label>v (mm)<input type="number" id="fv" value="300" min="1" step="any" class="inp"></label></div><p id="fout" class="formula" style="font-size:16px"></p></div>
+<p class="note">R = 3 (written 3:1) means the image is <b>3× life size</b>. 1:1 means life size: v = u = 2f.</p>
+<div class="check" data-q="o6"></div>
+</section>
+
+<section class="topic" id="o7" aria-labelledby="oh7">
+<div class="th"><span class="num">07</span><div><h2 id="oh7">Refraction</h2><p>Without it, lenses wouldn't work</p></div></div>
+<svg class="v" viewBox="0 0 440 160" role="img" aria-label="A straw looks bent where it enters the water">
+<rect x="120" y="70" width="200" height="80" fill="#3F6CC9" fill-opacity=".18"/><line x1="120" y1="70" x2="320" y2="70" stroke="#3F6CC9" stroke-width="2"/>
+<path d="M150 10 L215 70" stroke="#D9822B" stroke-width="8" stroke-linecap="round"/><path d="M215 70 L250 140" stroke="#D9822B" stroke-width="8" stroke-linecap="round" opacity=".85"/><path d="M215 70 L280 130" stroke="#D9822B" stroke-width="3" stroke-dasharray="5 5" opacity=".6"/>
+<text x="330" y="66" font-size="12" fill="#5E5A6B">air</text><text x="330" y="100" font-size="12" fill="#3F6CC9">water (higher index)</text><text x="285" y="148" font-size="11" fill="#5E5A6B">where it really is</text></svg>
+<ul class="clean"><li><b>Refraction</b> = light <b>bending</b> as it passes from one medium into another (unless it hits perpendicular, like on the optical axis).</li><li>The <b>refractive index</b> says how much a material bends light. Water's is higher than air's, so a straw looks broken.</li><li>Glass bends light, so lenses can focus. <b>Different wavelengths bend differently</b> (chromatic aberration, next lecture).</li><li><b>Short focal length</b> → rays bend sharply → <b>more distortion</b> (wide angle). <b>Long focal length</b> → gentle bending → more magnification, <b>less distortion</b>.</li></ul>
+<div class="check" data-q="o7"></div>
+</section>
+
+<section class="topic" id="o8" aria-labelledby="oh8">
+<div class="th"><span class="num">08</span><div><h2 id="oh8">Angle of view &amp; perspective</h2><p>Focal length vs camera position</p></div></div>
+<div class="box"><label for="fl"><b>Focal length: <span id="flv">50</span> mm</b> · sensor: <select id="sens" class="inp" style="width:auto;display:inline-block;min-height:40px"><option value="43.27">Full frame</option><option value="28.2">APS-C (1.5×)</option><option value="21.6">Micro Four Thirds (2×)</option></select></label><input type="range" id="fl" min="14" max="400" value="50" aria-label="Focal length"><canvas id="aov" width="460" height="190" aria-label="Angle of view cone"></canvas><p class="cap" id="aovcap"></p></div>
+<div class="tw"><table><thead><tr><th>Full-frame lens</th><th>Angle of view (diagonal)</th></tr></thead><tbody><tr><td>20 mm</td><td>≈ 94°</td></tr><tr><td>50 mm</td><td>≈ 47°</td></tr><tr><td>300 mm</td><td>≈ 8°</td></tr></tbody></table></div>
+<div class="box"><h3>Her slide: focal length controls…</h3><p><b>1. Magnification</b> (longer = bigger subject) · <b>2. Angle of view</b> (shorter = wider) · <b>3. Perspective</b> (relative size of objects). Note: focal length controls angle of view and image scale, but <b>camera position controls perspective</b>.</p></div>
+<ul class="clean"><li><b>Focal length controls magnification and angle of view</b> (how much of the scene you see, usually measured on the diagonal). Longer lens = bigger subject, less scene.</li><li><b>Perspective is controlled by camera-to-subject distance</b>, not by focal length.</li><li>The lens's <b>image circle</b> must cover the sensor: full frame is 24 × 36 mm, APS-C about 15 × 22.5 mm. Bigger glass = pricier lens. A full-frame lens on a crop body uses the sharp center ("sweet spot").</li></ul>
+<div class="beyond"><b>Beyond the lecture</b>The math behind the table: angle of view = 2 × arctan(sensor diagonal ÷ (2 × focal length)). The slider above uses it.</div>
+<div class="check" data-q="o8"></div>
+</section>
+</div>
+
+<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures (Sep 28 – Oct 16, 2026), for study use.</p>
+</div>
+
+<script>
+(function(){
+/* ---------- quick checks ---------- */
+var Q={
+1:["What share of a Bayer filter's photosites are green?",["50%","33%","25%","100%"],"Half are green because our eyes are most sensitive to green. Red and blue get 25% each."],
+2:["Why does Kodak's TrueSense pattern work better in low light?",["Panchromatic (unfiltered) pixels catch all the light","It has more blue pixels","It removes demosaicing","It cools the sensor"],"A color filter throws away about 2/3 of the light. Clear 'pan' pixels keep all of it."],
+3:["What does raising the ISO actually do?",["Amplifies the signal (gain)","Makes the photodiode more sensitive","Makes the photosites bigger","Removes noise"],"Sensitivity is fixed. ISO just turns up the gain, and the noise gets amplified too."],
+4:["Which noise is the MOST common in a photograph?",["Photon noise","Thermal noise","Transfer noise","Grain"],"Light is random, so even the input is noisy. That's photon noise."],
+5:["Mean 150, std dev 15. What's the SNR?",["20 dB","10 dB","40 dB","6 dB"],"150 ÷ 15 = 10 → log(10) = 1 → 20 × 1 = 20 dB."],
+6:["Why do crop sensors tend to have more noise?",["Smaller photosites catch fewer photons, so more amplification is needed","They have fewer green pixels","They use JPEG only","Pixel density sets the ISO"],"Smaller bucket, fewer photons, more gain, more noise."],
+7:["Which scene is BEST for exposing to the right?",["A low-key scene without bright highlights","A bride in white next to a groom in black","A sunny sky with white clouds","A white cat next to a black cat"],"ETTR only works when the scene doesn't fill the whole range. Otherwise you clip."],
+8:["What do you need for a good HDR series?",["A sturdy tripod and several exposures","One exposure at high ISO","A Foveon sensor","JPEG mode"],"The camera can't move between the exposures, or the merge fails."]};
+document.querySelectorAll('.check').forEach(function(el){var q=Q[el.dataset.q];if(!q)return;var order=[0,1,2,3].sort(function(){return Math.random()-.5;});
+ el.innerHTML='<span class="tag">Quick check</span><div class="q">'+q[0]+'</div><div class="opts">'+order.map(function(i){return '<button type="button" data-i="'+i+'">'+q[1][i]+'</button>';}).join('')+'</div><div class="fb" aria-live="polite"></div>';
+ el.querySelectorAll('.opts button').forEach(function(b){b.addEventListener('click',function(){var ok=b.dataset.i==='0';b.classList.add(ok?'right':'wrong');if(!ok)el.querySelector('[data-i="0"]').classList.add('right');el.querySelectorAll('.opts button').forEach(function(x){x.disabled=true;});el.querySelector('.fb').innerHTML=(ok?'✅ Correct. ':'❌ Not quite. ')+q[2];});});});
+
+/* ---------- 1 demosaicing demo ---------- */
+var W=96,H=64,orig=[];
+for(var y=0;y<H;y++)for(var x=0;x<W;x++){var r,g,b;
+ var sky=y<30;r=sky?110+y*2:70;g=sky?160+y:120+((x*7+y*3)%9);b=sky?235:60;
+ if(y>=30){r=60+((x+y)%5);g=130;b=55;}
+ var dx=x-26,dy=y-20;if(dx*dx+dy*dy<120){r=250;g=210;b=60;}
+ if(x>52&&x<82&&y>24&&y<52){r=200;g=50;b=45;}
+ if(x>60&&x<74&&y>36&&y<52){r=245;g=245;b=245;}
+ if(y>14&&y<24&&x>40&&x<92&&(x%4===0)){r=245;g=245;b=245;}
+ orig.push([r,g,b]);}
+function ch(x,y){return (y%2===0)?(x%2===0?0:1):(x%2===0?1:2);} /* RGGB */
+function raw(x,y){return orig[y*W+x][ch(x,y)];}
+var dmc=document.getElementById('dm'),dctx=dmc.getContext('2d'),cap=document.getElementById('dmcap');
+var CAPS=["What the sensor records: just one brightness number per photosite. No color yet.","The same numbers shown in the color of each filter: 50% green, 25% red, 25% blue.","After demosaicing: missing colors are averaged from the neighbors. Look closely at the edges for small color mistakes.","The real scene, for comparison."];
+function demosaic(){var out=[];for(var y=0;y<H;y++)for(var x=0;x<W;x++){var px=[0,0,0];for(var c=0;c<3;c++){if(ch(x,y)===c){px[c]=raw(x,y);continue;}var s=0,n=0;for(var j=-1;j<=1;j++)for(var i=-1;i<=1;i++){var xx=x+i,yy=y+j;if(xx<0||yy<0||xx>=W||yy>=H)continue;if(ch(xx,yy)===c){s+=raw(xx,yy);n++;}}px[c]=n?s/n:0;}out.push(px);}return out;}
+var dem=demosaic();
+function drawDM(v){var im=dctx.createImageData(W,H);for(var y=0;y<H;y++)for(var x=0;x<W;x++){var k=(y*W+x)*4,p;
+ if(v===0){var g=raw(x,y);p=[g,g,g];}else if(v===1){var c=ch(x,y),val=raw(x,y);p=[0,0,0];p[c]=val;}else if(v===2){p=dem[y*W+x];}else p=orig[y*W+x];
+ im.data[k]=p[0];im.data[k+1]=p[1];im.data[k+2]=p[2];im.data[k+3]=255;}dctx.putImageData(im,0,0);cap.textContent=CAPS[v];}
+document.querySelectorAll('#dmv button').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('#dmv button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});drawDM(+b.dataset.v);});});
+drawDM(0);
+
+/* ---------- 2 CFA patterns ---------- */
+var COL={R:'#E0473C',G:'#3FA34D',B:'#3F6CC9',P:'#E9E6F2'};
+var CFAS=[
+ {n:'Bayer',t:'Standard',p:['RGRGRG','GBGBGB','RGRGRG','GBGBGB','RGRGRG','GBGBGB'],d:'2 × 2 repeat. Every filter throws away about 2/3 of the light.',light:'≈ 1/3 per pixel'},
+ {n:'X-Trans',t:'Fujifilm',p:['GBGGRG','RGRBGB','GBGGRG','GRGGBG','BGBRGR','GRGGBG'],d:'6 × 6 repeat with MORE green (about 56%), where we are most sensitive.',light:'≈ 1/3 per pixel'},
+ {n:'TrueSense',t:'Kodak',p:['PGPRPG','GPRPGP','PBPGPB','BPGPBP','PGPRPG','GPRPGP'],d:'Half the photosites have NO filter: panchromatic ("pan") pixels catch all the light. Pan pixels build the luminance, and the color pixels give the chrominance. Better in low light and shadows.',light:'pan pixels: all of it'}];
+var cf=document.getElementById('cfas');
+CFAS.forEach(function(c){var cnt={R:0,G:0,B:0,P:0};var cells=c.p.join('').split('');cells.forEach(function(k){cnt[k]++;});
+ var d=document.createElement('div');d.className='box';
+ d.innerHTML='<h3>'+c.n+' <span class="tag">'+c.t+'</span></h3><div class="cfa" style="grid-template-columns:repeat(6,1fr)" role="img" aria-label="'+c.n+' filter pattern">'+cells.map(function(k){return '<i style="background:'+COL[k]+(k==='P'?';color:#5E5A6B':'')+'">'+(k==='P'?'P':'')+'</i>';}).join('')+'</div>'
+ +'<div class="stat"><span>Green</span><b>'+Math.round(cnt.G/36*100)+'%</b></div>'+(cnt.P?'<div class="stat"><span>Pan (clear)</span><b>'+Math.round(cnt.P/36*100)+'%</b></div>':'')+'<div class="stat"><span>Light kept</span><b>'+c.light+'</b></div><p class="note">'+c.d+'</p>';
+ cf.appendChild(d);});
+
+/* ---------- 3 ISO gain ---------- */
+var isoS=document.getElementById('iso'),ic=document.getElementById('isoc'),ix=ic.getContext('2d');
+function rnd(s){return function(){s=(s*9301+49297)%233280;return s/233280;};}
+function drawISO(){var st=+isoS.value,iso=100*Math.pow(2,st),gain=Math.pow(2,st);document.getElementById('isov').textContent=iso;document.getElementById('gainv').textContent=gain;
+ ix.clearRect(0,0,440,120);var r=rnd(5),sig=Math.max(3,60/gain);
+ for(var i=0;i<40;i++){var n=(r()-.5)*10;var raw=sig+n*0.6+((r()-.5)*4);var out=Math.min(110,raw*gain);var x=6+i*10.8;
+  ix.fillStyle='#CFC6F5';ix.fillRect(x,114-Math.min(110,sig*gain),8,Math.min(110,sig*gain));
+  ix.fillStyle='#6D4AD9';ix.fillRect(x,114-out,8,3);}
+ ix.fillStyle='#5E5A6B';ix.font='12px Inter,sans-serif';ix.fillText('less light reaches the sensor → more gain',8,12);
+ document.getElementById('isocap').textContent=st===0?'Lots of light, little gain: the dots sit close to the bar (low noise).':'Less light, ×'+gain+' gain: the dots scatter more around the bar. The noise was amplified too.';}
+isoS.addEventListener('input',drawISO);drawISO();
+
+/* ---------- 5 SNR calc ---------- */
+var sm=document.getElementById('sm'),ss=document.getElementById('ss'),so=document.getElementById('sout');
+function snr(){var m=+sm.value,s=+ss.value;if(!(m>0&&s>0)){so.textContent='Enter a mean and std dev above 0';return;}var r=m/s;so.textContent='20 × log('+m+' ÷ '+s+') = 20 × log('+(+r.toFixed(2))+') = '+(20*Math.log10(r)).toFixed(1)+' dB';}
+sm.addEventListener('input',snr);ss.addEventListener('input',snr);snr();
+
+/* ---------- 7 ETTR ---------- */
+var LV=[2048,1024,512,256,128,64,32,16,8,4,2,1];
+document.getElementById('ltab').innerHTML=LV.map(function(v,i){return '<tr><td>'+(i===0?'Brightest stop':i===LV.length-1?'Darkest stop':'Stop '+(i+1))+'</td><td>'+v.toLocaleString()+'</td></tr>';}).join('');
+var ec=document.getElementById('ettr'),ex=ec.getContext('2d'),evS=document.getElementById('ev');
+function drawETTR(){var e=+evS.value;document.getElementById('evv').textContent='+'+e;
+ var Wd=460,Hd=230,L=30,R=450,bw=(R-L)/12;ex.clearRect(0,0,Wd,Hd);
+ /* stops: left = darkest */
+ for(var i=0;i<12;i++){var lv=LV[11-i],h=Math.max(3,Math.log2(lv+1)*9);ex.fillStyle='rgba(109,74,217,'+(0.15+i*0.05)+')';ex.fillRect(L+i*bw+1,140-h,bw-2,h);}
+ ex.fillStyle='#5E5A6B';ex.font='11px Inter,sans-serif';ex.fillText('levels per stop (12-bit raw)',L,14);ex.fillText('dark',L,158);ex.textAlign='right';ex.fillText('bright',R,158);ex.textAlign='left';
+ /* noise floor */
+ ex.fillStyle='rgba(192,57,43,.14)';ex.fillRect(L,166,bw*3,52);ex.fillStyle='#C0392B';ex.fillText('noise zone',L+4,214);
+ /* histogram: low key centered at stop index 3+e */
+ var c=3.2+e,peak=0;var clipped=0;
+ ex.beginPath();ex.moveTo(L,218);for(var x=0;x<=12;x+=0.05){var y=Math.exp(-((x-c)*(x-c))/1.3)+0.25*Math.exp(-((x-(c+3))*(x-(c+3)))/0.4);var X=L+x*bw;ex.lineTo(X,218-y*48);}
+ ex.lineTo(R,218);ex.closePath();ex.fillStyle='rgba(31,138,112,.35)';ex.fill();ex.strokeStyle='#1F8A70';ex.lineWidth=2;ex.stroke();
+ if(c+3>11.4){ex.fillStyle='#C0392B';ex.fillRect(R-4,166,4,52);}
+ /* levels for the shadow peak */
+ var si=Math.max(0,Math.min(11,Math.round(c)));var lvl=LV[11-si];document.getElementById('lv').textContent=lvl.toLocaleString();
+ var cl=c+3>11.4;var ce=document.getElementById('clip');ce.innerHTML=cl?'<span class="pill bad">highlights clipped</span>':'<span class="pill ok">none</span>';
+ document.getElementById('ettrcap').textContent=e===0?'Normal exposure: the shadows sit near the noise and get only a few levels.':(cl?'Too far: the brightest part of the scene is clipped and gone. Back off one stop.':'+'+e+' stop'+(e>1?'s':'')+': the shadows move right, away from the noise, and get '+lvl.toLocaleString()+' levels. Darken it back down in raw processing.');}
+evS.addEventListener('input',drawETTR);drawETTR();
+/* ===== extra quick checks ===== */
+Object.assign(Q,{
+d1:["On the camera it's a photosite. In the file it's a…",["Pixel","Photodiode","Bit","Voxel"],"Photosite = on the sensor. Pixel = in the file."],
+d2:["What turns the photosite's analog voltage into a digital count?",["The A/D (analog-to-digital) converter","The Bayer filter","The microlens","The shutter"],"The A/D converter. The number of possible counts is limited by bit depth."],
+d3:["How many colors can a 24-bit image show?",["About 16.7 million","256","65,536","4,096"],"2²⁴ ≈ 16.7 million (8 bits each for R, G and B)."],
+d4:["The in-camera histogram is based on…",["The JPEG preview","The raw data","The lens","The ISO"],"Even when you shoot raw, the camera's histogram comes from the JPEG."],
+d5:["Which sensor has an A/D converter at every photosite and uses microlenses?",["CMOS","CCD","Foveon X3","Film"],"CMOS: circuitry at each photosite takes space, so microlenses funnel light in."],
+d6:["Who invented the Bayer pattern, and where?",["Bryce Bayer, Kodak (1976)","Bryce Bayer, Canon (1969)","Boyle and Smith, Bell Labs","Frank Wanlass, Fairchild"],"Bryce Bayer at Kodak, patent 1976, Emmy in 2001."],
+r1:["How many bits are in a byte?",["8","2","10","1,024"],"A byte = 8 bits. A bit is a single 0 or 1."],
+r2:["Which file type keeps a logo sharp at any size?",["Vector (e.g. EPS)","Raster (e.g. JPEG)","RAW","BMP"],"Vectors store shapes as math, so they redraw sharply at any size."],
+r4:["Which setting does NOT change the RAW data?",["Picture style / saturation","Aperture","Shutter speed","Exposure"],"Picture style, saturation, contrast and sharpening only affect the JPEG and the preview."],
+r5:["Compared with a JPEG, an unprocessed RAW has…",["Higher dynamic range, lower contrast, less sharpness","Lower dynamic range, more contrast","The same everything, just bigger","More sharpness and more contrast"],"RAW keeps more range but hasn't been given contrast or sharpening yet. It isn't ready for output."],
+r6:["What values can an 8-bit (JPEG) channel hold?",["0–255","1–256","0–100","0–4,095"],"2⁸ = 256 levels, numbered 0 to 255."],
+r7:["You deleted the .xmp file next to your RAW. What happens?",["Your Camera Raw edits are lost","The RAW is deleted","Nothing","The RAW becomes a JPEG"],"The .xmp sidecar holds the edit instructions. Keep it with the RAW."],
+r8:["What is DNG's big archival promise?",["Adobe guarantees old DNGs will still open (legacy & versionable)","It is always uncompressed","Every camera writes it","It is 50% smaller"],"DNG is open and versionable, so Adobe promises future software will open it."],
+f1:["Preservation = redundancy + documentation + validation + …?",["a migration plan","a bigger hard drive","JPEG copies","DNG only"],"Keep moving data off old media before you can't read it."],
+f2:["Why do raw files get tone mapping?",["Sensors are linear but human vision isn't","To add noise","To demosaic","To compress"],"Tone mapping (like a gamma curve) makes the linear sensor data look natural."],
+f3:["What is BigTIFF for?",["Files larger than 4 GB (64-bit offsets)","Animated images","Lossy web images","Vector graphics"],"Classic TIFF uses 32-bit offsets with a 4 GB limit. BigTIFF uses 64-bit offsets."],
+f4:["What happens when you re-save a JPEG over and over?",["Generational degradation: artifacts build up","Nothing, it's lossless","It turns into a TIFF","Resolution drops by half"],"Each save compresses an already compressed file."],
+f5:["Which format is limited to 256 colors?",["GIF","PNG","TIFF","HEIF"],"GIF uses indexed color: a palette of at most 256 colors."],
+f6:["In JPEG compression, which channels get cut in half first?",["The color (Cb, Cr) channels","The brightness (Y) channel","All three equally","None"],"We're more sensitive to brightness than to color, so color is subsampled."],
+f7:["Zooming to 3200% in Photoshop shows big squares. What is that?",["Pixelation: just magnification, not an artifact","Blocking","Aliasing","Posterization"],"Pixelation isn't an artifact. The pixels are just magnified."],
+f8:["What is a virtual copy?",["Another set of edit instructions on the same original","A duplicate full-size file","A JPEG export","A backup drive"],"One original file, many sets of instructions."],
+o2:["Light that bounces off a surface at the same angle it came in is…",["Reflected (specular)","Absorbed","Transmitted","Scattered"],"RATS: Reflected, Absorbed, Transmitted, Scattered."],
+o3:["Why does a 4×5 ground glass show the image upside down and backwards?",["Every real lens image is inverted, and there's no prism to flip it","The film is loaded backwards","Refraction in the ground glass","It's a negative lens"],"A DSLR flips it with a pentaprism and a mirrorless camera does it in software. The 4×5 doesn't."],
+o4:["Which lens can form a real image by itself?",["Positive (thicker in the center)","Negative (thinner in the center)","Both","Neither"],"A positive lens converges light to a point. A negative lens diverges it."],
+o5:["Focal length is measured from the back nodal point to the focal plane with the object at…",["Infinity","1 meter","The front nodal point","Twice the focal length"],"Light from infinity enters parallel and comes to focus at the focal plane."],
+o6:["f = 100 mm, R = 3. What is v?",["400 mm","300 mm","133 mm","33 mm"],"v = f(R + 1) = 100 × 4 = 400 mm. Then u = v ÷ R ≈ 133.3 mm."],
+o7:["Which focal length bends light more sharply (more distortion)?",["Short (wide angle)","Long (telephoto)","They bend the same","Only zoom lenses"],"Short focal lengths bend rays more, so wide angles distort more."],
+o8:["What controls perspective?",["Camera-to-subject distance","Focal length","Aperture","Sensor size"],"Focal length changes the angle of view and image scale. Distance changes perspective."]});
+document.querySelectorAll('.check').forEach(function(el){if(el.innerHTML)return;var q=Q[el.dataset.q];if(!q)return;var order=[0,1,2,3].sort(function(){return Math.random()-.5;});
+ el.innerHTML='<span class="tag">Quick check</span><div class="q">'+q[0]+'</div><div class="opts">'+order.map(function(i){return '<button type="button" data-i="'+i+'">'+q[1][i]+'</button>';}).join('')+'</div><div class="fb" aria-live="polite"></div>';
+ el.querySelectorAll('.opts button').forEach(function(b){b.addEventListener('click',function(){var ok=b.dataset.i==='0';b.classList.add(ok?'right':'wrong');if(!ok)el.querySelector('[data-i="0"]').classList.add('right');el.querySelectorAll('.opts button').forEach(function(x){x.disabled=true;});el.querySelector('.fb').innerHTML=(ok?'✅ Correct. ':'❌ Not quite. ')+q[2];});});});
+
+/* ===== lecture tabs ===== */
+var tabs=document.querySelectorAll('#lecs button');
+function showLec(id,scroll){tabs.forEach(function(b){var on=b.dataset.l===id;b.setAttribute('aria-selected',on);b.setAttribute('aria-pressed',on);});
+ document.querySelectorAll('.lec').forEach(function(d){d.hidden=d.id!==id;});
+ try{localStorage.setItem('e2-lec',id);}catch(e){}
+ if(scroll){var t=document.getElementById('lecs');try{if(window.frameElement&&window.parent!==window){var fr=window.frameElement.getBoundingClientRect(),r=t.getBoundingClientRect();if(fr.top+r.top<0)window.parent.scrollTo({top:window.parent.scrollY+fr.top+r.top-12,behavior:'smooth'});return;}}catch(e){}if(t.getBoundingClientRect().top<0)t.scrollIntoView({block:'start'});}}
+tabs.forEach(function(b){b.addEventListener('click',function(){showLec(b.dataset.l,true);});});
+document.querySelectorAll('.toc a').forEach(function(a){if(a._b)return;a._b=1;a.addEventListener('click',function(e){var t=document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();
+ try{if(window.frameElement&&window.parent!==window){var fr=window.frameElement.getBoundingClientRect();window.parent.scrollTo({top:window.parent.scrollY+fr.top+t.getBoundingClientRect().top-12,behavior:'smooth'});return;}}catch(err){}
+ t.scrollIntoView({behavior:'smooth',block:'start'});});});
+try{var saved=localStorage.getItem('e2-lec');if(saved&&document.getElementById(saved))showLec(saved,false);}catch(e){}
+
+/* ===== bytes ===== */
+var tb=document.getElementById('tb');function tbf(){var n=+tb.value;document.getElementById('tbv').textContent=n;var bytes=n*1e12,gib=bytes/Math.pow(1024,3);document.getElementById('tbout').textContent=n+' TB = '+(n*1e12).toLocaleString()+' bytes → shows as ≈ '+Math.round(gib).toLocaleString()+' GB on a computer that counts in 1,024s';}tb.addEventListener('input',tbf);tbf();
+
+/* ===== raster vs vector ===== */
+var rc=document.getElementById('rast'),rx=rc.getContext('2d'),small=document.createElement('canvas');small.width=small.height=24;var sx=small.getContext('2d');sx.fillStyle='#fff';sx.fillRect(0,0,24,24);sx.fillStyle='#6D4AD9';sx.font='900 18px Arial';sx.textAlign='center';sx.fillText('A',12,19);
+function zoomf(){var z=+document.getElementById('zoom').value;document.getElementById('zv').textContent=z;rx.imageSmoothingEnabled=false;rx.fillStyle='#fff';rx.fillRect(0,0,200,200);var s=200*z/24*24/24;var w=24*(200/24)*z;rx.drawImage(small,100-w/2,100-w/2-(z-1)*10,w,w);
+ document.getElementById('vg').setAttribute('transform','translate(100 '+(100-(z-1)*10*0)+') scale('+z+') translate(-100 -100)');}
+document.getElementById('zoom').addEventListener('input',zoomf);zoomf();
+
+/* ===== bit depth ===== */
+var bs=document.getElementById('bits'),bc=document.getElementById('bitc'),bx=bc.getContext('2d');
+function bitf(){var b=+bs.value,L=Math.pow(2,b);document.getElementById('bv').textContent=b;document.getElementById('blv').textContent=L.toLocaleString();document.getElementById('brange').textContent='(values 0–'+(L-1).toLocaleString()+')';
+ for(var x=0;x<480;x++){var t=x/479,q=Math.round(t*(L-1))/(L-1),v=Math.round(q*255);bx.fillStyle='rgb('+v+','+v+','+v+')';bx.fillRect(x,0,1,70);}
+ document.getElementById('bcap').textContent=b<=5?'Only '+L+' levels: you can see the steps (posterization / banding).':(b<=8?'Looks smooth to the eye. 8 bits is enough for printing and viewing.':'Your screen can’t show more than about 8 bits, but the extra levels give room for editing.');}
+bs.addEventListener('input',bitf);bitf();
+
+/* ===== chains ===== */
+function chain(id,arr){document.getElementById(id).innerHTML=arr.map(function(a,i){return (i?'<i>→</i>':'')+'<span'+(a[0]==='*'?' class="alt"':'')+'>'+a.replace('*','')+'</span>';}).join('');}
+chain('chain',['Photons','Sensor','Analog signal','Gain / analog processing','A to D conversion','Digital sensor data','Raw file','*Image processing: demosaic · white balance · color · noise reduction · tone mapping · sharpening','Rendered image','File encoding','*Compression','Output']);
+chain('adchain',['Photons','Photosite charge','Voltage (analog)','A/D converter','Digital count','Pixel']);
+(function(){var q=document.getElementById('qe');if(!q)return;q.innerHTML=[['CCD',90,'#6D4AD9'],['Human eye',15,'#1F8A70'],['Film',5,'#D9822B']].map(function(r){return '<div class="qerow"><span>'+r[0]+'</span><div class="qetrack"><i style="width:'+r[1]+'%;background:'+r[2]+'"></i></div><b>≈ '+r[1]+'%</b></div>';}).join('');})();
+chain('jchain',['RGB','YCbCr','Chroma subsampling','8 × 8 blocks','Quantization','Entropy coding','JPEG']);
+document.getElementById('rle').innerHTML='RRRRBBBBBBBGG'.split('').map(function(c){return '<b style="background:'+({R:'#E0473C',B:'#3F6CC9',G:'#3FA34D'})[c]+'"></b>';}).join('')+'<span class="note" style="width:100%">13 pixels → "R4 B7 G2"</span>';
+
+/* ===== JPEG demo (real browser JPEG encoder) ===== */
+var js=document.getElementById('jsrc'),jsx=js.getContext('2d'),jo=document.getElementById('jout'),jox=jo.getContext('2d'),gen=1,cur=null;
+(function(){var im=jsx.createImageData(96,96);for(var y=0;y<96;y++)for(var x=0;x<96;x++){var k=(y*96+x)*4,r,g,b;var t=x/95;r=Math.round(40+180*t);g=Math.round(90+60*Math.sin(y/9));b=Math.round(200-150*t);
+ if((x-48)*(x-48)+(y-30)*(y-30)<200){r=245;g=200;b=40;} if(y>60&&((x+y)%6<3)){r=30;g=30;b=40;} if(y>60&&((x+y)%6>=3)){r=235;g=235;b=235;} if(x>66&&x<90&&y>8&&y<22){r=200;g=40;b=60;}
+ im.data[k]=r;im.data[k+1]=g;im.data[k+2]=b;im.data[k+3]=255;}jsx.putImageData(im,0,0);})();
+function encode(srcCanvas,q,cb){var url=srcCanvas.toDataURL('image/jpeg',q/100);var img=new Image();img.onload=function(){cb(img,Math.round((url.length-23)*3/4));};img.src=url;}
+function jrun(reset){var q=+document.getElementById('jq').value;document.getElementById('jqv').textContent=q;if(reset){gen=1;cur=js;}
+ encode(cur||js,q,function(img,bytes){jox.drawImage(img,0,0);var tmp=document.createElement('canvas');tmp.width=tmp.height=96;tmp.getContext('2d').drawImage(img,0,0);cur=tmp;document.getElementById('jgv').textContent=gen;
+  document.getElementById('jcap').innerHTML='JPEG q'+q+' · ≈ '+(bytes/1024).toFixed(1)+' KB (original ≈ 27 KB uncompressed)'+(gen>1?' · after '+gen+' saves':'');});}
+document.getElementById('jq').addEventListener('input',function(){jrun(true);});
+document.getElementById('jresave').addEventListener('click',function(){gen++;jrun(false);});
+document.getElementById('jreset').addEventListener('click',function(){document.getElementById('jq').value=50;jrun(true);});
+jrun(true);
+
+/* ===== lens calculator ===== */
+function fmt(n){return (Math.round(n*10)/10).toLocaleString();}
+function lens(){var f=+document.getElementById('lf').value,R=+document.getElementById('lr').value,o=document.getElementById('lsteps');if(!(f>0&&R>0)){o.innerHTML='<li>Enter f and R above 0</li>';return;}
+ var v=f*(R+1),u=v/R;o.innerHTML='<li>v = f (R + 1) = '+f+' × ('+R+' + 1)</li><li>v = '+fmt(v)+' mm</li><li>R = v / u → u = v / R = '+fmt(v)+' / '+R+'</li><li class="last">u = '+fmt(u)+' mm · v = '+fmt(v)+' mm'+(R===1?' (1:1 → u = v = 2f)':'')+'</li>';}
+['lf','lr'].forEach(function(i){document.getElementById(i).addEventListener('input',lens);});lens();
+function ff(){var u=+document.getElementById('fu').value,v=+document.getElementById('fv').value,o=document.getElementById('fout');if(!(u>0&&v>0)){o.textContent='Enter u and v above 0';return;}var inv=1/u+1/v;o.textContent='1/'+u+' + 1/'+v+' = '+inv.toFixed(4)+' → press 1/x → f = '+fmt(1/inv)+' mm · R = v/u = '+fmt(v/u);}
+['fu','fv'].forEach(function(i){document.getElementById(i).addEventListener('input',ff);});ff();
+
+/* ===== angle of view ===== */
+var ac=document.getElementById('aov'),ax=ac.getContext('2d');
+function aovf(){var f=+document.getElementById('fl').value,d=+document.getElementById('sens').value;document.getElementById('flv').textContent=f;var a=2*Math.atan(d/(2*f));var deg=a*180/Math.PI;
+ ax.clearRect(0,0,460,190);var cx=30,cy=95,L=420,h=Math.min(90,Math.tan(a/2)*L);ax.fillStyle='rgba(109,74,217,.18)';ax.beginPath();ax.moveTo(cx,cy);ax.lineTo(cx+L,cy-h);ax.lineTo(cx+L,cy+h);ax.closePath();ax.fill();ax.strokeStyle='#6D4AD9';ax.lineWidth=2;ax.stroke();
+ ax.fillStyle='#15131C';ax.fillRect(cx-18,cy-12,18,24);ax.font='800 16px Inter,sans-serif';ax.fillText(deg.toFixed(1)+'°',cx+40,cy+6);
+ var crop=(43.27/d);document.getElementById('aovcap').textContent=f+' mm on '+(crop>1.05?'a '+crop.toFixed(1)+'× crop sensor (looks like '+Math.round(f*crop)+' mm on full frame)':'full frame')+' → '+deg.toFixed(1)+'° diagonal'+(deg>60?' · wide angle':deg<25?' · telephoto':' · normal-ish');}
+document.getElementById('fl').addEventListener('input',aovf);document.getElementById('sens').addEventListener('change',aovf);aovf();
+
+})();
+</script>
+</body></html>
