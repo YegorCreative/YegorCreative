@@ -71,7 +71,7 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px}
 .opts button.wrong{border-color:var(--bad);background:var(--badb)}
 .fb{font-size:14px;font-weight:600}
 .lecs{display:flex;width:100%}
-.lecs button{flex:1 1 140px;min-height:48px;font-size:13.5px;line-height:1.2;padding:6px 10px;border-bottom:1px solid var(--line)}
+.lecs button{flex:1 1 118px;min-height:48px;font-size:13.5px;line-height:1.2;padding:6px 10px;border-bottom:1px solid var(--line)}
 .lec{display:grid;gap:22px}
 .inp{width:100%;min-height:44px;font-size:16px;padding:6px 10px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);margin-top:4px}
 .btn{font-weight:700;border:1.5px solid var(--accent);background:var(--card);color:var(--accent);border-radius:10px;padding:0 14px;min-height:44px;cursor:pointer}
@@ -90,14 +90,64 @@ ol.steps li{counter-increment:s;display:flex;gap:10px;align-items:baseline;font-
 ol.steps li::before{content:counter(s);flex:none;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font:700 12px/22px system-ui,sans-serif;text-align:center}
 ol.steps li.last{background:var(--soft);font-weight:700}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.lecs button.pkt{background:#FFF4CC;color:#7A5200}
+.lecs button.pkt[aria-pressed="true"]{background:#E9B10A;color:#2B1D00}
+.topic.pick{border:2px solid #E9B10A;box-shadow:0 0 0 5px #FFF4CC}
+.pickbox{background:#FFF8DB;border:1.5px solid #F2D16B;border-left:7px solid #E9B10A;border-radius:14px;padding:14px 16px;display:grid;gap:10px}
+.pickbox .rb{display:inline-flex;align-items:center;gap:6px;justify-self:start;background:#E9B10A;color:#2B1D00;font-weight:900;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:10px}
+.pickbox .pq{font-weight:800;font-size:clamp(16px,2.4vw,19px)}
+.pickbox .pa{font-size:clamp(18px,3vw,23px);line-height:1.4;font-weight:600}
+.pickbox .pa b{color:#8A5A00}
+.pickbox+.pickbox{margin-top:-6px}
+.toc a.pk{border-color:#E9B10A;background:#FFF8DB}
+.toc a.pk::before{content:"★";color:#C99300;margin-right:5px}
+.deck{display:grid;gap:14px}
+.fc{position:relative;min-height:300px;border-radius:22px;border:2px solid #E9B10A;background:#FFFDF3;padding:14px 18px 20px;display:grid;grid-template-rows:auto 1fr;gap:10px;cursor:pointer;text-align:center;box-shadow:0 10px 30px -18px rgba(120,80,0,.5);font:inherit;color:inherit;width:100%}
+.fc .fbd{display:grid;gap:14px;align-content:center}
+.fc .meta{display:flex;justify-content:space-between;gap:8px;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#8A5A00}
+.fc .fq{font-size:clamp(21px,4.4vw,30px);font-weight:900;line-height:1.25;text-wrap:balance}
+.fc .fa{font-size:clamp(19px,3.8vw,26px);line-height:1.4;font-weight:600}
+.fc .fa b{color:#8A5A00}
+.fc .fx{font-size:15px;color:var(--muted)}
+.fc .hint{font-size:13px;color:var(--muted);font-weight:700}
+.fc.back{background:#FFF4CC}
+@media (prefers-reduced-motion:no-preference){.fc.flip{animation:fl .28s ease}@keyframes fl{0%{transform:scale(.97);opacity:.4}100%{transform:none;opacity:1}}}
+.dctl{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.dctl .btn{min-height:44px}
+.dots{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.dots i{width:12px;height:12px;border-radius:50%;background:var(--line);display:block}
+.dots i.cur{outline:2px solid #E9B10A;outline-offset:2px}
+.dots i.ok{background:var(--ok)}.dots i.ag{background:var(--bad)}
+.plist{display:grid;gap:10px}
+.plist button{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;text-align:left;background:var(--card);border:1px solid var(--line);border-left:5px solid #E9B10A;border-radius:12px;padding:12px 14px;cursor:pointer;font:inherit;color:inherit}
+.plist .pd{grid-row:span 2;font-weight:900;color:#8A5A00;font-size:13px;white-space:nowrap}
+.plist .pq2{font-weight:700}
+.plist .ps{font-size:13px;color:var(--muted)}
 </style></head><body>
 <div class="w">
 <header class="intro">
 <span class="eyebrow">Exam 2 · Oct 30 · Lecture notes</span>
 <h1>Lecture Notes</h1>
 <p>Every PHPS-106 lecture for Exam 2, redesigned with diagrams you can play with and checked against the lecture slides. Each section ends with a quick check.</p>
-<div class="seg lecs" role="tablist" aria-label="Lectures" id="lecs"><button role="tab" aria-selected="false" aria-pressed="false" data-l="L0">Sep 21 · Digital sensors</button><button role="tab" aria-selected="true" aria-pressed="true" data-l="L1">Sep 28 · Sensors &amp; noise</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L2">Oct 2 · RAW &amp; files</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L3">Oct 5 · Formats &amp; compression</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L4">Oct 16 · Lenses</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L5">Oct 19 · Lens types</button></div>
+<div class="seg lecs" role="tablist" aria-label="Lectures" id="lecs"><button role="tab" class="pkt" aria-selected="false" aria-pressed="false" data-l="LP">★ Her test picks</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L0">Sep 21 · Digital sensors</button><button role="tab" aria-selected="true" aria-pressed="true" data-l="L1">Sep 28 · Sensors &amp; noise</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L2">Oct 2 · RAW &amp; files</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L3">Oct 5 · Formats &amp; compression</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L4">Oct 16 · Lenses</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L5">Oct 19 · Lens types</button></div>
 </header>
+<!-- ================= TEST PICKS ================= -->
+<div class="lec" id="LP" hidden>
+<section class="topic pick" aria-labelledby="ph1">
+<div class="th"><span class="num" style="-webkit-text-stroke-color:#E9B10A">★</span><div><h2 id="ph1">Her test picks</h2><p>Every time she said “this is a good test question”</p></div></div>
+<p>Tap the card to flip it. Mark it <b>Got it</b> or <b>Again</b>; the “Again” cards come back in <b>Practice missed</b>. Each card links to its lecture section, which is also highlighted in gold.</p>
+<div class="deck">
+<button type="button" class="fc" id="fc" aria-live="polite"></button>
+<div class="dots" id="pdots" aria-hidden="true"></div>
+<div class="dctl"><button type="button" class="btn" id="pprev">← Prev</button><button type="button" class="btn" id="pagain">↻ Again</button><button type="button" class="btn" id="pok">✓ Got it</button><button type="button" class="btn" id="pnext">Next →</button></div>
+<div class="dctl"><button type="button" class="btn" id="pshuf">Shuffle</button><button type="button" class="btn" id="pmiss">Practice missed</button><button type="button" class="btn" id="pall">All cards</button><button type="button" class="btn" id="pgo">Open in lecture →</button></div>
+</div>
+</section>
+<section class="topic" aria-labelledby="ph2">
+<div class="th"><div><h2 id="ph2">All picks at a glance</h2><p>Tap one to jump to its lecture section</p></div></div>
+<div class="plist" id="plist"></div>
+</section>
+</div>
 <!-- ================= LECTURE 0 · SEP 21 ================= -->
 <div class="lec" id="L0" hidden>
 <nav class="toc" aria-label="Sep 21 sections"><a href="#d1">Photosite → pixel</a><a href="#d2">Analog → digital</a><a href="#d3">Bit depth</a><a href="#d4">Histograms</a><a href="#d5">CCD vs CMOS</a><a href="#d6">Bayer history</a></nav>
@@ -338,7 +388,7 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 </div>
 <!-- ================= LECTURE 2 · OCT 2 ================= -->
 <div class="lec" id="L2" hidden>
-<nav class="toc" aria-label="Oct 2 sections"><a href="#r1">Bits &amp; bytes</a><a href="#r2">Raster vs vector</a><a href="#r3">Captured vs rendered</a><a href="#r4">What's in a RAW</a><a href="#r5">RAW vs JPEG</a><a href="#r6">Bit depth</a><a href="#r7">Non-destructive &amp; XMP</a><a href="#r8">DNG</a></nav>
+<nav class="toc" aria-label="Oct 2 sections"><a href="#r1">Bits &amp; bytes</a><a href="#r2">Raster vs vector</a><a href="#r3">Captured vs rendered</a><a href="#r4">What's in a RAW</a><a class="pk" href="#r5">RAW vs JPEG</a><a class="pk" href="#r6">Bit depth</a><a href="#r7">Non-destructive &amp; XMP</a><a href="#r8">DNG</a></nav>
 
 <section class="topic" id="r1" aria-labelledby="rh1">
 <div class="th"><span class="num">01</span><div><h2 id="rh1">Bits &amp; bytes</h2><p>The smallest pieces of digital memory</p></div></div>
@@ -386,8 +436,9 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <div class="check" data-q="r4"></div>
 </section>
 
-<section class="topic" id="r5" aria-labelledby="rh5">
+<section class="topic pick" id="r5" aria-labelledby="rh5">
 <div class="th"><span class="num">05</span><div><h2 id="rh5">RAW vs JPEG</h2><p>"A really good test question"</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · “A really good test question”</span><div class="pq">Compared with a JPEG, a RAW file has…</div><div class="pa"><b>Higher</b> dynamic range, <b>lower</b> contrast, <b>less</b> sharp, and it's <b>not ready for output</b>.</div></div><div class="pickbox"><span class="rb">★ Her test pick · Test question</span><div class="pq">Which file is bigger: the RAW file or the demosaiced image?</div><div class="pa">The <b>demosaiced</b> image.</div></div>
 <div class="tw"><table><thead><tr><th></th><th>RAW (before processing)</th><th>JPEG</th></tr></thead><tbody>
 <tr><td>Dynamic range</td><td><b>Higher</b></td><td>Lower</td></tr>
 <tr><td>Contrast</td><td><b>Lower</b></td><td>Higher (added in processing)</td></tr>
@@ -402,8 +453,9 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <div class="check" data-q="r5"></div>
 </section>
 
-<section class="topic" id="r6" aria-labelledby="rh6">
+<section class="topic pick" id="r6" aria-labelledby="rh6">
 <div class="th"><span class="num">06</span><div><h2 id="rh6">Bit depth ≠ dynamic range</h2><p>Levels vs the useful range</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · Test question</span><div class="pq">What values can one channel of an 8-bit image hold?</div><div class="pa"><b>0 to 255</b> (256 levels)</div></div>
 <div class="formula">gray levels = 2<sup>bits</sup></div>
 <div class="box"><label for="bits"><b><span id="bv">8</span> bits → <span id="blv">256</span> levels</b> <span class="note" id="brange"></span></label><input type="range" id="bits" min="1" max="16" value="8" aria-label="Bit depth"><canvas id="bitc" width="480" height="70" aria-label="Gradient at the chosen bit depth"></canvas><p class="cap" id="bcap"></p></div>
 <div class="tw"><table><thead><tr><th>Bits</th><th>Levels</th><th>Values</th></tr></thead><tbody><tr><td>1</td><td>2</td><td>0–1</td></tr><tr><td><b>8 (JPEG)</b></td><td><b>256</b></td><td><b>0–255</b></td></tr><tr><td>12 (raw)</td><td>4,096</td><td>0–4,095</td></tr><tr><td>14</td><td>16,384</td><td>0–16,383</td></tr><tr><td>16</td><td>65,536</td><td>0–65,535</td></tr></tbody></table></div>
@@ -439,7 +491,7 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 
 <!-- ================= LECTURE 3 · OCT 5 ================= -->
 <div class="lec" id="L3" hidden>
-<nav class="toc" aria-label="Oct 5 sections"><a href="#f1">Archiving</a><a href="#f2">Processing chain</a><a href="#f3">TIFF</a><a href="#f4">JPEG</a><a href="#f5">Other formats</a><a href="#f6">How compression works</a><a href="#f7">Artifacts</a><a href="#f8">Virtual copies</a></nav>
+<nav class="toc" aria-label="Oct 5 sections"><a href="#f1">Archiving</a><a href="#f2">Processing chain</a><a href="#f3">TIFF</a><a class="pk" href="#f4">JPEG</a><a href="#f5">Other formats</a><a href="#f6">How compression works</a><a href="#f7">Artifacts</a><a href="#f8">Virtual copies</a></nav>
 
 <section class="topic" id="f1" aria-labelledby="fh1">
 <div class="th"><span class="num">01</span><div><h2 id="fh1">Archiving isn't just a file format</h2><p>Should you convert to DNG?</p></div></div>
@@ -467,8 +519,9 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <div class="check" data-q="f3"></div>
 </section>
 
-<section class="topic" id="f4" aria-labelledby="fh4">
+<section class="topic pick" id="f4" aria-labelledby="fh4">
 <div class="th"><span class="num">04</span><div><h2 id="fh4">JPEG</h2><p>Joint Photographic Experts Group</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · Test question</span><div class="pq">What happens when you edit and re-save a JPEG over and over?</div><div class="pa"><b>Generational degradation</b>: it's compressed again every save, so artifacts build up.</div></div><div class="pickbox"><span class="rb">★ Her test pick · Test question (the chart)</span><div class="pq">TIFF vs JPEG: which is better for repeated editing, and which allows transparency?</div><div class="pa"><b>TIFF</b> for both. JPEG degrades every save and has no transparency.</div></div>
 <ul class="clean"><li>JPEG is <b>both a file format and a lossy compression method</b>. Lossy = data thrown away is gone.</li><li><b>8 bits per channel only.</b> Can embed a color profile. Small files (about <b>500 KB – 8 MB</b>). <b>.jpg = .jpeg</b>. Designed for efficient <b>distribution</b>.</li><li><b>Generational degradation:</b> every re-save compresses an already compressed file, and artifacts pile up fast. Editing a JPEG? Save it as TIFF or PSD first.</li><li>In-camera JPEG: <b>white balance, tone, color, sharpening, noise reduction and compression are baked in</b>. Get it right in camera (custom white balance, User 1/User 2 settings).</li></ul>
 <div class="box"><label for="jq"><b>JPEG quality: <span id="jqv">50</span></b> · re-saves: <span id="jgv">1</span></label><input type="range" id="jq" min="1" max="100" value="50" aria-label="JPEG quality"><div class="row" style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" class="btn" id="jresave">Re-save again</button><button type="button" class="btn" id="jreset">Start over</button></div>
 <div class="two"><div><canvas id="jsrc" class="pix" width="96" height="96" aria-label="Original detail"></canvas><p class="cap">Original (zoomed)</p></div><div><canvas id="jout" class="pix" width="96" height="96" aria-label="JPEG result"></canvas><p class="cap" id="jcap"></p></div></div></div>
@@ -548,7 +601,7 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 
 <!-- ================= LECTURE 4 · OCT 16 ================= -->
 <div class="lec" id="L4" hidden>
-<nav class="toc" aria-label="Oct 16 sections"><a href="#o1">What you need</a><a href="#o2">RATS</a><a href="#o3">Pinhole vs lens</a><a href="#o4">Positive &amp; negative</a><a href="#o5">u, v, f &amp; nodal points</a><a href="#o6">Scale of reproduction</a><a href="#o7">Refraction</a><a href="#o8">Angle of view</a></nav>
+<nav class="toc" aria-label="Oct 16 sections"><a href="#o1">What you need</a><a class="pk" href="#o2">RATS</a><a href="#o3">Pinhole vs lens</a><a class="pk" href="#o4">Positive &amp; negative</a><a href="#o5">u, v, f &amp; nodal points</a><a class="pk" href="#o6">Scale of reproduction</a><a href="#o7">Refraction</a><a href="#o8">Angle of view</a></nav>
 
 <section class="topic" id="o1" aria-labelledby="oh1">
 <div class="th"><span class="num">01</span><div><h2 id="oh1">What you need to make an image</h2><p>Four ingredients</p></div></div>
@@ -560,8 +613,9 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 </div>
 </section>
 
-<section class="topic" id="o2" aria-labelledby="oh2">
+<section class="topic pick" id="o2" aria-labelledby="oh2">
 <div class="th"><span class="num">02</span><div><h2 id="oh2">RATS: what happens to light</h2><p>"Excellent test question" 🎆</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · “Excellent test question”</span><div class="pq">What 4 things can happen to light when it hits something?</div><div class="pa"><b>RATS</b>: <b>R</b>eflected · <b>A</b>bsorbed · <b>T</b>ransmitted · <b>S</b>cattered</div></div>
 <svg class="v" viewBox="0 0 440 210" role="img" aria-label="Incident light on a glass: reflected, absorbed, transmitted and scattered">
 <rect x="190" y="30" width="44" height="150" rx="6" fill="#6D4AD9" fill-opacity=".15" stroke="#6D4AD9" stroke-width="2"/>
 <path d="M20 50 L190 105" stroke="#E0A21E" stroke-width="5" stroke-linecap="round"/><text x="20" y="40" font-size="13" font-weight="800">incident light</text>
@@ -601,8 +655,9 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <div class="check" data-q="o3"></div>
 </section>
 
-<section class="topic" id="o4" aria-labelledby="oh4">
+<section class="topic pick" id="o4" aria-labelledby="oh4">
 <div class="th"><span class="num">04</span><div><h2 id="oh4">Positive vs negative lenses</h2><p>Converge or diverge</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · Test question</span><div class="pq">Positive vs negative lens: what does each one do?</div><div class="pa"><b>Positive (convex)</b>: thicker in the center, <b>converges</b> light, forms a <b>real image</b>.<br><b>Negative (concave)</b>: thinner in the center, <b>diverges</b> light, <b>can't</b> form a real image alone.</div></div>
 <svg class="v" viewBox="0 0 440 170" role="img" aria-label="Positive lens converges parallel rays to a point; negative lens spreads them apart">
 <g transform="translate(0 10)"><path d="M100 10 Q125 75 100 140 Q75 75 100 10Z" fill="#6D4AD9" fill-opacity=".2" stroke="#6D4AD9" stroke-width="2"/>
 <g stroke-width="2.5" fill="none"><path d="M10 40 H100 L190 75" stroke="#E0473C"/><path d="M10 75 H190" stroke="#3FA34D"/><path d="M10 110 H100 L190 75" stroke="#E0473C"/></g><circle cx="190" cy="75" r="4" fill="#15131C"/><text x="100" y="160" text-anchor="middle" font-size="13" font-weight="800">positive: converges</text></g>
@@ -651,8 +706,9 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <div class="check" data-q="o5"></div>
 </section>
 
-<section class="topic" id="o6" aria-labelledby="oh6">
+<section class="topic pick" id="o6" aria-labelledby="oh6">
 <div class="th"><span class="num">06</span><div><h2 id="oh6">Scale of reproduction (R or M)</h2><p>The 5 formulas from myCourses</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · Calculator trap</span><div class="pq">1/u + 1/v = 0.02 on your calculator. What is the focal length?</div><div class="pa">Press <b>1/x</b>: f = 1 ÷ 0.02 = <b>50 mm</b></div></div>
 <div class="tw"><table><thead><tr><th>#</th><th>Formula</th><th>Use when you know</th></tr></thead><tbody>
 <tr><td>1</td><td><b>1/f = 1/u + 1/v</b></td><td>two of f, u, v</td></tr>
 <tr><td>2</td><td><b>R = v / u</b></td><td>both distances (or image size ÷ object size)</td></tr>
@@ -691,7 +747,7 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 
 <!-- ================= LECTURE 5 · OCT 19 ================= -->
 <div class="lec" id="L5" hidden>
-<nav class="toc" aria-label="Oct 19 sections"><a href="#n1">Normal lens &amp; crop factor</a><a href="#n2">FF vs crop lenses</a><a href="#n3">Telephoto vs wide</a><a href="#n4">Retrofocus</a><a href="#n5">Framing vs perspective</a><a href="#n6">Prime vs zoom</a><a href="#n7">Macro 1:1</a><a href="#n8">Diopters</a><a href="#n9">Specialty lenses</a></nav>
+<nav class="toc" aria-label="Oct 19 sections"><a href="#n1">Normal lens &amp; crop factor</a><a href="#n2">FF vs crop lenses</a><a href="#n3">Telephoto vs wide</a><a class="pk" href="#n4">Retrofocus</a><a class="pk" href="#n5">Framing vs perspective</a><a href="#n6">Prime vs zoom</a><a href="#n7">Macro 1:1</a><a href="#n8">Diopters</a><a href="#n9">Specialty lenses</a></nav>
 
 <section class="topic" id="n1" aria-labelledby="nh1">
 <div class="th"><span class="num">01</span><div><h2 id="nh1">Normal lens &amp; crop factor</h2><p>"Normal" depends on the sensor size</p></div></div>
@@ -734,8 +790,9 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <div class="check" data-q="n3"></div>
 </section>
 
-<section class="topic" id="n4" aria-labelledby="nh4">
+<section class="topic pick" id="n4" aria-labelledby="nh4">
 <div class="th"><span class="num">04</span><div><h2 id="nh4">Telephoto vs reverse telephoto (retrofocus)</h2><p>"A very good test question"</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · “A very good test question”</span><div class="pq">Telephoto vs reverse telephoto (retrofocus): how are the elements arranged?</div><div class="pa"><b>Telephoto</b>: positive element in <b>front</b>, negative behind → rear nodal point falls <b>in front of</b> the lens.<br><b>Retrofocus</b>: negative in front, positive behind → rear nodal point falls <b>behind</b> the lens, so a wide angle clears the DSLR mirror.</div></div>
 <svg class="v" viewBox="0 0 440 190" role="img" aria-label="Normal telephoto: positive then negative element, back nodal plane in front. Retrofocus: negative then positive, back nodal plane behind the lens">
 <g font-size="12" fill="#15131C"><text x="105" y="16" text-anchor="middle" font-weight="800">Normal telephoto</text><text x="330" y="16" text-anchor="middle" font-weight="800">Reverse telephoto (retrofocus)</text></g>
 <g transform="translate(0 30)"><line x1="10" y1="60" x2="210" y2="60" stroke="#9A95A8" stroke-dasharray="3 3"/>
@@ -756,8 +813,9 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <div class="check" data-q="n4"></div>
 </section>
 
-<section class="topic" id="n5" aria-labelledby="nh5">
+<section class="topic pick" id="n5" aria-labelledby="nh5">
 <div class="th"><span class="num">05</span><div><h2 id="nh5">Framing vs perspective</h2><p>She "can't impose upon that enough"</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · She “can't impose upon that enough”</span><div class="pq">What does changing the focal length change, and what does moving the camera change?</div><div class="pa">Focal length → <b>framing</b>.<br>Camera position → <b>perspective</b>.</div></div>
 <div class="formula" style="font-size:16px">Change the LENS → change FRAMING<br>Move the CAMERA → change PERSPECTIVE</div>
 <ul class="clean"><li><b>Perspective</b> = the relative size of objects in a scene, and it's controlled by <b>camera position</b> (distance).</li><li>Move closer and foreground objects become relatively larger. Everything at the same distance scales together.</li><li>Why people think lenses change perspective: with a telephoto you usually stand <b>far away</b>, and with a wide angle <b>close</b>. The <b>distance</b> is what changes the look.</li></ul>
 <div class="check" data-q="n5"></div>
@@ -966,6 +1024,34 @@ document.querySelectorAll('.toc a').forEach(function(a){if(a._b)return;a._b=1;a.
  t.scrollIntoView({behavior:'smooth',block:'start'});});});
 try{var saved=localStorage.getItem('e2-lec');if(saved&&document.getElementById(saved))showLec(saved,false);}catch(e){}
 
+
+/* ===== her test picks ===== */
+(function(){var P=[{"l": "L4", "s": "o2", "d": "Oct 16", "said": "“Excellent test question”", "q": "What 4 things can happen to light when it hits something?", "a": "<b>RATS</b>: <b>R</b>eflected · <b>A</b>bsorbed · <b>T</b>ransmitted · <b>S</b>cattered", "x": "Reflected: angle in = angle out. Absorbed: turns into heat (a black shirt in the sun). Transmitted: passes through. Scattered: redirected by dust or water (fog + headlights)."}, {"l": "L2", "s": "r5", "d": "Oct 2", "said": "“A really good test question”", "q": "Compared with a JPEG, a RAW file has…", "a": "<b>Higher</b> dynamic range, <b>lower</b> contrast, <b>less</b> sharp, and it's <b>not ready for output</b>.", "x": "Less sharp because the anti-aliasing filter blurs a little and sharpening is only added in processing."}, {"l": "L2", "s": "r5", "d": "Oct 2", "said": "Test question", "q": "Which file is bigger: the RAW file or the demosaiced image?", "a": "The <b>demosaiced</b> image.", "x": "RAW = 1 value per photosite (1 channel). Demosaiced = red, green and blue at every pixel (3 channels)."}, {"l": "L2", "s": "r6", "d": "Oct 2", "said": "Test question", "q": "What values can one channel of an 8-bit image hold?", "a": "<b>0 to 255</b> (256 levels)", "x": "2⁸ = 256. Counting starts at 0, so the top value is 255. 12-bit = 4,096 levels, 16-bit = 65,536."}, {"l": "L3", "s": "f4", "d": "Oct 5", "said": "Test question", "q": "What happens when you edit and re-save a JPEG over and over?", "a": "<b>Generational degradation</b>: it's compressed again every save, so artifacts build up.", "x": "Fix: convert to TIFF or PSD before you edit."}, {"l": "L3", "s": "f4", "d": "Oct 5", "said": "Test question (the chart)", "q": "TIFF vs JPEG: which is better for repeated editing, and which allows transparency?", "a": "<b>TIFF</b> for both. JPEG degrades every save and has no transparency.", "x": "TIFF: lossless or lossy, 8/16/32 bits, layers, large files. JPEG: lossy, 8 bits only, small files."}, {"l": "L4", "s": "o4", "d": "Oct 16", "said": "Test question", "q": "Positive vs negative lens: what does each one do?", "a": "<b>Positive (convex)</b>: thicker in the center, <b>converges</b> light, forms a <b>real image</b>.<br><b>Negative (concave)</b>: thinner in the center, <b>diverges</b> light, <b>can't</b> form a real image alone.", "x": "Every camera lens uses both, e.g. an achromatic doublet."}, {"l": "L4", "s": "o6", "d": "Oct 16", "said": "Calculator trap", "q": "1/u + 1/v = 0.02 on your calculator. What is the focal length?", "a": "Press <b>1/x</b>: f = 1 ÷ 0.02 = <b>50 mm</b>", "x": "1/u + 1/v gives 1/f, not f. A 0.02 mm focal length makes no sense, so always flip it."}, {"l": "L5", "s": "n4", "d": "Oct 19", "said": "“A very good test question”", "q": "Telephoto vs reverse telephoto (retrofocus): how are the elements arranged?", "a": "<b>Telephoto</b>: positive element in <b>front</b>, negative behind → rear nodal point falls <b>in front of</b> the lens.<br><b>Retrofocus</b>: negative in front, positive behind → rear nodal point falls <b>behind</b> the lens, so a wide angle clears the DSLR mirror.", "x": "Her slide calls it “Reverse Telephoto Wide Angle Lens”."}, {"l": "L5", "s": "n5", "d": "Oct 19", "said": "She “can't impose upon that enough”", "q": "What does changing the focal length change, and what does moving the camera change?", "a": "Focal length → <b>framing</b>.<br>Camera position → <b>perspective</b>.", "x": "Zooming never changes perspective. Only distance does."}];
+var fc=document.getElementById('fc');if(!fc)return;
+var order=P.map(function(_,i){return i;}),i=0,back=false,mark={};
+try{mark=JSON.parse(localStorage.getItem('e2-picks')||'{}')||{};}catch(e){}
+function save(){try{localStorage.setItem('e2-picks',JSON.stringify(mark));}catch(e){}}
+function goSec(l,sid){showLec(l,false);var t=document.getElementById(sid);if(!t)return;setTimeout(function(){
+ try{if(window.frameElement&&window.parent!==window){var fr=window.frameElement.getBoundingClientRect();window.parent.scrollTo({top:window.parent.scrollY+fr.top+t.getBoundingClientRect().top-12,behavior:'smooth'});return;}}catch(e){}
+ t.scrollIntoView({behavior:'smooth',block:'start'});},30);}
+function draw(anim){var k=order[i],c=P[k];fc.classList.toggle('back',back);
+ fc.innerHTML='<span class="meta"><span>★ '+c.d+' lecture</span><span>'+(i+1)+' / '+order.length+'</span></span><span class="fbd">'+(back?'<div class="fa">'+c.a+'</div>'+(c.x?'<div class="fx">'+c.x+'</div>':'')+'<div class="hint">'+c.said+'</div>':'<div class="fq">'+c.q+'</div><div class="hint">Tap to see the answer</div>')+'</span>';
+ fc.setAttribute('aria-label',(back?'Answer: ':'Question: ')+fc.textContent);
+ if(anim){fc.classList.remove('flip');void fc.offsetWidth;fc.classList.add('flip');}
+ document.getElementById('pdots').innerHTML=order.map(function(k2,j){return '<i class="'+(j===i?'cur ':'')+(mark[k2]==='ok'?'ok':mark[k2]==='ag'?'ag':'')+'"></i>';}).join('');}
+function step(d){i=(i+d+order.length)%order.length;back=false;draw(true);}
+fc.addEventListener('click',function(){back=!back;draw(true);});
+document.getElementById('pprev').onclick=function(){step(-1);};
+document.getElementById('pnext').onclick=function(){step(1);};
+document.getElementById('pok').onclick=function(){mark[order[i]]='ok';save();step(1);};
+document.getElementById('pagain').onclick=function(){mark[order[i]]='ag';save();step(1);};
+document.getElementById('pshuf').onclick=function(){for(var a=order.length-1;a>0;a--){var b=Math.floor(Math.random()*(a+1)),t=order[a];order[a]=order[b];order[b]=t;}i=0;back=false;draw(true);};
+document.getElementById('pmiss').onclick=function(){var m=P.map(function(_,k){return k;}).filter(function(k){return mark[k]==='ag';});if(!m.length){fc.innerHTML='<div class="fq">No “Again” cards 🎉</div><div class="hint">Tap “All cards” to start over</div>';return;}order=m;i=0;back=false;draw(true);};
+document.getElementById('pall').onclick=function(){order=P.map(function(_,k){return k;});i=0;back=false;draw(true);};
+document.getElementById('pgo').onclick=function(){var c=P[order[i]];goSec(c.l,c.s);};
+document.getElementById('plist').innerHTML=P.map(function(c,k){return '<button type="button" data-k="'+k+'"><span class="pd">★ '+c.d+'</span><span class="pq2">'+c.q+'</span><span class="ps">'+c.said+'</span></button>';}).join('');
+document.querySelectorAll('#plist button').forEach(function(b){b.addEventListener('click',function(){var c=P[+b.dataset.k];goSec(c.l,c.s);});});
+draw(false);})();
 /* ===== crop factor & diopters (Oct 19) ===== */
 (function(){var cw=document.getElementById('cw'),ch=document.getElementById('ch'),cf=document.getElementById('cf'),o=document.getElementById('csteps');if(!cw)return;
 function r1(n){return Math.round(n*10)/10;}
