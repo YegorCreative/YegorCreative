@@ -469,6 +469,7 @@ function norm(s){return String(s).toLowerCase().replace(/[–—]/g,"-").replace
 function lev(a,b){const m=[];for(let i=0;i<=a.length;i++){m[i]=[i];for(let j=1;j<=b.length;j++)m[i][j]=i?Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1)):j;}return m[a.length][b.length];}
 function seqTokens(s){return norm(s).replace(/f\s*\//g," ").replace(/\bsec(onds?)?\b/g," ").replace(/→|->|>/g," ").split(/[\s,;]+/).filter(t=>t&&t!=="-");}
 function answerText(q){
+  if(q.k==="gen")return q.d;
   if(q.k==="mc"||q.k==="spd")return q.o[0];
   if(q.k==="tf")return q.a?"True":"False";
   if(q.k==="fill")return q.a[0].replace(/\b\w/g,c=>c.toUpperCase());
@@ -476,6 +477,91 @@ function answerText(q){
   if(q.k==="seq")return q.a.join(", ");
   if(q.k==="multi")return q.c.map(i=>q.o[i]).join(", ");
 }
+
+/* ---------- generated questions: fresh numbers every time ---------- */
+let RNG=Math.random;
+function seeded(seed){let a=seed>>>0;return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function hashStr(s){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;}
+const ri=(a,b)=>a+Math.floor(RNG()*(b-a+1));
+const pk=a=>a[Math.floor(RNG()*a.length)];
+function rshuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(RNG()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+const art=n=>/^(8|11|18)/.test(String(n))?"an":"a",ratio=m=>m>=1?m+":1":"1:"+Math.round(1/m*100)/100;
+const r1=x=>Math.round(x*10)/10,r2=x=>Math.round(x*100)/100,r3=x=>Math.round(x*1000)/1000;
+const SH=["1/4","1/8","1/15","1/30","1/60","1/125","1/250","1/500","1/1000","1/2000","1/4000"];
+const AP=["1.4","2","2.8","4","5.6","8","11","16","22","32"];
+const IS=[100,200,400,800,1600,3200,6400];
+function mcFrom(right,pool){const others=rshuffle(pool.filter(x=>x!==right)).slice(0,3);return [right].concat(others);}
+const GEN={
+ snr(){const sd=pk([2,2.5,4,5,8,10]),ratio=pk([2,3,4,5,8,10,12,20,25,50]),mean=r1(sd*ratio),a=r2(20*Math.log10(mean/sd));
+  return{k:"num",q:`A gray patch measures mean ${mean} and standard deviation ${sd}. What is its SNR in dB? (1 decimal)`,a,tol:0.15,d:`${r1(a)} dB`,e:`SNR = 20 × log(${mean} ÷ ${sd}) = 20 × log(${r2(mean/sd)}) ≈ ${r1(a)} dB.`};},
+ tones(){const b=pk([1,2,3,4,5,6,7,8,10,12,14,16]),a=2**b;
+  return{k:"num",q:`How many tones can a ${b}-bit image (or channel) hold?`,a,tol:0,d:a.toLocaleString("en-US"),e:`2^${b} = ${a.toLocaleString("en-US")} tones${b===8?" (values 0–255)":""}.`};},
+ bits(){const b=pk([1,2,3,4,5,6,7,8,10,12]),t=2**b;
+  return{k:"num",q:`An image has ${t.toLocaleString("en-US")} possible tones. How many bits is that?`,a:b,tol:0,d:`${b} bits`,e:`2^x = ${t} → x = ${b}.`};},
+ crop(){const s=pk([[23.5,15.6],[22.3,14.9],[17.3,13],[13.2,8.8],[27.9,18.6],[25.1,16.7],[6.17,4.55]]),dg=r1(Math.hypot(s[0],s[1])),a=r2(43.3/dg);
+  return{k:"num",q:`A sensor measures ${s[0]} × ${s[1]} mm, so its diagonal is about ${dg} mm. What is its crop factor? (2 decimals)`,a,tol:0.02,d:`${a}`,e:`Crop factor = 43.3 ÷ ${dg} ≈ ${a}.`};},
+ equiv(){const f=pk([16,18,24,28,35,50,85,100,135,200]),c=pk([1.5,1.6,2]),a=r1(f*c);
+  return{k:"num",q:`${art(f)==="an"?"An":"A"} ${f} mm lens is used on a ${c}× crop camera. What full-frame focal length does it act like (mm)?`,a,tol:0.6,d:`${a} mm`,e:`${f} × ${c} = ${a} mm.`};},
+ lens(){const f=pk([25,40,50,60,75,80,100,120,150,200]),m=pk([0.25,0.5,1,2,3,4]),v=f*(m+1),u=r1(v/m);
+  return{k:"num",q:`Object distance u = ${u} mm and image distance v = ${v} mm. What is the focal length (mm)?`,a:f,tol:0.6,d:`${f} mm`,e:`1/${u} + 1/${v} = ${(1/u+1/v).toFixed(5)} → press 1/x → ${f} mm.`};},
+ comb(){const p=pk([[30,60],[40,40],[50,100],[60,120],[85,200],[100,150],[150,300],[200,200],[75,150],[120,180]]),a=r1(1/(1/p[0]+1/p[1]));
+  return{k:"num",q:`Two lenses of ${p[0]} mm and ${p[1]} mm are put together (touching). What is the combined focal length (mm)?`,a,tol:0.6,d:`${a} mm`,e:`1/${p[0]} + 1/${p[1]} = ${(1/p[0]+1/p[1]).toFixed(5)} → 1/x → ${a} mm.`};},
+ diop(){if(RNG()<.5){const f=pk([40,50,100,125,200,250,500,1000,2000]),a=r2(1000/f);
+   return{k:"num",q:`A lens has a focal length of ${f} mm. What is its power in diopters?`,a,tol:0.05,d:`${a} D`,e:`Convert to METERS first: ${f} mm = ${f/1000} m. D = 1 ÷ ${f/1000} = ${a}.`};}
+  const d1=pk([1,2,3,4]),d2=pk([1,2,3,4,10]),a=r1(1000/(d1+d2));
+  return{k:"num",q:`You stack a +${d1} and a +${d2} diopter lens. What is the combined focal length (mm)?`,a,tol:1,d:`${a} mm`,e:`Diopters add: ${d1} + ${d2} = ${d1+d2} D. f = 1 ÷ ${d1+d2} m ≈ ${a} mm.`};},
+ scale(){const f=pk([35,50,60,85,100,105,150]),m=pk([0.5,1,2,3,4]),v=f*(m+1),u=r2(v/m);
+  if(RNG()<.5)return{k:"num",q:`For a ${ratio(m)} reproduction (m = ${m}) with ${art(f)} ${f} mm lens, what is the image distance v (mm)?`,a:v,tol:0.6,d:`${v} mm`,e:`v = f(m + 1) = ${f} × ${m+1} = ${v} mm.`};
+  return{k:"num",q:`For a ${ratio(m)} reproduction (m = ${m}) with ${art(f)} ${f} mm lens, what is the object distance u (mm)? (1 decimal)`,a:u,tol:0.15,d:`${r1(u)} mm`,e:`v = f(m + 1) = ${v} mm, then u = v ÷ m = ${v} ÷ ${m} ≈ ${r1(u)} mm.`};},
+ ruler(){const w=pk([24,36,48,60,72,96,120,240]),a=r2(24/w);
+  return{k:"num",q:`You photograph a ruler with a full-frame camera, and ${w} mm of the ruler fills the frame's 24 mm short side. What is the scale of reproduction R? (2 decimals)`,a,tol:0.006,d:`${a}`,e:`R = 24 ÷ ${w} = ${a}.`};},
+ fnum(){const f=pk([24,35,50,85,100,135,200,300,400]),n=pk([1.4,2,2.8,4,5.6,8,11,16]),a=r1(f/n);
+  return{k:"num",q:`How wide is the aperture of ${art(f)} ${f} mm lens set to f/${n}? (mm, 1 decimal)`,a,tol:0.15,d:`${a} mm`,e:`Diameter = focal length ÷ f-number = ${f} ÷ ${n} ≈ ${a} mm.`};},
+ pin(){if(RNG()<.5){const f=pk([4,6,8,9,12,16,25]),a=r3(Math.sqrt(f)/141);
+   return{k:"num",q:`What is the best pinhole diameter (inches) for a pinhole ${f} inches from the film? (3 decimals)`,a,tol:0.0015,d:`${a} in`,e:`D = √f ÷ 141 = ${r3(Math.sqrt(f))} ÷ 141 ≈ ${a} in.`};}
+  const f=pk([100,144,150,196,225,400]),a=r2(Math.sqrt(f)/28);
+  return{k:"num",q:`What is the best pinhole diameter (mm) for a pinhole ${f} mm from the sensor? (2 decimals)`,a,tol:0.01,d:`${a} mm`,e:`D = √f ÷ 28 = ${r2(Math.sqrt(f))} ÷ 28 ≈ ${a} mm.`};},
+ hyper(){const h=pk([10,12,16,20,24,30,36,40,50,60]);
+  return{k:"num",q:`The hyperfocal distance is ${h} ft and you focus at ${h} ft. Everything is sharp from how many feet to infinity?`,a:h/2,tol:0,d:`${h/2} ft`,e:`Half the hyperfocal distance: ${h} ÷ 2 = ${h/2} ft.`};},
+ hand(){const f=pk([24,28,35,50,70,85,100,135,200,300]),c=pk([1,1.5,1.6]),x=f*c,dens=[15,30,60,125,250,500,1000];let i=dens.findIndex(d=>d>=x);if(i<0)i=dens.length-1;
+  const right="1/"+dens[i],o=mcFrom(right,dens.map(d=>"1/"+d).filter((_,j)=>Math.abs(j-i)<=3));
+  return{k:"mc",q:`Handheld rule: ${art(f)} ${f} mm lens on a ${c===1?"full-frame":c+"× crop"} camera. What is the slowest whole-stop shutter speed you should handhold?`,o,e:`${f} × ${c} = ${r1(x)}, so 1/${r1(x)}, rounded to the next faster whole stop = ${right}.`};},
+ isstop(){const base=pk([4,5,6,7,8]),st=pk([2,3,4]),right=SH[base-st];
+  return{k:"mc",q:`The handheld rule gives ${SH[base]}. Your lens has ${st} stops of image stabilization. About how slow can you safely go?`,o:mcFrom(right,SH.slice(Math.max(0,base-st-2),base+2)),e:`Each stop of IS = one shutter stop slower: ${SH.slice(base-st,base+1).reverse().join(" → ")}.`};},
+ nd(){if(RNG()<.5){const k=ri(1,10),d=r1(0.3*k);return{k:"num",q:`An ND ${d} filter blocks how many stops of light?`,a:k,tol:0,d:`${k} stops`,e:`Every 0.3 of density = 1 stop: ${d} ÷ 0.3 = ${k}.`};}
+  const k=ri(1,10);return{k:"num",q:`What density of ND filter blocks ${k} stop${k>1?"s":""}? (1 decimal)`,a:r1(0.3*k),tol:0.05,d:`ND ${r1(0.3*k)}`,e:`${k} × 0.3 = ${r1(0.3*k)}.`};},
+ expo(){for(let tries=0;tries<200;tries++){
+   const s=ri(2,8),a=ri(1,7),i=ri(0,5),d=pk([-4,-3,-2,-1,1,2,3,4]),solve=pk(["s","a","i"]);
+   const ns=s+ri(-3,3),na=a+ri(-3,3),ni=i+ri(-3,3);let S2=solve==="s"?null:ns,A2=solve==="a"?null:na,I2=solve==="i"?null:ni;
+   if(S2!==null&&(S2<0||S2>=SH.length))continue;if(A2!==null&&(A2<0||A2>=AP.length))continue;if(I2!==null&&(I2<0||I2>=IS.length))continue;
+   // exposure = -shutter -aperture +iso (bigger = brighter); N+d is d stops brighter
+   const E0=-s-a+i,E1=E0+d;
+   if(solve==="s")S2=-E1-A2+I2;else if(solve==="a")A2=-E1-S2+I2;else I2=E1+S2+A2;
+   if(S2<0||S2>=SH.length||A2<0||A2>=AP.length||I2<0||I2>=IS.length)continue;
+   const changed=[S2!==s,A2!==a,I2!==i].filter(Boolean).length;if(changed<2)continue;
+   const fmt={s:k=>SH[k],a:k=>"f/"+AP[k],i:k=>"ISO "+IS[k]},arr={s:SH.map((_,k)=>k),a:AP.map((_,k)=>k),i:IS.map((_,k)=>k)},val={s:S2,a:A2,i:I2};
+   const right=fmt[solve](val[solve]),pool=arr[solve].filter(k=>Math.abs(k-val[solve])<=3).map(fmt[solve]);
+   const given=[solve!=="s"?SH[S2]:null,solve!=="a"?"f/"+AP[A2]:null,solve!=="i"?"ISO "+IS[I2]:null].filter(Boolean).join(" and ");
+   const what={s:"shutter speed",a:"aperture",i:"ISO"}[solve];
+   const part=(n,b,c)=>{const x=c-b;return x?`${n} ${x>0?"+":""}${x}`:null;};
+   const sh=-(S2-s),ap=-(A2-a),iso=I2-i;
+   return{k:"mc",q:`Base exposure (N): ${SH[s]}, f/${AP[a]}, ISO ${IS[i]}. For N${d>0?"+":"−"}${Math.abs(d)}, you set ${given}. What ${what}?`,o:mcFrom(right,pool),
+     e:`Count stops (+ = brighter). Shutter ${sh>=0?"+":""}${sh}, aperture ${ap>=0?"+":""}${ap}, ISO ${iso>=0?"+":""}${iso}: total ${sh+ap+iso>=0?"+":""}${sh+ap+iso} = N${d>0?"+":"−"}${Math.abs(d)}. So the ${what} is ${right}.`};}
+  return GEN.tones();},
+ rm(){const o=pk([10,15,20,24,30,40,50,60]),m=pk([0.25,0.5,1,2,3]),img=r1(o*m);
+  return{k:"num",q:`${art(o)==="an"?"An":"A"} ${o} mm object is ${img} mm tall on the sensor. What is the scale of reproduction R? (2 decimals)`,a:m,tol:0.01,d:`${m} (${ratio(m)})`,e:`R = image size ÷ object size = ${img} ÷ ${o} = ${m}.`};}
+};
+const GQ=[
+ ["G1","snr","snr","SNR from a patch's mean and standard deviation"],["G2","dsens","tones","Bit depth → number of tones"],["G3","raw","bits","Number of tones → bit depth"],
+ ["G4","sensor","crop","Crop factor from a sensor's diagonal"],["G5","lens2","equiv","Equivalent focal length on a crop camera"],["G6","lens","lens","Focal length from u and v (1/f = 1/u + 1/v)"],
+ ["G7","lab2","comb","Combined focal length of two lenses"],["G8","lens2","diop","Diopters ↔ focal length"],["G9","scale","scale","Image and object distance for a reproduction ratio"],
+ ["G10","lab2","ruler","Scale of reproduction from a ruler (R = 24 ÷ width)"],["G11","aber","fnum","Aperture diameter from focal length and f-number"],["G12","aber","pin","Optimum pinhole diameter"],
+ ["G13","aber","hyper","Sharp zone when focused at the hyperfocal distance"],["G14","lab2","hand","Handheld shutter rule"],["G15","lab2","isstop","Image stabilization stops"],
+ ["G16","si","nd","ND filter density ↔ stops"],["G17","expo","expo","Equivalent exposure, changing two settings"],["G18","expo","expo","Equivalent exposure, changing two settings"],["G19","scale","rm","Scale of reproduction = image ÷ object"]
+].map(([id,t,g,name])=>({id,t,k:"gen",g,q:"🎲 "+name+" (new numbers every time)",d:"Different numbers every time",e:""}));
+Q.push(...GQ);
+function inst(q){if(q.k!=="gen")return q;const tpl=q.tpl||q;const x=GEN[tpl.g]();return Object.assign({id:tpl.id,t:tpl.t,tpl,gen:true},x);}
+
 const BYID={};Q.forEach(q=>BYID[q.id]=q);
 const TWIN={};Q.forEach(q=>{if(q.rv&&BYID[q.rv]){TWIN[q.id]=q.rv;TWIN[q.rv]=q.id;}});
 const TORD={};Object.keys(TOPICS).forEach((t,i)=>TORD[t]=i);
@@ -553,6 +639,7 @@ function learnPick(){
 /* ---------- how a card is shown ---------- */
 function formatFor(q){
   const L=lvl(q),typedOK=q.k==="mc"||q.k==="fill"||q.k==="num"||q.k==="seq";
+  if(run.mode==="group")return "native";
   if(run.mode!=="learn"){
     if(q.k==="mc"&&(S.mode==="type"||(S.mode==="auto"&&(L==="mastered"||L==="completed"))))return "written";
     return "native";
@@ -597,6 +684,13 @@ function home(){
     <div class="btns"><button class="btn" id="learn">Start learning (${S.L.size})</button><button class="btn ghost" id="report">📊 What I know</button></div>
   </section>
   <section class="card stack">
+    <h2>Group study</h2>
+    <p class="muted" style="margin:0">Study together: everyone who types the <b>same code</b> gets the <b>same questions, in the same order, with the answers in the same A–D order</b>, even the 🎲 number questions. Each person's results go into <b>their own</b> progress.</p>
+    <div class="szrow"><input type="text" id="gcode" placeholder="e.g. LENS-4821-15" autocomplete="off" spellcheck="false" style="width:200px;text-transform:uppercase" aria-label="Group code"><button class="btn" id="gjoin">Join</button></div>
+    <div class="szrow"><span class="hint">or make a new code with</span><input type="number" id="gcount" min="1" max="100" value="${S.gcount||15}" inputmode="numeric" style="width:90px" aria-label="Number of questions"><span class="hint">questions</span><button class="btn ghost" id="gnew">Create code</button></div>
+    <p class="hint" id="gmsg" style="margin:0">Share the code in your group chat, then go through it together and compare answers.</p>
+  </section>
+  <section class="card stack">
     <div class="qmeta"><h2>What I know</h2><button class="btn ghost" id="report2">Full report</button></div>
     ${tilesHTML(counts(Q))}
     <div class="bars">${topicBars()}</div>
@@ -637,6 +731,9 @@ function home(){
   $("#o-retype").onchange=e=>setL("retype",e.target.checked);
   $("#o-star").onchange=e=>setL("starred",e.target.checked);
   $("#learn").onclick=()=>startLearn(1);
+  $("#gjoin").onclick=()=>{const c=$("#gcode").value.trim().toUpperCase();if(!parseCode(c)){$("#gmsg").textContent="That code doesn't look right. It should look like LENS-4821-15.";return;}startGroup(c);};
+  $("#gcode").onkeydown=e=>{if(e.key==="Enter")$("#gjoin").click();};
+  $("#gnew").onclick=()=>{let n=Math.round(+$("#gcount").value);if(!(n>=1))n=15;n=Math.min(n,100);S.gcount=n;save();const c=pk(["LENS","PIXEL","FOCUS","NOISE","STOP","BOKEH","PRISM","SHUTTER","APERTURE","RAW"])+"-"+(1000+Math.floor(Math.random()*9000))+"-"+n;$("#gcode").value=c;$("#gmsg").innerHTML=`Your code: <b style="font-size:1.3rem">${c}</b> · share it, then tap Join.`;};
   $("#report").onclick=()=>report(null);$("#report2").onclick=()=>report(null);
   $("#go").onclick=()=>start("attempt");
   $("#miss").onclick=()=>start("miss");
@@ -653,6 +750,7 @@ function startLearn(n){
 }
 
 function show(){
+  if(run.qs[run.i].k==="gen")run.qs[run.i]=inst(run.qs[run.i]);
   const q=run.qs[run.i],N=run.qs.length;
   run.sel=null;run.done=false;run.fmt=formatFor(q);run.claim=null;run.typed=false;
   let body="";const f=run.fmt;
@@ -660,20 +758,20 @@ function show(){
   else if(f==="tfs"){const wrong=q.o.slice(1);run.claim=Math.random()<.5||!wrong.length?0:1+Math.floor(Math.random()*wrong.length);
     body=`<div class="claim">${esc(q.o[run.claim])}</div><div class="opts"><button class="opt" data-i="t"><span class="key">T</span><span>True</span></button><button class="opt" data-i="f"><span class="key">F</span><span>False</span></button></div><p class="hint" style="margin:0">Is this the right answer to the question?</p>`;}
   else if(f==="flash"){body=`<div class="btns"><button class="btn ghost" id="reveal">Show answer</button></div><p class="hint" style="margin:0">Say the answer in your head, then check it.</p>`;}
-  else if(q.k==="mc"||q.k==="spd"){run.order=shuffle(q.o.map((_,i)=>i));
+  else if(q.k==="mc"||q.k==="spd"){run.order=q._order||shuffle(q.o.map((_,i)=>i));
     body=(q.k==="spd"?spdSVG(q.g):"")+`<div class="opts">${run.order.map((oi,j)=>`<button class="opt" data-i="${oi}"><span class="key">${"ABCD"[j]}</span><span>${esc(q.o[oi])}</span></button>`).join("")}</div>`;}
   else if(q.k==="tf"){body=`<div class="opts"><button class="opt" data-i="t"><span class="key">T</span><span>True</span></button><button class="opt" data-i="f"><span class="key">F</span><span>False</span></button></div><p class="hint" style="margin:0">If it's false, think about how you would fix it before you check.</p>`;}
-  else if(q.k==="multi"){run.order=shuffle(q.o.map((_,i)=>i));run.sel=new Set();
+  else if(q.k==="multi"){run.order=q._order||shuffle(q.o.map((_,i)=>i));run.sel=new Set();
     body=`<div class="opts">${run.order.map((oi,j)=>`<button class="opt" data-i="${oi}"><span class="key">${j+1}</span><span>${esc(q.o[oi])}</span></button>`).join("")}</div><p class="hint" style="margin:0">Select all that apply.</p>`;}
   else{const hint=q.k==="seq"?"Separate with commas, e.g. 100, 200, 400 (the f/ is optional)":q.k==="num"?"Type the number. You can add units.":"Type your answer. Spelling counts.";
     body=`<input type="text" id="ans" autocomplete="off" spellcheck="false" aria-label="Your answer"><p class="hint" style="margin:0">${hint}</p>`;}
-  const L=lvl(q),where=run.mode==="learn"?`Round ${run.set} · ${run.left.size} to go`:`${run.mode==="attempt"?`Practice exam ${Math.min(S.attempts.length+1,99)}`:run.mode==="miss"?"Learning":"All questions"} · ${run.i+1} / ${N}`;
+  const L=lvl(q),where=run.mode==="group"?`Group ${run.code} · Q ${run.i+1} / ${N}`:run.mode==="learn"?`Round ${run.set} · ${run.left.size} to go`:`${run.mode==="attempt"?`Practice exam ${Math.min(S.attempts.length+1,99)}`:run.mode==="miss"?"Learning":"All questions"} · ${run.i+1} / ${N}`;
   const prog=run.mode==="learn"?(1-run.left.size/run.size)*100:run.i/N*100;
   $("#app").innerHTML=`
   <div class="qmeta"><button class="btn ghost" id="quit">Quit</button><span class="eyebrow">${where}</span></div>
   <div class="progress"><div style="width:${prog}%"></div></div>
   <section class="card stack">
-    <div class="qmeta"><div><span class="tag">${TOPICS[q.t]}</span>${q.rv?'<span class="tag flip">↺ Flipped</span>':""}<span class="tag lv lv-${L}">${LVN[L]}</span></div><button type="button" class="star" id="star" aria-pressed="${!!S.star[q.id]}" aria-label="Star this question">${S.star[q.id]?"★":"☆"}</button></div>
+    <div class="qmeta"><div><span class="tag">${TOPICS[q.t]}</span>${q.rv?'<span class="tag flip">↺ Flipped</span>':""}${q.gen?'<span class="tag flip">🎲 New numbers</span>':""}<span class="tag lv lv-${L}">${LVN[L]}</span></div><button type="button" class="star" id="star" aria-pressed="${!!S.star[q.id]}" aria-label="Star this question">${S.star[q.id]?"★":"☆"}</button></div>
     <div class="qtext">${esc(q.q)}</div>
     ${body}
     <div id="fb"></div>
@@ -738,13 +836,14 @@ function record(q,ok){
   if(first)st.lv=nextLv(cur,ok);else if(!ok)st.lv="learning";else st.lv=st.lv||cur;
   S.stats[q.id]=st;save();
   let ins=-1;
-  if(run.mode==="learn"){if(ok)run.left.delete(q.id);else{run.left.add(q.id);ins=Math.min(run.i+3,run.qs.length);run.qs.splice(ins,0,q);}}
-  return {first,snap,ins,from:cur};
+  let insObj=null;
+  if(run.mode==="learn"){if(ok)run.left.delete(q.id);else{run.left.add(q.id);ins=Math.min(run.i+3,run.qs.length);insObj=q.tpl||q;run.qs.splice(ins,0,insObj);}}
+  return {first,snap,ins,insObj,from:cur};
 }
 function undo(q,info){
   if(info.snap)S.stats[q.id]=JSON.parse(info.snap);else delete S.stats[q.id];
   if(info.first)run.first.delete(q.id);
-  if(info.ins>=0&&run.qs[info.ins]===q)run.qs.splice(info.ins,1);
+  if(info.ins>=0&&run.qs[info.ins]===info.insObj)run.qs.splice(info.ins,1);
 }
 function finish(q,ok,given,spell,smart){
   $("#check").hidden=false;
@@ -779,6 +878,19 @@ function next(){run.i++;if(run.i<run.qs.length)show();else if(run.mode==="learn"
 function tilesHTML(c){return `<div class="tiles">${["new","learning","almost","mastered","completed"].map(k=>`<div class="tile lv-${k}"><b>${c[k]}</b><span>${LVN[k]}</span></div>`).join("")}</div>`;}
 function topicBars(){let h="";for(const t in TOPICS){const qs=Q.filter(q=>q.t===t),c=counts(qs);h+=`<div class="tb"><span>${TOPICS[t]}</span>${sbar(c,qs.length)}<span class="pct">${c.mastered+c.completed}/${qs.length}</span></div>`;}return h;}
 
+/* ---------- group sessions (same code = same questions) ---------- */
+function parseCode(c){const m=/^([A-Z]+)-(\d{4})-(\d{1,3})$/.exec(c);if(!m)return null;const n=+m[3];return n>=1&&n<=100?{n}:null;}
+function startGroup(code){
+  const p=parseCode(code);RNG=seeded(hashStr(code));
+  try{
+    const base=Q.filter(q=>!q.rv),by={};base.forEach(q=>{(by[q.t]=by[q.t]||[]).push(q);});
+    const tops=rshuffle(Object.keys(by).sort());tops.forEach(t=>{by[t]=rshuffle(by[t]);});
+    const list=[];let k=0;while(list.length<p.n&&tops.some(t=>by[t].length)){const t=tops[k%tops.length];if(by[t].length)list.push(by[t].shift());k++;}
+    const qs=list.map(q=>{const x=Object.assign({},inst(q));if(x.k==="mc"||x.k==="spd"||x.k==="multi")x._order=rshuffle(x.o.map((_,i)=>i));return x;});
+    confirmReset=false;run=newRun("group",qs,{code});
+  }finally{RNG=Math.random;}
+  show();
+}
 function learnDone(){
   run.all=run.all.concat(run.results);
   const first={};run.results.forEach(x=>{if(!(x.q.id in first))first[x.q.id]=x.ok;});
@@ -822,7 +934,7 @@ function results(){
   const missed=r.filter(x=>!x.ok);
   const verdict=pct>=90?"Exam ready on this set.":pct>=75?"Solid. Keep learning your misses, then take the next one.":"Review the misses below, then go again.";
   $("#app").innerHTML=`
-  <header class="head"><div><div class="eyebrow">${run.mode==="attempt"?`Practice exam ${S.attempts.length} of 7`:run.mode==="miss"?"Learning round":"All questions"}</div><h1>Results</h1></div></header>
+  <header class="head"><div><div class="eyebrow">${run.mode==="group"?`Group session ${run.code}`:run.mode==="attempt"?`Practice exam ${S.attempts.length} of 7`:run.mode==="miss"?"Learning round":"All questions"}</div><h1>Results</h1></div></header>
   <section class="card stack">
     <div class="score">${score}<span class="muted" style="font-size:.45em">/${total}</span></div>
     <p style="margin:0"><b>${pct}%</b>. ${verdict}</p>
