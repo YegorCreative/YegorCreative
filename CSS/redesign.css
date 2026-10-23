@@ -593,7 +593,6 @@ textarea:focus-visible,
   }
 
   #primaryNav {
-    display: flex !important;
     align-items: center !important;
     flex: 0 0 auto;
     margin: 0 !important;
@@ -2379,5 +2378,13 @@ textarea:focus-visible,
   .yc-codebanner__inner {
     max-width: 100%;
     box-sizing: border-box;
+  }
+}
+
+/* Desktop menu from 1200px. Below that, CSS/nav-fix.css hides #primaryNav.
+   An ID with !important would otherwise beat nav-fix.css between 1040 and 1199px. */
+@media screen and (min-width: 1200px) {
+  #primaryNav {
+    display: flex !important;
   }
 }
