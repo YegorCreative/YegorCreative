@@ -116,6 +116,28 @@ details.cat summary{cursor:pointer;font-weight:600}
 .selfg{display:flex;gap:10px;flex-wrap:wrap}
 .selfg .btn.okb{background:var(--good);color:#fff}.selfg .btn.nob{background:var(--bad);color:#fff}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.togs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:520px){.togs{grid-template-columns:1fr}}
+.tog{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:10px 12px;cursor:pointer;background:var(--surface)}
+.tog input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--accent);flex:none}
+.tog span{display:grid;gap:2px}.tog small{color:var(--muted);font-size:.8rem;line-height:1.35}
+.szrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.szrow input{width:110px;font:inherit;font-size:1.2rem;font-weight:600;padding:10px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+.star{background:none;border:1px solid var(--line);border-radius:999px;width:40px;height:40px;font-size:1.2rem;color:var(--warn);flex:none}
+.star[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
+.claim{border:1.5px dashed var(--accent);border-radius:8px;padding:12px 14px;font-weight:600;background:var(--accent-soft)}
+.claim::before{content:"Proposed answer: ";font-weight:400;color:var(--muted)}
+.lvmove{font-size:.9rem;color:var(--muted)}
+.linkbtn{background:none;border:none;padding:0;color:var(--ink);text-decoration:underline;font-size:.9rem;cursor:pointer}
+input.good{border-color:var(--good)!important;background:var(--good-bg)!important}
+.lv-new{--c:#8A9099}.lv-learning{--c:#B0261D}.lv-almost{--c:#C99A1C}.lv-mastered{--c:#2B7A4B}.lv-completed{--c:#1F5FB0}
+.tag.lv{background:transparent;border:1px solid var(--c);color:var(--ink);margin-left:6px}
+.tiles{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+@media (max-width:620px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media (max-width:400px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+.tile.lv-new,.tile.lv-learning,.tile.lv-almost,.tile.lv-mastered,.tile.lv-completed{border-left:6px solid var(--c)}
+details.cat.lv-new,details.cat.lv-learning,details.cat.lv-almost,details.cat.lv-mastered,details.cat.lv-completed{border-left:6px solid var(--c)}
+.legend span{display:block}
 </style>
 </head><body>
 
@@ -428,22 +450,15 @@ const Q=[
 {id:"E9",t:"expo",k:"mc",q:"Base N: 1/30, f/4, ISO 1600. For N −1 at f/8, the shutter speed is…",o:["1/15","1/30","1/60","1/8"],e:"f/4 → f/8 = −2 stops. You only want −1, so add 1 stop with the shutter: 1/30 → 1/15."},
 {id:"E10",t:"expo",k:"mc",q:"In bracketing notation, \"N\" means…",o:["The base (metered) exposure","Noise","Neutral density","Number of photos"],e:"N = your base exposure. N +1 = one stop brighter, N −2 = two stops darker."}
 ];
-
 /* ---------- storage (per-viewer, best effort) ---------- */
 const KEY="exam2-prep-v1";
 function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.attempts)return s;}catch(e){}return{attempts:[],stats:{}};}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 let S=load();
-const SIZES=[5,7,10,15,20];function SZ(){return SIZES.includes(S.setSize)?S.setSize:7;}
 if(!S.mode)S.mode=S.typeMode?"type":"auto";
-const MODES={mc:"Multiple choice",auto:"Auto level-up",type:"Type my answers"};
-function streak(q){const st=S.stats[q.id];if(!st)return 0;return st.streak!=null?st.streak:(st.last==="r"?1:0);}
-function status(q){const st=S.stats[q.id];if(!st)return "u";if(st.last==="w")return "n";return streak(q)>=3?"m":"l";}
-const STN={m:"Know it 100%",l:"Still learning",n:"Need to learn",u:"Not seen yet"};
-const STD={m:"Right 3+ times in a row",l:"Right last time, but not 3 in a row yet",n:"Missed the last time you saw it",u:"Hasn't come up yet"};
-function counts(list){const c={m:0,l:0,n:0,u:0};list.forEach(q=>c[status(q)]++);return c;}
-function sbar(c,tot){return `<div class="sbar">${["m","l","n","u"].map(k=>c[k]?`<i class="st-${k}" style="width:${c[k]/tot*100}%"></i>`:"").join("")}</div>`;}
-function wantsTyped(q){return q.k==="mc"&&(S.mode==="type"||(S.mode==="auto"&&streak(q)>=2));}
+if(!S.star)S.star={};
+S.L=Object.assign({size:7,types:{mc:true,written:true,tf:true,flash:false},dir:"normal",shuffle:true,smart:false,retype:false,starred:false},S.L||{});
+if(S.setSize&&!S.L._m){S.L.size=S.setSize;S.L._m=1;}
 let run=null; let confirmReset=false;
 
 /* ---------- helpers ---------- */
@@ -461,6 +476,21 @@ function answerText(q){
   if(q.k==="seq")return q.a.join(", ");
   if(q.k==="multi")return q.c.map(i=>q.o[i]).join(", ");
 }
+const BYID={};Q.forEach(q=>BYID[q.id]=q);
+const TWIN={};Q.forEach(q=>{if(q.rv&&BYID[q.rv]){TWIN[q.id]=q.rv;TWIN[q.rv]=q.id;}});
+const TORD={};Object.keys(TOPICS).forEach((t,i)=>TORD[t]=i);
+const QIDX={};Q.forEach((q,i)=>QIDX[q.id]=i);
+function topicSort(list){return list.slice().sort((a,b)=>TORD[a.t]-TORD[b.t]||QIDX[a.id]-QIDX[b.id]);}
+
+/* ---------- levels: new → learning / almost done → mastered → completed ---------- */
+const LV=["new","learning","almost","mastered","completed"];
+const LVN={new:"New",learning:"Learning",almost:"Almost done",mastered:"Mastered",completed:"Completed"};
+const LVD={new:"Haven't seen it yet",learning:"Missed it the last time it counted",almost:"Right on the first try once",mastered:"Right on the first try twice in a row; now asked as free response",completed:"Free-response version right too; only comes back now and then"};
+function lvl(q){const st=S.stats[q.id];if(!st)return "new";if(st.lv)return st.lv;
+  if(st.last==="w")return "learning";const sk=st.streak!=null?st.streak:(st.last==="r"?1:0);return sk>=3?"mastered":"almost";}
+function nextLv(cur,ok){if(!ok)return "learning";return {new:"almost",learning:"almost",almost:"mastered",mastered:"completed",completed:"completed"}[cur];}
+function counts(list){const c={new:0,learning:0,almost:0,mastered:0,completed:0};list.forEach(q=>c[lvl(q)]++);return c;}
+function sbar(c,tot){return `<div class="sbar">${["completed","mastered","almost","learning","new"].map(k=>c[k]?`<i class="lv-${k}" style="width:${c[k]/tot*100}%"></i>`:"").join("")}</div>`;}
 
 /* ---------- SPD graphs ---------- */
 function spdSVG(kind){
@@ -482,71 +512,108 @@ function spdSVG(kind){
     <text x="12" y="${(yt+yb)/2}" text-anchor="middle" transform="rotate(-90 12 ${(yt+yb)/2})">power</text></svg>`;
 }
 
-/* ---------- picking questions ---------- */
-const BYID={};Q.forEach(q=>BYID[q.id]=q);
-const TWIN={};Q.forEach(q=>{if(q.rv&&BYID[q.rv]){TWIN[q.id]=q.rv;TWIN[q.rv]=q.id;}});
+/* ---------- picking: practice attempts ---------- */
 function addTwins(list){
   const have=new Set(list.map(q=>q.id)),out=list.slice();
   list.forEach(q=>{const t=TWIN[q.id];if(t&&!have.has(t)&&Math.random()<0.5){have.add(t);const at=out.indexOf(q)+1+Math.floor(Math.random()*(out.length-out.indexOf(q)));out.splice(at,0,BYID[t]);}});
   return out;
 }
 function pick(mode){
-  if(mode==="miss")return shuffle(Q.filter(q=>S.stats[q.id]&&S.stats[q.id].last==="w"));
+  if(mode==="miss")return shuffle(Q.filter(q=>lvl(q)==="learning"));
   if(mode==="all")return shuffle(Q);
-  let out=[];
+  let out=[];const W={new:2,learning:3,almost:1,mastered:0.3,completed:0};
   for(const t in TOPICS){
-    const pool=shuffle(Q.filter(q=>q.t===t)).map(q=>{const s=S.stats[q.id];let p=Math.random();if(!s)p+=2;else{if(s.last==="w")p+=3;p+=s.wrong*0.5-s.right*0.3;}return{q,p};});
+    const pool=shuffle(Q.filter(q=>q.t===t)).map(q=>({q,p:Math.random()+W[lvl(q)]}));
     pool.sort((a,b)=>b.p-a.p);out=out.concat(pool.slice(0,5).map(x=>x.q));
   }
-  if(S.mode==="auto"){const have=new Set(out.map(q=>q.id));out=out.map(q=>{const t=TWIN[q.id];if(t&&streak(q)>=3&&!have.has(t)){have.add(t);q.lvl=1;return Object.assign({},BYID[t],{lvl:2});}return q;});}
   return addTwins(shuffle(out));
 }
 
+/* ---------- picking: learn sets (Quizlet-style) ---------- */
+function learnPool(){
+  let pool=Q.slice();
+  if(S.L.dir==="normal")pool=pool.filter(q=>!q.rv);
+  else if(S.L.dir==="flip")pool=pool.filter(q=>!(TWIN[q.id]&&!q.rv));
+  if(S.L.starred)pool=pool.filter(q=>S.star[q.id]);
+  return pool;
+}
+function learnPick(){
+  const n=S.L.size,pool=learnPool();if(!pool.length)return [];
+  const by={};LV.forEach(k=>by[k]=[]);pool.forEach(q=>by[lvl(q)].push(q));
+  LV.forEach(k=>{by[k]=k==="new"&&!S.L.shuffle?topicSort(by[k]):shuffle(by[k]);});
+  // learning gets the most, then new, then almost done, mastered, completed
+  const share={learning:.36,new:.28,almost:.18,mastered:.12,completed:.06},order=["learning","new","almost","mastered","completed"];
+  const want={};let tot=0;order.forEach(k=>{want[k]=Math.floor(n*share[k]);tot+=want[k];});
+  for(const k of order){if(tot>=n)break;want[k]++;tot++;}
+  const out=[];order.forEach(k=>{out.push(...by[k].splice(0,want[k]));});
+  for(const k of order){while(out.length<n&&by[k].length)out.push(by[k].shift());}
+  return S.L.shuffle?shuffle(out):topicSort(out);
+}
+
+/* ---------- how a card is shown ---------- */
+function formatFor(q){
+  const L=lvl(q),typedOK=q.k==="mc"||q.k==="fill"||q.k==="num"||q.k==="seq";
+  if(run.mode!=="learn"){
+    if(q.k==="mc"&&(S.mode==="type"||(S.mode==="auto"&&(L==="mastered"||L==="completed"))))return "written";
+    return "native";
+  }
+  if((L==="mastered"||L==="completed")&&typedOK)return "written";
+  const T=S.L.types,opts=[];
+  if(q.k==="mc"){if(T.mc)opts.push("native");if(T.written)opts.push("written");if(T.tf)opts.push("tfs");if(T.flash)opts.push("flash");}
+  else if(q.k==="fill"||q.k==="num"||q.k==="seq"){if(T.written||T.mc||T.tf)opts.push("native");if(T.flash)opts.push("flash");}
+  else{if(T.mc||T.tf||T.written)opts.push("native");if(T.flash)opts.push("flash");}
+  return opts.length?opts[Math.floor(Math.random()*opts.length)]:"native";
+}
+
 /* ---------- screens ---------- */
+function chk(id,label,on,hint){return `<label class="tog"><input type="checkbox" id="${id}" ${on?"checked":""}><span><b>${label}</b>${hint?`<small>${hint}</small>`:""}</span></label>`;}
 function home(){
   run=null;
   const n=S.attempts.length;
   let dots="";for(let i=0;i<7;i++){const a=S.attempts[i];
     dots+=a?`<div class="dot done"><span>${Math.round(a.score/a.total*100)}%</span><small>#${i+1}</small></div>`
            :`<div class="dot ${i===n?"next":""}"><span>#${i+1}</span></div>`;}
-  let bars="";for(const t in TOPICS){let r=0,s=0;Q.filter(q=>q.t===t).forEach(q=>{const st=S.stats[q.id];if(st){s++;if(st.last==="r")r++;}});
-    const total=Q.filter(q=>q.t===t).length,pct=Math.round(r/total*100);
-    bars+=`<div class="bar"><span>${TOPICS[t]}</span><div class="track"><div class="fill" style="width:${pct}%"></div></div><span class="pct">${pct}%</span></div>`;}
-  const misses=Q.filter(q=>S.stats[q.id]&&S.stats[q.id].last==="w").length;
-  const lv=[0,0,0];Q.forEach(q=>{const k=streak(q);lv[k>=3?2:k>=2?1:0]++;});
+  const misses=Q.filter(q=>lvl(q)==="learning").length,stars=Q.filter(q=>S.star[q.id]).length;
   const label=n<7?`Start attempt ${n+1} of 7`:"Extra round";
+  const T=S.L.types;
   $("#app").innerHTML=`
   <header class="head">
     <div><div class="eyebrow">PHOSCIFUN · Exam 2 · Oct 30</div><h1>Exam 2 Prep</h1></div>
     <div class="chip18"><i></i>18% gray</div>
   </header>
   <section class="card stack">
-    <h2>Learn in short sets</h2>
-    <p class="muted" style="margin:0">Short sessions that <b>loop until you get each question right</b>. A right answer drops it from the set. Finish the set, then tap <b>Learn more</b> for the next one. Every set mixes in a few questions you're still learning or missed before.</p>
-    <div class="stack" style="gap:8px"><span class="eyebrow">Questions per set</span>
-      <div class="mode" role="group" aria-label="Questions per set">${SIZES.map(n=>`<button type="button" data-sz="${n}" aria-pressed="${SZ()===n}">${n}</button>`).join("")}</div></div>
-    <div class="btns"><button class="btn" id="learn">Start a set of ${SZ()}</button><button class="btn ghost" id="report">📊 What I know</button></div>
-  </section>
-  <section class="card stack">
-    <div class="qmeta"><h2>Your 7 attempts</h2><span class="muted">${n} done${n>=7?" · all 7 complete":""}</span></div>
-    <div class="dots">${dots}</div>
-    <p class="muted" style="margin:0">Each attempt is ${Object.keys(TOPICS).length*5} questions, 5 from each topic, plus a few <b>↺ flipped</b> questions that ask the same idea the other way around. It grows as new labs are added. Questions you miss come back more often in later attempts.</p>
-    <div class="stack" style="gap:8px"><span class="eyebrow">Answer mode</span>
-      <div class="mode" role="group" aria-label="Answer mode">${Object.keys(MODES).map(m=>`<button type="button" data-tm="${m}" aria-pressed="${S.mode===m}">${MODES[m]}</button>`).join("")}</div>
-      <p class="hint" style="margin:0">${S.mode==="auto"?"<b>Auto level-up:</b> a question starts as multiple choice. Get it right <b>2 times in a row</b> and it comes back as <b>type the answer</b>. Right <b>3 in a row</b> and it comes back <b>↺ flipped</b> (asked the other way around). Miss it and it drops back to multiple choice.":S.mode==="type"?"Choices are hidden: type every answer from memory. Words and numbers are checked automatically (spelling counts); for longer answers you compare with the key and grade yourself honestly.":"Every question shows its choices."} True/false, select-all and graph questions always stay as buttons.</p>
-      <p class="hint" style="margin:0">Your levels: <b>${lv[0]}</b> multiple choice · <b>${lv[1]}</b> typing · <b>${lv[2]}</b> mastered, 3+ right in a row (of ${Q.length}).</p></div>
-    <div class="btns">
-      <button class="btn" id="go">${label}</button>
-      <button class="btn ghost" id="miss" ${misses?"":"disabled"}>Redo my misses (${misses})</button>
-      <button class="btn ghost" id="all">All ${Q.length} questions</button>
-    </div>
+    <h2>Learn</h2>
+    <p class="muted" style="margin:0">Short rounds that <b>loop until you get every question right once</b>. Your <b>first try</b> in a round moves a question up: <b>New → Almost done → Mastered → Completed</b>. A miss sends it to <b>Learning</b>. Mastered questions come back as <b>free response</b>. Rounds mix in more <b>Learning</b> than New, and Completed only now and then.</p>
+    <div class="stack" style="gap:8px"><span class="eyebrow">Round length</span>
+      <div class="szrow"><input type="number" id="sz" min="1" max="${Q.length}" step="1" inputmode="numeric" value="${S.L.size}" aria-label="Questions per round"><span class="hint">questions per round (any number, 1–${Q.length})</span></div></div>
+    <div class="stack" style="gap:8px"><span class="eyebrow">Question types</span>
+      <div class="togs">${chk("t-mc","Multiple choice",T.mc)}${chk("t-written","Written",T.written)}${chk("t-tf","True / false",T.tf)}${chk("t-flash","Flashcards",T.flash)}</div></div>
+    <div class="stack" style="gap:8px"><span class="eyebrow">Answer with</span>
+      <div class="mode" role="group" aria-label="Answer with">${[["normal","Definition (normal)"],["flip","Term (flipped)"],["both","Both"]].map(([k,l])=>`<button type="button" data-dir="${k}" aria-pressed="${S.L.dir===k}">${l}</button>`).join("")}</div>
+      <p class="hint" style="margin:0">Flipping works on the ${Object.keys(TWIN).length/2} definition-style questions that have a reversed version. The rest stay as they are.</p></div>
+    <div class="stack" style="gap:8px"><span class="eyebrow">Options</span>
+      <div class="togs">${chk("o-shuffle","Shuffle items",S.L.shuffle,"Off = new questions come in topic order")}${chk("o-smart","Smart grading",S.L.smart,"Accepts small typos. Off by default: she marks misspellings wrong")}${chk("o-retype","Retype answers",S.L.retype,"After a miss, type the right answer to continue")}${chk("o-star","Only starred items",S.L.starred,`${stars} starred. Tap ☆ on any question to star it`)}</div>
+      <p class="hint" style="margin:0">You can always override: <b>I was right</b> after a miss, or <b>Mark wrong</b> after a right answer so it comes back sooner.</p></div>
+    <div class="btns"><button class="btn" id="learn">Start learning (${S.L.size})</button><button class="btn ghost" id="report">📊 What I know</button></div>
   </section>
   <section class="card stack">
     <div class="qmeta"><h2>What I know</h2><button class="btn ghost" id="report2">Full report</button></div>
     ${tilesHTML(counts(Q))}
-    <div class="legend">${["m","l","n","u"].map(k=>`<span class="st-${k}">${STN[k]}</span>`).join("")}</div>
     <div class="bars">${topicBars()}</div>
-    <p class="hint" style="margin:0">Each bar shows a topic's questions by status. The number is how many you know 100%.</p>
+    <p class="hint" style="margin:0">Each bar shows a topic's questions by level. The number is how many are Mastered or Completed.</p>
+  </section>
+  <section class="card stack">
+    <div class="qmeta"><h2>Your 7 practice exams</h2><span class="muted">${n} done${n>=7?" · all 7 complete":""}</span></div>
+    <div class="dots">${dots}</div>
+    <p class="muted" style="margin:0">Each one is ${Object.keys(TOPICS).length*5} questions, 5 from each topic, plus a few <b>↺ flipped</b> ones. Questions you're still learning come up more often.</p>
+    <div class="stack" style="gap:8px"><span class="eyebrow">Answer mode</span>
+      <div class="mode" role="group" aria-label="Answer mode">${[["mc","Multiple choice"],["auto","Auto"],["type","Type my answers"]].map(([k,l])=>`<button type="button" data-tm="${k}" aria-pressed="${S.mode===k}">${l}</button>`).join("")}</div>
+      <p class="hint" style="margin:0">${S.mode==="auto"?"<b>Auto:</b> Mastered and Completed questions are asked as free response; the rest keep their choices.":S.mode==="type"?"Every multiple-choice question becomes free response.":"Every question shows its choices."}</p></div>
+    <div class="btns">
+      <button class="btn" id="go">${label}</button>
+      <button class="btn ghost" id="miss" ${misses?"":"disabled"}>Redo Learning (${misses})</button>
+      <button class="btn ghost" id="all">All ${Q.length} questions</button>
+    </div>
   </section>
   <section class="card stack">
     <h2>Exam day rules</h2>
@@ -554,30 +621,45 @@ function home(){
       <li><b>Covered so far:</b> Lab 1, Lab 2, the lectures of Sep 21, Sep 28, Oct 2, Oct 5, Oct 16, Oct 19 and Oct 23, and the SI review sheets.</li>
       <li><b>Know the SNR setup:</b> 20 × log(mean ÷ std dev). log(10) = 1, log(100) = 2.</li>
       <li><b>Include units</b> (dB, stops, µm).</li>
-      <li><b>Spelling matters.</b> This quiz marks misspellings wrong too.</li>
+      <li><b>Spelling matters.</b> This quiz marks misspellings wrong too (unless you turn on Smart grading).</li>
       <li>Charge your laptop to 100% and bring it.</li>
     </ul>
-    <div class="btns"><button class="btn ghost" id="reset">${confirmReset?"Tap again to erase all progress":"Reset all attempts"}</button></div>
+    <div class="btns"><button class="btn ghost" id="reset">${confirmReset?"Tap again to erase all progress":"Reset all progress"}</button></div>
   </section>`;
+  const setL=(k,v)=>{S.L[k]=v;save();home();};
+  const szi=$("#sz");szi.oninput=()=>{const v=Math.round(+szi.value);if(v>=1&&v<=Q.length){S.L.size=v;save();$("#learn").textContent=`Start learning (${v})`;}};
+  szi.onchange=()=>{let v=Math.round(+szi.value);if(!(v>=1))v=1;if(v>Q.length)v=Q.length;S.L.size=v;save();szi.value=v;$("#learn").textContent=`Start learning (${v})`;};
+  document.querySelectorAll("[data-dir]").forEach(b=>b.onclick=()=>setL("dir",b.dataset.dir));
   document.querySelectorAll("[data-tm]").forEach(b=>b.onclick=()=>{S.mode=b.dataset.tm;save();home();});
-  $("#go").onclick=()=>start("attempt");
+  ["mc","written","tf","flash"].forEach(k=>{$("#t-"+k).onchange=e=>{S.L.types[k]=e.target.checked;if(!Object.values(S.L.types).some(Boolean))S.L.types.mc=true;save();home();};});
+  $("#o-shuffle").onchange=e=>setL("shuffle",e.target.checked);
+  $("#o-smart").onchange=e=>setL("smart",e.target.checked);
+  $("#o-retype").onchange=e=>setL("retype",e.target.checked);
+  $("#o-star").onchange=e=>setL("starred",e.target.checked);
   $("#learn").onclick=()=>startLearn(1);
-  document.querySelectorAll("[data-sz]").forEach(b=>b.onclick=()=>{S.setSize=+b.dataset.sz;save();home();});
-  $("#report").onclick=()=>report(null);
-  $("#report2").onclick=()=>report(null);
+  $("#report").onclick=()=>report(null);$("#report2").onclick=()=>report(null);
+  $("#go").onclick=()=>start("attempt");
   $("#miss").onclick=()=>start("miss");
   $("#all").onclick=()=>start("all");
-  $("#reset").onclick=()=>{if(confirmReset){S={attempts:[],stats:{}};save();confirmReset=false;}else confirmReset=true;home();};
+  $("#reset").onclick=()=>{if(confirmReset){S={attempts:[],stats:{},star:{},mode:S.mode,L:S.L};save();confirmReset=false;}else confirmReset=true;home();};
 }
 
-function start(mode){confirmReset=false;run={mode,qs:pick(mode),i:0,results:[]};show();}
+function newRun(mode,qs,extra){return Object.assign({mode,qs,i:0,results:[],first:new Set()},extra||{});}
+function start(mode){confirmReset=false;run=newRun(mode,pick(mode));show();}
+function startLearn(n){
+  confirmReset=false;const qs=learnPick(),prev=run&&run.mode==="learn"?run.all:[];
+  if(!qs.length){run=null;$("#app").innerHTML=`<section class="card stack"><h2>Nothing to study</h2><p style="margin:0">${S.L.starred?"You haven't starred any questions yet. Tap ☆ on a question to star it, or turn off “Only starred items”.":"No questions match these settings."}</p><div class="btns"><button class="btn" id="home">Back</button></div></section>`;$("#home").onclick=home;return;}
+  run=newRun("learn",qs,{set:n,size:qs.length,left:new Set(qs.map(q=>q.id)),all:prev});show();
+}
 
 function show(){
   const q=run.qs[run.i],N=run.qs.length;
-  run.sel=null;run.done=false;
-  let body="";
-  run.typed=wantsTyped(q);
-  if(run.typed){body=`<input type="text" id="ans" autocomplete="off" spellcheck="false" aria-label="Your answer"><p class="hint" style="margin:0">Type your answer from memory. Short answers are checked for you; for longer ones you'll compare and grade yourself.</p>`;}
+  run.sel=null;run.done=false;run.fmt=formatFor(q);run.claim=null;run.typed=false;
+  let body="";const f=run.fmt;
+  if(f==="written"&&q.k==="mc"){run.typed=true;body=`<input type="text" id="ans" autocomplete="off" spellcheck="false" aria-label="Your answer"><p class="hint" style="margin:0">Free response: type the answer from memory.${lvl(q)==="mastered"||lvl(q)==="completed"?" (Mastered questions are asked this way.)":""}</p>`;}
+  else if(f==="tfs"){const wrong=q.o.slice(1);run.claim=Math.random()<.5||!wrong.length?0:1+Math.floor(Math.random()*wrong.length);
+    body=`<div class="claim">${esc(q.o[run.claim])}</div><div class="opts"><button class="opt" data-i="t"><span class="key">T</span><span>True</span></button><button class="opt" data-i="f"><span class="key">F</span><span>False</span></button></div><p class="hint" style="margin:0">Is this the right answer to the question?</p>`;}
+  else if(f==="flash"){body=`<div class="btns"><button class="btn ghost" id="reveal">Show answer</button></div><p class="hint" style="margin:0">Say the answer in your head, then check it.</p>`;}
   else if(q.k==="mc"||q.k==="spd"){run.order=shuffle(q.o.map((_,i)=>i));
     body=(q.k==="spd"?spdSVG(q.g):"")+`<div class="opts">${run.order.map((oi,j)=>`<button class="opt" data-i="${oi}"><span class="key">${"ABCD"[j]}</span><span>${esc(q.o[oi])}</span></button>`).join("")}</div>`;}
   else if(q.k==="tf"){body=`<div class="opts"><button class="opt" data-i="t"><span class="key">T</span><span>True</span></button><button class="opt" data-i="f"><span class="key">F</span><span>False</span></button></div><p class="hint" style="margin:0">If it's false, think about how you would fix it before you check.</p>`;}
@@ -585,23 +667,28 @@ function show(){
     body=`<div class="opts">${run.order.map((oi,j)=>`<button class="opt" data-i="${oi}"><span class="key">${j+1}</span><span>${esc(q.o[oi])}</span></button>`).join("")}</div><p class="hint" style="margin:0">Select all that apply.</p>`;}
   else{const hint=q.k==="seq"?"Separate with commas, e.g. 100, 200, 400 (the f/ is optional)":q.k==="num"?"Type the number. You can add units.":"Type your answer. Spelling counts.";
     body=`<input type="text" id="ans" autocomplete="off" spellcheck="false" aria-label="Your answer"><p class="hint" style="margin:0">${hint}</p>`;}
+  const L=lvl(q),where=run.mode==="learn"?`Round ${run.set} · ${run.left.size} to go`:`${run.mode==="attempt"?`Practice exam ${Math.min(S.attempts.length+1,99)}`:run.mode==="miss"?"Learning":"All questions"} · ${run.i+1} / ${N}`;
+  const prog=run.mode==="learn"?(1-run.left.size/run.size)*100:run.i/N*100;
   $("#app").innerHTML=`
-  <div class="qmeta"><button class="btn ghost" id="quit">Quit</button><span class="mode" role="group" aria-label="Answer mode" style="font-size:.85rem"><button type="button" id="tmq" aria-pressed="${S.mode!=="mc"}">Mode: ${S.mode==="auto"?"Auto":S.mode==="type"?"Typing":"Choices"}</button></span><span class="eyebrow">${run.mode==="learn"?`Set ${run.set} · ${run.left.size} to go`:`${run.mode==="attempt"?`Attempt ${Math.min(S.attempts.length+1,99)}`:run.mode==="miss"?"Misses":"All questions"} · ${run.i+1} / ${N}`}</span></div>
-  <div class="progress"><div style="width:${run.mode==="learn"?(1-run.left.size/run.size)*100:run.i/N*100}%"></div></div>
+  <div class="qmeta"><button class="btn ghost" id="quit">Quit</button><span class="eyebrow">${where}</span></div>
+  <div class="progress"><div style="width:${prog}%"></div></div>
   <section class="card stack">
-    <div><span class="tag">${TOPICS[q.t]}</span>${q.rv||q.lvl===2?'<span class="tag flip">↺ Flipped</span>':""}${S.mode==="auto"&&run.typed?'<span class="tag flip">⬆ Level up: type it</span>':""}</div>
+    <div class="qmeta"><div><span class="tag">${TOPICS[q.t]}</span>${q.rv?'<span class="tag flip">↺ Flipped</span>':""}<span class="tag lv lv-${L}">${LVN[L]}</span></div><button type="button" class="star" id="star" aria-pressed="${!!S.star[q.id]}" aria-label="Star this question">${S.star[q.id]?"★":"☆"}</button></div>
     <div class="qtext">${esc(q.q)}</div>
     ${body}
     <div id="fb"></div>
-    <div class="btns"><button class="btn" id="check">Check</button></div>
+    <div class="btns"><button class="btn" id="check" ${f==="flash"?"hidden":""}>Check</button></div>
   </section>`;
-  $("#quit").onclick=()=>{const r=run.results;if(r.length)report(r);else home();};
-  $("#tmq").onclick=()=>{if(run.done)return;S.mode={mc:"auto",auto:"type",type:"mc"}[S.mode];save();show();};
+  $("#quit").onclick=()=>{const r=run.mode==="learn"?run.all.concat(run.results):run.results;if(r.length)report(r);else home();};
+  $("#star").onclick=e=>{S.star[q.id]=!S.star[q.id];if(!S.star[q.id])delete S.star[q.id];save();e.currentTarget.textContent=S.star[q.id]?"★":"☆";e.currentTarget.setAttribute("aria-pressed",!!S.star[q.id]);};
   document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
     if(run.done)return;
-    if(q.k==="multi"){const i=+b.dataset.i;run.sel.has(i)?run.sel.delete(i):run.sel.add(i);b.classList.toggle("sel");}
+    if(q.k==="multi"&&f!=="tfs"){const i=+b.dataset.i;run.sel.has(i)?run.sel.delete(i):run.sel.add(i);b.classList.toggle("sel");}
     else{document.querySelectorAll(".opt").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");run.sel=b.dataset.i;}
   });
+  if(f==="flash")$("#reveal").onclick=()=>{run.done=true;$("#reveal").disabled=true;
+    $("#fb").innerHTML=`<div class="fb" style="background:var(--accent-soft);border:1px solid var(--accent)"><strong>Answer</strong><div><b>${esc(answerText(q))}</b></div><div>${esc(q.e)}</div><div class="selfg"><button class="btn okb" id="sg1">✓ I knew it</button><button class="btn nob" id="sg0">✗ I didn't</button></div></div>`;
+    $("#sg1").onclick=()=>finish(q,true,"(flashcard)",false);$("#sg0").onclick=()=>finish(q,false,"(flashcard)",false);$("#sg1").focus();};
   $("#check").onclick=()=>run.done?next():check();
   const inp=$("#ans");if(inp)inp.focus();
 }
@@ -618,92 +705,114 @@ function typedGrade(q,v){
     if(m.length>4&&lev(m,u)<=2)return "spell";return false;}
   return "self";
 }
+function gradeText(q,v){ // for fill / num / seq and typed mc; returns true | false | "spell" | "self"
+  if(run.typed)return typedGrade(q,v);
+  if(q.k==="num"){const m=v.replace(/,/g,"").match(/-?\d*\.?\d+/);return !!m&&Math.abs(parseFloat(m[0])-q.a)<=q.tol+1e-9;}
+  if(q.k==="seq"){const t=seqTokens(v),a=q.a.map(x=>norm(x));return t.length===a.length&&t.every((x,i)=>x===a[i]);}
+  const n=norm(v).replace(/^(a|an|the) /,""),ns=n.replace(/\s/g,"");
+  if(q.a.some(a=>norm(a).replace(/\s/g,"")===ns))return true;
+  if(q.a.some(a=>{const as=norm(a).replace(/\s/g,"");return as.length>4&&lev(as,ns)<=2;}))return "spell";
+  return false;
+}
 function check(){
-  const q=run.qs[run.i];let ok=false,given="",spell=false;
-  if(run.typed){const v=$("#ans").value;if(!v.trim())return;given=v;$("#ans").disabled=true;
-    const g=typedGrade(q,v);
+  const q=run.qs[run.i],f=run.fmt;let ok=false,given="",spell=false,smart=false;
+  if(f==="tfs"){if(run.sel===null)return;const isRight=run.claim===0;ok=(run.sel==="t")===isRight;given=(run.sel==="t"?"True":"False")+": "+q.o[run.claim];}
+  else if($("#ans")){const v=$("#ans").value;if(!v.trim())return;given=v;$("#ans").disabled=true;
+    const g=gradeText(q,v);
     if(g==="self"){run.done=true;$("#check").hidden=true;
       $("#fb").innerHTML=`<div class="fb" style="background:var(--accent-soft);border:1px solid var(--accent)"><strong>Compare</strong><div>Key: <b>${esc(q.o[0])}</b></div><div>${esc(q.e)}</div><div class="selfg"><button class="btn okb" id="sg1">✓ I got it</button><button class="btn nob" id="sg0">✗ I missed it</button></div></div>`;
       $("#sg1").onclick=()=>finish(q,true,given,false);$("#sg0").onclick=()=>finish(q,false,given,false);$("#sg1").focus();return;}
-    ok=g===true;spell=g==="spell";
-    run.done=true;finish(q,ok,given,spell);return;}
-  if(q.k==="mc"||q.k==="spd"){if(run.sel===null)return;ok=run.sel==="0";given=q.o[+run.sel];}
+    if(g==="spell"&&S.L.smart&&run.mode==="learn"){ok=true;smart=true;}else{ok=g===true;spell=g==="spell";}}
+  else if(q.k==="mc"||q.k==="spd"){if(run.sel===null)return;ok=run.sel==="0";given=q.o[+run.sel];}
   else if(q.k==="tf"){if(run.sel===null)return;ok=(run.sel==="t")===q.a;given=run.sel==="t"?"True":"False";}
   else if(q.k==="multi"){if(!run.sel.size)return;ok=run.sel.size===q.c.length&&q.c.every(i=>run.sel.has(i));given=[...run.sel].map(i=>q.o[i]).join(", ");}
-  else{const v=$("#ans").value;if(!v.trim())return;given=v;
-    if(q.k==="num"){const m=v.replace(/,/g,"").match(/-?\d*\.?\d+/);ok=!!m&&Math.abs(parseFloat(m[0])-q.a)<=q.tol+1e-9;}
-    else if(q.k==="seq"){const t=seqTokens(v),a=q.a.map(x=>norm(x));ok=t.length===a.length&&t.every((x,i)=>x===a[i]);}
-    else{const n=norm(v).replace(/^(a|an|the) /,""),ns=n.replace(/\s/g,"");
-      ok=q.a.some(a=>norm(a).replace(/\s/g,"")===ns);
-      if(!ok)spell=q.a.some(a=>{const as=norm(a).replace(/\s/g,"");return as.length>4&&lev(as,ns)<=2;});}
-    $("#ans").disabled=true;}
-  run.done=true;finish(q,ok,given,spell);
+  run.done=true;finish(q,ok,given,spell,smart);
 }
-function finish(q,ok,given,spell){
+
+/* record one answer; first try in this run decides the level */
+function record(q,ok){
+  const first=!run.first.has(q.id);run.first.add(q.id);
+  const snap=S.stats[q.id]?JSON.stringify(S.stats[q.id]):null;
+  const st=S.stats[q.id]||{right:0,wrong:0};const cur=lvl(q);
+  ok?st.right++:st.wrong++;st.last=ok?"r":"w";
+  if(first)st.lv=nextLv(cur,ok);else if(!ok)st.lv="learning";else st.lv=st.lv||cur;
+  S.stats[q.id]=st;save();
+  let ins=-1;
+  if(run.mode==="learn"){if(ok)run.left.delete(q.id);else{run.left.add(q.id);ins=Math.min(run.i+3,run.qs.length);run.qs.splice(ins,0,q);}}
+  return {first,snap,ins,from:cur};
+}
+function undo(q,info){
+  if(info.snap)S.stats[q.id]=JSON.parse(info.snap);else delete S.stats[q.id];
+  if(info.first)run.first.delete(q.id);
+  if(info.ins>=0&&run.qs[info.ins]===q)run.qs.splice(info.ins,1);
+}
+function finish(q,ok,given,spell,smart){
   $("#check").hidden=false;
-  // mark options
+  const f=run.fmt;
   document.querySelectorAll(".opt").forEach(b=>{b.disabled=true;const i=b.dataset.i;
-    const correct=(q.k==="mc"||q.k==="spd")?i==="0":q.k==="tf"?(i==="t")===q.a:q.k==="multi"?q.c.includes(+i):false;
+    const correct=f==="tfs"?(i==="t")===(run.claim===0):(q.k==="mc"||q.k==="spd")?i==="0":q.k==="tf"?(i==="t")===q.a:q.k==="multi"?q.c.includes(+i):false;
     if(correct)b.classList.add("right");else if(b.classList.contains("sel"))b.classList.add("wrong");});
-  const st=S.stats[q.id]||{right:0,wrong:0};const sk=streak(q);ok?st.right++:st.wrong++;st.last=ok?"r":"w";st.streak=ok?sk+1:0;S.stats[q.id]=st;save();
-  run.results.push({q,ok,given});
-  if(run.mode==="learn"){if(ok)run.left.delete(q.id);else{const at=Math.min(run.i+3,run.qs.length);run.qs.splice(at,0,q);}}
-  $("#fb").innerHTML=`<div class="fb ${ok?"ok":"no"}"><strong>${ok?"Correct":"Not quite"}</strong>
-    ${spell?`<div class="spell">Close. Check your spelling, because spelling counts on the exam.</div>`:""}
-    ${ok?"":`<div>Answer: <b>${esc(answerText(q))}</b></div>`}
-    <div>${esc(q.e)}</div></div>`;
-  $("#check").textContent=run.i+1<run.qs.length?(run.mode==="learn"&&!ok?"Next (it will come back)":"Next"):run.mode==="learn"?"Finish set":"See results";
-  $("#check").focus();
+  let info=record(q,ok);
+  run.results.push({q,ok,given});const ri=run.results.length-1;
+  const paint=()=>{const r=run.results[ri],L=lvl(q),moved=info.first&&L!==info.from;
+    $("#fb").innerHTML=`<div class="fb ${r.ok?"ok":"no"}"><strong>${r.ok?"Correct":"Not quite"}</strong>
+      ${smart&&r.ok?`<div class="spell">Accepted with a small typo (Smart grading). On the exam this would be wrong: spell it “${esc(answerText(q))}”.</div>`:""}
+      ${spell?`<div class="spell">Close. Check your spelling, because spelling counts on the exam.</div>`:""}
+      ${r.ok&&f!=="tfs"?"":`<div>Answer: <b>${esc(answerText(q))}</b></div>`}
+      <div>${esc(q.e)}</div>
+      <div class="lvmove">${moved?`Level: ${LVN[info.from]} → <b>${LVN[L]}</b>`:`Level: <b>${LVN[L]}</b>`}${run.mode==="learn"&&!r.ok?" · it will come back in this round":""}</div>
+      <div class="btns"><button type="button" class="linkbtn" id="ovr">${r.ok?"Mark wrong (see it sooner)":"I was right (override)"}</button></div>
+      ${!r.ok&&S.L.retype&&run.mode==="learn"?`<div class="stack" style="gap:6px"><label for="rt" class="hint">Retype the right answer to continue:</label><input type="text" id="rt" autocomplete="off" spellcheck="false"></div>`:""}
+    </div>`;
+    const nb=$("#check");nb.textContent=run.i+1<run.qs.length?"Next":run.mode==="learn"?"Finish round":"See results";
+    const rt=$("#rt");
+    if(rt){nb.disabled=true;rt.oninput=()=>{const v=rt.value;const target=norm(answerText(q)).replace(/\s/g,""),u=norm(v).replace(/\s/g,"");
+        const okk=u===target||(q.k==="fill"&&q.a.some(a=>norm(a).replace(/\s/g,"")===u))||(q.k==="num"&&v.replace(/,/g,"").match(/-?\d*\.?\d+/)&&Math.abs(parseFloat(v.replace(/,/g,"").match(/-?\d*\.?\d+/)[0])-q.a)<=q.tol+1e-9)||(target.length>12&&lev(target,u)<=3);
+        nb.disabled=!okk;rt.classList.toggle("good",!!okk);};rt.focus();}
+    else{nb.disabled=false;nb.focus();}
+    $("#ovr").onclick=()=>{undo(q,info);const nok=!run.results[ri].ok;run.results[ri].ok=nok;info=record(q,nok);smart=false;spell=false;paint();};
+  };
+  paint();
 }
 
 function next(){run.i++;if(run.i<run.qs.length)show();else if(run.mode==="learn")learnDone();else results();}
-function tilesHTML(c){return `<div class="tiles">${["m","l","n","u"].map(k=>`<div class="tile st-${k}"><b>${c[k]}</b><span>${STN[k]}</span></div>`).join("")}</div>`;}
-function topicBars(){let h="";for(const t in TOPICS){const qs=Q.filter(q=>q.t===t),c=counts(qs);h+=`<div class="tb"><span>${TOPICS[t]}</span>${sbar(c,qs.length)}<span class="pct">${c.m}/${qs.length}</span></div>`;}return h;}
-/* ---------- learn in sets of 7 ---------- */
-function learnPick(){
-  const notM=Q.filter(q=>status(q)!=="m");
-  const unseen=[];for(const t in TOPICS)unseen.push(...Q.filter(q=>q.t===t&&status(q)==="u"));
-  const review=shuffle(notM.filter(q=>status(q)==="n")).concat(shuffle(notM.filter(q=>status(q)==="l")));
-  const n=SZ(),nr=Math.max(1,Math.round(n*0.3));let out=review.slice(0,nr);const used=new Set(out.map(q=>q.id));
-  for(const q of unseen){if(out.length>=n)break;if(!used.has(q.id)){out.push(q);used.add(q.id);}}
-  for(const q of review){if(out.length>=n)break;if(!used.has(q.id)){out.push(q);used.add(q.id);}}
-  if(out.length<n)for(const q of shuffle(Q)){if(out.length>=n)break;if(!used.has(q.id)){out.push(q);used.add(q.id);}}
-  return shuffle(out);
-}
-function startLearn(n){confirmReset=false;const qs=learnPick();run={mode:"learn",set:n,qs,size:qs.length,left:new Set(qs.map(q=>q.id)),i:0,results:[],all:run&&run.mode==="learn"?run.all:[]};show();}
+function tilesHTML(c){return `<div class="tiles">${["new","learning","almost","mastered","completed"].map(k=>`<div class="tile lv-${k}"><b>${c[k]}</b><span>${LVN[k]}</span></div>`).join("")}</div>`;}
+function topicBars(){let h="";for(const t in TOPICS){const qs=Q.filter(q=>q.t===t),c=counts(qs);h+=`<div class="tb"><span>${TOPICS[t]}</span>${sbar(c,qs.length)}<span class="pct">${c.mastered+c.completed}/${qs.length}</span></div>`;}return h;}
+
 function learnDone(){
   run.all=run.all.concat(run.results);
   const first={};run.results.forEach(x=>{if(!(x.q.id in first))first[x.q.id]=x.ok;});
-  const ids=Object.keys(first),firstRight=ids.filter(i=>first[i]).length,c=counts(Q);
+  const ids=Object.keys(first),firstRight=ids.filter(i=>first[i]).length;
   $("#app").innerHTML=`
-  <header class="head"><div><div class="eyebrow">Learn · set ${run.set} done</div><h1>Set complete</h1></div></header>
+  <header class="head"><div><div class="eyebrow">Learn · round ${run.set} done</div><h1>Round complete</h1></div></header>
   <section class="card stack">
-    <div class="score">${ids.length}<span class="muted" style="font-size:.45em">/${ids.length} learned</span></div>
-    <p style="margin:0"><b>${firstRight}</b> right on the first try, <b>${ids.length-firstRight}</b> needed another go. Those come back in later sets until they stick.</p>
-    <div class="btns"><button class="btn" id="more">Learn more (next ${SZ()})</button><button class="btn ghost" id="rep">📊 What I know</button><button class="btn ghost" id="home">Done</button></div>
+    <div class="score">${ids.length}<span class="muted" style="font-size:.45em">/${ids.length} right at least once</span></div>
+    <p style="margin:0"><b>${firstRight}</b> right on the first try (moved up a level), <b>${ids.length-firstRight}</b> went to <b>Learning</b> and will show up more in the next rounds.</p>
+    <div class="btns"><button class="btn" id="more">Continue (next ${S.L.size})</button><button class="btn ghost" id="rep">📊 What I know</button><button class="btn ghost" id="home">Done</button></div>
   </section>
-  <section class="card stack"><h2>Overall</h2>${tilesHTML(c)}</section>`;
+  <section class="card stack"><h2>Overall</h2>${tilesHTML(counts(Q))}</section>`;
   const n=run.set;$("#more").onclick=()=>startLearn(n+1);$("#rep").onclick=()=>report(run.all);$("#home").onclick=home;window.scrollTo(0,0);
 }
+
 /* ---------- progress report ---------- */
+function termHTML(q){return `<div class="term"><div><span class="tag">${TOPICS[q.t]}</span>${S.star[q.id]?' <span class="tag">★</span>':""}</div><div>${esc(q.q)}</div><div class="ans">${esc(answerText(q))}</div></div>`;}
 function report(sess){
   const c=counts(Q);let sessHTML="";
   if(sess&&sess.length){const ids={};sess.forEach(x=>{ids[x.q.id]=x;});const seen=Object.values(ids).map(x=>x.q),sc=counts(seen),right=sess.filter(x=>x.ok).length;
-    sessHTML=`<section class="card stack"><h2>This session</h2><p style="margin:0"><b>${right}</b> right out of <b>${sess.length}</b> answers on <b>${seen.length}</b> questions.</p>${tilesHTML(sc)}
-    ${["n","l","m"].map(k=>{const L=seen.filter(q=>status(q)===k);return L.length?`<details class="cat st-${k}" ${k==="n"?"open":""}><summary>${STN[k]} from this session (${L.length})</summary>${L.map(termHTML).join("")}</details>`:"";}).join("")}</section>`;}
+    sessHTML=`<section class="card stack"><h2>This session</h2><p style="margin:0"><b>${right}</b> right out of <b>${sess.length}</b> answers on <b>${seen.length}</b> questions. Where they stand now:</p>${tilesHTML(sc)}
+    ${["learning","almost","mastered","completed"].map(k=>{const L=seen.filter(q=>lvl(q)===k);return L.length?`<details class="cat lv-${k}" ${k==="learning"?"open":""}><summary>${LVN[k]} from this session (${L.length})</summary>${L.map(termHTML).join("")}</details>`:"";}).join("")}</section>`;}
   $("#app").innerHTML=`
   <header class="head"><div><div class="eyebrow">Exam 2 · progress report</div><h1>What I know</h1></div><button class="btn ghost" id="home">Back</button></header>
   ${sessHTML}
   <section class="card stack"><h2>All ${Q.length} questions</h2>${tilesHTML(c)}
-    <div class="legend">${["m","l","n","u"].map(k=>`<span class="st-${k}">${STN[k]}: ${STD[k].toLowerCase()}</span>`).join("")}</div>
+    <div class="legend">${LV.map(k=>`<span class="lv-${k}"><b>${LVN[k]}</b>: ${LVD[k].toLowerCase()}</span>`).join("")}</div>
     <div class="bars">${topicBars()}</div>
-    <div class="btns"><button class="btn" id="learn">Work on these: start a set of ${SZ()}</button></div></section>
-  <section class="card stack"><h2>The terms</h2><p class="hint" style="margin:0">Open a group to see each question and its answer, sorted by topic.</p>
-    ${["n","l","u","m"].map(k=>{const L=Q.filter(q=>status(q)===k);return `<details class="cat st-${k}"><summary>${STN[k]} (${L.length})</summary>${L.length?L.map(termHTML).join(""):'<p class="hint">None yet.</p>'}</details>`;}).join("")}
+    <div class="btns"><button class="btn" id="learn">Keep learning (${S.L.size})</button></div></section>
+  <section class="card stack"><h2>The questions</h2><p class="hint" style="margin:0">Open a group to see each question and its answer.</p>
+    ${["learning","new","almost","mastered","completed"].map(k=>{const L=Q.filter(q=>lvl(q)===k);return `<details class="cat lv-${k}"><summary>${LVN[k]} (${L.length})</summary>${L.length?L.map(termHTML).join(""):'<p class="hint">None yet.</p>'}</details>`;}).join("")}
   </section>`;
   run=null;$("#home").onclick=home;$("#learn").onclick=()=>startLearn(1);window.scrollTo(0,0);
 }
-function termHTML(q){return `<div class="term"><div><span class="tag">${TOPICS[q.t]}</span></div><div>${esc(q.q)}</div><div class="ans">${esc(answerText(q))}</div></div>`;}
 
 function results(){
   const r=run.results,score=r.filter(x=>x.ok).length,total=r.length,pct=Math.round(score/total*100);
@@ -711,28 +820,26 @@ function results(){
   let byT="";for(const t in TOPICS){const x=r.filter(y=>y.q.t===t);if(!x.length)continue;const s=x.filter(y=>y.ok).length,p=Math.round(s/x.length*100);
     byT+=`<div class="bar"><span>${TOPICS[t]}</span><div class="track"><div class="fill" style="width:${p}%"></div></div><span class="pct">${s}/${x.length}</span></div>`;}
   const missed=r.filter(x=>!x.ok);
-  const verdict=pct>=90?"Exam ready on this set.":pct>=75?"Solid. Redo your misses, then take the next attempt.":"Review the misses below, then go again.";
+  const verdict=pct>=90?"Exam ready on this set.":pct>=75?"Solid. Keep learning your misses, then take the next one.":"Review the misses below, then go again.";
   $("#app").innerHTML=`
-  <header class="head"><div><div class="eyebrow">${run.mode==="attempt"?`Attempt ${S.attempts.length} of 7`:run.mode==="miss"?"Misses round":"All questions"}</div><h1>Results</h1></div></header>
+  <header class="head"><div><div class="eyebrow">${run.mode==="attempt"?`Practice exam ${S.attempts.length} of 7`:run.mode==="miss"?"Learning round":"All questions"}</div><h1>Results</h1></div></header>
   <section class="card stack">
     <div class="score">${score}<span class="muted" style="font-size:.45em">/${total}</span></div>
     <p style="margin:0"><b>${pct}%</b>. ${verdict}</p>
     <div class="bars">${byT}</div>
-    <div class="btns"><button class="btn" id="home">Back to attempts</button><button class="btn ghost" id="rep">📊 What I know</button></div>
+    <div class="btns"><button class="btn" id="home">Back</button><button class="btn ghost" id="rep">📊 What I know</button></div>
   </section>
   ${missed.length?`<section class="card stack"><h2>What you missed (${missed.length})</h2>
     ${missed.map(x=>`<div class="miss"><div><span class="tag">${TOPICS[x.q.t]}</span></div><div>${esc(x.q.q)}</div>
       <div class="you">You: ${esc(x.given)}</div><div class="ans">Answer: ${esc(answerText(x.q))}</div><div class="hint">${esc(x.q.e)}</div></div>`).join("")}
   </section>`:""}`;
-  $("#home").onclick=home;const rr=run.results;$("#rep").onclick=()=>report(rr);
+  $("#home").onclick=home;const rr=r;$("#rep").onclick=()=>report(rr);
   window.scrollTo(0,0);
 }
 
 document.addEventListener("keydown",e=>{
   if(!run||e.key!=="Enter")return;
-  const b=$("#check");if(b&&!b.hidden){e.preventDefault();b.click();}
+  const b=$("#check");if(b&&!b.hidden&&!b.disabled){e.preventDefault();b.click();}
 });
 home();
 </script>
-
-</body></html>
