@@ -90,6 +90,24 @@ input[type=text]{width:100%;font:inherit;font-size:1.05rem;padding:12px 14px;bor
 .miss{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:4px}
 .miss .you{color:var(--bad)} .miss .ans{color:var(--good);font-weight:500}
 .stack{display:grid;gap:14px}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:520px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tile{border-radius:8px;padding:10px 12px;border:1px solid var(--line);display:grid;gap:2px}
+.tile b{font-family:var(--display);font-size:2rem;line-height:1}
+.tile span{font-size:.82rem;color:var(--muted)}
+.st-m{--c:#2B7A4B}.st-l{--c:#C99A1C}.st-n{--c:#B0261D}.st-u{--c:#8A9099}
+.tile.st-m,.tile.st-l,.tile.st-n,.tile.st-u{border-left:6px solid var(--c)}
+.sbar{display:flex;height:10px;border-radius:5px;overflow:hidden;background:var(--line)}
+.sbar i{display:block;height:100%;background:var(--c)}
+.tb{display:grid;grid-template-columns:150px 1fr 70px;gap:10px;align-items:center;font-size:.9rem}
+.tb .pct{font-family:var(--mono);font-size:.78rem;text-align:right;color:var(--muted)}
+@media (max-width:480px){.tb{grid-template-columns:1fr 64px}.tb .sbar{grid-column:1/-1;grid-row:2}}
+details.cat{border:1px solid var(--line);border-left:6px solid var(--c);border-radius:8px;padding:10px 14px}
+details.cat summary{cursor:pointer;font-weight:600}
+.term{border-top:1px solid var(--line);padding:8px 0;display:grid;gap:2px;font-size:.92rem}
+.term .ans{color:var(--good);font-weight:500}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.8rem;color:var(--muted)}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--c);margin-right:5px;vertical-align:-1px}
 .mode{display:inline-flex;border:1.5px solid var(--line);border-radius:8px;overflow:hidden}
 .stack>.mode{display:flex}.stack>.mode button{flex:1 1 0}
 .mode button{border:0;border-radius:0;background:var(--surface);color:var(--ink);padding:10px 14px;font-weight:600}
@@ -416,9 +434,15 @@ const KEY="exam2-prep-v1";
 function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.attempts)return s;}catch(e){}return{attempts:[],stats:{}};}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 let S=load();
+const SIZES=[5,7,10,15,20];function SZ(){return SIZES.includes(S.setSize)?S.setSize:7;}
 if(!S.mode)S.mode=S.typeMode?"type":"auto";
 const MODES={mc:"Multiple choice",auto:"Auto level-up",type:"Type my answers"};
 function streak(q){const st=S.stats[q.id];if(!st)return 0;return st.streak!=null?st.streak:(st.last==="r"?1:0);}
+function status(q){const st=S.stats[q.id];if(!st)return "u";if(st.last==="w")return "n";return streak(q)>=3?"m":"l";}
+const STN={m:"Know it 100%",l:"Still learning",n:"Need to learn",u:"Not seen yet"};
+const STD={m:"Right 3+ times in a row",l:"Right last time, but not 3 in a row yet",n:"Missed the last time you saw it",u:"Hasn't come up yet"};
+function counts(list){const c={m:0,l:0,n:0,u:0};list.forEach(q=>c[status(q)]++);return c;}
+function sbar(c,tot){return `<div class="sbar">${["m","l","n","u"].map(k=>c[k]?`<i class="st-${k}" style="width:${c[k]/tot*100}%"></i>`:"").join("")}</div>`;}
 function wantsTyped(q){return q.k==="mc"&&(S.mode==="type"||(S.mode==="auto"&&streak(q)>=2));}
 let run=null; let confirmReset=false;
 
@@ -497,6 +521,13 @@ function home(){
     <div class="chip18"><i></i>18% gray</div>
   </header>
   <section class="card stack">
+    <h2>Learn in short sets</h2>
+    <p class="muted" style="margin:0">Short sessions that <b>loop until you get each question right</b>. A right answer drops it from the set. Finish the set, then tap <b>Learn more</b> for the next one. Every set mixes in a few questions you're still learning or missed before.</p>
+    <div class="stack" style="gap:8px"><span class="eyebrow">Questions per set</span>
+      <div class="mode" role="group" aria-label="Questions per set">${SIZES.map(n=>`<button type="button" data-sz="${n}" aria-pressed="${SZ()===n}">${n}</button>`).join("")}</div></div>
+    <div class="btns"><button class="btn" id="learn">Start a set of ${SZ()}</button><button class="btn ghost" id="report">📊 What I know</button></div>
+  </section>
+  <section class="card stack">
     <div class="qmeta"><h2>Your 7 attempts</h2><span class="muted">${n} done${n>=7?" · all 7 complete":""}</span></div>
     <div class="dots">${dots}</div>
     <p class="muted" style="margin:0">Each attempt is ${Object.keys(TOPICS).length*5} questions, 5 from each topic, plus a few <b>↺ flipped</b> questions that ask the same idea the other way around. It grows as new labs are added. Questions you miss come back more often in later attempts.</p>
@@ -511,9 +542,11 @@ function home(){
     </div>
   </section>
   <section class="card stack">
-    <h2>Mastery by topic</h2>
-    <div class="bars">${bars}</div>
-    <p class="hint" style="margin:0">Percent of each topic's questions you got right the last time you saw them.</p>
+    <div class="qmeta"><h2>What I know</h2><button class="btn ghost" id="report2">Full report</button></div>
+    ${tilesHTML(counts(Q))}
+    <div class="legend">${["m","l","n","u"].map(k=>`<span class="st-${k}">${STN[k]}</span>`).join("")}</div>
+    <div class="bars">${topicBars()}</div>
+    <p class="hint" style="margin:0">Each bar shows a topic's questions by status. The number is how many you know 100%.</p>
   </section>
   <section class="card stack">
     <h2>Exam day rules</h2>
@@ -528,6 +561,10 @@ function home(){
   </section>`;
   document.querySelectorAll("[data-tm]").forEach(b=>b.onclick=()=>{S.mode=b.dataset.tm;save();home();});
   $("#go").onclick=()=>start("attempt");
+  $("#learn").onclick=()=>startLearn(1);
+  document.querySelectorAll("[data-sz]").forEach(b=>b.onclick=()=>{S.setSize=+b.dataset.sz;save();home();});
+  $("#report").onclick=()=>report(null);
+  $("#report2").onclick=()=>report(null);
   $("#miss").onclick=()=>start("miss");
   $("#all").onclick=()=>start("all");
   $("#reset").onclick=()=>{if(confirmReset){S={attempts:[],stats:{}};save();confirmReset=false;}else confirmReset=true;home();};
@@ -549,8 +586,8 @@ function show(){
   else{const hint=q.k==="seq"?"Separate with commas, e.g. 100, 200, 400 (the f/ is optional)":q.k==="num"?"Type the number. You can add units.":"Type your answer. Spelling counts.";
     body=`<input type="text" id="ans" autocomplete="off" spellcheck="false" aria-label="Your answer"><p class="hint" style="margin:0">${hint}</p>`;}
   $("#app").innerHTML=`
-  <div class="qmeta"><button class="btn ghost" id="quit">Quit</button><span class="mode" role="group" aria-label="Answer mode" style="font-size:.85rem"><button type="button" id="tmq" aria-pressed="${S.mode!=="mc"}">Mode: ${S.mode==="auto"?"Auto":S.mode==="type"?"Typing":"Choices"}</button></span><span class="eyebrow">${run.mode==="attempt"?`Attempt ${Math.min(S.attempts.length+1,99)}`:run.mode==="miss"?"Misses":"All questions"} · ${run.i+1} / ${N}</span></div>
-  <div class="progress"><div style="width:${run.i/N*100}%"></div></div>
+  <div class="qmeta"><button class="btn ghost" id="quit">Quit</button><span class="mode" role="group" aria-label="Answer mode" style="font-size:.85rem"><button type="button" id="tmq" aria-pressed="${S.mode!=="mc"}">Mode: ${S.mode==="auto"?"Auto":S.mode==="type"?"Typing":"Choices"}</button></span><span class="eyebrow">${run.mode==="learn"?`Set ${run.set} · ${run.left.size} to go`:`${run.mode==="attempt"?`Attempt ${Math.min(S.attempts.length+1,99)}`:run.mode==="miss"?"Misses":"All questions"} · ${run.i+1} / ${N}`}</span></div>
+  <div class="progress"><div style="width:${run.mode==="learn"?(1-run.left.size/run.size)*100:run.i/N*100}%"></div></div>
   <section class="card stack">
     <div><span class="tag">${TOPICS[q.t]}</span>${q.rv||q.lvl===2?'<span class="tag flip">↺ Flipped</span>':""}${S.mode==="auto"&&run.typed?'<span class="tag flip">⬆ Level up: type it</span>':""}</div>
     <div class="qtext">${esc(q.q)}</div>
@@ -558,7 +595,7 @@ function show(){
     <div id="fb"></div>
     <div class="btns"><button class="btn" id="check">Check</button></div>
   </section>`;
-  $("#quit").onclick=home;
+  $("#quit").onclick=()=>{const r=run.results;if(r.length)report(r);else home();};
   $("#tmq").onclick=()=>{if(run.done)return;S.mode={mc:"auto",auto:"type",type:"mc"}[S.mode];save();show();};
   document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
     if(run.done)return;
@@ -610,15 +647,63 @@ function finish(q,ok,given,spell){
     if(correct)b.classList.add("right");else if(b.classList.contains("sel"))b.classList.add("wrong");});
   const st=S.stats[q.id]||{right:0,wrong:0};const sk=streak(q);ok?st.right++:st.wrong++;st.last=ok?"r":"w";st.streak=ok?sk+1:0;S.stats[q.id]=st;save();
   run.results.push({q,ok,given});
+  if(run.mode==="learn"){if(ok)run.left.delete(q.id);else{const at=Math.min(run.i+3,run.qs.length);run.qs.splice(at,0,q);}}
   $("#fb").innerHTML=`<div class="fb ${ok?"ok":"no"}"><strong>${ok?"Correct":"Not quite"}</strong>
     ${spell?`<div class="spell">Close. Check your spelling, because spelling counts on the exam.</div>`:""}
     ${ok?"":`<div>Answer: <b>${esc(answerText(q))}</b></div>`}
     <div>${esc(q.e)}</div></div>`;
-  $("#check").textContent=run.i+1<run.qs.length?"Next":"See results";
+  $("#check").textContent=run.i+1<run.qs.length?(run.mode==="learn"&&!ok?"Next (it will come back)":"Next"):run.mode==="learn"?"Finish set":"See results";
   $("#check").focus();
 }
 
-function next(){run.i++;if(run.i<run.qs.length)show();else results();}
+function next(){run.i++;if(run.i<run.qs.length)show();else if(run.mode==="learn")learnDone();else results();}
+function tilesHTML(c){return `<div class="tiles">${["m","l","n","u"].map(k=>`<div class="tile st-${k}"><b>${c[k]}</b><span>${STN[k]}</span></div>`).join("")}</div>`;}
+function topicBars(){let h="";for(const t in TOPICS){const qs=Q.filter(q=>q.t===t),c=counts(qs);h+=`<div class="tb"><span>${TOPICS[t]}</span>${sbar(c,qs.length)}<span class="pct">${c.m}/${qs.length}</span></div>`;}return h;}
+/* ---------- learn in sets of 7 ---------- */
+function learnPick(){
+  const notM=Q.filter(q=>status(q)!=="m");
+  const unseen=[];for(const t in TOPICS)unseen.push(...Q.filter(q=>q.t===t&&status(q)==="u"));
+  const review=shuffle(notM.filter(q=>status(q)==="n")).concat(shuffle(notM.filter(q=>status(q)==="l")));
+  const n=SZ(),nr=Math.max(1,Math.round(n*0.3));let out=review.slice(0,nr);const used=new Set(out.map(q=>q.id));
+  for(const q of unseen){if(out.length>=n)break;if(!used.has(q.id)){out.push(q);used.add(q.id);}}
+  for(const q of review){if(out.length>=n)break;if(!used.has(q.id)){out.push(q);used.add(q.id);}}
+  if(out.length<n)for(const q of shuffle(Q)){if(out.length>=n)break;if(!used.has(q.id)){out.push(q);used.add(q.id);}}
+  return shuffle(out);
+}
+function startLearn(n){confirmReset=false;const qs=learnPick();run={mode:"learn",set:n,qs,size:qs.length,left:new Set(qs.map(q=>q.id)),i:0,results:[],all:run&&run.mode==="learn"?run.all:[]};show();}
+function learnDone(){
+  run.all=run.all.concat(run.results);
+  const first={};run.results.forEach(x=>{if(!(x.q.id in first))first[x.q.id]=x.ok;});
+  const ids=Object.keys(first),firstRight=ids.filter(i=>first[i]).length,c=counts(Q);
+  $("#app").innerHTML=`
+  <header class="head"><div><div class="eyebrow">Learn · set ${run.set} done</div><h1>Set complete</h1></div></header>
+  <section class="card stack">
+    <div class="score">${ids.length}<span class="muted" style="font-size:.45em">/${ids.length} learned</span></div>
+    <p style="margin:0"><b>${firstRight}</b> right on the first try, <b>${ids.length-firstRight}</b> needed another go. Those come back in later sets until they stick.</p>
+    <div class="btns"><button class="btn" id="more">Learn more (next ${SZ()})</button><button class="btn ghost" id="rep">📊 What I know</button><button class="btn ghost" id="home">Done</button></div>
+  </section>
+  <section class="card stack"><h2>Overall</h2>${tilesHTML(c)}</section>`;
+  const n=run.set;$("#more").onclick=()=>startLearn(n+1);$("#rep").onclick=()=>report(run.all);$("#home").onclick=home;window.scrollTo(0,0);
+}
+/* ---------- progress report ---------- */
+function report(sess){
+  const c=counts(Q);let sessHTML="";
+  if(sess&&sess.length){const ids={};sess.forEach(x=>{ids[x.q.id]=x;});const seen=Object.values(ids).map(x=>x.q),sc=counts(seen),right=sess.filter(x=>x.ok).length;
+    sessHTML=`<section class="card stack"><h2>This session</h2><p style="margin:0"><b>${right}</b> right out of <b>${sess.length}</b> answers on <b>${seen.length}</b> questions.</p>${tilesHTML(sc)}
+    ${["n","l","m"].map(k=>{const L=seen.filter(q=>status(q)===k);return L.length?`<details class="cat st-${k}" ${k==="n"?"open":""}><summary>${STN[k]} from this session (${L.length})</summary>${L.map(termHTML).join("")}</details>`:"";}).join("")}</section>`;}
+  $("#app").innerHTML=`
+  <header class="head"><div><div class="eyebrow">Exam 2 · progress report</div><h1>What I know</h1></div><button class="btn ghost" id="home">Back</button></header>
+  ${sessHTML}
+  <section class="card stack"><h2>All ${Q.length} questions</h2>${tilesHTML(c)}
+    <div class="legend">${["m","l","n","u"].map(k=>`<span class="st-${k}">${STN[k]}: ${STD[k].toLowerCase()}</span>`).join("")}</div>
+    <div class="bars">${topicBars()}</div>
+    <div class="btns"><button class="btn" id="learn">Work on these: start a set of ${SZ()}</button></div></section>
+  <section class="card stack"><h2>The terms</h2><p class="hint" style="margin:0">Open a group to see each question and its answer, sorted by topic.</p>
+    ${["n","l","u","m"].map(k=>{const L=Q.filter(q=>status(q)===k);return `<details class="cat st-${k}"><summary>${STN[k]} (${L.length})</summary>${L.length?L.map(termHTML).join(""):'<p class="hint">None yet.</p>'}</details>`;}).join("")}
+  </section>`;
+  run=null;$("#home").onclick=home;$("#learn").onclick=()=>startLearn(1);window.scrollTo(0,0);
+}
+function termHTML(q){return `<div class="term"><div><span class="tag">${TOPICS[q.t]}</span></div><div>${esc(q.q)}</div><div class="ans">${esc(answerText(q))}</div></div>`;}
 
 function results(){
   const r=run.results,score=r.filter(x=>x.ok).length,total=r.length,pct=Math.round(score/total*100);
@@ -633,13 +718,13 @@ function results(){
     <div class="score">${score}<span class="muted" style="font-size:.45em">/${total}</span></div>
     <p style="margin:0"><b>${pct}%</b>. ${verdict}</p>
     <div class="bars">${byT}</div>
-    <div class="btns"><button class="btn" id="home">Back to attempts</button></div>
+    <div class="btns"><button class="btn" id="home">Back to attempts</button><button class="btn ghost" id="rep">📊 What I know</button></div>
   </section>
   ${missed.length?`<section class="card stack"><h2>What you missed (${missed.length})</h2>
     ${missed.map(x=>`<div class="miss"><div><span class="tag">${TOPICS[x.q.t]}</span></div><div>${esc(x.q.q)}</div>
       <div class="you">You: ${esc(x.given)}</div><div class="ans">Answer: ${esc(answerText(x.q))}</div><div class="hint">${esc(x.q.e)}</div></div>`).join("")}
   </section>`:""}`;
-  $("#home").onclick=home;
+  $("#home").onclick=home;const rr=run.results;$("#rep").onclick=()=>report(rr);
   window.scrollTo(0,0);
 }
 
