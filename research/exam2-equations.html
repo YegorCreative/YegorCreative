@@ -185,7 +185,48 @@ var CARDS=[
  steps:["AOV = 2 × arctan(43.3 ÷ (2 × 50))","= 2 × arctan(0.433)","= 2 × 23.4°","≈ 47°"],given:"50 mm lens on full frame",
  note:"Formula = beyond the lecture. On the exam, know the table and the ideas.",
  trick:"<b>Zoom in = see less.</b> Walk closer = change perspective.",
- q:"Which lens sees more of the scene: 28 mm or 200 mm?",a:"28 mm (wider angle of view)"}
+ q:"Which lens sees more of the scene: 28 mm or 200 mm?",a:"28 mm (wider angle of view)"},
+{g:"lec",ic:"lens",name:"Diopters (Supplemental Lenses)",formula:"D = 1 / f   (f in meters)\nf = 1 / D\nD_combined = D + D_s",
+ what:"A supplemental (close-up) lens screws onto the front of a lens. Its power is in DIOPTERS, defined with the focal length in METERS. Diopters simply add up when you stack them.",
+ parts:["<b>D</b> = power in diopters","<b>f</b> = focal length in <b>meters</b> (× 1000 for mm)","Stacking +1 and +3 = <b>+4</b>"],
+ table:[["Diopters","Focal length"],["+1","1 m = 1000 mm"],["+2","½ m = 500 mm"],["+4","¼ m = 250 mm"]],
+ steps:["D = 1 + 3 = 4 diopters","f = 1 / 4 m","= 0.25 m","= 250 mm"],given:"Stack a +1 and a +3",
+ note:"The 49 mm printed on the ring is the thread diameter, not the focal length.",
+ trick:"<b>Flip it and think in meters.</b> 2 diopters → ½ m → 500 mm.",
+ q:"What is the focal length of a +5 diopter lens?",a:"1/5 m = 0.2 m = 200 mm"},
+{g:"lec",ic:"lens",name:"Optimum Pinhole Diameter",formula:"D = √f ÷ 141   (inches)\nD = √f ÷ 28   (millimeters)",
+ what:"There is one best size for a pinhole. Too big lets in more light but blurs the image; too small blurs it with diffraction. The best diameter depends on the pinhole-to-film (or sensor) distance.",
+ parts:["<b>D</b> = pinhole diameter","<b>f</b> = pinhole-to-sensor or pinhole-to-film distance","Use <b>141</b> for inches, <b>28</b> for millimeters"],
+ table:[["Distance f","Best D"],["4 in","0.014 in"],["6 in","0.017 in (≈ 0.44 mm)"],["150 mm","0.44 mm"]],
+ steps:["√6 = 2.449","D = 2.449 ÷ 141","= 0.0174 in","≈ 0.44 mm"],given:"Pinhole 6 inches from the film",
+ note:"Take the square root of f FIRST, then divide.",
+ trick:"<b>Inches → 141, millimeters → 28.</b> Root first, then divide.",
+ q:"Best pinhole for a 16-inch dorm-room camera?",a:"√16 ÷ 141 = 4 ÷ 141 ≈ 0.028 in"},
+{g:"lec",ic:"lens",name:"Relative F-Stops",formula:"N = f ÷ D\nD = f ÷ N",
+ what:"An f-number is a ratio: focal length divided by the aperture diameter. The same f-number lets in the same light on any lens, but it is a different physical hole size on a short lens than on a long one.",
+ parts:["<b>N</b> = f-number (e.g. 5.6)","<b>f</b> = focal length (mm)","<b>D</b> = aperture diameter (mm)"],
+ table:[["Lens at f/5.6","Hole diameter"],["50 mm","≈ 8.9 mm"],["100 mm","≈ 17.9 mm"],["300 mm","≈ 53.6 mm"]],
+ steps:["D = f ÷ N","= 300 ÷ 5.6","≈ 53.6 mm"],given:"300 mm lens at f/5.6",
+ note:"A longer lens needs a bigger opening for the same exposure. Learn your lenses: depth of field differs too.",
+ trick:"<b>f-number = focal length ÷ hole.</b> Same f-number, same light.",
+ q:"How wide is the aperture of a 100 mm lens at f/4?",a:"100 ÷ 4 = 25 mm"},
+{g:"lec",ic:"lens",name:"Hyperfocal Distance",formula:"Focus at H → sharp from H ÷ 2 to ∞",
+ what:"The hyperfocal distance is the closest distance that looks sharp when the lens is focused at infinity. Focus AT that distance instead, and everything from half of it to infinity is sharp: the most depth of field you can get.",
+ parts:["<b>H</b> = hyperfocal distance","Read it off the lens's <b>depth of field scale</b>","Great for landscapes (foreground + mountains sharp)"],
+ table:[["Focused at","Sharp zone"],["∞ (f/22)","20 ft → ∞"],["20 ft (H)","≈ 13 ft → ∞ (her scale)"],["Gain","≈ 7 ft"]],
+ steps:["At ∞, f/22: sharp from 20 ft","So H = 20 ft","Set ∞ on the other f/22 mark","Now sharp from ≈ 13 ft to ∞"],given:"Her lens DOF scale at f/22",
+ note:"Theory says H ÷ 2 (10 ft); her scale reading gave ~13 ft. Use her numbers on the exam. (Beyond: H = f² ÷ (N × c) + f.)",
+ trick:"<b>Focus at H, get half of H to infinity.</b>",
+ q:"H = 30 ft. You focus at 30 ft. What is sharp?",a:"From 15 ft to infinity"},
+{g:"lec",ic:"lens",name:"Handheld Shutter Rule",formula:"slowest shutter = 1 ÷ (f × crop)",
+ what:"The slowest shutter speed you can usually hold steady by hand. It was made before image stabilization; IS lets you go slower. Age, fatigue and camera weight change your real limit.",
+ parts:["<b>f</b> = focal length (mm)","<b>crop</b> = crop factor (full frame = 1)","IS on when handholding, <b>off on a tripod</b>"],
+ table:[["Setup","Slowest speed"],["100 mm, full frame","1/100"],["50 mm, ×1.6 crop","1/80"],["200 mm, ×1.5 crop","1/300"]],
+ steps:["f × crop = 50 × 1.6","= 80","→ 1/80 s"],given:"50 mm on a 1.6× crop camera",
+ note:"In Lab 2 you rounded to the next faster whole stop (e.g. 1/56 → 1/60). Mechanical IS on a tripod adds wobble and can damage gear.",
+ trick:"<b>One over the (cropped) lens.</b>",
+ q:"85 mm on full frame: slowest handheld speed?",a:"1/85 s (round to 1/125 for a whole stop)"}
+
 ];
 function rnd(seed){var s=seed;return function(){s=(s*9301+49297)%233280;return s/233280;};}
 function gauss(r){return (r()+r()+r()+r()-2)*1.2;}
@@ -213,6 +254,13 @@ var VIZ=[
  ,(function(){return '<svg viewBox="0 0 440 170" role="img" aria-label="Object at distance u, lens, inverted image at distance v"><line x1="10" y1="90" x2="430" y2="90" class="ln" stroke-dasharray="4 4"/><path d="M60 90 V40" stroke="var(--c)" stroke-width="5"/><path d="M200 25 Q215 90 200 155 Q185 90 200 25Z" fill="var(--cs)" stroke="var(--c)" stroke-width="2"/><path d="M60 40 L340 136" stroke="#E0473C" stroke-width="2"/><path d="M60 40 H200 L340 136" stroke="#3F6CC9" stroke-width="2" fill="none"/><path d="M340 90 V136" stroke="var(--c)" stroke-width="5"/><path d="M60 68 H198" stroke="var(--eqf-ink)"/><text x="130" y="62" text-anchor="middle" class="b">u (object)</text><path d="M202 68 H340" stroke="var(--eqf-ink)"/><text x="270" y="62" text-anchor="middle" class="b">v (image)</text><text x="340" y="160" text-anchor="middle" class="m">sharp, upside-down image</text></svg><p class="eqf-vcap">1/f = 1/u + 1/v. Then <b>flip</b> the result to get f.</p>';})()
  ,(function(){var s='<svg viewBox="0 0 440 160" role="img" aria-label="Object and its image at 1:1 and 3:1">';s+='<rect x="30" y="100" width="24" height="30" rx="3" fill="#9A95A8"/><text x="42" y="150" text-anchor="middle" class="m">object</text>';s+='<rect x="120" y="100" width="24" height="30" rx="3" fill="var(--c)"/><text x="132" y="150" text-anchor="middle" class="b">1:1</text>';s+='<rect x="230" y="40" width="72" height="90" rx="5" fill="var(--c)"/><text x="266" y="150" text-anchor="middle" class="b">3:1 (3× life size)</text>';s+='<text x="380" y="80" text-anchor="middle" class="m">R = v / u</text><text x="380" y="100" text-anchor="middle" class="m">= image ÷ object</text>';return s+'</svg><p class="eqf-vcap">Higher R = bigger image = the lens must sit farther from the sensor (longer v).</p>';})()
  ,(function(){var s='<svg viewBox="0 0 440 180" role="img" aria-label="Angle of view cones for 20, 50 and 300 mm">',F=[[20,94,'#E0473C'],[50,47,'var(--c)'],[300,8,'#1F8A70']];F.forEach(function(o){var a=o[1]/2*Math.PI/180,L=380,h=Math.min(85,Math.tan(a)*L);s+='<path d="M30 90 L'+(30+L)+' '+(90-h).toFixed(1)+' L'+(30+L)+' '+(90+h).toFixed(1)+'Z" fill="'+o[2]+'" fill-opacity=".12" stroke="'+o[2]+'" stroke-width="2"/>';});s+='<rect x="14" y="82" width="16" height="16" fill="var(--eqf-ink)"/>';F.forEach(function(o,i){s+='<text x="420" y="'+(30+i*22)+'" text-anchor="end" class="b" fill="'+o[2]+'" style="fill:'+o[2]+'">'+o[0]+' mm ≈ '+o[1]+'°</text>';});return s+'</svg><p class="eqf-vcap">Longer lens → narrower view. Distance to the subject controls perspective.</p>';})()
+
+ ,(function(){var s='<svg viewBox="0 0 440 150" role="img" aria-label="Diopters add: +1 plus +3 equals +4, focal length 250 mm">';[[1,60,'#9A95A8'],[3,170,'var(--c)']].forEach(function(o){s+='<ellipse cx="'+o[1]+'" cy="70" rx="14" ry="50" fill="var(--cs)" stroke="'+o[2]+'" stroke-width="3"/><text x="'+o[1]+'" y="140" text-anchor="middle" class="b">+'+o[0]+'</text>';});s+='<text x="115" y="76" text-anchor="middle" class="b">+</text><text x="230" y="76" text-anchor="middle" class="b">=</text><ellipse cx="290" cy="70" rx="18" ry="54" fill="var(--c)" fill-opacity=".3" stroke="var(--c)" stroke-width="3"/><text x="290" y="140" text-anchor="middle" class="b">+4</text><text x="370" y="66" text-anchor="middle" class="b">f = 1/4 m</text><text x="370" y="86" text-anchor="middle" class="m">= 250 mm</text>';return s+'</svg><p class="eqf-vcap">Diopters add. Flip the total and think in meters.</p>';})()
+
+ ,(function(){var s='<svg viewBox="0 0 440 160" role="img" aria-label="A card with a pinhole projects an upside-down image onto film at distance f">';s+='<line x1="60" y1="40" x2="60" y2="110" stroke="var(--c)" stroke-width="4"/><path d="M60 40 l-8 12 h16z" fill="var(--c)"/><rect x="200" y="20" width="10" height="110" fill="var(--eqf-ink)"/><rect x="200" y="72" width="10" height="6" fill="#fff"/><line x1="360" y1="20" x2="360" y2="130" stroke="var(--eqf-ink)" stroke-width="3"/><line x1="60" y1="40" x2="360" y2="115" stroke="var(--c)" stroke-opacity=".5"/><line x1="60" y1="110" x2="360" y2="35" stroke="var(--c)" stroke-opacity=".5"/><line x1="350" y1="35" x2="350" y2="115" stroke="var(--c)" stroke-width="4"/><path d="M350 115 l-8 -12 h16z" fill="var(--c)"/><line x1="205" y1="145" x2="360" y2="145" stroke="var(--eqf-ink)"/><text x="282" y="140" text-anchor="middle" class="b">f</text><text x="215" y="66" class="m">D</text>';return s+'</svg><p class="eqf-vcap">D = hole size, f = hole-to-film distance.</p>';})()
+ ,(function(){var s='<svg viewBox="0 0 440 150" role="img" aria-label="At f/5.6 a 50 mm lens has a small hole and a 300 mm lens a large one">';[[90,8.9,'50 mm'],[300,53.6,'300 mm']].forEach(function(o){var r=Math.max(6,o[1]*1.1);s+='<circle cx="'+o[0]+'" cy="65" r="62" fill="var(--cs)" stroke="var(--c)" stroke-width="2"/><circle cx="'+o[0]+'" cy="65" r="'+r+'" fill="var(--eqf-ink)"/><text x="'+o[0]+'" y="145" text-anchor="middle" class="b">'+o[2]+' · f/5.6 → '+o[1]+' mm</text>';});return s+'</svg><p class="eqf-vcap">Same f-number, same light, different hole size.</p>';})()
+ ,(function(){var s='<svg viewBox="0 0 440 150" role="img" aria-label="Focusing at the hyperfocal distance makes everything from half of it to infinity sharp">';[[40,'Focus at ∞',260],[100,'Focus at H',150]].forEach(function(o){s+='<text x="20" y="'+(o[0]-12)+'" class="m">'+o[1]+'</text><line x1="20" y1="'+o[0]+'" x2="420" y2="'+o[0]+'" stroke="var(--eqf-ink)" stroke-width="2"/><rect x="'+o[2]+'" y="'+(o[0]-9)+'" width="'+(420-o[2])+'" height="18" rx="6" fill="var(--c)" fill-opacity=".3" stroke="var(--c)"/>';});s+='<text x="260" y="136" text-anchor="middle" class="b">H</text><line x1="260" y1="62" x2="260" y2="124" stroke="var(--c)" stroke-dasharray="4 4"/><text x="150" y="136" text-anchor="middle" class="b">H/2</text><text x="425" y="45" class="b">∞</text>';return s+'</svg><p class="eqf-vcap">Move focus from ∞ to H and the sharp zone grows to H ÷ 2.</p>';})()
+ ,(function(){var s='<svg viewBox="0 0 440 150" role="img" aria-label="Longer lenses need faster shutter speeds to avoid shake">';[[24,'1/30'],[50,'1/60'],[100,'1/125'],[200,'1/250'],[400,'1/500']].forEach(function(o,i){var x=40+i*88,h=20+i*22;s+='<rect x="'+(x-20)+'" y="'+(120-h)+'" width="40" height="'+h+'" rx="6" fill="var(--c)" fill-opacity="'+(0.3+i*0.15)+'"/><text x="'+x+'" y="138" text-anchor="middle" class="m">'+o[0]+' mm</text><text x="'+x+'" y="'+(112-h)+'" text-anchor="middle" class="b">'+o[1]+'</text>';});return s+'</svg><p class="eqf-vcap">Full frame: the longer the lens, the faster you must shoot.</p>';})()
 
 ];
 var grid=document.getElementById('eqf-grid'),panel=document.getElementById('eqf-panel'),mt=document.getElementById('eqf-mtitle'),mn=document.getElementById('eqf-mnum'),mi=document.getElementById('eqf-micon'),mb=document.getElementById('eqf-mbody'),xb=document.getElementById('eqf-x'),pv=document.getElementById('eqf-prev'),nx=document.getElementById('eqf-next'),cnt=document.getElementById('eqf-count');
