@@ -91,6 +91,7 @@ input[type=text]{width:100%;font:inherit;font-size:1.05rem;padding:12px 14px;bor
 .miss .you{color:var(--bad)} .miss .ans{color:var(--good);font-weight:500}
 .stack{display:grid;gap:14px}
 .mode{display:inline-flex;border:1.5px solid var(--line);border-radius:8px;overflow:hidden}
+.stack>.mode{display:flex}.stack>.mode button{flex:1 1 0}
 .mode button{border:0;border-radius:0;background:var(--surface);color:var(--ink);padding:10px 14px;font-weight:600}
 .mode button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
 .tag.flip{background:var(--ink);color:var(--surface);margin-left:6px}
@@ -415,6 +416,10 @@ const KEY="exam2-prep-v1";
 function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.attempts)return s;}catch(e){}return{attempts:[],stats:{}};}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 let S=load();
+if(!S.mode)S.mode=S.typeMode?"type":"auto";
+const MODES={mc:"Multiple choice",auto:"Auto level-up",type:"Type my answers"};
+function streak(q){const st=S.stats[q.id];if(!st)return 0;return st.streak!=null?st.streak:(st.last==="r"?1:0);}
+function wantsTyped(q){return q.k==="mc"&&(S.mode==="type"||(S.mode==="auto"&&streak(q)>=2));}
 let run=null; let confirmReset=false;
 
 /* ---------- helpers ---------- */
@@ -469,6 +474,7 @@ function pick(mode){
     const pool=shuffle(Q.filter(q=>q.t===t)).map(q=>{const s=S.stats[q.id];let p=Math.random();if(!s)p+=2;else{if(s.last==="w")p+=3;p+=s.wrong*0.5-s.right*0.3;}return{q,p};});
     pool.sort((a,b)=>b.p-a.p);out=out.concat(pool.slice(0,5).map(x=>x.q));
   }
+  if(S.mode==="auto"){const have=new Set(out.map(q=>q.id));out=out.map(q=>{const t=TWIN[q.id];if(t&&streak(q)>=3&&!have.has(t)){have.add(t);q.lvl=1;return Object.assign({},BYID[t],{lvl:2});}return q;});}
   return addTwins(shuffle(out));
 }
 
@@ -483,6 +489,7 @@ function home(){
     const total=Q.filter(q=>q.t===t).length,pct=Math.round(r/total*100);
     bars+=`<div class="bar"><span>${TOPICS[t]}</span><div class="track"><div class="fill" style="width:${pct}%"></div></div><span class="pct">${pct}%</span></div>`;}
   const misses=Q.filter(q=>S.stats[q.id]&&S.stats[q.id].last==="w").length;
+  const lv=[0,0,0];Q.forEach(q=>{const k=streak(q);lv[k>=3?2:k>=2?1:0]++;});
   const label=n<7?`Start attempt ${n+1} of 7`:"Extra round";
   $("#app").innerHTML=`
   <header class="head">
@@ -494,8 +501,9 @@ function home(){
     <div class="dots">${dots}</div>
     <p class="muted" style="margin:0">Each attempt is ${Object.keys(TOPICS).length*5} questions, 5 from each topic, plus a few <b>↺ flipped</b> questions that ask the same idea the other way around. It grows as new labs are added. Questions you miss come back more often in later attempts.</p>
     <div class="stack" style="gap:8px"><span class="eyebrow">Answer mode</span>
-      <div class="mode" role="group" aria-label="Answer mode"><button type="button" data-tm="0" aria-pressed="${!S.typeMode}">Multiple choice</button><button type="button" data-tm="1" aria-pressed="${!!S.typeMode}">Type my answers</button></div>
-      <p class="hint" style="margin:0">${S.typeMode?"Choices are hidden: type the answer from memory. Words and numbers are checked automatically (spelling counts). For longer answers you compare with the key and grade yourself honestly.":"Switch to <b>Type my answers</b> once you start memorizing. True/false, select-all and graph questions stay as buttons."}</p></div>
+      <div class="mode" role="group" aria-label="Answer mode">${Object.keys(MODES).map(m=>`<button type="button" data-tm="${m}" aria-pressed="${S.mode===m}">${MODES[m]}</button>`).join("")}</div>
+      <p class="hint" style="margin:0">${S.mode==="auto"?"<b>Auto level-up:</b> a question starts as multiple choice. Get it right <b>2 times in a row</b> and it comes back as <b>type the answer</b>. Right <b>3 in a row</b> and it comes back <b>↺ flipped</b> (asked the other way around). Miss it and it drops back to multiple choice.":S.mode==="type"?"Choices are hidden: type every answer from memory. Words and numbers are checked automatically (spelling counts); for longer answers you compare with the key and grade yourself honestly.":"Every question shows its choices."} True/false, select-all and graph questions always stay as buttons.</p>
+      <p class="hint" style="margin:0">Your levels: <b>${lv[0]}</b> multiple choice · <b>${lv[1]}</b> typing · <b>${lv[2]}</b> mastered, 3+ right in a row (of ${Q.length}).</p></div>
     <div class="btns">
       <button class="btn" id="go">${label}</button>
       <button class="btn ghost" id="miss" ${misses?"":"disabled"}>Redo my misses (${misses})</button>
@@ -518,7 +526,7 @@ function home(){
     </ul>
     <div class="btns"><button class="btn ghost" id="reset">${confirmReset?"Tap again to erase all progress":"Reset all attempts"}</button></div>
   </section>`;
-  document.querySelectorAll("[data-tm]").forEach(b=>b.onclick=()=>{S.typeMode=b.dataset.tm==="1";save();home();});
+  document.querySelectorAll("[data-tm]").forEach(b=>b.onclick=()=>{S.mode=b.dataset.tm;save();home();});
   $("#go").onclick=()=>start("attempt");
   $("#miss").onclick=()=>start("miss");
   $("#all").onclick=()=>start("all");
@@ -531,7 +539,7 @@ function show(){
   const q=run.qs[run.i],N=run.qs.length;
   run.sel=null;run.done=false;
   let body="";
-  run.typed=!!S.typeMode&&q.k==="mc";
+  run.typed=wantsTyped(q);
   if(run.typed){body=`<input type="text" id="ans" autocomplete="off" spellcheck="false" aria-label="Your answer"><p class="hint" style="margin:0">Type your answer from memory. Short answers are checked for you; for longer ones you'll compare and grade yourself.</p>`;}
   else if(q.k==="mc"||q.k==="spd"){run.order=shuffle(q.o.map((_,i)=>i));
     body=(q.k==="spd"?spdSVG(q.g):"")+`<div class="opts">${run.order.map((oi,j)=>`<button class="opt" data-i="${oi}"><span class="key">${"ABCD"[j]}</span><span>${esc(q.o[oi])}</span></button>`).join("")}</div>`;}
@@ -541,17 +549,17 @@ function show(){
   else{const hint=q.k==="seq"?"Separate with commas, e.g. 100, 200, 400 (the f/ is optional)":q.k==="num"?"Type the number. You can add units.":"Type your answer. Spelling counts.";
     body=`<input type="text" id="ans" autocomplete="off" spellcheck="false" aria-label="Your answer"><p class="hint" style="margin:0">${hint}</p>`;}
   $("#app").innerHTML=`
-  <div class="qmeta"><button class="btn ghost" id="quit">Quit</button><span class="mode" role="group" aria-label="Answer mode" style="font-size:.85rem"><button type="button" id="tmq" aria-pressed="${!!S.typeMode}">${S.typeMode?"⌨ Typing on":"⌨ Type answers"}</button></span><span class="eyebrow">${run.mode==="attempt"?`Attempt ${Math.min(S.attempts.length+1,99)}`:run.mode==="miss"?"Misses":"All questions"} · ${run.i+1} / ${N}</span></div>
+  <div class="qmeta"><button class="btn ghost" id="quit">Quit</button><span class="mode" role="group" aria-label="Answer mode" style="font-size:.85rem"><button type="button" id="tmq" aria-pressed="${S.mode!=="mc"}">Mode: ${S.mode==="auto"?"Auto":S.mode==="type"?"Typing":"Choices"}</button></span><span class="eyebrow">${run.mode==="attempt"?`Attempt ${Math.min(S.attempts.length+1,99)}`:run.mode==="miss"?"Misses":"All questions"} · ${run.i+1} / ${N}</span></div>
   <div class="progress"><div style="width:${run.i/N*100}%"></div></div>
   <section class="card stack">
-    <div><span class="tag">${TOPICS[q.t]}</span>${q.rv?'<span class="tag flip">↺ Flipped</span>':""}</div>
+    <div><span class="tag">${TOPICS[q.t]}</span>${q.rv||q.lvl===2?'<span class="tag flip">↺ Flipped</span>':""}${S.mode==="auto"&&run.typed?'<span class="tag flip">⬆ Level up: type it</span>':""}</div>
     <div class="qtext">${esc(q.q)}</div>
     ${body}
     <div id="fb"></div>
     <div class="btns"><button class="btn" id="check">Check</button></div>
   </section>`;
   $("#quit").onclick=home;
-  $("#tmq").onclick=()=>{if(run.done)return;S.typeMode=!S.typeMode;save();show();};
+  $("#tmq").onclick=()=>{if(run.done)return;S.mode={mc:"auto",auto:"type",type:"mc"}[S.mode];save();show();};
   document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
     if(run.done)return;
     if(q.k==="multi"){const i=+b.dataset.i;run.sel.has(i)?run.sel.delete(i):run.sel.add(i);b.classList.toggle("sel");}
@@ -600,7 +608,7 @@ function finish(q,ok,given,spell){
   document.querySelectorAll(".opt").forEach(b=>{b.disabled=true;const i=b.dataset.i;
     const correct=(q.k==="mc"||q.k==="spd")?i==="0":q.k==="tf"?(i==="t")===q.a:q.k==="multi"?q.c.includes(+i):false;
     if(correct)b.classList.add("right");else if(b.classList.contains("sel"))b.classList.add("wrong");});
-  const st=S.stats[q.id]||{right:0,wrong:0};ok?st.right++:st.wrong++;st.last=ok?"r":"w";S.stats[q.id]=st;save();
+  const st=S.stats[q.id]||{right:0,wrong:0};const sk=streak(q);ok?st.right++:st.wrong++;st.last=ok?"r":"w";st.streak=ok?sk+1:0;S.stats[q.id]=st;save();
   run.results.push({q,ok,given});
   $("#fb").innerHTML=`<div class="fb ${ok?"ok":"no"}"><strong>${ok?"Correct":"Not quite"}</strong>
     ${spell?`<div class="spell">Close. Check your spelling, because spelling counts on the exam.</div>`:""}
