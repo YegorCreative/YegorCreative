@@ -90,6 +90,12 @@ input[type=text]{width:100%;font:inherit;font-size:1.05rem;padding:12px 14px;bor
 .miss{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:4px}
 .miss .you{color:var(--bad)} .miss .ans{color:var(--good);font-weight:500}
 .stack{display:grid;gap:14px}
+.mode{display:inline-flex;border:1.5px solid var(--line);border-radius:8px;overflow:hidden}
+.mode button{border:0;border-radius:0;background:var(--surface);color:var(--ink);padding:10px 14px;font-weight:600}
+.mode button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.tag.flip{background:var(--ink);color:var(--surface);margin-left:6px}
+.selfg{display:flex;gap:10px;flex-wrap:wrap}
+.selfg .btn.okb{background:var(--good);color:#fff}.selfg .btn.nob{background:var(--bad);color:#fff}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head><body>
@@ -193,6 +199,45 @@ const Q=[
 {id:"SI38",t:"si",k:"mc",q:"Which file format is called a \"legacy\" format, and why?",o:["DNG, because Adobe promises it will always be supported","JPEG, because it is the oldest","raw, because every camera makes it","TIFF, because it has layers"],e:"DNG is legacy/versionable: it will still open in the future."},
 {id:"SI39",t:"si",k:"mc",q:"Which shutter speed blurs motion?",o:["1/2 second","1/500","1/1000","1/250"],e:"A slow shutter blurs motion."},
 {id:"SI40",t:"si",k:"mc",q:"Kodak TrueSense adds which kind of pixels to the color filter array?",o:["Panchromatic (unfiltered) pixels that catch all the light","Extra blue pixels","Infrared pixels","Pixels with no photodiode"],e:"Pan pixels give luminance and about 2/3 more light, better in low light."},
+{id:"RV1",rv:"AB2",t:"aber",k:"mc",q:"What is bokeh?",o:["The quality of the blur in out-of-focus areas","The amount of depth of field","Color fringing around edges","A type of lens distortion"],e:"Bokeh is determined by lens aberrations and the aperture."},
+{id:"RV2",rv:"AB6",t:"aber",k:"fill",q:"An achromatic doublet corrects ________ aberration.",a:["chromatic"],e:"Crown glass + flint glass cemented together. Spelling counts!"},
+{id:"RV3",rv:"AB9",t:"aber",k:"mc",q:"What does barrel distortion look like?",o:["Straight lines bulge outward at the edges","Lines pinch inward","Colors fringe at edges","The center is blurry"],e:"Like a barrel. Magnification decreases away from the axis (fisheye)."},
+{id:"RV4",rv:"AB10",t:"aber",k:"fill",q:"Pincushion distortion from eyeglasses comes from ________ lenses.",a:["negative","negative lens","negative lenses","concave"],e:"Negative (concave) lenses, like glasses for nearsighted people."},
+{id:"RV5",rv:"AB13",t:"aber",k:"mc",q:"What is the diffraction limit of a lens?",o:["The point where diffraction softening cancels the sharpness gained by stopping down","The widest aperture of the lens","The closest focusing distance","The maximum shutter speed"],e:"Stop down past it and the image gets softer."},
+{id:"RV6",rv:"AB15",t:"aber",k:"fill",q:"The largest circle that still appears as a point is the permissible circle of ________.",a:["confusion"],e:"Permissible circle of confusion."},
+{id:"RV7",rv:"AB18",t:"aber",k:"fill",q:"The closest distance that appears sharp when the lens is focused at infinity is the ________ distance.",a:["hyperfocal"],e:"Hyperfocal distance. Spelling counts!"},
+{id:"RV8",rv:"LB15",t:"lab2",k:"mc",q:"What is a nodal point?",o:["The point a ray aims at entering the lens and seems to leave from, still parallel to its original direction","The point where all colors focus","The center of the aperture blades","The front glass surface"],e:"Swing a lens around its rear nodal point and the image doesn't move."},
+{id:"RV9",rv:"SI5",t:"si",k:"fill",q:"Which sensor type is a Complementary Metal-Oxide Semiconductor? (abbreviation)",a:["cmos"],e:"CMOS."},
+{id:"RV10",rv:"D7",t:"dsens",k:"fill",q:"Which sensor type is a Charge-Coupled Device? (abbreviation)",a:["ccd"],e:"CCD."},
+{id:"RV11",rv:"SI6",t:"si",k:"fill",q:"A photosite's charge overflowing into its neighbors, making a bright halo or streak, is called ________.",a:["blooming"],e:"Blooming, mostly a CCD problem."},
+{id:"RV12",rv:"C2",t:"cfa",k:"mc",q:"What does demosaicing do?",o:["Fills in the two missing colors at every pixel from its neighbors","Removes noise","Compresses the raw file","Converts RGB to YCbCr"],e:"It rebuilds full color from the Bayer (CFA) data."},
+{id:"RV13",rv:"C9",t:"cfa",k:"mc",q:"What is photon noise?",o:["Random variation in the light itself: the most common noise","Heat from the electronics read as light","Charge left behind during readout","Banding from too few bits"],e:"Light arrives randomly, so even the input is noisy."},
+{id:"RV14",rv:"C10",t:"cfa",k:"fill",q:"Noise from the camera's heat that photosites read as if it were light is ________ noise.",a:["thermal"],e:"Thermal noise. Cooled sensors reduce it."},
+{id:"RV15",rv:"C11",t:"cfa",k:"mc",q:"What is transfer (readout) noise?",o:["Charge not fully transferred during readout, or neighboring photosites interfering","Random variation in the light","Heat read as light","JPEG compression"],e:"Also called transfer process noise."},
+{id:"RV16",rv:"F1",t:"fmt",k:"fill",q:"Tagged Image File Format is abbreviated ____.",a:["tiff","tif"],e:"TIFF."},
+{id:"RV17",rv:"F3",t:"fmt",k:"fill",q:"Joint Photographic Experts Group is abbreviated ____.",a:["jpeg","jpg"],e:"JPEG."},
+{id:"RV18",rv:"N8",t:"snr",k:"fill",q:"In the histogram panel, the Std Dev (standard deviation) value represents the ________.",a:["noise","amount of noise","the noise"],e:"Std Dev = noise; Mean = signal. SNR = 20 × log(mean ÷ std dev)."},
+{id:"RV19",rv:"P1",t:"comp",k:"fill",q:"Compression where decompressing gives back the exact original is called ________.",a:["lossless"],e:"Lossless. Lossy throws data away for good."},
+{id:"RV20",rv:"P7",t:"comp",k:"mc",q:"What is blocking?",o:["Visible 8 × 8 squares from aggressive JPEG compression","Smooth tones turning into steps","Jagged diagonal edges","Seeing pixels when you zoom in"],e:"One of BAPS: Blocking, Aliasing, Posterization, Stair-stepping."},
+{id:"RV21",rv:"P8",t:"comp",k:"mc",q:"What is posterization?",o:["Smooth tones turning into visible steps (banding) from too few tonal levels","Visible 8 × 8 squares","Jagged diagonal edges","Moiré patterns"],e:"Also called banding."},
+{id:"RV22",rv:"P10",t:"comp",k:"mc",q:"What is stair-stepping?",o:["Jagged steps along diagonal or curved edges","Visible 8 × 8 squares","Banding in smooth tones","Seeing pixels when zoomed in"],e:"Don't call it \"jaggies\" on the exam."},
+{id:"RV23",rv:"L1",t:"lens",k:"fill",q:"In RATS, what does the A stand for?",a:["absorbed","absorption"],e:"Reflected, Absorbed, Transmitted, Scattered."},
+{id:"RV24",rv:"L3",t:"lens",k:"mc",q:"What is scattered light?",o:["Light redirected in many directions by dust or water, like fog with headlights","Light that bounces off at the same angle","Light that turns into heat","Light that passes straight through"],e:"Scattered light acts like flare and forms no image."},
+{id:"RV25",rv:"L4",t:"lens",k:"fill",q:"A lens that is thicker in the center and converges light is a ________ lens.",a:["positive","convex","positive convex"],e:"Positive (convex). It forms a real image by itself."},
+{id:"RV26",rv:"L7",t:"lens",k:"fill",q:"In lens equations, the object distance is written with which letter?",a:["u"],e:"u = object distance, v = image distance."},
+{id:"RV27",rv:"L11",t:"lens",k:"fill",q:"The bending of light as it passes from one medium into another is called ________.",a:["refraction"],e:"Refraction. Spelling counts!"},
+{id:"RV28",rv:"R10",t:"raw",k:"fill",q:"Which file type, saved next to a raw file, stores your edit instructions? (extension)",a:["xmp",".xmp","xmp sidecar","sidecar","sidecar file"],e:"The .xmp sidecar. Keep it with the raw."},
+{id:"RV29",rv:"R12",t:"raw",k:"fill",q:"Adobe promises DNG files will still open in the future, so DNG is called a ________ format.",a:["legacy","legacy and versionable"],e:"Legacy / versionable."},
+{id:"RV30",rv:"R15",t:"raw",k:"mc",q:"What is a vector image?",o:["Shapes defined mathematically, so it scales without losing quality","A grid of pixels","A raw sensor file","A compressed JPEG"],e:"Logos, diagrams, type. Photos are normally raster."},
+{id:"RV31",rv:"LT8",t:"lens2",k:"fill",q:"A lens with the negative element in front, so its rear nodal point falls behind the lens, is called a ________ lens.",a:["retrofocus","reverse telephoto","retro focus","reverse-telephoto"],e:"Retrofocus = reverse telephoto. That's how DSLR wide angles clear the mirror."},
+{id:"RV32",rv:"LT11",t:"lens2",k:"fill",q:"A lens that reaches at least 1:1 is a true ________ lens.",a:["macro"],e:"Macro."},
+{id:"RV33",rv:"LT16",t:"lens2",k:"fill",q:"Which kind of lens keeps building verticals from converging?",a:["tilt-shift","tilt shift","tiltshift","perspective control","perspective-control","shift"],e:"Tilt-shift (perspective control) lens."},
+{id:"RV34",rv:"LT17",t:"lens2",k:"fill",q:"A lens that folds the light path with curved mirrors is called a ________ lens.",a:["catadioptric","mirror"],e:"Catadioptric (mirror) lens. Usually one fixed f-stop."},
+{id:"RV35",rv:"LT15",t:"lens2",k:"mc",q:"A diopter is 1 divided by…",o:["The focal length in meters","The focal length in millimeters","The aperture diameter","The f-number"],e:"D = 1 ÷ f (meters)."},
+{id:"RV36",rv:"SC8",t:"scale",k:"fill",q:"Moving the camera closer or farther changes the ________.",a:["perspective"],e:"Camera position = perspective. Focal length = framing."},
+{id:"RV37",rv:"C7",t:"cfa",k:"fill",q:"Which sensor records red, green and blue at every pixel using how deep each color goes into the silicon?",a:["foveon","foveon x3","x3"],e:"Foveon X3, the direct image sensor."},
+{id:"RV38",rv:"S3",t:"sensor",k:"fill",q:"Which sensor size has a crop factor of 1?",a:["full frame","full-frame","fullframe","35mm","35 mm"],e:"Full frame (24 × 36 mm)."},
+{id:"RV39",rv:"SI16",t:"si",k:"num",q:"What density of ND filter blocks exactly 1 stop?",a:0.3,tol:0,d:"ND 0.3",e:"Every 0.3 of density = 1 stop."},
 {id:"LT1",t:"lens2",k:"mc",q:"A \"normal\" lens reproduces a field of view of about…",o:["47° (like human vision)","94°","8°","180°"],e:"Normal ≈ 47° on the diagonal, which looks natural to a human observer."},
 {id:"LT2",t:"lens2",k:"mc",q:"The normal focal length for a 4×5 camera is about…",o:["150 mm","50 mm","24 mm","300 mm"],e:"Normal ≈ the format's diagonal: ~50 mm for 35 mm/full frame and ~150 mm for 4×5."},
 {id:"LT3",t:"lens2",k:"num",q:"A Four Thirds sensor is 17.3 × 13 mm (diagonal ≈ 21.6 mm). What is its crop factor? (1 decimal)",a:2.0,tol:0.05,d:"2.0",e:"43.3 ÷ 21.6 ≈ 2.0"},
@@ -409,6 +454,13 @@ function spdSVG(kind){
 }
 
 /* ---------- picking questions ---------- */
+const BYID={};Q.forEach(q=>BYID[q.id]=q);
+const TWIN={};Q.forEach(q=>{if(q.rv&&BYID[q.rv]){TWIN[q.id]=q.rv;TWIN[q.rv]=q.id;}});
+function addTwins(list){
+  const have=new Set(list.map(q=>q.id)),out=list.slice();
+  list.forEach(q=>{const t=TWIN[q.id];if(t&&!have.has(t)&&Math.random()<0.5){have.add(t);const at=out.indexOf(q)+1+Math.floor(Math.random()*(out.length-out.indexOf(q)));out.splice(at,0,BYID[t]);}});
+  return out;
+}
 function pick(mode){
   if(mode==="miss")return shuffle(Q.filter(q=>S.stats[q.id]&&S.stats[q.id].last==="w"));
   if(mode==="all")return shuffle(Q);
@@ -417,7 +469,7 @@ function pick(mode){
     const pool=shuffle(Q.filter(q=>q.t===t)).map(q=>{const s=S.stats[q.id];let p=Math.random();if(!s)p+=2;else{if(s.last==="w")p+=3;p+=s.wrong*0.5-s.right*0.3;}return{q,p};});
     pool.sort((a,b)=>b.p-a.p);out=out.concat(pool.slice(0,5).map(x=>x.q));
   }
-  return shuffle(out);
+  return addTwins(shuffle(out));
 }
 
 /* ---------- screens ---------- */
@@ -440,7 +492,10 @@ function home(){
   <section class="card stack">
     <div class="qmeta"><h2>Your 7 attempts</h2><span class="muted">${n} done${n>=7?" · all 7 complete":""}</span></div>
     <div class="dots">${dots}</div>
-    <p class="muted" style="margin:0">Each attempt is ${Object.keys(TOPICS).length*5} questions, 5 from each topic, and it grows as new labs are added. Questions you miss come back more often in later attempts.</p>
+    <p class="muted" style="margin:0">Each attempt is ${Object.keys(TOPICS).length*5} questions, 5 from each topic, plus a few <b>↺ flipped</b> questions that ask the same idea the other way around. It grows as new labs are added. Questions you miss come back more often in later attempts.</p>
+    <div class="stack" style="gap:8px"><span class="eyebrow">Answer mode</span>
+      <div class="mode" role="group" aria-label="Answer mode"><button type="button" data-tm="0" aria-pressed="${!S.typeMode}">Multiple choice</button><button type="button" data-tm="1" aria-pressed="${!!S.typeMode}">Type my answers</button></div>
+      <p class="hint" style="margin:0">${S.typeMode?"Choices are hidden: type the answer from memory. Words and numbers are checked automatically (spelling counts). For longer answers you compare with the key and grade yourself honestly.":"Switch to <b>Type my answers</b> once you start memorizing. True/false, select-all and graph questions stay as buttons."}</p></div>
     <div class="btns">
       <button class="btn" id="go">${label}</button>
       <button class="btn ghost" id="miss" ${misses?"":"disabled"}>Redo my misses (${misses})</button>
@@ -455,7 +510,7 @@ function home(){
   <section class="card stack">
     <h2>Exam day rules</h2>
     <ul class="rules">
-      <li><b>Covered so far:</b> Lab 1 (Sensor Performance and Noise) and the lectures of Sep 21, Sep 28, Oct 2, Oct 5, Oct 16 and Oct 19. More gets added before Oct 30.</li>
+      <li><b>Covered so far:</b> Lab 1, Lab 2, the lectures of Sep 21, Sep 28, Oct 2, Oct 5, Oct 16, Oct 19 and Oct 23, and the SI review sheets.</li>
       <li><b>Know the SNR setup:</b> 20 × log(mean ÷ std dev). log(10) = 1, log(100) = 2.</li>
       <li><b>Include units</b> (dB, stops, µm).</li>
       <li><b>Spelling matters.</b> This quiz marks misspellings wrong too.</li>
@@ -463,6 +518,7 @@ function home(){
     </ul>
     <div class="btns"><button class="btn ghost" id="reset">${confirmReset?"Tap again to erase all progress":"Reset all attempts"}</button></div>
   </section>`;
+  document.querySelectorAll("[data-tm]").forEach(b=>b.onclick=()=>{S.typeMode=b.dataset.tm==="1";save();home();});
   $("#go").onclick=()=>start("attempt");
   $("#miss").onclick=()=>start("miss");
   $("#all").onclick=()=>start("all");
@@ -475,7 +531,9 @@ function show(){
   const q=run.qs[run.i],N=run.qs.length;
   run.sel=null;run.done=false;
   let body="";
-  if(q.k==="mc"||q.k==="spd"){run.order=shuffle(q.o.map((_,i)=>i));
+  run.typed=!!S.typeMode&&q.k==="mc";
+  if(run.typed){body=`<input type="text" id="ans" autocomplete="off" spellcheck="false" aria-label="Your answer"><p class="hint" style="margin:0">Type your answer from memory. Short answers are checked for you; for longer ones you'll compare and grade yourself.</p>`;}
+  else if(q.k==="mc"||q.k==="spd"){run.order=shuffle(q.o.map((_,i)=>i));
     body=(q.k==="spd"?spdSVG(q.g):"")+`<div class="opts">${run.order.map((oi,j)=>`<button class="opt" data-i="${oi}"><span class="key">${"ABCD"[j]}</span><span>${esc(q.o[oi])}</span></button>`).join("")}</div>`;}
   else if(q.k==="tf"){body=`<div class="opts"><button class="opt" data-i="t"><span class="key">T</span><span>True</span></button><button class="opt" data-i="f"><span class="key">F</span><span>False</span></button></div><p class="hint" style="margin:0">If it's false, think about how you would fix it before you check.</p>`;}
   else if(q.k==="multi"){run.order=shuffle(q.o.map((_,i)=>i));run.sel=new Set();
@@ -483,16 +541,17 @@ function show(){
   else{const hint=q.k==="seq"?"Separate with commas, e.g. 100, 200, 400 (the f/ is optional)":q.k==="num"?"Type the number. You can add units.":"Type your answer. Spelling counts.";
     body=`<input type="text" id="ans" autocomplete="off" spellcheck="false" aria-label="Your answer"><p class="hint" style="margin:0">${hint}</p>`;}
   $("#app").innerHTML=`
-  <div class="qmeta"><button class="btn ghost" id="quit">Quit</button><span class="eyebrow">${run.mode==="attempt"?`Attempt ${Math.min(S.attempts.length+1,99)}`:run.mode==="miss"?"Misses":"All questions"} · ${run.i+1} / ${N}</span></div>
+  <div class="qmeta"><button class="btn ghost" id="quit">Quit</button><span class="mode" role="group" aria-label="Answer mode" style="font-size:.85rem"><button type="button" id="tmq" aria-pressed="${!!S.typeMode}">${S.typeMode?"⌨ Typing on":"⌨ Type answers"}</button></span><span class="eyebrow">${run.mode==="attempt"?`Attempt ${Math.min(S.attempts.length+1,99)}`:run.mode==="miss"?"Misses":"All questions"} · ${run.i+1} / ${N}</span></div>
   <div class="progress"><div style="width:${run.i/N*100}%"></div></div>
   <section class="card stack">
-    <div><span class="tag">${TOPICS[q.t]}</span></div>
+    <div><span class="tag">${TOPICS[q.t]}</span>${q.rv?'<span class="tag flip">↺ Flipped</span>':""}</div>
     <div class="qtext">${esc(q.q)}</div>
     ${body}
     <div id="fb"></div>
     <div class="btns"><button class="btn" id="check">Check</button></div>
   </section>`;
   $("#quit").onclick=home;
+  $("#tmq").onclick=()=>{if(run.done)return;S.typeMode=!S.typeMode;save();show();};
   document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
     if(run.done)return;
     if(q.k==="multi"){const i=+b.dataset.i;run.sel.has(i)?run.sel.delete(i):run.sel.add(i);b.classList.toggle("sel");}
@@ -502,8 +561,27 @@ function show(){
   const inp=$("#ans");if(inp)inp.focus();
 }
 
+function typedGrade(q,v){
+  const sq=x=>norm(x).replace(/^(a|an|the) /,"").replace(/[^a-z0-9./%:+-]/g,"");
+  const key=q.o[0],main=key.replace(/\s*\([^)]*\)/g,"").trim(),u=sq(v);
+  const cands=[key,main].concat(q.alt||[]).map(sq).filter(Boolean);
+  if(cands.some(c=>c===u))return true;
+  const nums=x=>(norm(x).replace(/,/g,"").match(/\d*\.?\d+/g)||[]).join("|");
+  const kn=nums(main),un=nums(v),words=main.split(/\s+/).length;
+  if(kn&&kn===un&&words<=4)return true;
+  if(words<=3){const m=sq(main);if(m.length>=4&&u.includes(m))return true;
+    if(m.length>4&&lev(m,u)<=2)return "spell";return false;}
+  return "self";
+}
 function check(){
   const q=run.qs[run.i];let ok=false,given="",spell=false;
+  if(run.typed){const v=$("#ans").value;if(!v.trim())return;given=v;$("#ans").disabled=true;
+    const g=typedGrade(q,v);
+    if(g==="self"){run.done=true;$("#check").hidden=true;
+      $("#fb").innerHTML=`<div class="fb" style="background:var(--accent-soft);border:1px solid var(--accent)"><strong>Compare</strong><div>Key: <b>${esc(q.o[0])}</b></div><div>${esc(q.e)}</div><div class="selfg"><button class="btn okb" id="sg1">✓ I got it</button><button class="btn nob" id="sg0">✗ I missed it</button></div></div>`;
+      $("#sg1").onclick=()=>finish(q,true,given,false);$("#sg0").onclick=()=>finish(q,false,given,false);$("#sg1").focus();return;}
+    ok=g===true;spell=g==="spell";
+    run.done=true;finish(q,ok,given,spell);return;}
   if(q.k==="mc"||q.k==="spd"){if(run.sel===null)return;ok=run.sel==="0";given=q.o[+run.sel];}
   else if(q.k==="tf"){if(run.sel===null)return;ok=(run.sel==="t")===q.a;given=run.sel==="t"?"True":"False";}
   else if(q.k==="multi"){if(!run.sel.size)return;ok=run.sel.size===q.c.length&&q.c.every(i=>run.sel.has(i));given=[...run.sel].map(i=>q.o[i]).join(", ");}
@@ -514,7 +592,10 @@ function check(){
       ok=q.a.some(a=>norm(a).replace(/\s/g,"")===ns);
       if(!ok)spell=q.a.some(a=>{const as=norm(a).replace(/\s/g,"");return as.length>4&&lev(as,ns)<=2;});}
     $("#ans").disabled=true;}
-  run.done=true;
+  run.done=true;finish(q,ok,given,spell);
+}
+function finish(q,ok,given,spell){
+  $("#check").hidden=false;
   // mark options
   document.querySelectorAll(".opt").forEach(b=>{b.disabled=true;const i=b.dataset.i;
     const correct=(q.k==="mc"||q.k==="spd")?i==="0":q.k==="tf"?(i==="t")===q.a:q.k==="multi"?q.c.includes(+i):false;
@@ -556,7 +637,7 @@ function results(){
 
 document.addEventListener("keydown",e=>{
   if(!run||e.key!=="Enter")return;
-  const b=$("#check");if(b){e.preventDefault();b.click();}
+  const b=$("#check");if(b&&!b.hidden){e.preventDefault();b.click();}
 });
 home();
 </script>

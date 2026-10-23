@@ -114,6 +114,8 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 @media (prefers-reduced-motion:no-preference){.fc.flip{animation:fl .28s ease}@keyframes fl{0%{transform:scale(.97);opacity:.4}100%{transform:none;opacity:1}}}
 .dctl{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 .dctl .btn{min-height:44px}
+.dctl .btn[aria-pressed="true"]{background:var(--accent);color:#fff}
+.fc .fyou{font-size:15px;font-weight:700;color:var(--ink);background:#fff;border-radius:10px;padding:8px 12px;justify-self:center}
 .dots{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
 .dots i{width:12px;height:12px;border-radius:50%;background:var(--line);display:block}
 .dots i.cur{outline:2px solid #E9B10A;outline-offset:2px}
@@ -136,12 +138,14 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <div class="lec" id="LP" hidden>
 <section class="topic pick" aria-labelledby="ph1">
 <div class="th"><span class="num" style="-webkit-text-stroke-color:#E9B10A">★</span><div><h2 id="ph1">Her test picks</h2><p>Every time she said “this is a good test question”</p></div></div>
-<p>Tap the card to flip it. Mark it <b>Got it</b> or <b>Again</b>; the “Again” cards come back in <b>Practice missed</b>. Each card links to its lecture section, which is also highlighted in gold.</p>
+<p>Tap the card to flip it. Mark it <b>Got it</b> or <b>Again</b>; the “Again” cards come back in <b>Practice missed</b>. Once you're memorizing, turn on <b>⌨ Type my answer</b>, and try <b>↺ Flip</b> to see the answer first and recall the question. Each card links to its lecture section, highlighted in gold.</p>
 <div class="deck">
 <button type="button" class="fc" id="fc" aria-live="polite"></button>
+<div class="dctl" id="ptbox" hidden><input class="inp" id="pin" type="text" autocomplete="off" spellcheck="false" placeholder="Type your answer from memory" aria-label="Your answer" style="flex:1 1 220px;margin-top:0"><button type="button" class="btn" id="pchk">Show answer</button></div>
 <div class="dots" id="pdots" aria-hidden="true"></div>
 <div class="dctl"><button type="button" class="btn" id="pprev">← Prev</button><button type="button" class="btn" id="pagain">↻ Again</button><button type="button" class="btn" id="pok">✓ Got it</button><button type="button" class="btn" id="pnext">Next →</button></div>
 <div class="dctl"><button type="button" class="btn" id="pshuf">Shuffle</button><button type="button" class="btn" id="pmiss">Practice missed</button><button type="button" class="btn" id="pall">All cards</button><button type="button" class="btn" id="pgo">Open in lecture →</button></div>
+<div class="dctl"><button type="button" class="btn" id="ptype" aria-pressed="false">⌨ Type my answer</button><button type="button" class="btn" id="pdir" aria-pressed="false">↺ Flip: answer → question</button></div>
 </div>
 </section>
 <section class="topic" aria-labelledby="ph2">
@@ -1186,13 +1190,21 @@ function save(){try{localStorage.setItem('e2-picks',JSON.stringify(mark));}catch
 function goSec(l,sid){showLec(l,false);var t=document.getElementById(sid);if(!t)return;setTimeout(function(){
  try{if(window.frameElement&&window.parent!==window){var fr=window.frameElement.getBoundingClientRect();window.parent.scrollTo({top:window.parent.scrollY+fr.top+t.getBoundingClientRect().top-12,behavior:'smooth'});return;}}catch(e){}
  t.scrollIntoView({behavior:'smooth',block:'start'});},30);}
+var typeOn=false,rev=false,typed='',ptbox=document.getElementById('ptbox'),pin=document.getElementById('pin');
 function draw(anim){var k=order[i],c=P[k];fc.classList.toggle('back',back);
- fc.innerHTML='<span class="meta"><span>★ '+c.d+' lecture</span><span>'+(i+1)+' / '+order.length+'</span></span><span class="fbd">'+(back?'<div class="fa">'+c.a+'</div>'+(c.x?'<div class="fx">'+c.x+'</div>':'')+'<div class="hint">'+c.said+'</div>':'<div class="fq">'+c.q+'</div><div class="hint">Tap to see the answer</div>')+'</span>';
+ var qHTML=rev?'<div class="fa">'+c.a+'</div>':'<div class="fq">'+c.q+'</div>',aHTML=rev?'<div class="fq">'+c.q+'</div>':'<div class="fa">'+c.a+'</div>'+(c.x?'<div class="fx">'+c.x+'</div>':'');
+ var you=typed?'<div class="fyou">You wrote: '+typed.replace(/[&<>]/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[m];})+'</div>':'';
+ fc.innerHTML='<span class="meta"><span>★ '+c.d+' lecture'+(rev?' · flipped':'')+'</span><span>'+(i+1)+' / '+order.length+'</span></span><span class="fbd">'+(back?aHTML+you+'<div class="hint">'+c.said+(typed?' · then tap Got it or Again':'')+'</div>':qHTML+'<div class="hint">'+(rev?'What was the question? ':'')+(typeOn?'Type below, then Show answer':'Tap to see the answer')+'</div>')+'</span>';
  fc.setAttribute('aria-label',(back?'Answer: ':'Question: ')+fc.textContent);
+ ptbox.hidden=!typeOn||back;
  if(anim){fc.classList.remove('flip');void fc.offsetWidth;fc.classList.add('flip');}
  document.getElementById('pdots').innerHTML=order.map(function(k2,j){return '<i class="'+(j===i?'cur ':'')+(mark[k2]==='ok'?'ok':mark[k2]==='ag'?'ag':'')+'"></i>';}).join('');}
-function step(d){i=(i+d+order.length)%order.length;back=false;draw(true);}
+function step(d){i=(i+d+order.length)%order.length;back=false;typed='';pin.value='';draw(true);}
 fc.addEventListener('click',function(){back=!back;draw(true);});
+document.getElementById('pchk').onclick=function(){typed=pin.value.trim();back=true;draw(true);};
+pin.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();document.getElementById('pchk').click();}});
+document.getElementById('ptype').onclick=function(){typeOn=!typeOn;this.setAttribute('aria-pressed',typeOn);back=false;typed='';draw(false);if(typeOn)pin.focus();};
+document.getElementById('pdir').onclick=function(){rev=!rev;this.setAttribute('aria-pressed',rev);back=false;typed='';draw(true);};
 document.getElementById('pprev').onclick=function(){step(-1);};
 document.getElementById('pnext').onclick=function(){step(1);};
 document.getElementById('pok').onclick=function(){mark[order[i]]='ok';save();step(1);};
