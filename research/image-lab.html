@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Image Formation Lab</title>
+<style>
+body *{min-width:0}
+:root{--bg:#F6F5FA;--card:#FFFFFF;--ink:#15131C;--muted:#5E5A6B;--line:#E2DEEE;--accent:#6D4AD9;--soft:#EFEAFD;--ok:#1F8A70;--okb:#E1F4EE;--bad:#C0392B;--badb:#FBE3E0;--warm:#D9822B;--warmb:#FCEFE0;--R:#E0473C;--G:#3FA34D;--B:#3F6CC9}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55;padding:24px 16px 56px}
+.w{max-width:980px;margin:0 auto;display:grid;gap:22px}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(28px,6vw,40px);font-weight:900}
+h3{font-size:17px}
+p{margin:0}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.intro{display:grid;gap:8px}
+.intro p{color:var(--muted);max-width:68ch}
+button,input,select{font:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.toc{display:flex;gap:8px;flex-wrap:wrap}
+.toc a{display:inline-flex;align-items:center;min-height:40px;padding:0 13px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:13.5px}
+.toc a:hover{border-color:var(--accent)}
+.topic{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 18px;display:grid;gap:16px;scroll-margin-top:12px}
+.th{display:flex;gap:14px;align-items:center}
+.num{font-size:40px;font-weight:900;line-height:1;color:transparent;-webkit-text-stroke:2px var(--accent);flex:none}
+.th h2{font-size:clamp(21px,4vw,28px)}
+.th p{margin-top:2px;color:var(--muted);font-weight:600;font-size:14px}
+.trick{display:flex;gap:10px;background:var(--bg);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:10px 12px}
+.trick b{color:var(--accent)}
+.beyond{background:var(--warmb);border-radius:12px;padding:12px 14px;font-size:14.5px}
+.beyond b:first-child{color:var(--warm);display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.formula{border:2px solid var(--accent);border-radius:14px;padding:14px;text-align:center;font-weight:800;font-size:clamp(16px,3.2vw,22px);font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--soft)}
+.note{font-size:13px;color:var(--muted)}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media(max-width:700px){.two,.three{grid-template-columns:minmax(0,1fr)}}
+.box{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:8px;align-content:start}
+.box h3{display:flex;gap:8px;align-items:center}
+.tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--soft);color:var(--accent)}
+.seg{display:inline-flex;flex-wrap:wrap;border:1.5px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+.seg button{border:0;border-right:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:700;font-size:13.5px;padding:0 12px;min-height:44px;cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+canvas,svg.v{display:block;width:100%;height:auto;border-radius:12px}
+.pix{image-rendering:pixelated}
+.stage{background:#0F0D16;border-radius:14px;padding:10px}
+.cap{font-size:13.5px;color:var(--muted);text-align:center}
+.cfa{display:grid;gap:2px;width:100%;max-width:190px;aspect-ratio:1;margin:0 auto}
+.cfa i{border-radius:3px;display:grid;place-items:center;font:800 11px/1 Inter,system-ui,sans-serif;color:#fff;font-style:normal}
+.stat{display:flex;justify-content:space-between;gap:8px;font-size:13.5px;border-top:1px solid var(--line);padding-top:6px}
+.stat b{font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--accent);min-height:36px}
+.meter{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:14px}
+.meter b{font-variant-numeric:tabular-nums}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-weight:800;font-size:12.5px}
+.pill.ok{background:var(--okb);color:var(--ok)}.pill.bad{background:var(--badb);color:var(--bad)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:14px}
+td,th{border-bottom:1px solid var(--line);padding:7px 6px;text-align:left}
+th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tw{overflow-x:auto}
+.spell{display:flex;flex-wrap:wrap;gap:8px}
+.spell span{background:var(--okb);color:var(--ok);font-weight:800;padding:6px 10px;border-radius:10px}
+.spell s{background:var(--badb);color:var(--bad);font-weight:700;padding:6px 10px;border-radius:10px}
+ul.clean{margin:0;padding-left:18px;display:grid;gap:4px}
+.check{border:1.5px dashed var(--accent);border-radius:14px;padding:14px;display:grid;gap:10px}
+.check .q{font-weight:700}
+.opts{display:grid;gap:8px}
+.opts button{text-align:left;border:1.5px solid var(--line);background:var(--card);border-radius:10px;padding:10px 12px;min-height:44px;cursor:pointer;font-weight:600;color:var(--ink)}
+.opts button.right{border-color:var(--ok);background:var(--okb)}
+.opts button.wrong{border-color:var(--bad);background:var(--badb)}
+.fb{font-size:14px;font-weight:600}
+.lecs{display:flex;width:100%}
+.lecs button{flex:1 1 140px;min-height:48px;font-size:13.5px;line-height:1.2;padding:6px 10px;border-bottom:1px solid var(--line)}
+.lec{display:grid;gap:22px}
+.inp{width:100%;min-height:44px;font-size:16px;padding:6px 10px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);margin-top:4px}
+.btn{font-weight:700;border:1.5px solid var(--accent);background:var(--card);color:var(--accent);border-radius:10px;padding:0 14px;min-height:44px;cursor:pointer}
+.btn:hover{background:var(--soft)}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chain span{background:var(--soft);color:var(--accent);font-weight:800;font-size:13px;padding:7px 10px;border-radius:10px}
+.chain span.alt{background:var(--warmb);color:var(--warm)}
+.chain i{font-style:normal;color:var(--muted);font-weight:800}
+.qe{display:grid;gap:8px}.qerow{display:grid;grid-template-columns:90px 1fr 54px;gap:8px;align-items:center;font-size:14px}.qetrack{height:14px;background:var(--line);border-radius:7px;overflow:hidden}.qetrack i{display:block;height:100%;border-radius:7px}
+@media(max-width:600px){.cmp thead{display:none}.cmp tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-bottom:1px solid var(--line)}.cmp td{border:0}.cmp td:first-child{grid-column:1/-1;font-weight:800;background:var(--soft);border-radius:8px;margin-top:8px}.cmp td:nth-child(2)::before{content:"CCD";display:block;font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--accent)}.cmp td:nth-child(3)::before{content:"CMOS";display:block;font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--warm)}}
+@media(max-width:600px){.cmp.tele td:nth-child(2)::before{content:"TELEPHOTO"}.cmp.tele td:nth-child(3)::before{content:"WIDE ANGLE"}}
+.rle{display:flex;flex-wrap:wrap;gap:2px}
+.rle b{width:16px;height:16px;border-radius:3px;display:inline-block}
+ol.steps{margin:0;padding:0;list-style:none;display:grid;gap:6px;counter-reset:s}
+ol.steps li{counter-increment:s;display:flex;gap:10px;align-items:baseline;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14.5px;background:var(--bg);border-radius:10px;padding:9px 12px}
+ol.steps li::before{content:counter(s);flex:none;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font:700 12px/22px system-ui,sans-serif;text-align:center}
+ol.steps li.last{background:var(--soft);font-weight:700}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head><body>
+<div class="w">
+<header class="intro">
+<span class="eyebrow">Exam 2 · Lab 3 · Image Formation</span>
+<h1>Image Formation Lab</h1>
+<p>Everything from the Image Formation Lab and the lab intro video: the 4×5 view camera, pinholes, the f-number series, 1:1 and 2:1 reproduction, finding an unknown focal length, and chromatic aberration. All numbers here are <b>practice numbers</b>, different from the lab equipment, so you learn the method. Do your own lab measurements.</p>
+<nav class="toc" aria-label="Sections"><a href="#i1">The 4×5 camera</a><a href="#i2">Pinhole size</a><a href="#i3">f-number series</a><a href="#i4">1:1 and 2:1</a><a href="#i5">Unknown focal length</a><a href="#i6">Chromatic aberration</a></nav>
+</header>
+
+<section class="topic" id="i1" aria-labelledby="ih1">
+<div class="th"><span class="num">01</span><div><h2 id="ih1">The 4×5 view camera</h2><p>A lens, a bellows and a ground glass</p></div></div>
+<div class="box"><h3>Tap a part</h3>
+<div class="seg" role="group" aria-label="Camera part" id="partb"><button type="button" aria-pressed="true" data-p="0">Front standard</button><button type="button" aria-pressed="false" data-p="1">Bellows</button><button type="button" aria-pressed="false" data-p="2">Rear standard</button><button type="button" aria-pressed="false" data-p="3">Film holder</button></div>
+<svg class="v" id="cam" viewBox="0 0 460 210" role="img" aria-label="A 4 by 5 view camera on a rail: lens on the front standard, bellows in the middle, ground glass on the rear standard"></svg>
+<p class="cap" id="partcap"></p></div>
+<ul class="clean">
+<li><b>Movements:</b> the standards slide forward and back, <b>tilt</b>, <b>swing</b> (sideways) and <b>rise/fall</b>. That's why it's "the ultimate machine for architecture": it corrects distortion that we now usually fix in Lightroom.</li>
+<li><b>To focus,</b> the <b>shutter must be open</b> so light reaches the ground glass. Slide the front or rear standard, check with a <b>magnifier</b>, and put a <b>focusing cloth</b> (a jacket works) over your head because the image is dim.</li>
+<li>The image on the ground glass is <b>upside down and backwards</b>.</li>
+<li><b>Changing the lens:</b> grip the lens firmly, press the release button and slide it out. It's <b>keyed</b>, so it only goes back one way. Give it a tug to check it's locked.</li>
+<li>Close the shutter, insert the film holder, pull the <b>dark slide</b>, fire with a <b>cable release</b> (no shake), put the slide back.</li>
+<li>4×5 film comes in single sheets with <b>notches</b> (to find the emulsion side in the dark) and is loaded in a darkroom. A holder takes <b>two shots</b>. Her rule: flip the dark slide so you can tell which sheets are already exposed.</li>
+</ul>
+<div class="check" data-q="i1"></div>
+</section>
+
+<section class="topic" id="i2" aria-labelledby="ih2">
+<div class="th"><span class="num">02</span><div><h2 id="ih2">Pinholes and the optimal pinhole size</h2><p>Too big = blur, too small = diffraction</p></div></div>
+<p>In the lab a <b>pinhole "lens"</b> (no glass, just holes of different sizes) is taped onto a 4×5. One partner looks at the ground glass while the other changes the hole size, at two image distances: <b>bellows fully closed</b> and <b>bellows fully extended</b>. You'll find the sharpest hole is <b>not the same</b> for both, and the tiniest hole isn't always best.</p>
+<div class="formula">D = √f ÷ 28 (mm) &nbsp;·&nbsp; D = √f ÷ 141 (inches)<br><span style="font-size:.8em;font-weight:600">f = pinhole-to-ground-glass distance</span></div>
+<div class="box"><h3>Pinhole simulator</h3>
+<label for="pd"><b>Bellows (pinhole → ground glass): <span id="pdv">100 mm</span></b></label><input type="range" id="pd" min="60" max="400" step="10" value="100" aria-label="Bellows length">
+<label for="ph"><b>Hole size: <span id="phv">0.3 mm</span></b></label><input type="range" id="ph" min="0" max="7" value="2" aria-label="Pinhole size">
+<div class="two"><canvas id="pcv" width="300" height="160" class="v" aria-label="Simulated pinhole image of a bright point and text"></canvas><div><ol class="steps" id="pout"></ol></div></div>
+</div>
+<div class="trick"><span>🔑</span><span><b>Longer bellows → bigger best hole.</b> The best size grows with the square root of the distance. Each hole also has an f-number: N = distance ÷ hole (pinholes are around f/150 to f/700).</span></div>
+<div class="beyond"><b>Beyond the lab</b>The simulator adds two blurs: the hole's own size (geometric blur) and diffraction (about 2.44 × wavelength × f-number). The smallest total blur lands almost exactly on √f ÷ 28, which is where that formula comes from.</div>
+<div class="check" data-q="i2"></div>
+</section>
+
+<section class="topic" id="i3" aria-labelledby="ih3">
+<div class="th"><span class="num">03</span><div><h2 id="ih3">Part I: the f-number series</h2><p>f/4.5 (wide open) → f/27 (stopped down)</p></div></div>
+<p>You look at the example photos in Lightroom (a bear in front of resolution targets on a wall) from f/4.5 to f/27.</p>
+<div class="box"><h3>Slide through the series</h3>
+<label for="fs"><b>Aperture: <span id="fsv">f/4.5</span></b></label><input type="range" id="fs" min="0" max="6" value="0" aria-label="Aperture">
+<div class="three">
+<div class="box" style="background:#fff"><p class="cap" style="margin:0">Top of the bear's head<br>(in front of focus)</p><p id="sb1" style="font-size:34px;text-align:center;margin:6px 0">🐻</p></div>
+<div class="box" style="background:#fff"><p class="cap" style="margin:0">Targets on the wall<br>(behind focus)</p><p id="sb2" style="font:800 22px/1.2 ui-monospace,monospace;text-align:center;margin:10px 0">≡ ||| ≡</p></div>
+<div class="box" style="background:#fff"><p class="cap" style="margin:0">"LensAlign 2 3" at 100%<br>(in focus)</p><p id="sb3" style="font:800 20px/1.2 Inter,sans-serif;text-align:center;margin:10px 0">LensAlign 2 3</p></div>
+</div>
+<p class="cap" id="fscap"></p></div>
+<ul class="clean"><li>Stopping down <b>increases depth of field</b>: the top of the bear's head and the wall targets get sharper.</li><li>But at 100%, the fine letters and numbers in focus get <b>softer again</b> at the smallest apertures. That's <b>diffraction</b> (Oct 23 lecture): you've passed the lens's <b>diffraction limit</b>.</li><li>So the <b>sharpest image wasn't at the smallest aperture</b>. Every lens has a sweet spot.</li></ul>
+<div class="check" data-q="i3"></div>
+</section>
+
+<section class="topic" id="i4" aria-labelledby="ih4">
+<div class="th"><span class="num">04</span><div><h2 id="ih4">Part II: 1:1 and 2:1 reproduction</h2><p>Calculate first, then set the camera</p></div></div>
+<div class="formula">v = f (m + 1) &nbsp;·&nbsp; m = v ÷ u &nbsp;→&nbsp; u = v ÷ m</div>
+<div class="box"><h3>Distance calculator (practice lens)</h3>
+<div class="two"><label>Focal length marked on the lens (mm)<input class="inp" id="sf" type="number" min="1" value="150" inputmode="decimal"></label><label>Reproduction m (1 = 1:1, 2 = 2:1)<input class="inp" id="sm" type="number" min="0.1" step="any" value="1" inputmode="decimal"></label></div>
+<ol class="steps" id="sout"></ol></div>
+<div class="box"><h3>Fill in the lab table (practice numbers)</h3>
+<div class="two"><label>Measured image size (mm)<input class="inp" id="ti" type="number" min="0" step="any" value="58" inputmode="decimal"></label><label>Measured object size (mm)<input class="inp" id="to" type="number" min="0" step="any" value="30" inputmode="decimal"></label></div>
+<label>Scale of reproduction required<input class="inp" id="tr" type="number" min="0" step="any" value="2" inputmode="decimal"></label>
+<div class="tw"><table><tbody id="tout"></tbody></table></div></div>
+<ul class="clean">
+<li><b>Object distance u:</b> from the lens's center line (about the front nodal point) to the arrow on the light box. <b>Image distance v:</b> from the lens to where the film sits (the ground-glass ridge).</li>
+<li>Lock the front standard at u, slide the rear standard to v, then make <b>small</b> focus adjustments. Measure the object and image the same way (side to side).</li>
+<li><b>Why it's not perfect:</b> the true nodal points of the recessed lens are only estimated, the ground glass is hard to measure exactly, and focusing by eye isn't precise.</li>
+<li><b>At 1:1, u = v</b>, and both equal <b>2 × the focal length</b>. At 2:1, v = 3f and u = 1.5f.</li>
+<li>Why it matters: <b>advertising and biomedical</b> work need exact sizes (a ring for a jeweler, or the "enlarged to show texture" cereal box).</li>
+</ul>
+<div class="check" data-q="i4"></div>
+</section>
+
+<section class="topic" id="i5" aria-labelledby="ih5">
+<div class="th"><span class="num">05</span><div><h2 id="ih5">Part III: finding an unknown focal length</h2><p>No pivot, no infinity: use what you know</p></div></div>
+<p>The lens is taped so you can't read it and locked so you can't pivot it, and the light isn't at infinity. The <b>front and rear nodal points are marked</b>. You have a light box, a focusing screen and a ruler. Practice on this <b>made-up lens</b>: move the light and the screen until the image is sharp, then work out f.</p>
+<div class="box"><h3>Practice optical bench</h3>
+<label for="bu"><b>Light box → front nodal point (u): <span id="buv"></span></b></label><input type="range" id="bu" min="120" max="1200" step="5" value="600" aria-label="Object distance">
+<label for="bv"><b>Rear nodal point → screen (v): <span id="bvv"></span></b></label><input type="range" id="bv" min="60" max="700" step="1" value="200" aria-label="Image distance">
+<svg class="v" id="bench" viewBox="0 0 460 150" role="img" aria-label="Optical bench with light box, lens and screen"></svg>
+<p class="cap" id="bcap"></p>
+<div class="two"><label>Your focal length (mm)<input class="inp" id="bg" type="number" min="1" step="any" inputmode="decimal"></label><div style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap"><button type="button" class="btn" id="bchk">Check</button><button type="button" class="btn" id="bnew">New mystery lens</button></div></div>
+<p id="bres" class="formula" style="font-size:16px"></p></div>
+<div class="three">
+<div class="box"><h3>Method 1 · Lens equation</h3><p>Get it sharp, measure u and v from the nodal points: <b>1/f = 1/u + 1/v</b> (press 1/x!).</p></div>
+<div class="box"><h3>Method 2 · Make it 1:1</h3><p>Move both until the image is the <b>same size</b> as the object. Then u = v = 2f, so <b>f = u ÷ 2</b>.</p></div>
+<div class="box"><h3>Method 3 · Magnification</h3><p>Measure image ÷ object = m and v: <b>f = v ÷ (m + 1)</b>.</p></div>
+</div>
+<p class="note">Why learn this? Some lenses have no focal length marked, or it's been rubbed off. The lab says not to share your own lab solution with other groups.</p>
+<div class="check" data-q="i5"></div>
+</section>
+
+<section class="topic" id="i6" aria-labelledby="ih6">
+<div class="th"><span class="num">06</span><div><h2 id="ih6">Part IV: seeing chromatic aberration</h2><p>Defocus a little each way and look at the edge</p></div></div>
+<p>Focus on the black square of the resolution target with a magnifier, then <b>shorten</b> the bellows a little and <b>lengthen</b> it a little. Do it with the <b>single uncoated lens</b> and the <b>coated achromatic lens</b>.</p>
+<div class="box"><h3>Try it</h3>
+<div class="seg" role="group" aria-label="Lens" id="cl"><button type="button" aria-pressed="true" data-l="1">Single uncoated lens</button><button type="button" aria-pressed="false" data-l="0">Coated achromatic lens</button></div>
+<label for="cb"><b>Bellows: <span id="cbv">in focus</span></b></label><input type="range" id="cb" min="-3" max="3" value="0" aria-label="Bellows change">
+<svg class="v" id="csvg" viewBox="0 0 460 170" role="img" aria-label="The edge of a black square with or without a colored fringe" style="max-width:460px;margin:0 auto"></svg>
+<p class="cap" id="ccap"></p></div>
+<div class="tw"><table><thead><tr><th>Defocused by…</th><th>Single lens</th><th>Compound (achromatic) lens</th></tr></thead><tbody><tr><td>Reducing the bellows (shorter)</td><td class="hidec">Blue</td><td class="hidec">No hue</td></tr><tr><td>Increasing the bellows (longer)</td><td class="hidec">Red</td><td class="hidec">No hue</td></tr></tbody></table></div>
+<div class="btns" style="display:flex;gap:8px"><button type="button" class="btn" id="reveal">Show the expected answers</button></div>
+<ul class="clean"><li><b>Blue bends most</b>, so it focuses <b>closest</b> to the lens: shorten the bellows and blue comes into focus first. <b>Red</b> focuses <b>farthest</b> (past green): lengthen the bellows to see it.</li><li>The sensor or film normally sits where <b>green</b> focuses.</li><li>The expensive <b>coated, achromatic</b> lens shows no colors. Coatings and achromatic doublets fix it, the same reason eyeglasses get coatings. Very strong glasses (±5 to 7 diopters) can still show color at the edges.</li><li>Don't defocus a lot: way out of focus you see every color, which doesn't count.</li></ul>
+<div class="beyond"><b>Beyond the lab</b>What you actually see at the edge depends on the blurred colors around the sharp one, so classmates sometimes describe it differently. Her rule for the table: shorter bellows → the color that focuses <b>first</b>; longer → the color that focuses <b>last</b>.</div>
+<div class="check" data-q="i6"></div>
+</section>
+
+<p class="note" style="text-align:center">Practice numbers and drawings are my own, made from the PHPS-106 Image Formation Lab handout and lab video (Oct 2026), for study use.</p>
+</div>
+<script>
+(function(){
+var Q={
+i1:["Why must the shutter be OPEN while you focus a 4×5 camera?",["So light reaches the ground glass and you can see the image","So the film is exposed while focusing","To lock the bellows","So the dark slide can come out"],"Focus with the shutter open and a focusing cloth over your head, then close it before inserting the film holder."],
+i2:["With the bellows fully extended (longer pinhole-to-ground-glass distance), the best pinhole is…",["Bigger than with the bellows closed","Smaller than with the bellows closed","Always the smallest hole","Always the same size"],"D = √f ÷ 28: a longer distance needs a bigger hole. Too small a hole adds diffraction blur."],
+i3:["In the f/4.5 → f/27 series, the in-focus LensAlign letters got softer at f/27. Why?",["Diffraction from the very small aperture","Less depth of field","Chromatic aberration","Camera shake"],"Stopping down adds depth of field, but past the diffraction limit the in-focus detail softens."],
+i4:["For a 1:1 reproduction with a 150 mm lens, u and v are…",["Both 300 mm (2 × f)","Both 150 mm","u = 150, v = 300","u = 300, v = 450"],"v = f(m + 1) = 150 × 2 = 300 mm and u = v ÷ m = 300 mm. At 1:1, u = v = 2f."],
+i5:["The image is sharp with u = 300 mm and v = 150 mm (from the nodal points). What is f?",["100 mm","450 mm","150 mm","50 mm"],"1/300 + 1/150 = 0.01 → press 1/x → 100 mm."],
+i6:["With the uncoated single lens, which color do you see when you SHORTEN the bellows a little?",["Blue: it focuses closest to the lens","Red: it focuses closest","Green","No color at all"],"Blue bends most, so it focuses first (closest). Lengthen the bellows and red, which focuses last, shows up."]};
+document.querySelectorAll('.check').forEach(function(el){var q=Q[el.dataset.q];if(!q)return;var order=[0,1,2,3].sort(function(){return Math.random()-.5;});
+ el.innerHTML='<span class="tag">Quick check</span><div class="q">'+q[0]+'</div><div class="opts">'+order.map(function(i){return '<button type="button" data-i="'+i+'">'+q[1][i]+'</button>';}).join('')+'</div><div class="fb" aria-live="polite"></div>';
+ el.querySelectorAll('.opts button').forEach(function(b){b.addEventListener('click',function(){var ok=b.dataset.i==='0';b.classList.add(ok?'right':'wrong');if(!ok)el.querySelector('[data-i="0"]').classList.add('right');el.querySelectorAll('.opts button').forEach(function(x){x.disabled=true;});el.querySelector('.fb').innerHTML=(ok?'✅ Correct. ':'❌ Not quite. ')+q[2];});});});
+document.querySelectorAll('.toc a').forEach(function(a){a.addEventListener('click',function(e){var t=document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();
+ try{if(window.frameElement&&window.parent!==window){var fr=window.frameElement.getBoundingClientRect();window.parent.scrollTo({top:window.parent.scrollY+fr.top+t.getBoundingClientRect().top-12,behavior:'smooth'});return;}}catch(err){}t.scrollIntoView({behavior:'smooth',block:'start'});});});
+function seg(id,fn){var g=document.getElementById(id);if(!g)return;var bs=g.querySelectorAll('button');bs.forEach(function(b){b.addEventListener('click',function(){bs.forEach(function(x){x.setAttribute('aria-pressed',x===b);});fn(b);});});}
+function T(x,y,t,o){o=o||{};return '<text x="'+x+'" y="'+y+'" text-anchor="'+(o.a||'middle')+'" style="font:'+(o.w||800)+' '+(o.s||16)+'px Inter,sans-serif" fill="'+(o.c||'#15131C')+'">'+t+'</text>';}
+var r1=function(x){return Math.round(x*10)/10;},r2=function(x){return Math.round(x*100)/100;};
+
+/* 4x5 camera */
+var cam=document.getElementById('cam'),PC=['The front standard holds the lens and shutter. It slides, tilts, swings and rises/falls.','The bellows (not an accordion!) is a light-tight tube between the standards. Longer bellows = longer image distance.','The rear standard holds the ground glass, where the image appears upside down and backwards. The film holder goes here.','The film holder takes two 4×5 sheets. Pull the dark slide to expose, then put it back and flip it to mark the sheet as used.'];
+function drawCam(p){var hi=function(i){return p===i?'#6D4AD9':'#9A95A8';},s='<rect width="460" height="210" fill="#fff"/><rect x="40" y="170" width="380" height="10" rx="4" fill="#C9C4D8"/>';
+ s+='<rect x="90" y="50" width="16" height="122" rx="3" fill="'+hi(0)+'"/><circle cx="98" cy="100" r="26" fill="#15131C"/><circle cx="98" cy="100" r="16" fill="#3a3550"/><rect x="66" y="94" width="10" height="12" fill="#15131C"/>';
+ s+='<path d="M106 62 L310 40 L310 160 L106 140 Z" fill="'+(p===1?'#E7E0FF':'#EFEDF5')+'" stroke="'+hi(1)+'" stroke-width="2"/>';for(var k=0;k<9;k++){var x=120+k*22;s+='<line x1="'+x+'" y1="'+(61-k*2.4)+'" x2="'+x+'" y2="'+(141+k*2.4)+'" stroke="'+hi(1)+'" stroke-opacity=".5"/>';}
+ s+='<rect x="310" y="30" width="18" height="142" rx="3" fill="'+hi(2)+'"/><rect x="328" y="40" width="6" height="122" fill="#BFE3F5" stroke="'+hi(2)+'"/>';
+ s+='<rect x="340" y="34" width="'+(p===3?36:14)+'" height="134" rx="3" fill="'+hi(3)+'" fill-opacity="'+(p===3?1:.35)+'"/>';
+ s+=T(98,40,'front',{s:14,c:hi(0)})+T(210,30,'bellows',{s:14,c:hi(1)})+T(320,22,'rear / ground glass',{s:14,c:hi(2)})+T(380,195,'film holder',{s:14,c:hi(3)});
+ cam.innerHTML=s;document.getElementById('partcap').textContent=PC[p];}
+seg('partb',function(b){drawCam(+b.dataset.p);});drawCam(0);
+
+/* pinhole */
+var HS=[0.15,0.2,0.3,0.4,0.5,0.6,0.8,1.0],pd=document.getElementById('pd'),ph=document.getElementById('ph'),pcv=document.getElementById('pcv'),pcx=pcv.getContext('2d');
+function pin(){var f=+pd.value,D=HS[+ph.value],lam=0.00055,geo=D,dif=2.44*lam*f/D,tot=Math.sqrt(geo*geo+dif*dif),best=Math.sqrt(f)/28,bestIdx=0;
+ HS.forEach(function(h,i){var t=Math.sqrt(h*h+Math.pow(2.44*lam*f/h,2));if(t<Math.sqrt(HS[bestIdx]*HS[bestIdx]+Math.pow(2.44*lam*f/HS[bestIdx],2)))bestIdx=i;});
+ document.getElementById('pdv').textContent=f+' mm';document.getElementById('phv').textContent=D+' mm';
+ var px=Math.min(9,tot*9);pcx.clearRect(0,0,300,160);pcx.fillStyle='#14101C';pcx.fillRect(0,0,300,160);pcx.filter='blur('+px.toFixed(1)+'px)';pcx.fillStyle='#FFE28A';pcx.beginPath();pcx.arc(70,80,10,0,7);pcx.fill();pcx.fillStyle='#fff';pcx.font='800 30px Inter,sans-serif';pcx.fillText('ABC',130,92);pcx.filter='none';
+ var b=Math.abs(D-HS[bestIdx])<1e-9;
+ document.getElementById('pout').innerHTML='<li>Formula: D = √'+f+' ÷ 28 = <b>'+r2(best)+' mm</b></li><li>This hole: f-number ≈ '+f+' ÷ '+D+' = <b>f/'+Math.round(f/D)+'</b></li><li>Blur: hole size '+r2(geo)+' mm + diffraction '+r2(dif)+' mm</li><li class="last">'+(b?'<b>Sharpest hole for this bellows ✓</b>':D<HS[bestIdx]?'Too small: diffraction blur. Try a bigger hole.':'Too big: the hole itself blurs. Try a smaller hole.')+'</li>';}
+pd.addEventListener('input',pin);ph.addEventListener('input',pin);pin();
+
+/* f-number series */
+var FN=[4.5,5.6,8,11,16,22,27],fs=document.getElementById('fs');
+function fser(){var N=FN[+fs.value],dof=Math.max(0,6*(1-(N-4.5)/22.5)),dif=N>11?(N-11)*0.11:0;
+ document.getElementById('fsv').textContent='f/'+N;
+ document.getElementById('sb1').style.filter='blur('+dof.toFixed(1)+'px)';document.getElementById('sb2').style.filter='blur('+(dof*0.9).toFixed(1)+'px)';document.getElementById('sb3').style.filter='blur('+dif.toFixed(2)+'px)';
+ document.getElementById('fscap').textContent=N<=5.6?'Wide open: shallow depth of field. The head top and the wall are soft, but the in-focus text is crisp.':N<=11?'Stopping down: more depth of field and the text is still crisp. This is the sweet spot.':'Smallest apertures: the most depth of field, but diffraction now softens the in-focus letters at 100%.';}
+fs.addEventListener('input',fser);fser();
+
+/* scale of reproduction */
+var sf=document.getElementById('sf'),sm=document.getElementById('sm');
+function scl(){var f=+sf.value,m=+sm.value,o=document.getElementById('sout');if(!(f>0&&m>0)){o.innerHTML='<li>Enter values above 0</li>';return;}var v=f*(m+1),u=v/m;
+ o.innerHTML='<li>v = f(m + 1) = '+f+' × ('+m+' + 1) = <b>'+r1(v)+' mm</b></li><li>u = v ÷ m = '+r1(v)+' ÷ '+m+' = <b>'+r1(u)+' mm</b></li><li class="last">Check: 1/'+r1(u)+' + 1/'+r1(v)+' = 1/'+r1(1/(1/u+1/v))+' ✓'+(m===1?' · at 1:1, u = v = 2f':'')+'</li>';}
+[sf,sm].forEach(function(e){e.addEventListener('input',scl);});scl();
+var ti=document.getElementById('ti'),to=document.getElementById('to'),tr=document.getElementById('tr');
+function tab(){var i=+ti.value,ob=+to.value,req=+tr.value,t=document.getElementById('tout');if(!(i>0&&ob>0&&req>0)){t.innerHTML='<tr><td>Enter values above 0</td></tr>';return;}var obs=i/ob,ratio=req/obs;
+ t.innerHTML='<tr><td>Scale of reproduction observed (image ÷ object)</td><td><b>'+r2(obs)+'</b></td></tr><tr><td>Scale of reproduction required</td><td>'+req+'</td></tr><tr><td>Ratio of scales of reproduction (observed : required, as 1 : x)</td><td><b>1 : '+r2(ratio)+'</b></td></tr><tr><td>Off by</td><td>'+r1(Math.abs(obs-req)/req*100)+'%</td></tr>';}
+[ti,to,tr].forEach(function(e){e.addEventListener('input',tab);});tab();
+
+/* unknown focal length bench */
+var F=0,bu=document.getElementById('bu'),bv=document.getElementById('bv'),bench=document.getElementById('bench');
+function newLens(){F=[70,85,95,110,125,140,160,180][Math.floor(Math.random()*8)]+Math.floor(Math.random()*9);document.getElementById('bres').textContent='';document.getElementById('bg').value='';drawB();}
+function drawB(){var u=+bu.value,v=+bv.value,vt=u>F?1/(1/F-1/u):Infinity,blur=isFinite(vt)?Math.abs(v-vt)/vt:9,m=isFinite(vt)?vt/(u-0)*1:0,sharp=blur<0.012;
+ document.getElementById('buv').textContent=u+' mm';document.getElementById('bvv').textContent=v+' mm';
+ var X=function(d){return d;},lx=50+Math.min(u,1200)/1200*180,sx=lx+Math.min(v,700)/700*110;
+ var s='<rect width="460" height="150" fill="#fff"/><rect x="10" y="118" width="350" height="6" rx="3" fill="#C9C4D8"/>';
+ s+='<rect x="18" y="56" width="22" height="56" rx="3" fill="#FFE28A" stroke="#C99A1C"/><path d="M29 66 l-6 10 h4 v14 h4 v-14 h4 z" fill="#15131C"/>';
+ s+='<rect x="'+(lx-12)+'" y="48" width="24" height="70" rx="5" fill="#15131C"/><circle cx="'+(lx-7)+'" cy="112" r="3" fill="#1F8A70"/><circle cx="'+(lx+7)+'" cy="112" r="3" fill="#C0392B"/>';
+ s+='<rect x="'+(sx-3)+'" y="30" width="6" height="88" fill="#6D4AD9"/>';
+ var mm=isFinite(vt)?v/u:0,ah=Math.max(10,Math.min(85,mm*60)),bl=Math.min(8,blur*70);
+ s+='<rect x="372" y="20" width="80" height="100" rx="6" fill="#F3F1F8" stroke="#6D4AD9"/>'+T(412,138,'on the screen',{s:12,c:'#5E5A6B'});
+ s+='<g style="filter:blur('+bl.toFixed(1)+'px)"><g transform="translate(412 70) rotate(180) scale('+(ah/40).toFixed(3)+')"><path d="M0 -20 L-10 -6 L-4 -6 L-4 20 L4 20 L4 -6 L10 -6 Z" fill="#15131C"/></g></g>';
+ s+=T(29,140,'light',{s:13})+T(lx,40,'lens',{s:13})+T(sx,24,'screen',{s:13});
+ bench.innerHTML=s;document.getElementById('bcap').innerHTML=sharp?'<b>Sharp ✓</b> The image is '+r2(v/u)+'× the object\'s size. Now use u and v (or the size) to work out f.':'Not sharp yet: move the screen (or the light) until the arrow is crisp.';}
+bu.addEventListener('input',drawB);bv.addEventListener('input',drawB);
+document.getElementById('bnew').addEventListener('click',newLens);
+document.getElementById('bchk').addEventListener('click',function(){var g=+document.getElementById('bg').value,r=document.getElementById('bres');if(!(g>0)){r.textContent='Type your focal length first.';return;}var err=Math.abs(g-F)/F;
+ r.innerHTML=err<=0.03?'✅ Yes! The mystery lens is '+F+' mm.':err<=0.1?'Close ('+r1(err*100)+'% off). Get the image sharper and measure again.':'❌ Not yet. Get the arrow sharp, then try 1/f = 1/u + 1/v.';});
+newLens();
+
+/* chromatic aberration */
+var single=true,cb=document.getElementById('cb'),cs=document.getElementById('csvg');
+function chrom(){var d=+cb.value,s='<rect width="460" height="170" fill="#fff"/>',w=Math.abs(d)*4;
+ var col=!single||d===0?null:(d<0?'#2F6BFF':'#E0473C');
+ s+='<defs><filter id="bl"><feGaussianBlur stdDeviation="'+(Math.abs(d)*1.6)+'"/></filter></defs>';
+ if(col)s+='<rect x="'+(150-w)+'" y="'+(25-w)+'" width="'+(160+2*w)+'" height="'+(120+2*w)+'" fill="'+col+'" fill-opacity=".75" filter="url(#bl)"/>';
+ s+='<rect x="150" y="25" width="160" height="120" fill="#15131C" filter="url(#bl)"/>';
+ cs.innerHTML=s;document.getElementById('cbv').textContent=d===0?'in focus':d<0?'shorter by '+(-d):'longer by '+d;
+ document.getElementById('ccap').textContent=d===0?'In focus: a clean black edge.':!single?'Coated achromatic lens: just blur, no color.':d<0?'Shorter bellows: a BLUE edge (blue focuses first, closest to the lens).':'Longer bellows: a RED edge (red focuses last, past green).';}
+seg('cl',function(b){single=b.dataset.l==='1';chrom();});cb.addEventListener('input',chrom);chrom();
+var rv=false;document.getElementById('reveal').addEventListener('click',function(){rv=!rv;document.querySelectorAll('.hidec').forEach(function(td){td.style.color=rv?'':'transparent';td.style.background=rv?'':'repeating-linear-gradient(45deg,#EFEAFD,#EFEAFD 6px,#fff 6px,#fff 12px)';});this.textContent=rv?'Hide the answers':'Show the expected answers';});
+document.querySelectorAll('.hidec').forEach(function(td){td.style.color='transparent';td.style.background='repeating-linear-gradient(45deg,#EFEAFD,#EFEAFD 6px,#fff 6px,#fff 12px)';});
+})();
+</script>
+</body></html>

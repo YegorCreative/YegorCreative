@@ -71,7 +71,7 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px}
 .opts button.wrong{border-color:var(--bad);background:var(--badb)}
 .fb{font-size:14px;font-weight:600}
 .lecs{display:flex;width:100%}
-.lecs button{flex:1 1 104px;min-height:48px;font-size:13.5px;line-height:1.2;padding:6px 10px;border-bottom:1px solid var(--line)}
+.lecs button{flex:1 1 96px;min-height:48px;font-size:13.5px;line-height:1.2;padding:6px 10px;border-bottom:1px solid var(--line)}
 .lec{display:grid;gap:22px}
 .inp{width:100%;min-height:44px;font-size:16px;padding:6px 10px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);margin-top:4px}
 .btn{font-weight:700;border:1.5px solid var(--accent);background:var(--card);color:var(--accent);border-radius:10px;padding:0 14px;min-height:44px;cursor:pointer}
@@ -132,7 +132,7 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <span class="eyebrow">Exam 2 · Oct 30 · Lecture notes</span>
 <h1>Lecture Notes</h1>
 <p>Every PHPS-106 lecture for Exam 2, redesigned with diagrams you can play with and checked against the lecture slides. Each section ends with a quick check.</p>
-<div class="seg lecs" role="tablist" aria-label="Lectures" id="lecs"><button role="tab" class="pkt" aria-selected="false" aria-pressed="false" data-l="LP">★ Her test picks</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L0">Sep 21 · Digital sensors</button><button role="tab" aria-selected="true" aria-pressed="true" data-l="L1">Sep 28 · Sensors &amp; noise</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L2">Oct 2 · RAW &amp; files</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L3">Oct 5 · Formats &amp; compression</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L4">Oct 16 · Lenses</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L5">Oct 19 · Lens types</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L6">Oct 23 · Aberrations &amp; DOF</button></div>
+<div class="seg lecs" role="tablist" aria-label="Lectures" id="lecs"><button role="tab" class="pkt" aria-selected="false" aria-pressed="false" data-l="LP">★ Her test picks</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L0">Sep 21 · Digital sensors</button><button role="tab" aria-selected="true" aria-pressed="true" data-l="L1">Sep 28 · Sensors &amp; noise</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L2">Oct 2 · RAW &amp; files</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L3">Oct 5 · Formats &amp; compression</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L4">Oct 16 · Lenses</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L5">Oct 19 · Lens types</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L6">Oct 23 · Aberrations &amp; DOF</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L7">Oct 26 · Autofocus &amp; perspective</button></div>
 </header>
 <!-- ================= TEST PICKS ================= -->
 <div class="lec" id="LP" hidden>
@@ -1022,7 +1022,101 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 </section>
 </div>
 
-<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures (Sep 21 – Oct 23, 2026), for study use.</p>
+<!-- ================= LECTURE 7 · OCT 26 ================= -->
+<div class="lec" id="L7" hidden>
+<nav class="toc" aria-label="Oct 26 sections"><a href="#v1">Autofocus</a><a href="#v2">Depth cues</a><a href="#v3">Binocular vision</a><a href="#v4">Linear perspective</a><a class="pk" href="#v5">Image size rules</a></nav>
+<div class="beyond" style="margin:0"><b>Heads-up</b>She taught this on Oct 26 as "next week's lecture" (Exam 2 is Friday, Oct 30). Autofocus may be on Exam 2. Perspective is for next week's lab, but she said anything in <b>blue</b> on her slides will probably be on a test at some point.</div>
+
+<section class="topic" id="v1" aria-labelledby="vh1">
+<div class="th"><span class="num">01</span><div><h2 id="vh1">Autofocus methods</h2><p>Phase detection vs contrast detection</p></div></div>
+<div class="two">
+<div class="box"><h3>Phase detection</h3><ul class="clean"><li><b>Calculates the distance</b> to the object, then moves the lens straight to that distance (and checks once more).</li><li><b>Very fast</b>, but needs a <b>separate sensor or special microlenses</b>.</li><li>If the lens is <b>miscalibrated</b>, focus can be off (front- or back-focusing).</li></ul></div>
+<div class="box"><h3>Contrast detection</h3><ul class="clean"><li>The lens <b>moves through the focus range</b> while the camera measures contrast.</li><li><b>Maximum contrast = in focus.</b></li><li><b>Slower</b>, but <b>cheaper and smaller</b> because it uses the <b>main sensor</b>.</li></ul></div>
+</div>
+<div class="box"><h3>Watch them focus</h3>
+<div class="btns" style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn" id="afc">Run contrast detection</button><button type="button" class="btn" id="afp">Run phase detection</button></div>
+<svg class="v" id="afsvg" viewBox="0 0 460 190" role="img" aria-label="Contrast versus lens position: contrast detection scans the curve to find the peak; phase detection jumps to it"></svg>
+<p class="cap" id="afcap">Contrast is highest at perfect focus.</p></div>
+<ul class="clean"><li><b>LensAlign</b> (in the lab) checks whether your camera and lens are calibrated: shoot it, zoom in, and the zero mark should be sharp. If not, the camera front- or back-focuses. Some cameras let you adjust this, but ask Dan or Nanette first.</li><li><b>Manual focus:</b> go back and forth past focus, then zero in. (Most students are out of practice because they rely on autofocus.)</li><li>Why turn autofocus <b>off</b> for the ND filter patches: a flat patch has no contrast or edges, so the lens just "hunts" back and forth. It won't break, but it's needless wear on a mechanical part.</li></ul>
+<div class="check" data-q="v1"></div>
+</section>
+
+<section class="topic" id="v2" aria-labelledby="vh2">
+<div class="th"><span class="num">02</span><div><h2 id="vh2">How do we achieve perspective?</h2><p>Showing a 3-D world on a 2-D sensor, print or screen</p></div></div>
+<p><b>Perspective</b> = the relationships between the objects we image: how we show a three-dimensional world on two-dimensional media (sensor, paper, screen). It applies to drawing and painting too.</p>
+<div class="tw"><table class="cmp"><thead><tr><th>Cue</th><th>How it shows depth</th></tr></thead><tbody>
+<tr><td>Depth of field</td><td>Sharp subject, blurred background separates near from far</td></tr>
+<tr><td>Lighting</td><td>Light and shadow give objects shape and volume</td></tr>
+<tr><td>Overlap</td><td>Whatever blocks something else is in front of it</td></tr>
+<tr><td>Aerial haze</td><td>Faraway things look hazier and lower in contrast ("incredible" for depth)</td></tr>
+<tr><td>Color</td><td>Far objects look cooler and less saturated</td></tr>
+<tr><td>Stereophotography / holography</td><td>Two views (or a hologram) give real 3-D: "a little bit of cheating"</td></tr>
+<tr><td>Linear perspective</td><td>Things get smaller and lines converge with distance (section 04)</td></tr>
+</tbody></table></div>
+<div class="trick"><span>🔑</span><span><b>"Don't Let Old Apes Cook Spaghetti Hot Lunches":</b> Depth of field · Lighting · Overlap · Aerial haze · Color · Stereo · Holography · Linear.</span></div>
+<div class="check" data-q="v2"></div>
+</section>
+
+<section class="topic" id="v3" aria-labelledby="vh3">
+<div class="th"><span class="num">03</span><div><h2 id="vh3">Binocular vision</h2><p>Two eyes, one 3-D picture</p></div></div>
+<svg class="v" viewBox="0 0 460 210" role="img" aria-label="Left and right eye fields of view overlap in the middle: that overlap is the binocular field">
+<path d="M150 170 L40 20 L300 20 Z" fill="#3F6CC9" fill-opacity=".14"/><path d="M310 170 L160 20 L420 20 Z" fill="#E0473C" fill-opacity=".14"/>
+<path d="M150 170 L160 20 L300 20 L310 170 Z" fill="#6D4AD9" fill-opacity=".18"/>
+<circle cx="150" cy="178" r="14" fill="#fff" stroke="#3F6CC9" stroke-width="3"/><circle cx="310" cy="178" r="14" fill="#fff" stroke="#E0473C" stroke-width="3"/>
+<circle cx="150" cy="178" r="5" fill="#15131C"/><circle cx="310" cy="178" r="5" fill="#15131C"/>
+<text x="230" y="60" text-anchor="middle" style="font:800 17px Inter,sans-serif" fill="#6D4AD9">binocular field</text>
+<text x="230" y="80" text-anchor="middle" style="font:600 14px Inter,sans-serif" fill="#5E5A6B">(depth perception)</text>
+<text x="70" y="45" style="font:700 14px Inter,sans-serif" fill="#3F6CC9">left eye only</text><text x="390" y="45" text-anchor="end" style="font:700 14px Inter,sans-serif" fill="#E0473C">right eye only</text>
+<text x="230" y="200" text-anchor="middle" style="font:600 13px Inter,sans-serif" fill="#5E5A6B">pupils about 2.5 in apart</text></svg>
+<ul class="clean">
+<li><b>Binocular vision</b> = using both eyes together to get a 3-D, <b>stereoscopic</b> view (length, width and depth). All animals with <b>forward-facing eyes</b> have it. A fish with eyes on the sides has no overlap, so no depth perception.</li>
+<li>You <b>see with your brain</b>: the signals cross at the <b>optic chiasm</b>, go to the <b>LGN</b> and then to the visual cortex at the back of the head, which fuses both images into one.</li>
+<li>Each eye sees from a slightly different spot. The brain <b>triangulates</b> the difference. <b>Binocular disparity</b> = the difference in where an object lands in the left vs right eye. Average pupil separation is <b>2.5 inches</b>.</li>
+<li>Disparity <b>increases as objects get closer</b>. At 450 ft the separation ratio is 2000:1: almost no disparity.</li>
+<li>Binocular vision works well within about <b>18–20 ft</b>. Beyond 20 ft the brain uses <b>shadows and relative motion</b>.</li>
+<li>If the brain can't fuse the two images: <b>binocular dysfunction</b>, no depth perception (causes include blindness, differential focus, strabismus/lazy eye, processing problems). Depth perception develops in the toddler years.</li>
+</ul>
+<div class="two">
+<div class="box"><h3>Try it: disparity</h3><p>Hold a finger out, close one eye, then the other, back and forth. The finger "jumps" against the background. That jump is binocular disparity.</p></div>
+<div class="box"><h3>Try it: dominant eye</h3><p>With both eyes open, hide a far object behind your thumb. Close one eye, then the other. The eye where the thumb <b>moves less</b> is your <b>dominant eye</b>, probably the one you put to the viewfinder.</p></div>
+</div>
+<div class="check" data-q="v3"></div>
+</section>
+
+<section class="topic" id="v4" aria-labelledby="vh4">
+<div class="th"><span class="num">04</span><div><h2 id="vh4">Linear perspective</h2><p>Horizon line · vanishing point · orthogonal lines</p></div></div>
+<p><b>Linear perspective</b> = the geometric way of showing that objects get <b>smaller and closer together</b> as they get farther away. We judge distance by how things shrink and how lines converge. The <b>object distance</b> and the <b>focal length</b> are the critical factors.</p>
+<div class="box"><h3>Draw a one-point street</h3>
+<label for="vpx"><b>Vanishing point (left ↔ right)</b></label><input type="range" id="vpx" min="120" max="340" value="230" aria-label="Vanishing point position">
+<label for="hz"><b>Horizon line (eye level)</b></label><input type="range" id="hz" min="50" max="150" value="95" aria-label="Horizon height">
+<div class="btns" style="display:flex;gap:8px"><button type="button" class="btn" id="orth" aria-pressed="true">Hide orthogonal lines</button></div>
+<svg class="v" id="lpsvg" viewBox="0 0 460 230" role="img" aria-label="Two buildings drawn in one-point perspective with lines converging on the vanishing point"></svg></div>
+<ol class="clean" style="padding-left:20px;list-style:decimal">
+<li><b>Horizon line:</b> runs across the scene, usually at the viewer's <b>eye level</b>. It can be where a wall meets the floor, not just sky and ground.</li>
+<li><b>Vanishing point:</b> for one-point perspective, a point on the horizon (often near the center) where all the receding lines meet.</li>
+<li><b>Orthogonal lines:</b> visual rays connecting the corners of shapes to the vanishing point. Draw them, build the shapes, then erase them.</li>
+</ol>
+<p><b>Two-point perspective:</b> two vanishing points, like standing on a street corner looking down both streets.</p>
+<div class="check" data-q="v4"></div>
+</section>
+
+<section class="topic pick" id="v5" aria-labelledby="vh5">
+<div class="th"><span class="num">05</span><div><h2 id="vh5">The two image-size rules</h2><p>"Anything in blue will probably be on a test"</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · in blue on her slide</span><div class="pq">How do focal length and object distance change image size?</div><div class="pa">Image size is <b>directly proportional to focal length</b>.<br>Image size is <b>inversely proportional to object distance</b>.</div></div>
+<p>Changes in perspective usually come from changing <b>camera position</b> (object distance) and <b>focal length</b>.</p>
+<div class="box"><h3>Her boot experiment</h3>
+<div class="seg" role="group" aria-label="Focal length" id="bf"><button type="button" aria-pressed="true" data-f="50">50 mm</button><button type="button" aria-pressed="false" data-f="100">100 mm</button><button type="button" aria-pressed="false" data-f="200">200 mm</button></div>
+<label for="bd"><b>Distance to the first boot: <span id="bdv">10 ft</span></b> (the second boot is the same distance farther again)</label><input type="range" id="bd" min="5" max="30" step="5" value="10" aria-label="Object distance">
+<svg class="v" id="bsvg" viewBox="0 0 460 200" role="img" aria-label="Two identical boots: the far one, at twice the distance, looks half as big"></svg>
+<p class="cap" id="bcap"></p></div>
+<ul class="clean"><li><b>Object ratio 1:2 → size ratio 2:1.</b> If the second object is twice as far away (10 ft, then 20 ft), it looks <b>half as big</b>. Her folding chairs: the far chair fits exactly in the gap between the near chair's seat and top.</li>
+<li><b>Doubling the focal length doubles everything</b>: her slide measured the boots at 0.75 and 0.375 in (50 mm), 1.5 and 0.75 in (100 mm), 3.0 and 1.5 in (200 mm). The ratio between them never changes, so focal length doesn't change perspective. Only moving does.</li>
+<li>Look up <b>forced perspective</b> photography: it plays with exactly this.</li></ul>
+<div class="check" data-q="v5"></div>
+</section>
+</div>
+
+<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures (Sep 21 – Oct 26, 2026), for study use.</p>
 </div>
 
 <script>
@@ -1136,6 +1230,11 @@ a8:["Which of these does NOT affect the circle of confusion?",["The file format 
 a9:["Which three things control depth of field?",["Aperture, object distance, focal length","Shutter speed, ISO, aperture","ISO, focal length, white balance","Sensor size, file format, aperture"],"Her \"beautiful test question\"."],
 a10:["You focus at the hyperfocal distance (30 ft). Depth of field now runs from…",["15 ft to infinity","30 ft to infinity","0 ft to 30 ft","60 ft to infinity"],"Half the hyperfocal distance to infinity."],
 a11:["Your camera is on a tripod. Image stabilization should be…",["Off","On","On, maximum mode","It never matters"],"Mechanical IS adds wobble on a tripod and can damage gear."],
+v1:["Which autofocus method uses the main sensor and finds focus at maximum contrast?",["Contrast detection: slower, but cheaper and smaller","Phase detection","LensAlign","Manual focus"],"Phase detection calculates distance (fast, separate sensor/microlenses). Contrast detection scans for the contrast peak."],
+v2:["Faraway mountains look hazy and low in contrast. Which depth cue is that?",["Aerial haze","Overlap","Linear perspective","Stereophotography"],"Haze is \"incredible\" for showing depth."],
+v3:["Beyond about 20 ft, how does your brain judge depth?",["Shadows and relative motion","Binocular disparity","Your dominant eye","It can't at all"],"Binocular vision works within about 18–20 ft; past that, disparity is too small."],
+v4:["In one-point perspective, the receding (orthogonal) lines meet at the…",["Vanishing point on the horizon line","Bottom of the frame","Optical axis","Focal point"],"Horizon line + vanishing point + orthogonal lines."],
+v5:["You double the focal length without moving. The image of everything in the scene…",["Doubles in size, so the size ratios (perspective) stay the same","Gets half as big","Changes perspective","Doesn't change"],"Image size ∝ focal length. Only moving the camera changes perspective."],
 d1:["On the camera it's a photosite. In the file it's a…",["Pixel","Photodiode","Bit","Voxel"],"Photosite = on the sensor. Pixel = in the file."],
 d2:["What turns the photosite's analog voltage into a digital count?",["The A/D (analog-to-digital) converter","The Bayer filter","The microlens","The shutter"],"The A/D converter. The number of possible counts is limited by bit depth."],
 d3:["How many colors can a 24-bit image show?",["About 16.7 million","256","65,536","4,096"],"2²⁴ ≈ 16.7 million (8 bits each for R, G and B)."],
@@ -1182,7 +1281,7 @@ try{var saved=localStorage.getItem('e2-lec');if(saved&&document.getElementById(s
 
 
 /* ===== her test picks ===== */
-(function(){var P=[{"l": "L4", "s": "o2", "d": "Oct 16", "said": "“Excellent test question”", "q": "What 4 things can happen to light when it hits something?", "a": "<b>RATS</b>: <b>R</b>eflected · <b>A</b>bsorbed · <b>T</b>ransmitted · <b>S</b>cattered", "x": "Reflected: angle in = angle out. Absorbed: turns into heat (a black shirt in the sun). Transmitted: passes through. Scattered: redirected by dust or water (fog + headlights)."}, {"l": "L2", "s": "r5", "d": "Oct 2", "said": "“A really good test question”", "q": "Compared with a JPEG, a RAW file has…", "a": "<b>Higher</b> dynamic range, <b>lower</b> contrast, <b>less</b> sharp, and it's <b>not ready for output</b>.", "x": "Less sharp because the anti-aliasing filter blurs a little and sharpening is only added in processing."}, {"l": "L2", "s": "r5", "d": "Oct 2", "said": "Test question", "q": "Which file is bigger: the RAW file or the demosaiced image?", "a": "The <b>demosaiced</b> image.", "x": "RAW = 1 value per photosite (1 channel). Demosaiced = red, green and blue at every pixel (3 channels)."}, {"l": "L2", "s": "r6", "d": "Oct 2", "said": "Test question", "q": "What values can one channel of an 8-bit image hold?", "a": "<b>0 to 255</b> (256 levels)", "x": "2⁸ = 256. Counting starts at 0, so the top value is 255. 12-bit = 4,096 levels, 16-bit = 65,536."}, {"l": "L3", "s": "f4", "d": "Oct 5", "said": "Test question", "q": "What happens when you edit and re-save a JPEG over and over?", "a": "<b>Generational degradation</b>: it's compressed again every save, so artifacts build up.", "x": "Fix: convert to TIFF or PSD before you edit."}, {"l": "L3", "s": "f4", "d": "Oct 5", "said": "Test question (the chart)", "q": "TIFF vs JPEG: which is better for repeated editing, and which allows transparency?", "a": "<b>TIFF</b> for both. JPEG degrades every save and has no transparency.", "x": "TIFF: lossless or lossy, 8/16/32 bits, layers, large files. JPEG: lossy, 8 bits only, small files."}, {"l": "L4", "s": "o4", "d": "Oct 16", "said": "Test question", "q": "Positive vs negative lens: what does each one do?", "a": "<b>Positive (convex)</b>: thicker in the center, <b>converges</b> light, forms a <b>real image</b>.<br><b>Negative (concave)</b>: thinner in the center, <b>diverges</b> light, <b>can't</b> form a real image alone.", "x": "Every camera lens uses both, e.g. an achromatic doublet."}, {"l": "L4", "s": "o6", "d": "Oct 16", "said": "Calculator trap", "q": "1/u + 1/v = 0.02 on your calculator. What is the focal length?", "a": "Press <b>1/x</b>: f = 1 ÷ 0.02 = <b>50 mm</b>", "x": "1/u + 1/v gives 1/f, not f. A 0.02 mm focal length makes no sense, so always flip it."}, {"l": "L5", "s": "n4", "d": "Oct 19", "said": "“A very good test question”", "q": "Telephoto vs reverse telephoto (retrofocus): how are the elements arranged?", "a": "<b>Telephoto</b>: positive element in <b>front</b>, negative behind → rear nodal point falls <b>in front of</b> the lens.<br><b>Retrofocus</b>: negative in front, positive behind → rear nodal point falls <b>behind</b> the lens, so a wide angle clears the DSLR mirror.", "x": "Her slide calls it “Reverse Telephoto Wide Angle Lens”."}, {"l": "L5", "s": "n5", "d": "Oct 19", "said": "She “can't impose upon that enough”", "q": "What does changing the focal length change, and what does moving the camera change?", "a": "Focal length → <b>framing</b>.<br>Camera position → <b>perspective</b>.", "x": "Zooming never changes perspective. Only distance does."},{"l": "L6", "s": "a8", "d": "Oct 23", "said": "“Beautiful test question”", "q": "What affects your circle of confusion?", "a": "<b>Eyesight</b> · <b>contrast</b> (circle vs background) · <b>level of illumination</b> · the viewer's <b>opinion</b> of sharpness", "x": "Memory hook: Every Coffee Looks Okay."},{"l": "L6", "s": "a9", "d": "Oct 23", "said": "“Also a beautiful test question”", "q": "What are the three depth of field controls?", "a": "<b>Aperture</b> · <b>object distance</b> (camera to subject) · <b>focal length</b>", "x": "Smaller aperture, farther away, shorter lens = more depth of field."}];
+(function(){var P=[{"l": "L4", "s": "o2", "d": "Oct 16", "said": "“Excellent test question”", "q": "What 4 things can happen to light when it hits something?", "a": "<b>RATS</b>: <b>R</b>eflected · <b>A</b>bsorbed · <b>T</b>ransmitted · <b>S</b>cattered", "x": "Reflected: angle in = angle out. Absorbed: turns into heat (a black shirt in the sun). Transmitted: passes through. Scattered: redirected by dust or water (fog + headlights)."}, {"l": "L2", "s": "r5", "d": "Oct 2", "said": "“A really good test question”", "q": "Compared with a JPEG, a RAW file has…", "a": "<b>Higher</b> dynamic range, <b>lower</b> contrast, <b>less</b> sharp, and it's <b>not ready for output</b>.", "x": "Less sharp because the anti-aliasing filter blurs a little and sharpening is only added in processing."}, {"l": "L2", "s": "r5", "d": "Oct 2", "said": "Test question", "q": "Which file is bigger: the RAW file or the demosaiced image?", "a": "The <b>demosaiced</b> image.", "x": "RAW = 1 value per photosite (1 channel). Demosaiced = red, green and blue at every pixel (3 channels)."}, {"l": "L2", "s": "r6", "d": "Oct 2", "said": "Test question", "q": "What values can one channel of an 8-bit image hold?", "a": "<b>0 to 255</b> (256 levels)", "x": "2⁸ = 256. Counting starts at 0, so the top value is 255. 12-bit = 4,096 levels, 16-bit = 65,536."}, {"l": "L3", "s": "f4", "d": "Oct 5", "said": "Test question", "q": "What happens when you edit and re-save a JPEG over and over?", "a": "<b>Generational degradation</b>: it's compressed again every save, so artifacts build up.", "x": "Fix: convert to TIFF or PSD before you edit."}, {"l": "L3", "s": "f4", "d": "Oct 5", "said": "Test question (the chart)", "q": "TIFF vs JPEG: which is better for repeated editing, and which allows transparency?", "a": "<b>TIFF</b> for both. JPEG degrades every save and has no transparency.", "x": "TIFF: lossless or lossy, 8/16/32 bits, layers, large files. JPEG: lossy, 8 bits only, small files."}, {"l": "L4", "s": "o4", "d": "Oct 16", "said": "Test question", "q": "Positive vs negative lens: what does each one do?", "a": "<b>Positive (convex)</b>: thicker in the center, <b>converges</b> light, forms a <b>real image</b>.<br><b>Negative (concave)</b>: thinner in the center, <b>diverges</b> light, <b>can't</b> form a real image alone.", "x": "Every camera lens uses both, e.g. an achromatic doublet."}, {"l": "L4", "s": "o6", "d": "Oct 16", "said": "Calculator trap", "q": "1/u + 1/v = 0.02 on your calculator. What is the focal length?", "a": "Press <b>1/x</b>: f = 1 ÷ 0.02 = <b>50 mm</b>", "x": "1/u + 1/v gives 1/f, not f. A 0.02 mm focal length makes no sense, so always flip it."}, {"l": "L5", "s": "n4", "d": "Oct 19", "said": "“A very good test question”", "q": "Telephoto vs reverse telephoto (retrofocus): how are the elements arranged?", "a": "<b>Telephoto</b>: positive element in <b>front</b>, negative behind → rear nodal point falls <b>in front of</b> the lens.<br><b>Retrofocus</b>: negative in front, positive behind → rear nodal point falls <b>behind</b> the lens, so a wide angle clears the DSLR mirror.", "x": "Her slide calls it “Reverse Telephoto Wide Angle Lens”."}, {"l": "L5", "s": "n5", "d": "Oct 19", "said": "She “can't impose upon that enough”", "q": "What does changing the focal length change, and what does moving the camera change?", "a": "Focal length → <b>framing</b>.<br>Camera position → <b>perspective</b>.", "x": "Zooming never changes perspective. Only distance does."},{"l": "L6", "s": "a8", "d": "Oct 23", "said": "“Beautiful test question”", "q": "What affects your circle of confusion?", "a": "<b>Eyesight</b> · <b>contrast</b> (circle vs background) · <b>level of illumination</b> · the viewer's <b>opinion</b> of sharpness", "x": "Memory hook: Every Coffee Looks Okay."},{"l": "L6", "s": "a9", "d": "Oct 23", "said": "“Also a beautiful test question”", "q": "What are the three depth of field controls?", "a": "<b>Aperture</b> · <b>object distance</b> (camera to subject) · <b>focal length</b>", "x": "Smaller aperture, farther away, shorter lens = more depth of field."},{"l": "L7", "s": "v5", "d": "Oct 26", "said": "In blue on her slide (“probably on a test”)", "q": "How do focal length and object distance affect image size?", "a": "Image size is <b>directly proportional to focal length</b> and <b>inversely proportional to object distance</b>.", "x": "Double the focal length → everything twice as big. Twice as far away → half as big."}];
 var fc=document.getElementById('fc');if(!fc)return;
 var order=P.map(function(_,i){return i;}),i=0,back=false,mark={};
 try{mark=JSON.parse(localStorage.getItem('e2-picks')||'{}')||{};}catch(e){}
@@ -1312,6 +1411,56 @@ if(hf){function drawH(){var f=50,c=0.03,H=f*f/(hN*c)+f,Hft=H/304.8,near=hM==='in
  s+=T(X(near),148,'sharp from '+near.toFixed(1)+' ft',{s:12,c:'#1F8A70'});hf.innerHTML=s;
  document.getElementById('hfcap').innerHTML='50 mm at f/'+hN+': hyperfocal distance ≈ <b>'+Hft.toFixed(1)+' ft</b>. '+(hM==='inf'?'Focused at ∞, everything from '+Hft.toFixed(1)+' ft to ∞ is sharp.':'Focused at '+Hft.toFixed(1)+' ft, everything from half that, <b>'+(Hft/2).toFixed(1)+' ft</b>, to ∞ is sharp.');}
  segPick('hfm',function(b){hM=b.dataset.m;drawH();});segPick('hfn',function(b){hN=+b.dataset.n;drawH();});drawH();}
+})();
+
+/* ===== Oct 26 · autofocus & perspective ===== */
+(function(){
+function T(x,y,t,o){o=o||{};return '<text x="'+x+'" y="'+y+'" text-anchor="'+(o.a||'middle')+'" style="font:'+(o.w||700)+' '+(o.s||15)+'px Inter,sans-serif" fill="'+(o.c||'#15131C')+'">'+t+'</text>';}
+var af=document.getElementById('afsvg');if(!af)return;
+var PK=0.62,timer=null,RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function C(x){return Math.exp(-Math.pow((x-PK)/0.13,2));}
+function drawAF(pos,trail,label){var X=function(x){return 40+x*380;},Y=function(c){return 150-c*120;};
+ var s='<rect width="460" height="190" fill="#fff"/><line x1="40" y1="150" x2="420" y2="150" stroke="#15131C"/><line x1="40" y1="20" x2="40" y2="150" stroke="#15131C"/>';
+ var p=[];for(var i=0;i<=100;i++){var x=i/100;p.push(X(x).toFixed(1)+','+Y(C(x)).toFixed(1));}
+ s+='<polyline points="'+p.join(' ')+'" fill="none" stroke="#6D4AD9" stroke-width="3"/>';
+ (trail||[]).forEach(function(x){s+='<circle cx="'+X(x)+'" cy="'+Y(C(x))+'" r="4" fill="#D9822B" fill-opacity=".6"/>';});
+ s+='<line x1="'+X(pos)+'" y1="20" x2="'+X(pos)+'" y2="150" stroke="#D9822B" stroke-dasharray="4 4"/><circle cx="'+X(pos)+'" cy="'+Y(C(pos))+'" r="7" fill="#D9822B"/>';
+ s+=T(230,175,'lens position →',{s:13,c:'#5E5A6B'})+T(28,90,'contrast',{s:13,c:'#5E5A6B'}).replace('<text','<text transform="rotate(-90 28 90)"');
+ af.innerHTML=s;if(label)document.getElementById('afcap').innerHTML=label;}
+function run(kind){clearInterval(timer);if(kind==='p'){var steps=[0.08,0.6,PK],k=0,tr=[];timer=setInterval(function(){tr.push(steps[k]);drawAF(steps[k],tr,k===0?'Phase detection measures the distance…':k===1?'…jumps the lens there…':'<b>…and fine-tunes. In focus in 2 moves. Fast.</b>');k++;if(k>=steps.length)clearInterval(timer);},RM?0:450);return;}
+ var x=0.05,tr=[],best=0,bx=0,phase=0;timer=setInterval(function(){tr.push(x);var c=C(x);if(c>best){best=c;bx=x;}drawAF(x,tr,'Contrast detection: moving through focus and measuring contrast…');
+  if(phase===0){x+=0.05;if(x>0.95){phase=1;}}else{clearInterval(timer);drawAF(bx,tr,'<b>Back to the contrast peak: in focus.</b> It had to scan past the peak to find it, so it\'s slower.');}},RM?0:120);}
+document.getElementById('afc').onclick=function(){run('c');};document.getElementById('afp').onclick=function(){run('p');};
+drawAF(PK,[],'Contrast is highest at perfect focus.');
+
+/* linear perspective */
+var vpx=document.getElementById('vpx'),hz=document.getElementById('hz'),lp=document.getElementById('lpsvg'),ort=true;
+function drawLP(){var vx=+vpx.value,hy=+hz.value,s='<rect width="460" height="230" fill="#fff"/>';
+ s+='<line x1="0" y1="'+hy+'" x2="460" y2="'+hy+'" stroke="#3F6CC9" stroke-width="2"/>'+T(10,hy-6,'horizon line',{s:12,a:'start',c:'#3F6CC9'});
+ function toward(x,y,t){return [x+(vx-x)*t,y+(hy-y)*t];}
+ [[20,40,130,220],[330,40,440,220]].forEach(function(b,bi){var x0=b[0],y0=b[1],x1=b[2],y1=b[3],t=0.55;var inner=bi===0?x1:x0;
+  var pts=[[inner,y0],[inner,y1]];var far=pts.map(function(p){return toward(p[0],p[1],t);});
+  if(ort){[[inner,y0],[inner,y1],[bi===0?x0:x1,y0]].forEach(function(p){s+='<line x1="'+p[0]+'" y1="'+p[1]+'" x2="'+vx+'" y2="'+hy+'" stroke="#E0473C" stroke-dasharray="4 4"/>';});}
+  s+='<rect x="'+x0+'" y="'+y0+'" width="'+(x1-x0)+'" height="'+(y1-y0)+'" fill="#EFEAFD" stroke="#6D4AD9" stroke-width="2"/>';
+  s+='<polygon points="'+inner+','+y0+' '+far[0][0].toFixed(1)+','+far[0][1].toFixed(1)+' '+far[1][0].toFixed(1)+','+far[1][1].toFixed(1)+' '+inner+','+y1+'" fill="#DCD3FA" stroke="#6D4AD9" stroke-width="2"/>';
+  for(var k=1;k<=3;k++){var tt=k*0.13,a=toward(inner,y0+30,tt),c=toward(inner,y0+60,tt);s+='<line x1="'+a[0].toFixed(1)+'" y1="'+a[1].toFixed(1)+'" x2="'+c[0].toFixed(1)+'" y2="'+c[1].toFixed(1)+'" stroke="#6D4AD9" stroke-width="3"/>';}});
+ s+='<circle cx="'+vx+'" cy="'+hy+'" r="6" fill="#3F6CC9"/>'+T(vx,hy+22,'vanishing point',{s:12,c:'#3F6CC9'});
+ lp.innerHTML=s;}
+vpx.addEventListener('input',drawLP);hz.addEventListener('input',drawLP);
+document.getElementById('orth').onclick=function(){ort=!ort;this.textContent=ort?'Hide orthogonal lines':'Show orthogonal lines';this.setAttribute('aria-pressed',ort);drawLP();};drawLP();
+
+/* boots */
+var bF=50,bd=document.getElementById('bd'),bs=document.getElementById('bsvg');
+function boot(x,base,h,c){var w=h*0.7;return '<path d="M'+(x)+' '+(base-h)+' h'+(w*0.45)+' v'+(h*0.62)+' q'+(w*0.1)+' '+(h*0.18)+' '+(w*0.55)+' '+(h*0.22)+' v'+(h*0.16)+' h-'+(w)+' z" fill="'+c+'" stroke="#5a3b1f" stroke-width="1.5"/>';}
+function drawB(){var u=+bd.value,s1=0.75*(bF/50)*(10/u),s2=s1/2,px=60;
+ var s='<rect width="460" height="200" fill="#fff"/><line x1="10" y1="170" x2="450" y2="170" stroke="#C9C4D8" stroke-width="2"/>';
+ var h1=Math.min(150,s1*px),h2=Math.min(150,s2*px);
+ s+=boot(110,170,h1,'#A0703F')+boot(300,170,h2,'#A0703F');
+ s+=T(130,190,u+' ft · '+(Math.round(s1*1000)/1000)+' in',{s:13})+T(315,190,(2*u)+' ft · '+(Math.round(s2*1000)/1000)+' in',{s:13});
+ bs.innerHTML=s;document.getElementById('bdv').textContent=u+' ft';
+ document.getElementById('bcap').innerHTML='At '+bF+' mm the near boot images at <b>'+(Math.round(s1*1000)/1000)+' in</b> and the far one at <b>'+(Math.round(s2*1000)/1000)+' in</b>: still exactly <b>2:1</b>. Change the focal length and both change together; change the distance and the sizes change inversely.';}
+document.querySelectorAll('#bf button').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('#bf button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});bF=+b.dataset.f;drawB();});});
+bd.addEventListener('input',drawB);drawB();
 })();
 
 /* ===== crop factor & diopters (Oct 19) ===== */
