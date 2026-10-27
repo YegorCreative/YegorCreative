@@ -175,7 +175,7 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <g fill="#6D4AD9" fill-opacity=".18" stroke="#6D4AD9" stroke-opacity=".5">
 <rect x="40" y="130" width="45" height="20"/><rect x="85" y="110" width="45" height="40"/><rect x="130" y="90" width="45" height="60"/><rect x="175" y="70" width="45" height="80"/><rect x="220" y="50" width="45" height="100"/><rect x="265" y="30" width="45" height="120"/><rect x="310" y="10" width="45" height="140"/></g>
 <path d="M40 150 L355 10" stroke="#E0473C" stroke-width="3"/>
-<text x="370" y="30" font-size="12" fill="#E0473C" font-weight="800">voltage (analog)</text><text x="370" y="48" font-size="12" fill="#6D4AD9" font-weight="800">digital counts</text><text x="40" y="166" font-size="11" fill="#5E5A6B">more light → more voltage → higher count</text></svg>
+<text x="436" y="30" text-anchor="end" font-size="12" fill="#E0473C" font-weight="800">voltage (analog)</text><text x="436" y="48" text-anchor="end" font-size="12" fill="#6D4AD9" font-weight="800">digital counts</text><text x="40" y="166" font-size="11" fill="#5E5A6B">more light → more voltage → higher count</text></svg>
 <ul class="clean"><li>More light → more <b>voltage</b>. Voltage is <b>analog</b>: unlimited levels (1.375647 V is fine).</li><li>The <b>analog-to-digital (A/D) converter</b> sorts each voltage into a <b>digital count</b>. The number of counts is limited by the <b>bit depth</b>.</li><li>Every voltage in a range gets the same count. That's where <b>stair-steps</b> on smooth edges come from (you don't see them with enough pixels).</li></ul>
 <div class="check" data-q="d2"></div>
 </section>
@@ -278,7 +278,7 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <rect x="150" y="20" width="270" height="36" fill="#3F6CC9" fill-opacity=".85"/><rect x="150" y="58" width="270" height="36" fill="#3FA34D" fill-opacity=".85"/><rect x="150" y="96" width="270" height="36" fill="#E0473C" fill-opacity=".85"/>
 <text x="285" y="43" text-anchor="middle" fill="#fff" font-weight="800" font-size="14">blue layer (shallow)</text><text x="285" y="81" text-anchor="middle" fill="#fff" font-weight="800" font-size="14">green layer</text><text x="285" y="119" text-anchor="middle" fill="#fff" font-weight="800" font-size="14">red layer (deepest)</text>
 <g stroke-width="4" stroke-linecap="round"><path d="M40 6 L40 40" stroke="#3F6CC9"/><path d="M80 6 L80 78" stroke="#3FA34D"/><path d="M120 6 L120 116" stroke="#E0473C"/></g>
-<text x="80" y="146" text-anchor="middle" font-size="12" fill="#5E5A6B">light goes deeper into silicon</text></svg>
+<text x="6" y="146" font-size="12" fill="#5E5A6B">light goes deeper into silicon</text></svg>
 <ul class="clean"><li>A <b>direct image sensor</b>: records red, green and blue at <b>every</b> photosite, using how deep each color goes into the silicon. Like color film's 3 layers.</li><li><b>Pros:</b> no demosaicing (no interpolation), sharper still lifes, less processing.</li><li><b>Cons:</b> <b>blur on moving subjects</b>, and "funky" colors under some lights.</li><li>Sigma bought Foveon in <b>2008</b>, and it's the only company using it. No camera currently in production.</li></ul></div>
 <div class="check" data-q="2"></div>
 </section>
@@ -734,7 +734,7 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <svg class="v" viewBox="0 0 440 160" role="img" aria-label="A straw looks bent where it enters the water">
 <rect x="120" y="70" width="200" height="80" fill="#3F6CC9" fill-opacity=".18"/><line x1="120" y1="70" x2="320" y2="70" stroke="#3F6CC9" stroke-width="2"/>
 <path d="M150 10 L215 70" stroke="#D9822B" stroke-width="8" stroke-linecap="round"/><path d="M215 70 L250 140" stroke="#D9822B" stroke-width="8" stroke-linecap="round" opacity=".85"/><path d="M215 70 L280 130" stroke="#D9822B" stroke-width="3" stroke-dasharray="5 5" opacity=".6"/>
-<text x="330" y="66" font-size="12" fill="#5E5A6B">air</text><text x="330" y="100" font-size="12" fill="#3F6CC9">water (higher index)</text><text x="285" y="148" font-size="11" fill="#5E5A6B">where it really is</text></svg>
+<text x="330" y="66" font-size="12" fill="#5E5A6B">air</text><text x="436" y="100" text-anchor="end" font-size="12" fill="#3F6CC9">water (higher index)</text><text x="285" y="148" font-size="11" fill="#5E5A6B">where it really is</text></svg>
 <ul class="clean"><li><b>Refraction</b> = light <b>bending</b> as it passes from one medium into another (unless it hits perpendicular, like on the optical axis).</li><li>The <b>refractive index</b> says how much a material bends light. Water's is higher than air's, so a straw looks broken.</li><li>Glass bends light, so lenses can focus. <b>Different wavelengths bend differently</b> (chromatic aberration, next lecture).</li><li><b>Short focal length</b> → rays bend sharply → <b>more distortion</b> (wide angle). <b>Long focal length</b> → gentle bending → more magnification, <b>less distortion</b>.</li></ul>
 <div class="check" data-q="o7"></div>
 </section>
@@ -1350,7 +1350,7 @@ segPick('cab',function(b){drawCa(b.dataset.s==='1');});drawCa(false);}
 var sp=document.getElementById('spsvg');
 if(sp){var s='<rect width="460" height="250" fill="#fff"/>';[[62,'Perfect lens: sharp image',0],[188,'Spherical lens: unsharp image',1]].forEach(function(r){var cy=r[0];s+='<path d="M140 '+(cy-52)+' Q165 '+cy+' 140 '+(cy+52)+'Z" fill="#DCD3FA" stroke="#6D4AD9" stroke-width="2"/>';
  for(var h=-44;h<=44;h+=11){if(!h)continue;var fx=r[2]?380-Math.pow(Math.abs(h)/44,2)*90:360,ex=450,ey=cy-h*(ex-fx)/(fx-150);s+='<line x1="10" y1="'+(cy+h)+'" x2="150" y2="'+(cy+h)+'" stroke="#E0473C" stroke-width="1.5"/><line x1="150" y1="'+(cy+h)+'" x2="'+ex+'" y2="'+ey.toFixed(1)+'" stroke="#E0473C" stroke-width="1.5"/>';}
- s+=T(300,cy-50,r[1],{s:13});});sp.innerHTML=s;}
+ s+=T(300,cy-42,r[1],{s:13});});sp.innerHTML=s;}
 
 /* distortion grid */
 var dk=document.getElementById('dk'),ds=document.getElementById('dsvg');
@@ -1391,7 +1391,7 @@ if(cu){var DIST=[];for(var k=0;k<=40;k++)DIST.push(Math.round(Math.exp(Math.log(
  s+='<path d="M'+lx+' 38 Q'+(lx+14)+' 90 '+lx+' 142 Q'+(lx-14)+' 90 '+lx+' 38Z" fill="#DCD3FA" stroke="#6D4AD9" stroke-width="2"/><line x1="'+lx+'" y1="'+(90-ap)+'" x2="'+lx+'" y2="'+(90+ap)+'" stroke="#6D4AD9" stroke-width="5"/>';
  [-1,1].forEach(function(g){var ay=90+g*ap;s+='<line x1="'+ox.toFixed(1)+'" y1="90" x2="'+lx+'" y2="'+ay+'" stroke="#D9822B" stroke-width="1.5"/><line x1="'+lx+'" y1="'+ay+'" x2="'+ix.toFixed(1)+'" y2="90" stroke="#D9822B" stroke-width="1.5"/>';var ey=90+g*ap*(ix-sx)/(ix-lx);s+='';});
  s+='<line x1="'+sx+'" y1="30" x2="'+sx+'" y2="150" stroke="#15131C" stroke-width="3"/>'+T(sx,24,'sensor',{s:11});
- var R=Math.max(1.5,Math.min(30,b/c*7));s+='<rect x="340" y="40" width="110" height="100" rx="10" fill="#14101C"/><circle cx="395" cy="90" r="7" fill="none" stroke="#fff" stroke-dasharray="3 3"/><circle cx="395" cy="90" r="'+R.toFixed(1)+'" fill="#FFD27A" fill-opacity=".8"/>'+T(395,156,ok?'looks like a point ✓':'visible blur ✗',{s:12,c:ok?'#1F8A70':'#C0392B'});
+ var R=Math.max(1.5,Math.min(30,b/c*7));s+='<rect x="340" y="40" width="110" height="100" rx="10" fill="#14101C"/><circle cx="395" cy="90" r="7" fill="none" stroke="#fff" stroke-dasharray="3 3"/><circle cx="395" cy="90" r="'+R.toFixed(1)+'" fill="#FFD27A" fill-opacity=".8"/>'+T(395,160,ok?'a point ✓':'blurry ✗',{s:11,c:ok?'#1F8A70':'#C0392B'});
  cf.innerHTML=s;document.getElementById('cuv').textContent=(u/1000).toFixed(u<1000?2:1)+' m';
  document.getElementById('cfcap').innerHTML='Blur circle '+b.toFixed(3)+' mm vs permissible 0.03 mm (dashed). At f/'+cN+' the depth of field is about <b>'+(near/1000).toFixed(2)+' m to '+(far===Infinity?'∞':(far/1000).toFixed(2)+' m')+'</b>.';}
  cu.addEventListener('input',drawCf);segPick('cfn',function(b){cN=+b.dataset.n;drawCf();});drawCf();}
@@ -1587,7 +1587,7 @@ function seg(id,cb){var g=document.getElementById(id);if(!g)return;g.querySelect
   var g='<line x1="10" y1="110" x2="450" y2="110" stroke="#9A95A8" stroke-dasharray="4 4"/><path d="M70 110 V40" stroke="#6D4AD9" stroke-width="6"/><path d="M60 52 L70 34 L80 52" fill="#6D4AD9"/><text x="70" y="135" text-anchor="middle" font-size="11">object</text>';
   g+='<rect x="236" y="20" width="8" height="'+(90-hole/2)+'" fill="#15131C"/><rect x="236" y="'+(110+hole/2)+'" width="8" height="'+(90-hole/2)+'" fill="#15131C"/><text x="240" y="14" text-anchor="middle" font-size="11">pinhole</text>';
   g+='<path d="M70 40 L410 180 M70 110 L410 110" stroke="#E0A21E" stroke-width="'+(1+hole/3)+'" stroke-opacity=".55"/>';
-  g+='<rect x="404" y="20" width="6" height="180" fill="#C9C3DA"/><g opacity="'+bright.toFixed(2)+'"><path d="M394 110 V176" stroke="#6D4AD9" stroke-width="'+(6+blur)+'" stroke-opacity="'+(1-k*0.12).toFixed(2)+'"/><path d="M384 166 L394 184 L404 166" fill="#6D4AD9"/></g><text x="380" y="210" text-anchor="middle" font-size="11">upside-down image on the back</text>';
+  g+='<rect x="404" y="20" width="6" height="180" fill="#C9C3DA"/><g opacity="'+bright.toFixed(2)+'"><path d="M394 110 V176" stroke="#6D4AD9" stroke-width="'+(6+blur)+'" stroke-opacity="'+(1-k*0.12).toFixed(2)+'"/><path d="M384 166 L394 184 L404 166" fill="#6D4AD9"/></g><text x="454" y="197" text-anchor="end" font-size="11">upside-down image on the back</text>';
   g+='<path d="M70 150 H236" stroke="#15131C"/><text x="153" y="166" text-anchor="middle" font-size="11">object distance</text><path d="M244 195 H404" stroke="#15131C"/><text x="324" y="190" text-anchor="middle" font-size="11">image distance</text>';
   svg.innerHTML=g;document.getElementById('phcap').innerHTML=k<=2?'Small hole: <b>sharper but dim</b>, so you need a very long exposure.':(k===3?'Medium hole: a balance between sharpness and brightness.':'Big hole: <b>brighter but blurry</b>, because each point spreads into a big spot.')+' Either way, the image is <b>upside down</b>, and there’s only one sharp image distance for each hole size.';}
  s.addEventListener('input',draw);draw();})();
