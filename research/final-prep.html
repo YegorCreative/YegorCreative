@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Final Exam Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#E8EAED; --surface:#FFFFFF; --ink:#15181C; --muted:#59616B; --line:#D2D6DC;
+  --accent:#C4611A; --accent-ink:#FFFFFF; --accent-soft:#F6E4D6;
+  --good:#2B7A4B; --good-bg:#E2F1E7; --bad:#B0261D; --bad-bg:#F8E0DD; --warn:#8A6100;
+  --gray18:#777B7F;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#121417; --surface:#1B1E22; --ink:#E6E8EB; --muted:#9BA3AE; --line:#2D3238;
+    --accent:#F08A3C; --accent-ink:#1A0E04; --accent-soft:#3A2515;
+    --good:#72D09A; --good-bg:#142A1E; --bad:#FF8C82; --bad-bg:#301816; --warn:#E6B94F;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#121417; --surface:#1B1E22; --ink:#E6E8EB; --muted:#9BA3AE; --line:#2D3238;
+  --accent:#F08A3C; --accent-ink:#1A0E04; --accent-soft:#3A2515;
+  --good:#72D09A; --good-bg:#142A1E; --bad:#FF8C82; --bad-bg:#301816; --warn:#E6B94F;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;padding-inline:16px;padding-block:24px 64px}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1,h2{font-family:var(--display);font-weight:700;letter-spacing:.01em;line-height:1.05;margin:0;text-wrap:balance}
+h1{font-size:clamp(2.4rem,7vw,3.4rem);text-transform:uppercase}
+h2{font-size:1.6rem}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
+.head{display:flex;gap:16px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
+.chip18{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.75rem;color:var(--muted)}
+.chip18 i{display:block;width:28px;height:28px;border-radius:4px;background:var(--gray18)}
+/* attempts */
+.dots{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.dot{aspect-ratio:1;max-width:100%;border-radius:50%;border:2px dashed var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.dot.done{border-style:solid;border-color:var(--accent);color:var(--ink);background:var(--accent-soft)}
+.dot.next{border-style:solid;border-color:var(--ink);color:var(--ink)}
+.dot small{font-size:.62rem;color:var(--muted)}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+button{font:inherit;cursor:pointer;border-radius:8px}
+.btn{background:var(--accent);color:var(--accent-ink);border:none;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.45;cursor:default}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+/* mastery */
+.bars{display:grid;gap:10px}
+.bar{display:grid;grid-template-columns:150px 1fr 48px;gap:10px;align-items:center;font-size:.9rem}
+.track{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.fill{height:100%;background:var(--accent)}
+.bar .pct{font-family:var(--mono);font-size:.8rem;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+@media (max-width:480px){.bar{grid-template-columns:110px 1fr 40px}}
+.rules{margin:0;padding-left:18px;display:grid;gap:4px}
+/* quiz */
+.progress{height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.progress div{height:100%;background:var(--accent);transition:width .25s}
+.qmeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.tag{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;background:var(--accent-soft);color:var(--ink);padding:4px 8px;border-radius:4px}
+.qtext{font-size:1.2rem;font-weight:500;line-height:1.45}
+.opts{display:grid;gap:8px}
+.opt{text-align:left;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);padding:12px 14px;display:flex;gap:12px;align-items:flex-start}
+.opt .key{font-family:var(--mono);font-size:.8rem;color:var(--muted);min-width:1.2em;padding-top:2px}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.opt.right{border-color:var(--good);background:var(--good-bg)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.opt:disabled{cursor:default}
+input[type=text]{width:100%;font:inherit;font-size:1.05rem;padding:12px 14px;border:1.5px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+.hint{font-size:.85rem;color:var(--muted)}
+.fb{border-radius:8px;padding:14px 16px;display:grid;gap:6px}
+.fb.ok{background:var(--good-bg);border:1px solid var(--good)}
+.fb.no{background:var(--bad-bg);border:1px solid var(--bad)}
+.fb strong{font-family:var(--display);font-size:1.3rem;letter-spacing:.02em;text-transform:uppercase}
+.fb.ok strong{color:var(--good)} .fb.no strong{color:var(--bad)}
+.spell{color:var(--warn);font-weight:600}
+.spd{width:100%;max-width:420px;height:auto;color:var(--muted)}
+.spd .curve{fill:none;stroke:var(--accent);stroke-width:2}
+.spd .area{fill:var(--accent);fill-opacity:.15}
+.spd text{fill:var(--muted);font-family:var(--mono);font-size:10px}
+.spd line{stroke:var(--line)}
+/* results */
+.score{font-family:var(--display);font-size:clamp(3.5rem,14vw,5.5rem);font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.miss{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:4px}
+.miss .you{color:var(--bad)} .miss .ans{color:var(--good);font-weight:500}
+.stack{display:grid;gap:14px}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:520px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tile{border-radius:8px;padding:10px 12px;border:1px solid var(--line);display:grid;gap:2px}
+.tile b{font-family:var(--display);font-size:2rem;line-height:1}
+.tile span{font-size:.82rem;color:var(--muted)}
+.st-m{--c:#2B7A4B}.st-l{--c:#C99A1C}.st-n{--c:#B0261D}.st-u{--c:#8A9099}
+.tile.st-m,.tile.st-l,.tile.st-n,.tile.st-u{border-left:6px solid var(--c)}
+.sbar{display:flex;height:10px;border-radius:5px;overflow:hidden;background:var(--line)}
+.sbar i{display:block;height:100%;background:var(--c)}
+.tb{display:grid;grid-template-columns:150px 1fr 70px;gap:10px;align-items:center;font-size:.9rem}
+.tb .pct{font-family:var(--mono);font-size:.78rem;text-align:right;color:var(--muted)}
+@media (max-width:480px){.tb{grid-template-columns:1fr 64px}.tb .sbar{grid-column:1/-1;grid-row:2}}
+details.cat{border:1px solid var(--line);border-left:6px solid var(--c);border-radius:8px;padding:10px 14px}
+details.cat summary{cursor:pointer;font-weight:600}
+.term{border-top:1px solid var(--line);padding:8px 0;display:grid;gap:2px;font-size:.92rem}
+.term .ans{color:var(--good);font-weight:500}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.8rem;color:var(--muted)}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--c);margin-right:5px;vertical-align:-1px}
+.mode{display:inline-flex;border:1.5px solid var(--line);border-radius:8px;overflow:hidden}
+.stack>.mode{display:flex}.stack>.mode button{flex:1 1 0}
+.mode button{border:0;border-radius:0;background:var(--surface);color:var(--ink);padding:10px 14px;font-weight:600}
+.mode button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.tag.flip{background:var(--ink);color:var(--surface);margin-left:6px}
+.selfg{display:flex;gap:10px;flex-wrap:wrap}
+.selfg .btn.okb{background:var(--good);color:#fff}.selfg .btn.nob{background:var(--bad);color:#fff}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.togs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:520px){.togs{grid-template-columns:1fr}}
+.tog{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:10px 12px;cursor:pointer;background:var(--surface)}
+.tog input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--accent);flex:none}
+.tog span{display:grid;gap:2px}.tog small{color:var(--muted);font-size:.8rem;line-height:1.35}
+.szrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.szrow input{width:110px;font:inherit;font-size:1.2rem;font-weight:600;padding:10px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+.star{background:none;border:1px solid var(--line);border-radius:999px;width:40px;height:40px;font-size:1.2rem;color:var(--warn);flex:none}
+.star[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
+.claim{border:1.5px dashed var(--accent);border-radius:8px;padding:12px 14px;font-weight:600;background:var(--accent-soft)}
+.claim::before{content:"Proposed answer: ";font-weight:400;color:var(--muted)}
+.lvmove{font-size:.9rem;color:var(--muted)}
+.linkbtn{background:none;border:none;padding:0;color:var(--ink);text-decoration:underline;font-size:.9rem;cursor:pointer}
+input.good{border-color:var(--good)!important;background:var(--good-bg)!important}
+.lv-new{--c:#8A9099}.lv-learning{--c:#B0261D}.lv-almost{--c:#C99A1C}.lv-mastered{--c:#2B7A4B}.lv-completed{--c:#1F5FB0}
+.tag.lv{background:transparent;border:1px solid var(--c);color:var(--ink);margin-left:6px}
+.tiles{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+@media (max-width:620px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media (max-width:400px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+.tile.lv-new,.tile.lv-learning,.tile.lv-almost,.tile.lv-mastered,.tile.lv-completed{border-left:6px solid var(--c)}
+details.cat.lv-new,details.cat.lv-learning,details.cat.lv-almost,details.cat.lv-mastered,details.cat.lv-completed{border-left:6px solid var(--c)}
+.legend span{display:block}
+</style>
+</head><body>
+
+<div class="wrap" id="app"></div>
+
+<script>
+const TOPICS={expo:"Exam 1: stops & equivalent exposure",light:"Light: RATS",files:"Files: RAW, bits, JPEG & TIFF",lenses:"Lenses & lens designs",persp:"Framing, perspective & image size",dof:"Circle of confusion & depth of field"};
+const ISO=["100","200","400","800","1600","3200","6400"];
+const SHUT=["1","1/2","1/4","1/8","1/15","1/30","1/60","1/125","1/250","1/500","1/1000"];
+const APER=["1.4","2","2.8","4","5.6","8","11","16","22","32"];
+// first mc option is the correct one (shuffled on screen)
+const Q=[
+{id:"TP1",t:"light",k:"fill",q:"RATS: light can be Reflected, Absorbed, Transmitted or ________.",a:["scattered"],e:"Her \"excellent test question\". Scattered = redirected by dust or water (fog + headlights)."},
+{id:"TP2",t:"light",k:"mc",q:"What happens to light that is absorbed?",o:["It turns into heat","It bounces off at the same angle","It passes straight through","It is redirected by dust"],e:"Absorbed light becomes heat. A black shirt in the sun gets hot."},
+{id:"TP3",t:"files",k:"mc",q:"Compared with a JPEG of the same shot, the RAW file has…",o:["Higher dynamic range, lower contrast, less sharpness, not ready for output","Lower dynamic range and higher contrast","More sharpness and more contrast","The same look, just a bigger file"],e:"Her \"really good test question\"."},
+{id:"TP4",t:"files",k:"mc",q:"Which is bigger: the RAW data or the demosaiced image?",o:["The demosaiced image (3 channels per pixel vs 1)","The RAW data","They are always the same size","It depends on the ISO"],e:"Demosaicing creates red, green and blue at every pixel."},
+{id:"TP5",t:"files",k:"fill",q:"An 8-bit channel holds values from 0 to ____.",a:["255"],e:"256 levels, numbered 0–255."},
+{id:"TP6",t:"files",k:"fill",q:"Re-saving a JPEG over and over causes ____________ degradation.",a:["generational","generation"],e:"Generational degradation. Spelling counts!"},
+{id:"TP7",t:"files",k:"mc",q:"TIFF vs JPEG: which one supports transparency and is better for repeated editing?",o:["TIFF","JPEG","Both equally","Neither"],e:"TIFF. JPEG has no transparency and degrades every save."},
+{id:"TP8",t:"lenses",k:"mc",q:"A lens that is thinner in the center than at the edges…",o:["Is negative (concave), diverges light and can't form a real image alone","Is positive and converges light","Forms a real image by itself","Can start a fire with sunlight"],e:"Negative = concave = diverges."},
+{id:"TP9",t:"lenses",k:"num",q:"Your calculator shows 1/u + 1/v = 0.0125. What is the focal length (mm)?",a:80,tol:0.5,d:"80 mm",e:"Press 1/x: 1 ÷ 0.0125 = 80 mm."},
+{id:"TP10",t:"lenses",k:"mc",q:"In a (normal) telephoto lens design…",o:["The positive element is in front of the negative, so the rear nodal point falls in front of the lens","The negative element is in front","The rear nodal point falls behind the lens","There is only one element"],e:"Her \"very good test question\". Swap them and you get retrofocus (reverse telephoto)."},
+{id:"TP11",t:"lenses",k:"mc",q:"Why are most DSLR wide-angle lenses retrofocus designs?",o:["The rear nodal point falls behind the lens, so the lens clears the mirror","It makes them lighter","It removes all distortion","It gives a fixed aperture"],e:"A short focal length would otherwise put the lens inside the mirror box."},
+{id:"TP12",t:"persp",k:"mc",q:"You want to change the PERSPECTIVE of a portrait. What do you change?",o:["Camera position (distance)","Focal length","Aperture","ISO"],e:"Focal length changes framing; only camera position changes perspective."},
+{id:"TP15",t:"persp",k:"mc",q:"Her blue-slide rule: image size is…",o:["Directly proportional to focal length and inversely proportional to object distance","Inversely proportional to focal length","Directly proportional to object distance","Unrelated to focal length"],e:"Double f → double size. Double the distance → half the size."},
+{id:"TP13",t:"dof",k:"mc",q:"Which list gives the four things that affect the circle of confusion?",o:["Eyesight, contrast, level of illumination, the viewer's opinion","Aperture, focal length, distance, ISO","Sensor size, bit depth, ISO, contrast","Eyesight, shutter speed, focal length, color"],e:"Her \"beautiful test question\". Hook: Every Coffee Looks Okay."},
+{id:"TP14",t:"dof",k:"mc",q:"What are the three depth of field controls?",o:["Aperture, object distance, focal length","Aperture, shutter speed, ISO","Focal length, ISO, white balance","Object distance, file format, sensor size"],e:"Her other \"beautiful test question\"."},
+{id:"EX1",t:"expo",k:"mc",q:"Which three settings make an exposure?",o:["Shutter speed, aperture (f-number) and ISO","Shutter speed, white balance and ISO","Aperture, focal length and ISO","Shutter speed, aperture and white balance"],e:"Shutter speed, f-number, ISO. Every exposure needs all three."},
+{id:"EX2",t:"expo",k:"mc",q:"A change of one full stop…",o:["Halves or doubles the exposure","Changes the exposure by 10%","Triples the exposure","Changes only the depth of field"],e:"One stop = ×2 or ÷2 the light."},
+{id:"EX3",t:"expo",k:"fill",q:"Full f-stops: 2.8, 4, 5.6, ___, 11 (number only).",a:["8"],e:"1.4 · 2 · 2.8 · 4 · 5.6 · 8 · 11 · 16 · 22 · 32. Memorize the table: she said it's free points."},
+{id:"EX4",t:"expo",k:"fill",q:"Full f-stops: 8, 11, ___, 22 (number only).",a:["16"],e:"…8 · 11 · 16 · 22 · 32."},
+{id:"EX5",t:"expo",k:"fill",q:"Full f-stops: 1.4, ___, 2.8, 4 (number only).",a:["2"],e:"1.4 · 2 · 2.8 · 4 · 5.6…"},
+{id:"EX6",t:"expo",k:"fill",q:"One stop FASTER than 1/125 s is 1/____ s (number only).",a:["250","1/250"],e:"1 · 1/2 · 1/4 · 1/8 · 1/15 · 1/30 · 1/60 · 1/125 · 1/250 · 1/500 · 1/1000."},
+{id:"EX7",t:"expo",k:"fill",q:"One stop SLOWER than 1/30 s is 1/____ s (number only).",a:["15","1/15"],e:"…1/8 · 1/15 · 1/30 · 1/60…"},
+{id:"EX8",t:"expo",k:"num",q:"ISO 200 → ISO 800. How many stops is that?",a:2,tol:0,d:"2 stops",e:"200 → 400 (1) → 800 (2). ISO doubles each stop: 100 · 200 · 400 · 800 · 1600 · 3200 · 6400."},
+{id:"EX9",t:"expo",k:"num",q:"Shutter 1/125 → 1/30. How many stops of light did you ADD?",a:2,tol:0,d:"+2 stops",e:"1/125 → 1/60 (1) → 1/30 (2). A smaller fraction = more light."},
+{id:"EX10",t:"expo",k:"mc",q:"Base exposure: ISO 200, 1/125, f/8. You keep ISO 200 and change to 1/30 to blur the bat. Equivalent f-number?",o:["f/16","f/4","f/11","f/5.6"],e:"Her example: 1/125 → 1/30 = +2, so take 2 away: f/8 → f/11 → f/16 = −2. The column adds to 0."},
+{id:"EX11",t:"expo",k:"mc",q:"Base exposure: ISO 200, 1/125, f/8. The sun goes down: ISO 800, keep f/8. Equivalent shutter speed?",o:["1/500","1/30","1/250","1/1000"],e:"Her example: ISO +2, so the shutter goes −2: 1/125 → 1/250 → 1/500."},
+{id:"EX12",t:"expo",k:"tf",q:"In an equivalent exposure, the stop changes (+ and −) add up to zero.",a:true,e:"True. Add light (+), take light away (−), the column must total 0."},
+{id:"EX13",t:"expo",k:"mc",q:"In an N + 2 / N − 2 table, you count the stops from…",o:["The base exposure N (the top row), every time","The row just above","The brightest row","Whatever setting you changed last"],e:"\"You're always going back to the top to start.\""},
+{id:"EX14",t:"expo",k:"tf",q:"N + 2 is an equivalent exposure.",a:false,e:"False. N + 2 is a deliberate 2-stop OVERexposure. N − 2 is a deliberate underexposure."},
+{id:"EX15",t:"expo",k:"mc",q:"Going from f/8 to f/16 does what to the light?",o:["Takes 2 stops away (−2)","Adds 2 stops (+2)","Takes 1 stop away","Adds 1 stop"],e:"Bigger f-number = smaller opening = less light. f/8 → 11 → 16 = −2."},
+{id:"FP1",t:"light",k:"mc",q:"Light that is redirected by dust or water droplets (fog + headlights) is…",o:["Scattered","Reflected","Absorbed","Transmitted"],e:"Scattered light acts like flare. It doesn't form an image."},
+{id:"FP2",t:"light",k:"mc",q:"Light that passes straight through clear glass is…",o:["Transmitted","Scattered","Absorbed","Reflected"],e:"Transmitted = passes through."},
+{id:"FP3",t:"light",k:"tf",q:"With specular reflection, the angle the light comes in equals the angle it bounces off.",a:true,e:"True: angle in = angle out."},
+{id:"FP4",t:"light",k:"fill",q:"RATS stands for Reflected, ________, Transmitted, Scattered.",a:["absorbed"],e:"Absorbed light turns into heat. Spelling counts!"},
+{id:"FP5",t:"files",k:"tf",q:"A RAW file is ready for output straight out of the camera.",a:false,e:"False. RAW still needs processing: it has lower contrast and less sharpness."},
+{id:"FP6",t:"files",k:"mc",q:"Why is a demosaiced image bigger than the RAW data?",o:["It has red, green and blue at every pixel (3 channels instead of 1)","It is compressed less","It adds metadata","It has a higher ISO"],e:"RAW = 1 value per photosite. Demosaicing fills in all 3 colors at every pixel."},
+{id:"FP7",t:"files",k:"num",q:"How many levels (tones) can one 8-bit channel hold?",a:256,tol:0,d:"256",e:"2⁸ = 256 levels, numbered 0 to 255."},
+{id:"FP8",t:"files",k:"mc",q:"You'll edit and re-save an image many times. What should you do first?",o:["Convert the JPEG to TIFF (or PSD)","Save it as a smaller JPEG","Raise the JPEG quality to 100 every time","Nothing, JPEG is lossless"],e:"TIFF doesn't suffer generational degradation."},
+{id:"FP9",t:"files",k:"tf",q:"JPEG supports transparency.",a:false,e:"False. JPEG has no transparency. TIFF does."},
+{id:"FP10",t:"files",k:"mc",q:"Why does an unprocessed RAW look less sharp than the JPEG?",o:["The anti-aliasing filter blurs a little, and sharpening is only added in processing","RAW has fewer pixels","RAW is compressed more","RAW uses a smaller sensor area"],e:"The camera sharpens the JPEG. The RAW waits for you to do it."},
+{id:"FP11",t:"lenses",k:"mc",q:"Which lens is thicker in the center, converges light and forms a real image?",o:["Positive (convex)","Negative (concave)","Both","Neither"],e:"Positive lenses converge. Negative lenses diverge and can't form a real image alone."},
+{id:"FP12",t:"lenses",k:"num",q:"Your calculator shows 1/u + 1/v = 0.04. What is the focal length (mm)?",a:25,tol:0.5,d:"25 mm",e:"Press 1/x: 1 ÷ 0.04 = 25 mm."},
+{id:"FP13",t:"lenses",k:"mc",q:"A retrofocus (reverse telephoto) lens has…",o:["The negative element in front and the positive element behind","The positive element in front and the negative behind","Only positive elements","Only one element"],e:"Negative in front pushes the rear nodal point behind the lens, so a wide angle clears the DSLR mirror."},
+{id:"FP14",t:"lenses",k:"tf",q:"In a telephoto design, the rear nodal point falls in front of the lens.",a:true,e:"True. That's why a telephoto is physically shorter than its focal length."},
+{id:"FP15",t:"lenses",k:"fill",q:"1/u + 1/v gives you 1/f. To get f, press the ____ key.",a:["1/x","x^-1","x-1","x⁻¹"],e:"1/x. A focal length of 0.02 mm makes no sense."},
+{id:"FP16",t:"persp",k:"mc",q:"You zoom from 24 mm to 70 mm without moving. What changes?",o:["Framing and image size, not perspective","Perspective","Perspective and depth cues","Nothing at all"],e:"Focal length = framing. Only camera position changes perspective."},
+{id:"FP17",t:"persp",k:"num",q:"A subject is 10 mm tall on the sensor with a 50 mm lens. You switch to a 100 mm lens without moving. New size (mm)?",a:20,tol:0.1,d:"20 mm",e:"Image size ∝ focal length: 2× the focal length → 2× the size."},
+{id:"FP18",t:"persp",k:"num",q:"A subject is 4 mm tall on the sensor at 10 ft. You back up to 20 ft (same lens). New size (mm)?",a:2,tol:0.05,d:"2 mm",e:"Image size ∝ 1 ÷ object distance: 2× farther → ½ the size."},
+{id:"FP19",t:"persp",k:"tf",q:"Image size is directly proportional to object distance.",a:false,e:"False. It's INVERSELY proportional: farther away = smaller."},
+{id:"FP20",t:"persp",k:"fill",q:"Image size is ________ proportional to object distance.",a:["inversely"],e:"Inversely. (And directly proportional to focal length.)"},
+{id:"FP21",t:"dof",k:"mc",q:"Which of these does NOT affect the circle of confusion?",o:["Shutter speed","Eyesight","Contrast","Level of illumination"],e:"The four: eyesight, contrast, level of illumination, the viewer's opinion."},
+{id:"FP22",t:"dof",k:"mc",q:"Which combination gives the MOST depth of field?",o:["f/16, subject far away, short lens","f/2, subject close, long lens","f/2, subject far away, long lens","f/16, subject close, long lens"],e:"Smaller aperture (bigger f-number), farther away, shorter lens = more depth of field."},
+{id:"FP23",t:"dof",k:"tf",q:"Moving farther from your subject increases depth of field.",a:true,e:"True. Object distance is one of the three controls."},
+{id:"FP24",t:"dof",k:"tf",q:"At the same distance and f-number, a longer focal length gives MORE depth of field.",a:false,e:"False. A longer lens gives LESS depth of field."},
+{id:"FP25",t:"dof",k:"mc",q:"Changing which setting does NOT change depth of field?",o:["ISO","Aperture","Focal length","Object distance"],e:"The three controls are aperture, object distance and focal length."},
+];
+/* ---------- storage (per-viewer, best effort) ---------- */
+const KEY="final-prep-v1";
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.attempts)return s;}catch(e){}return{attempts:[],stats:{}};}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+let S=load();
+if(!S.mode)S.mode=S.typeMode?"type":"auto";
+if(!S.star)S.star={};
+S.L=Object.assign({size:7,types:{mc:true,written:true,tf:true,flash:false},dir:"normal",shuffle:true,smart:false,retype:false,starred:false},S.L||{});
+if(S.setSize&&!S.L._m){S.L.size=S.setSize;S.L._m=1;}
+let run=null; let confirmReset=false;
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function norm(s){return String(s).toLowerCase().replace(/[–—]/g,"-").replace(/½/g,"1/2").replace(/¼/g,"1/4").replace(/⅛/g,"1/8").replace(/\s+/g," ").replace(/[.!]+$/,"").trim();}
+function lev(a,b){const m=[];for(let i=0;i<=a.length;i++){m[i]=[i];for(let j=1;j<=b.length;j++)m[i][j]=i?Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1)):j;}return m[a.length][b.length];}
+function seqTokens(s){return norm(s).replace(/f\s*\//g," ").replace(/\bsec(onds?)?\b/g," ").replace(/→|->|>/g," ").split(/[\s,;]+/).filter(t=>t&&t!=="-");}
+function answerText(q){
+  if(q.k==="gen")return q.d;
+  if(q.k==="mc"||q.k==="spd")return q.o[0];
+  if(q.k==="tf")return q.a?"True":"False";
+  if(q.k==="fill")return q.a[0].replace(/\b\w/g,c=>c.toUpperCase());
+  if(q.k==="num")return q.d;
+  if(q.k==="seq")return q.a.join(", ");
+  if(q.k==="multi")return q.c.map(i=>q.o[i]).join(", ");
+}
+
+/* ---------- generated questions: fresh numbers every time ---------- */
+let RNG=Math.random;
+function seeded(seed){let a=seed>>>0;return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function hashStr(s){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;}
+const ri=(a,b)=>a+Math.floor(RNG()*(b-a+1));
+const pk=a=>a[Math.floor(RNG()*a.length)];
+function rshuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(RNG()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+const art=n=>/^(8|11|18)/.test(String(n))?"an":"a",ratio=m=>m>=1?m+":1":"1:"+Math.round(1/m*100)/100;
+const r1=x=>Math.round(x*10)/10,r2=x=>Math.round(x*100)/100,r3=x=>Math.round(x*1000)/1000;
+const SH=["1/4","1/8","1/15","1/30","1/60","1/125","1/250","1/500","1/1000","1/2000","1/4000"];
+const AP=["1.4","2","2.8","4","5.6","8","11","16","22","32"];
+const IS=[100,200,400,800,1600,3200,6400];
+function mcFrom(right,pool){const others=rshuffle(pool.filter(x=>x!==right)).slice(0,3);return [right].concat(others);}
+const GEN={
+ snr(){const sd=pk([2,2.5,4,5,8,10]),ratio=pk([2,3,4,5,8,10,12,20,25,50]),mean=r1(sd*ratio),a=r2(20*Math.log10(mean/sd));
+  return{k:"num",q:`A gray patch measures mean ${mean} and standard deviation ${sd}. What is its SNR in dB? (1 decimal)`,a,tol:0.15,d:`${r1(a)} dB`,e:`SNR = 20 × log(${mean} ÷ ${sd}) = 20 × log(${r2(mean/sd)}) ≈ ${r1(a)} dB.`};},
+ tones(){const b=pk([1,2,3,4,5,6,7,8,10,12,14,16]),a=2**b;
+  return{k:"num",q:`How many tones can a ${b}-bit image (or channel) hold?`,a,tol:0,d:a.toLocaleString("en-US"),e:`2^${b} = ${a.toLocaleString("en-US")} tones${b===8?" (values 0–255)":""}.`};},
+ bits(){const b=pk([1,2,3,4,5,6,7,8,10,12]),t=2**b;
+  return{k:"num",q:`An image has ${t.toLocaleString("en-US")} possible tones. How many bits is that?`,a:b,tol:0,d:`${b} bits`,e:`2^x = ${t} → x = ${b}.`};},
+ crop(){const s=pk([[23.5,15.6],[22.3,14.9],[17.3,13],[13.2,8.8],[27.9,18.6],[25.1,16.7],[6.17,4.55]]),dg=r1(Math.hypot(s[0],s[1])),a=r2(43.3/dg);
+  return{k:"num",q:`A sensor measures ${s[0]} × ${s[1]} mm, so its diagonal is about ${dg} mm. What is its crop factor? (2 decimals)`,a,tol:0.02,d:`${a}`,e:`Crop factor = 43.3 ÷ ${dg} ≈ ${a}.`};},
+ equiv(){const f=pk([16,18,24,28,35,50,85,100,135,200]),c=pk([1.5,1.6,2]),a=r1(f*c);
+  return{k:"num",q:`${art(f)==="an"?"An":"A"} ${f} mm lens is used on a ${c}× crop camera. What full-frame focal length does it act like (mm)?`,a,tol:0.6,d:`${a} mm`,e:`${f} × ${c} = ${a} mm.`};},
+ lens(){const f=pk([25,40,50,60,75,80,100,120,150,200]),m=pk([0.25,0.5,1,2,3,4]),v=f*(m+1),u=r1(v/m);
+  return{k:"num",q:`Object distance u = ${u} mm and image distance v = ${v} mm. What is the focal length (mm)?`,a:f,tol:0.6,d:`${f} mm`,e:`1/${u} + 1/${v} = ${(1/u+1/v).toFixed(5)} → press 1/x → ${f} mm.`};},
+ comb(){const p=pk([[30,60],[40,40],[50,100],[60,120],[85,200],[100,150],[150,300],[200,200],[75,150],[120,180]]),a=r1(1/(1/p[0]+1/p[1]));
+  return{k:"num",q:`Two lenses of ${p[0]} mm and ${p[1]} mm are put together (touching). What is the combined focal length (mm)?`,a,tol:0.6,d:`${a} mm`,e:`1/${p[0]} + 1/${p[1]} = ${(1/p[0]+1/p[1]).toFixed(5)} → 1/x → ${a} mm.`};},
+ diop(){if(RNG()<.5){const f=pk([40,50,100,125,200,250,500,1000,2000]),a=r2(1000/f);
+   return{k:"num",q:`A lens has a focal length of ${f} mm. What is its power in diopters?`,a,tol:0.05,d:`${a} D`,e:`Convert to METERS first: ${f} mm = ${f/1000} m. D = 1 ÷ ${f/1000} = ${a}.`};}
+  const d1=pk([1,2,3,4]),d2=pk([1,2,3,4,10]),a=r1(1000/(d1+d2));
+  return{k:"num",q:`You stack a +${d1} and a +${d2} diopter lens. What is the combined focal length (mm)?`,a,tol:1,d:`${a} mm`,e:`Diopters add: ${d1} + ${d2} = ${d1+d2} D. f = 1 ÷ ${d1+d2} m ≈ ${a} mm.`};},
+ scale(){const f=pk([35,50,60,85,100,105,150]),m=pk([0.5,1,2,3,4]),v=f*(m+1),u=r2(v/m);
+  if(RNG()<.5)return{k:"num",q:`For a ${ratio(m)} reproduction (m = ${m}) with ${art(f)} ${f} mm lens, what is the image distance v (mm)?`,a:v,tol:0.6,d:`${v} mm`,e:`v = f(m + 1) = ${f} × ${m+1} = ${v} mm.`};
+  return{k:"num",q:`For a ${ratio(m)} reproduction (m = ${m}) with ${art(f)} ${f} mm lens, what is the object distance u (mm)? (1 decimal)`,a:u,tol:0.15,d:`${r1(u)} mm`,e:`v = f(m + 1) = ${v} mm, then u = v ÷ m = ${v} ÷ ${m} ≈ ${r1(u)} mm.`};},
+ ruler(){const w=pk([24,36,48,60,72,96,120,240]),a=r2(24/w);
+  return{k:"num",q:`You photograph a ruler with a full-frame camera, and ${w} mm of the ruler fills the frame's 24 mm short side. What is the scale of reproduction R? (2 decimals)`,a,tol:0.006,d:`${a}`,e:`R = 24 ÷ ${w} = ${a}.`};},
+ fnum(){const f=pk([24,35,50,85,100,135,200,300,400]),n=pk([1.4,2,2.8,4,5.6,8,11,16]),a=r1(f/n);
+  return{k:"num",q:`How wide is the aperture of ${art(f)} ${f} mm lens set to f/${n}? (mm, 1 decimal)`,a,tol:0.15,d:`${a} mm`,e:`Diameter = focal length ÷ f-number = ${f} ÷ ${n} ≈ ${a} mm.`};},
+ pin(){if(RNG()<.5){const f=pk([4,6,8,9,12,16,25]),a=r3(Math.sqrt(f)/141);
+   return{k:"num",q:`What is the best pinhole diameter (inches) for a pinhole ${f} inches from the film? (3 decimals)`,a,tol:0.0015,d:`${a} in`,e:`D = √f ÷ 141 = ${r3(Math.sqrt(f))} ÷ 141 ≈ ${a} in.`};}
+  const f=pk([100,144,150,196,225,400]),a=r2(Math.sqrt(f)/28);
+  return{k:"num",q:`What is the best pinhole diameter (mm) for a pinhole ${f} mm from the sensor? (2 decimals)`,a,tol:0.01,d:`${a} mm`,e:`D = √f ÷ 28 = ${r2(Math.sqrt(f))} ÷ 28 ≈ ${a} mm.`};},
+ hyper(){const h=pk([10,12,16,20,24,30,36,40,50,60]);
+  return{k:"num",q:`The hyperfocal distance is ${h} ft and you focus at ${h} ft. Everything is sharp from how many feet to infinity?`,a:h/2,tol:0,d:`${h/2} ft`,e:`Half the hyperfocal distance: ${h} ÷ 2 = ${h/2} ft.`};},
+ hand(){const f=pk([24,28,35,50,70,85,100,135,200,300]),c=pk([1,1.5,1.6]),x=f*c,dens=[15,30,60,125,250,500,1000];let i=dens.findIndex(d=>d>=x);if(i<0)i=dens.length-1;
+  const right="1/"+dens[i],o=mcFrom(right,dens.map(d=>"1/"+d).filter((_,j)=>Math.abs(j-i)<=3));
+  return{k:"mc",q:`Handheld rule: ${art(f)} ${f} mm lens on a ${c===1?"full-frame":c+"× crop"} camera. What is the slowest whole-stop shutter speed you should handhold?`,o,e:`${f} × ${c} = ${r1(x)}, so 1/${r1(x)}, rounded to the next faster whole stop = ${right}.`};},
+ isstop(){const base=pk([4,5,6,7,8]),st=pk([2,3,4]),right=SH[base-st];
+  return{k:"mc",q:`The handheld rule gives ${SH[base]}. Your lens has ${st} stops of image stabilization. About how slow can you safely go?`,o:mcFrom(right,SH.slice(Math.max(0,base-st-2),base+2)),e:`Each stop of IS = one shutter stop slower: ${SH.slice(base-st,base+1).reverse().join(" → ")}.`};},
+ nd(){if(RNG()<.5){const k=ri(1,10),d=r1(0.3*k);return{k:"num",q:`An ND ${d} filter blocks how many stops of light?`,a:k,tol:0,d:`${k} stops`,e:`Every 0.3 of density = 1 stop: ${d} ÷ 0.3 = ${k}.`};}
+  const k=ri(1,10);return{k:"num",q:`What density of ND filter blocks ${k} stop${k>1?"s":""}? (1 decimal)`,a:r1(0.3*k),tol:0.05,d:`ND ${r1(0.3*k)}`,e:`${k} × 0.3 = ${r1(0.3*k)}.`};},
+ expo(){for(let tries=0;tries<200;tries++){
+   const s=ri(2,8),a=ri(1,7),i=ri(0,5),d=pk([-4,-3,-2,-1,1,2,3,4]),solve=pk(["s","a","i"]);
+   const ns=s+ri(-3,3),na=a+ri(-3,3),ni=i+ri(-3,3);let S2=solve==="s"?null:ns,A2=solve==="a"?null:na,I2=solve==="i"?null:ni;
+   if(S2!==null&&(S2<0||S2>=SH.length))continue;if(A2!==null&&(A2<0||A2>=AP.length))continue;if(I2!==null&&(I2<0||I2>=IS.length))continue;
+   // exposure = -shutter -aperture +iso (bigger = brighter); N+d is d stops brighter
+   const E0=-s-a+i,E1=E0+d;
+   if(solve==="s")S2=-E1-A2+I2;else if(solve==="a")A2=-E1-S2+I2;else I2=E1+S2+A2;
+   if(S2<0||S2>=SH.length||A2<0||A2>=AP.length||I2<0||I2>=IS.length)continue;
+   const changed=[S2!==s,A2!==a,I2!==i].filter(Boolean).length;if(changed<2)continue;
+   const fmt={s:k=>SH[k],a:k=>"f/"+AP[k],i:k=>"ISO "+IS[k]},arr={s:SH.map((_,k)=>k),a:AP.map((_,k)=>k),i:IS.map((_,k)=>k)},val={s:S2,a:A2,i:I2};
+   const right=fmt[solve](val[solve]),pool=arr[solve].filter(k=>Math.abs(k-val[solve])<=3).map(fmt[solve]);
+   const given=[solve!=="s"?SH[S2]:null,solve!=="a"?"f/"+AP[A2]:null,solve!=="i"?"ISO "+IS[I2]:null].filter(Boolean).join(" and ");
+   const what={s:"shutter speed",a:"aperture",i:"ISO"}[solve];
+   const part=(n,b,c)=>{const x=c-b;return x?`${n} ${x>0?"+":""}${x}`:null;};
+   const sh=-(S2-s),ap=-(A2-a),iso=I2-i;
+   return{k:"mc",q:`Base exposure (N): ${SH[s]}, f/${AP[a]}, ISO ${IS[i]}. For N${d>0?"+":"−"}${Math.abs(d)}, you set ${given}. What ${what}?`,o:mcFrom(right,pool),
+     e:`Count stops (+ = brighter). Shutter ${sh>=0?"+":""}${sh}, aperture ${ap>=0?"+":""}${ap}, ISO ${iso>=0?"+":""}${iso}: total ${sh+ap+iso>=0?"+":""}${sh+ap+iso} = N${d>0?"+":"−"}${Math.abs(d)}. So the ${what} is ${right}.`};}
+  return GEN.tones();},
+ isize(){if(RNG()<.5){const s0=pk([0.5,0.75,1,1.2,1.5]),f1=pk([35,50,85,100]),k=pk([2,3,4,0.5]),f2=Math.round(f1*k),a=r3(s0*f2/f1);
+   return{k:"num",q:`An object images at ${s0} in with ${art(f1)} ${f1} mm lens. Without moving, you switch to ${art(f2)} ${f2} mm lens. How big is the image now (in)? (3 decimals)`,a,tol:0.006,d:`${a} in`,e:`Image size ∝ focal length: ${s0} × (${f2} ÷ ${f1}) = ${a} in.`};}
+  const s0=pk([0.6,0.8,1,1.5,2]),u1=pk([5,8,10,12,15]),k=pk([2,3,4,0.5]),u2=r1(u1*k),a=r3(s0*u1/u2);
+  return{k:"num",q:`An object images at ${s0} in from ${u1} ft away. You move so it's ${u2} ft away (same lens). How big is the image now (in)? (3 decimals)`,a,tol:0.006,d:`${a} in`,e:`Image size ∝ 1 ÷ object distance: ${s0} × (${u1} ÷ ${u2}) = ${a} in.`};},
+ rm(){const o=pk([10,15,20,24,30,40,50,60]),m=pk([0.25,0.5,1,2,3]),img=r1(o*m);
+  return{k:"num",q:`${art(o)==="an"?"An":"A"} ${o} mm object is ${img} mm tall on the sensor. What is the scale of reproduction R? (2 decimals)`,a:m,tol:0.01,d:`${m} (${ratio(m)})`,e:`R = image size ÷ object size = ${img} ÷ ${o} = ${m}.`};}
+};
+const GQ=[["G17","expo","expo","Equivalent exposure, changing two settings"],["G18","expo","expo","Equivalent exposure, changing two settings"]].map(([id,t,g,name])=>({id,t,k:"gen",g,q:"🎲 "+name+" (new numbers every time)",d:"Different numbers every time",e:""}));
+Q.push(...GQ);
+function inst(q){if(q.k!=="gen")return q;const tpl=q.tpl||q;const x=GEN[tpl.g]();return Object.assign({id:tpl.id,t:tpl.t,tpl,gen:true},x);}
+
+const BYID={};Q.forEach(q=>BYID[q.id]=q);
+const TWIN={};Q.forEach(q=>{if(q.rv&&BYID[q.rv]){TWIN[q.id]=q.rv;TWIN[q.rv]=q.id;}});
+const TORD={};Object.keys(TOPICS).forEach((t,i)=>TORD[t]=i);
+const QIDX={};Q.forEach((q,i)=>QIDX[q.id]=i);
+function topicSort(list){return list.slice().sort((a,b)=>TORD[a.t]-TORD[b.t]||QIDX[a.id]-QIDX[b.id]);}
+
+/* ---------- levels: new → learning / almost done → mastered → completed ---------- */
+const LV=["new","learning","almost","mastered","completed"];
+const LVN={new:"New",learning:"Learning",almost:"Almost done",mastered:"Mastered",completed:"Completed"};
+const LVD={new:"Haven't seen it yet",learning:"Missed it the last time it counted",almost:"Right on the first try once",mastered:"Right on the first try twice in a row; now asked as free response",completed:"Free-response version right too; only comes back now and then"};
+function lvl(q){const st=S.stats[q.id];if(!st)return "new";if(st.lv)return st.lv;
+  if(st.last==="w")return "learning";const sk=st.streak!=null?st.streak:(st.last==="r"?1:0);return sk>=3?"mastered":"almost";}
+function nextLv(cur,ok){if(!ok)return "learning";return {new:"almost",learning:"almost",almost:"mastered",mastered:"completed",completed:"completed"}[cur];}
+function counts(list){const c={new:0,learning:0,almost:0,mastered:0,completed:0};list.forEach(q=>c[lvl(q)]++);return c;}
+function sbar(c,tot){return `<div class="sbar">${["completed","mastered","almost","learning","new"].map(k=>c[k]?`<i class="lv-${k}" style="width:${c[k]/tot*100}%"></i>`:"").join("")}</div>`;}
+
+/* ---------- SPD graphs ---------- */
+function spdSVG(kind){
+  const W=340,H=160,x0=36,x1=326,yb=130,yt=14,g=(l,c,w)=>Math.exp(-(((l-c)/w)**2));
+  const f={
+    tung:l=>0.04+0.96*((l-400)/300)**2.1,
+    day:l=>0.62+0.3*g(l,465,55)-0.18*((l-400)/300)+0.025*Math.sin(l/7),
+    fluor:l=>0.1+0.14*g(l,600,60)+0.08*g(l,480,40)+0.45*g(l,405,2.5)+0.8*g(l,436,2.5)+1*g(l,546,2.5)+0.35*g(l,578,3)+0.7*g(l,611,3)
+  }[kind];
+  const pts=[];let max=0;for(let l=400;l<=700;l++){const v=f(l);max=Math.max(max,v);pts.push([l,v]);}
+  const X=l=>x0+(l-400)/300*(x1-x0),Y=v=>yb-(v/max)*(yb-yt);
+  const line=pts.map(p=>X(p[0]).toFixed(1)+","+Y(p[1]).toFixed(1)).join(" ");
+  const area=`${x0},${yb} ${line} ${x1},${yb}`;
+  let ticks="";[400,500,600,700].forEach(l=>{ticks+=`<line x1="${X(l)}" y1="${yb}" x2="${X(l)}" y2="${yb+4}"/><text x="${X(l)}" y="${yb+16}" text-anchor="middle">${l}</text>`;});
+  return `<svg class="spd" viewBox="0 0 ${W} ${H}" role="img" aria-label="Spectral power distribution graph">
+    <line x1="${x0}" y1="${yb}" x2="${x1}" y2="${yb}"/><line x1="${x0}" y1="${yt}" x2="${x0}" y2="${yb}"/>
+    <polygon class="area" points="${area}"/><polyline class="curve" points="${line}"/>${ticks}
+    <text x="${(x0+x1)/2}" y="${H-2}" text-anchor="middle">wavelength (nm)</text>
+    <text x="12" y="${(yt+yb)/2}" text-anchor="middle" transform="rotate(-90 12 ${(yt+yb)/2})">power</text></svg>`;
+}
+
+/* ---------- picking: practice attempts ---------- */
+function addTwins(list){
+  const have=new Set(list.map(q=>q.id)),out=list.slice();
+  list.forEach(q=>{const t=TWIN[q.id];if(t&&!have.has(t)&&Math.random()<0.5){have.add(t);const at=out.indexOf(q)+1+Math.floor(Math.random()*(out.length-out.indexOf(q)));out.splice(at,0,BYID[t]);}});
+  return out;
+}
+function pick(mode){
+  if(mode==="miss")return shuffle(Q.filter(q=>lvl(q)==="learning"));
+  if(mode==="all")return shuffle(Q);
+  let out=[];const W={new:2,learning:3,almost:1,mastered:0.3,completed:0};
+  for(const t in TOPICS){
+    const pool=shuffle(Q.filter(q=>q.t===t)).map(q=>({q,p:Math.random()+W[lvl(q)]}));
+    pool.sort((a,b)=>b.p-a.p);out=out.concat(pool.slice(0,5).map(x=>x.q));
+  }
+  return addTwins(shuffle(out));
+}
+
+/* ---------- picking: learn sets (Quizlet-style) ---------- */
+function learnPool(){
+  let pool=Q.slice();
+  if(S.L.dir==="normal")pool=pool.filter(q=>!q.rv);
+  else if(S.L.dir==="flip")pool=pool.filter(q=>!(TWIN[q.id]&&!q.rv));
+  if(S.L.starred)pool=pool.filter(q=>S.star[q.id]);
+  return pool;
+}
+function learnPick(){
+  const n=S.L.size,pool=learnPool();if(!pool.length)return [];
+  const by={};LV.forEach(k=>by[k]=[]);pool.forEach(q=>by[lvl(q)].push(q));
+  LV.forEach(k=>{by[k]=k==="new"&&!S.L.shuffle?topicSort(by[k]):shuffle(by[k]);});
+  // learning gets the most, then new, then almost done, mastered, completed
+  const share={learning:.36,new:.28,almost:.18,mastered:.12,completed:.06},order=["learning","new","almost","mastered","completed"];
+  const want={};let tot=0;order.forEach(k=>{want[k]=Math.floor(n*share[k]);tot+=want[k];});
+  for(const k of order){if(tot>=n)break;want[k]++;tot++;}
+  const out=[];order.forEach(k=>{out.push(...by[k].splice(0,want[k]));});
+  for(const k of order){while(out.length<n&&by[k].length)out.push(by[k].shift());}
+  return S.L.shuffle?shuffle(out):topicSort(out);
+}
+
+/* ---------- how a card is shown ---------- */
+function formatFor(q){
+  const L=lvl(q),typedOK=q.k==="mc"||q.k==="fill"||q.k==="num"||q.k==="seq";
+  if(run.mode==="group")return "native";
+  if(run.mode!=="learn"){
+    if(q.k==="mc"&&(S.mode==="type"||(S.mode==="auto"&&(L==="mastered"||L==="completed"))))return "written";
+    return "native";
+  }
+  if((L==="mastered"||L==="completed")&&typedOK)return "written";
+  const T=S.L.types,opts=[];
+  if(q.k==="mc"){if(T.mc)opts.push("native");if(T.written)opts.push("written");if(T.tf)opts.push("tfs");if(T.flash)opts.push("flash");}
+  else if(q.k==="fill"||q.k==="num"||q.k==="seq"){if(T.written||T.mc||T.tf)opts.push("native");if(T.flash)opts.push("flash");}
+  else{if(T.mc||T.tf||T.written)opts.push("native");if(T.flash)opts.push("flash");}
+  return opts.length?opts[Math.floor(Math.random()*opts.length)]:"native";
+}
+
+/* ---------- screens ---------- */
+function chk(id,label,on,hint){return `<label class="tog"><input type="checkbox" id="${id}" ${on?"checked":""}><span><b>${label}</b>${hint?`<small>${hint}</small>`:""}</span></label>`;}
+function home(){
+  run=null;
+  const n=S.attempts.length;
+  let dots="";for(let i=0;i<7;i++){const a=S.attempts[i];
+    dots+=a?`<div class="dot done"><span>${Math.round(a.score/a.total*100)}%</span><small>#${i+1}</small></div>`
+           :`<div class="dot ${i===n?"next":""}"><span>#${i+1}</span></div>`;}
+  const misses=Q.filter(q=>lvl(q)==="learning").length,stars=Q.filter(q=>S.star[q.id]).length;
+  const label=n<7?`Start attempt ${n+1} of 7`:"Extra round";
+  const T=S.L.types;
+  $("#app").innerHTML=`
+  <header class="head">
+    <div><div class="eyebrow">PHOSCIFUN · Final exam · her test picks (Exam 1 + 2)</div><h1>Final Exam Prep</h1></div>
+    <div class="chip18"><i></i>18% gray</div>
+  </header>
+  <section class="card stack">
+    <h2>Learn</h2>
+    <p class="muted" style="margin:0">Short rounds that <b>loop until you get every question right once</b>. Your <b>first try</b> in a round moves a question up: <b>New → Almost done → Mastered → Completed</b>. A miss sends it to <b>Learning</b>. Mastered questions come back as <b>free response</b>. Rounds mix in more <b>Learning</b> than New, and Completed only now and then.</p>
+    <div class="stack" style="gap:8px"><span class="eyebrow">Round length</span>
+      <div class="szrow"><input type="number" id="sz" min="1" max="${Q.length}" step="1" inputmode="numeric" value="${S.L.size}" aria-label="Questions per round"><span class="hint">questions per round (any number, 1–${Q.length})</span></div></div>
+    <div class="stack" style="gap:8px"><span class="eyebrow">Question types</span>
+      <div class="togs">${chk("t-mc","Multiple choice",T.mc)}${chk("t-written","Written",T.written)}${chk("t-tf","True / false",T.tf)}${chk("t-flash","Flashcards",T.flash)}</div></div>
+    <div class="stack" style="gap:8px"><span class="eyebrow">Answer with</span>
+      <div class="mode" role="group" aria-label="Answer with">${[["normal","Definition (normal)"],["flip","Term (flipped)"],["both","Both"]].map(([k,l])=>`<button type="button" data-dir="${k}" aria-pressed="${S.L.dir===k}">${l}</button>`).join("")}</div>
+      <p class="hint" style="margin:0">Flipping works on the ${Object.keys(TWIN).length/2} definition-style questions that have a reversed version. The rest stay as they are.</p></div>
+    <div class="stack" style="gap:8px"><span class="eyebrow">Options</span>
+      <div class="togs">${chk("o-shuffle","Shuffle items",S.L.shuffle,"Off = new questions come in topic order")}${chk("o-smart","Smart grading",S.L.smart,"Accepts small typos. Off by default: she marks misspellings wrong")}${chk("o-retype","Retype answers",S.L.retype,"After a miss, type the right answer to continue")}${chk("o-star","Only starred items",S.L.starred,`${stars} starred. Tap ☆ on any question to star it`)}</div>
+      <p class="hint" style="margin:0">You can always override: <b>I was right</b> after a miss, or <b>Mark wrong</b> after a right answer so it comes back sooner.</p></div>
+    <div class="btns"><button class="btn" id="learn">Start learning (${S.L.size})</button><button class="btn ghost" id="report">📊 What I know</button></div>
+  </section>
+  <section class="card stack">
+    <h2>Group study</h2>
+    <p class="muted" style="margin:0">Study together: everyone who types the <b>same code</b> gets the <b>same questions, in the same order, with the answers in the same A–D order</b>, even the 🎲 number questions. Each person's results go into <b>their own</b> progress.</p>
+    <div class="szrow"><input type="text" id="gcode" placeholder="e.g. LENS-4821-15" autocomplete="off" spellcheck="false" style="width:200px;text-transform:uppercase" aria-label="Group code"><button class="btn" id="gjoin">Join</button></div>
+    <div class="szrow"><span class="hint">or make a new code with</span><input type="number" id="gcount" min="1" max="100" value="${S.gcount||15}" inputmode="numeric" style="width:90px" aria-label="Number of questions"><span class="hint">questions</span><button class="btn ghost" id="gnew">Create code</button></div>
+    <p class="hint" id="gmsg" style="margin:0">Share the code in your group chat, then go through it together and compare answers.</p>
+  </section>
+  <section class="card stack">
+    <div class="qmeta"><h2>What I know</h2><button class="btn ghost" id="report2">Full report</button></div>
+    ${tilesHTML(counts(Q))}
+    <div class="bars">${topicBars()}</div>
+    <p class="hint" style="margin:0">Each bar shows a topic's questions by level. The number is how many are Mastered or Completed.</p>
+  </section>
+  <section class="card stack">
+    <div class="qmeta"><h2>Your 7 practice exams</h2><span class="muted">${n} done${n>=7?" · all 7 complete":""}</span></div>
+    <div class="dots">${dots}</div>
+    <p class="muted" style="margin:0">Each one is ${Object.keys(TOPICS).length*5} questions, 5 from each topic, plus a few <b>↺ flipped</b> ones. Questions you're still learning come up more often.</p>
+    <div class="stack" style="gap:8px"><span class="eyebrow">Answer mode</span>
+      <div class="mode" role="group" aria-label="Answer mode">${[["mc","Multiple choice"],["auto","Auto"],["type","Type my answers"]].map(([k,l])=>`<button type="button" data-tm="${k}" aria-pressed="${S.mode===k}">${l}</button>`).join("")}</div>
+      <p class="hint" style="margin:0">${S.mode==="auto"?"<b>Auto:</b> Mastered and Completed questions are asked as free response; the rest keep their choices.":S.mode==="type"?"Every multiple-choice question becomes free response.":"Every question shows its choices."}</p></div>
+    <div class="btns">
+      <button class="btn" id="go">${label}</button>
+      <button class="btn ghost" id="miss" ${misses?"":"disabled"}>Redo Learning (${misses})</button>
+      <button class="btn ghost" id="all">All ${Q.length} questions</button>
+    </div>
+  </section>
+  <section class="card stack">
+    <h2>Exam day rules</h2>
+    <ul class="rules">
+      <li><b>Covered so far:</b> Labs 1–3, the lectures of Sep 21 through Oct 26, and the SI review sheets.</li>
+      <li><b>Know the SNR setup:</b> 20 × log(mean ÷ std dev). log(10) = 1, log(100) = 2.</li>
+      <li><b>Include units</b> (dB, stops, µm).</li>
+      <li><b>Spelling matters.</b> This quiz marks misspellings wrong too (unless you turn on Smart grading).</li>
+      <li>Charge your laptop to 100% and bring it.</li>
+    </ul>
+    <div class="btns"><button class="btn ghost" id="reset">${confirmReset?"Tap again to erase all progress":"Reset all progress"}</button></div>
+  </section>`;
+  const setL=(k,v)=>{S.L[k]=v;save();home();};
+  const szi=$("#sz");szi.oninput=()=>{const v=Math.round(+szi.value);if(v>=1&&v<=Q.length){S.L.size=v;save();$("#learn").textContent=`Start learning (${v})`;}};
+  szi.onchange=()=>{let v=Math.round(+szi.value);if(!(v>=1))v=1;if(v>Q.length)v=Q.length;S.L.size=v;save();szi.value=v;$("#learn").textContent=`Start learning (${v})`;};
+  document.querySelectorAll("[data-dir]").forEach(b=>b.onclick=()=>setL("dir",b.dataset.dir));
+  document.querySelectorAll("[data-tm]").forEach(b=>b.onclick=()=>{S.mode=b.dataset.tm;save();home();});
+  ["mc","written","tf","flash"].forEach(k=>{$("#t-"+k).onchange=e=>{S.L.types[k]=e.target.checked;if(!Object.values(S.L.types).some(Boolean))S.L.types.mc=true;save();home();};});
+  $("#o-shuffle").onchange=e=>setL("shuffle",e.target.checked);
+  $("#o-smart").onchange=e=>setL("smart",e.target.checked);
+  $("#o-retype").onchange=e=>setL("retype",e.target.checked);
+  $("#o-star").onchange=e=>setL("starred",e.target.checked);
+  $("#learn").onclick=()=>startLearn(1);
+  $("#gjoin").onclick=()=>{const c=$("#gcode").value.trim().toUpperCase();if(!parseCode(c)){$("#gmsg").textContent="That code doesn't look right. It should look like LENS-4821-15.";return;}startGroup(c);};
+  $("#gcode").onkeydown=e=>{if(e.key==="Enter")$("#gjoin").click();};
+  $("#gnew").onclick=()=>{let n=Math.round(+$("#gcount").value);if(!(n>=1))n=15;n=Math.min(n,100);S.gcount=n;save();const c=pk(["LENS","PIXEL","FOCUS","NOISE","STOP","BOKEH","PRISM","SHUTTER","APERTURE","RAW"])+"-"+(1000+Math.floor(Math.random()*9000))+"-"+n;$("#gcode").value=c;$("#gmsg").innerHTML=`Your code: <b style="font-size:1.3rem">${c}</b> · share it, then tap Join.`;};
+  $("#report").onclick=()=>report(null);$("#report2").onclick=()=>report(null);
+  $("#go").onclick=()=>start("attempt");
+  $("#miss").onclick=()=>start("miss");
+  $("#all").onclick=()=>start("all");
+  $("#reset").onclick=()=>{if(confirmReset){S={attempts:[],stats:{},star:{},mode:S.mode,L:S.L};save();confirmReset=false;}else confirmReset=true;home();};
+}
+
+function newRun(mode,qs,extra){return Object.assign({mode,qs,i:0,results:[],first:new Set()},extra||{});}
+function start(mode){confirmReset=false;run=newRun(mode,pick(mode));show();}
+function startLearn(n){
+  confirmReset=false;const qs=learnPick(),prev=run&&run.mode==="learn"?run.all:[];
+  if(!qs.length){run=null;$("#app").innerHTML=`<section class="card stack"><h2>Nothing to study</h2><p style="margin:0">${S.L.starred?"You haven't starred any questions yet. Tap ☆ on a question to star it, or turn off “Only starred items”.":"No questions match these settings."}</p><div class="btns"><button class="btn" id="home">Back</button></div></section>`;$("#home").onclick=home;return;}
+  run=newRun("learn",qs,{set:n,size:qs.length,left:new Set(qs.map(q=>q.id)),all:prev});show();
+}
+
+function show(){
+  if(run.qs[run.i].k==="gen")run.qs[run.i]=inst(run.qs[run.i]);
+  const q=run.qs[run.i],N=run.qs.length;
+  run.sel=null;run.done=false;run.fmt=formatFor(q);run.claim=null;run.typed=false;
+  let body="";const f=run.fmt;
+  if(f==="written"&&q.k==="mc"){run.typed=true;body=`<input type="text" id="ans" autocomplete="off" spellcheck="false" aria-label="Your answer"><p class="hint" style="margin:0">Free response: type the answer from memory.${lvl(q)==="mastered"||lvl(q)==="completed"?" (Mastered questions are asked this way.)":""}</p>`;}
+  else if(f==="tfs"){const wrong=q.o.slice(1);run.claim=Math.random()<.5||!wrong.length?0:1+Math.floor(Math.random()*wrong.length);
+    body=`<div class="claim">${esc(q.o[run.claim])}</div><div class="opts"><button class="opt" data-i="t"><span class="key">T</span><span>True</span></button><button class="opt" data-i="f"><span class="key">F</span><span>False</span></button></div><p class="hint" style="margin:0">Is this the right answer to the question?</p>`;}
+  else if(f==="flash"){body=`<div class="btns"><button class="btn ghost" id="reveal">Show answer</button></div><p class="hint" style="margin:0">Say the answer in your head, then check it.</p>`;}
+  else if(q.k==="mc"||q.k==="spd"){run.order=q._order||shuffle(q.o.map((_,i)=>i));
+    body=(q.k==="spd"?spdSVG(q.g):"")+`<div class="opts">${run.order.map((oi,j)=>`<button class="opt" data-i="${oi}"><span class="key">${"ABCD"[j]}</span><span>${esc(q.o[oi])}</span></button>`).join("")}</div>`;}
+  else if(q.k==="tf"){body=`<div class="opts"><button class="opt" data-i="t"><span class="key">T</span><span>True</span></button><button class="opt" data-i="f"><span class="key">F</span><span>False</span></button></div><p class="hint" style="margin:0">If it's false, think about how you would fix it before you check.</p>`;}
+  else if(q.k==="multi"){run.order=q._order||shuffle(q.o.map((_,i)=>i));run.sel=new Set();
+    body=`<div class="opts">${run.order.map((oi,j)=>`<button class="opt" data-i="${oi}"><span class="key">${j+1}</span><span>${esc(q.o[oi])}</span></button>`).join("")}</div><p class="hint" style="margin:0">Select all that apply.</p>`;}
+  else{const hint=q.k==="seq"?"Separate with commas, e.g. 100, 200, 400 (the f/ is optional)":q.k==="num"?"Type the number. You can add units.":"Type your answer. Spelling counts.";
+    body=`<input type="text" id="ans" autocomplete="off" spellcheck="false" aria-label="Your answer"><p class="hint" style="margin:0">${hint}</p>`;}
+  const L=lvl(q),where=run.mode==="group"?`Group ${run.code} · Q ${run.i+1} / ${N}`:run.mode==="learn"?`Round ${run.set} · ${run.left.size} to go`:`${run.mode==="attempt"?`Practice exam ${Math.min(S.attempts.length+1,99)}`:run.mode==="miss"?"Learning":"All questions"} · ${run.i+1} / ${N}`;
+  const prog=run.mode==="learn"?(1-run.left.size/run.size)*100:run.i/N*100;
+  $("#app").innerHTML=`
+  <div class="qmeta"><button class="btn ghost" id="quit">Quit</button><span class="eyebrow">${where}</span></div>
+  <div class="progress"><div style="width:${prog}%"></div></div>
+  <section class="card stack">
+    <div class="qmeta"><div><span class="tag">${TOPICS[q.t]}</span>${q.rv?'<span class="tag flip">↺ Flipped</span>':""}${q.gen?'<span class="tag flip">🎲 New numbers</span>':""}<span class="tag lv lv-${L}">${LVN[L]}</span></div><button type="button" class="star" id="star" aria-pressed="${!!S.star[q.id]}" aria-label="Star this question">${S.star[q.id]?"★":"☆"}</button></div>
+    <div class="qtext">${esc(q.q)}</div>
+    ${body}
+    <div id="fb"></div>
+    <div class="btns"><button class="btn" id="check" ${f==="flash"?"hidden":""}>Check</button></div>
+  </section>`;
+  $("#quit").onclick=()=>{const r=run.mode==="learn"?run.all.concat(run.results):run.results;if(r.length)report(r);else home();};
+  $("#star").onclick=e=>{S.star[q.id]=!S.star[q.id];if(!S.star[q.id])delete S.star[q.id];save();e.currentTarget.textContent=S.star[q.id]?"★":"☆";e.currentTarget.setAttribute("aria-pressed",!!S.star[q.id]);};
+  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    if(run.done)return;
+    if(q.k==="multi"&&f!=="tfs"){const i=+b.dataset.i;run.sel.has(i)?run.sel.delete(i):run.sel.add(i);b.classList.toggle("sel");}
+    else{document.querySelectorAll(".opt").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");run.sel=b.dataset.i;}
+  });
+  if(f==="flash")$("#reveal").onclick=()=>{run.done=true;$("#reveal").disabled=true;
+    $("#fb").innerHTML=`<div class="fb" style="background:var(--accent-soft);border:1px solid var(--accent)"><strong>Answer</strong><div><b>${esc(answerText(q))}</b></div><div>${esc(q.e)}</div><div class="selfg"><button class="btn okb" id="sg1">✓ I knew it</button><button class="btn nob" id="sg0">✗ I didn't</button></div></div>`;
+    $("#sg1").onclick=()=>finish(q,true,"(flashcard)",false);$("#sg0").onclick=()=>finish(q,false,"(flashcard)",false);$("#sg1").focus();};
+  $("#check").onclick=()=>run.done?next():check();
+  const inp=$("#ans");if(inp)inp.focus();
+}
+
+function typedGrade(q,v){
+  const sq=x=>norm(x).replace(/^(a|an|the) /,"").replace(/[^a-z0-9./%:+-]/g,"");
+  const key=q.o[0],main=key.replace(/\s*\([^)]*\)/g,"").trim(),u=sq(v);
+  const cands=[key,main].concat(q.alt||[]).map(sq).filter(Boolean);
+  if(cands.some(c=>c===u))return true;
+  const nums=x=>(norm(x).replace(/,/g,"").match(/\d*\.?\d+/g)||[]).join("|");
+  const kn=nums(main),un=nums(v),words=main.split(/\s+/).length;
+  if(kn&&kn===un&&words<=4)return true;
+  if(words<=3){const m=sq(main);if(m.length>=4&&u.includes(m))return true;
+    if(m.length>4&&lev(m,u)<=2)return "spell";return false;}
+  return "self";
+}
+function gradeText(q,v){ // for fill / num / seq and typed mc; returns true | false | "spell" | "self"
+  if(run.typed)return typedGrade(q,v);
+  if(q.k==="num"){const m=v.replace(/,/g,"").match(/-?\d*\.?\d+/);return !!m&&Math.abs(parseFloat(m[0])-q.a)<=q.tol+1e-9;}
+  if(q.k==="seq"){const t=seqTokens(v),a=q.a.map(x=>norm(x));return t.length===a.length&&t.every((x,i)=>x===a[i]);}
+  const n=norm(v).replace(/^(a|an|the) /,""),ns=n.replace(/\s/g,"");
+  if(q.a.some(a=>norm(a).replace(/\s/g,"")===ns))return true;
+  if(q.a.some(a=>{const as=norm(a).replace(/\s/g,"");return as.length>4&&lev(as,ns)<=2;}))return "spell";
+  return false;
+}
+function check(){
+  const q=run.qs[run.i],f=run.fmt;let ok=false,given="",spell=false,smart=false;
+  if(f==="tfs"){if(run.sel===null)return;const isRight=run.claim===0;ok=(run.sel==="t")===isRight;given=(run.sel==="t"?"True":"False")+": "+q.o[run.claim];}
+  else if($("#ans")){const v=$("#ans").value;if(!v.trim())return;given=v;$("#ans").disabled=true;
+    const g=gradeText(q,v);
+    if(g==="self"){run.done=true;$("#check").hidden=true;
+      $("#fb").innerHTML=`<div class="fb" style="background:var(--accent-soft);border:1px solid var(--accent)"><strong>Compare</strong><div>Key: <b>${esc(q.o[0])}</b></div><div>${esc(q.e)}</div><div class="selfg"><button class="btn okb" id="sg1">✓ I got it</button><button class="btn nob" id="sg0">✗ I missed it</button></div></div>`;
+      $("#sg1").onclick=()=>finish(q,true,given,false);$("#sg0").onclick=()=>finish(q,false,given,false);$("#sg1").focus();return;}
+    if(g==="spell"&&S.L.smart&&run.mode==="learn"){ok=true;smart=true;}else{ok=g===true;spell=g==="spell";}}
+  else if(q.k==="mc"||q.k==="spd"){if(run.sel===null)return;ok=run.sel==="0";given=q.o[+run.sel];}
+  else if(q.k==="tf"){if(run.sel===null)return;ok=(run.sel==="t")===q.a;given=run.sel==="t"?"True":"False";}
+  else if(q.k==="multi"){if(!run.sel.size)return;ok=run.sel.size===q.c.length&&q.c.every(i=>run.sel.has(i));given=[...run.sel].map(i=>q.o[i]).join(", ");}
+  run.done=true;finish(q,ok,given,spell,smart);
+}
+
+/* record one answer; first try in this run decides the level */
+function record(q,ok){
+  const first=!run.first.has(q.id);run.first.add(q.id);
+  const snap=S.stats[q.id]?JSON.stringify(S.stats[q.id]):null;
+  const st=S.stats[q.id]||{right:0,wrong:0};const cur=lvl(q);
+  ok?st.right++:st.wrong++;st.last=ok?"r":"w";
+  if(first)st.lv=nextLv(cur,ok);else if(!ok)st.lv="learning";else st.lv=st.lv||cur;
+  S.stats[q.id]=st;save();
+  let ins=-1;
+  let insObj=null;
+  if(run.mode==="learn"){if(ok)run.left.delete(q.id);else{run.left.add(q.id);ins=Math.min(run.i+3,run.qs.length);insObj=q.tpl||q;run.qs.splice(ins,0,insObj);}}
+  return {first,snap,ins,insObj,from:cur};
+}
+function undo(q,info){
+  if(info.snap)S.stats[q.id]=JSON.parse(info.snap);else delete S.stats[q.id];
+  if(info.first)run.first.delete(q.id);
+  if(info.ins>=0&&run.qs[info.ins]===info.insObj)run.qs.splice(info.ins,1);
+}
+function finish(q,ok,given,spell,smart){
+  $("#check").hidden=false;
+  const f=run.fmt;
+  document.querySelectorAll(".opt").forEach(b=>{b.disabled=true;const i=b.dataset.i;
+    const correct=f==="tfs"?(i==="t")===(run.claim===0):(q.k==="mc"||q.k==="spd")?i==="0":q.k==="tf"?(i==="t")===q.a:q.k==="multi"?q.c.includes(+i):false;
+    if(correct)b.classList.add("right");else if(b.classList.contains("sel"))b.classList.add("wrong");});
+  let info=record(q,ok);
+  run.results.push({q,ok,given});const ri=run.results.length-1;
+  const paint=()=>{const r=run.results[ri],L=lvl(q),moved=info.first&&L!==info.from;
+    $("#fb").innerHTML=`<div class="fb ${r.ok?"ok":"no"}"><strong>${r.ok?"Correct":"Not quite"}</strong>
+      ${smart&&r.ok?`<div class="spell">Accepted with a small typo (Smart grading). On the exam this would be wrong: spell it “${esc(answerText(q))}”.</div>`:""}
+      ${spell?`<div class="spell">Close. Check your spelling, because spelling counts on the exam.</div>`:""}
+      ${r.ok&&f!=="tfs"?"":`<div>Answer: <b>${esc(answerText(q))}</b></div>`}
+      <div>${esc(q.e)}</div>
+      <div class="lvmove">${moved?`Level: ${LVN[info.from]} → <b>${LVN[L]}</b>`:`Level: <b>${LVN[L]}</b>`}${run.mode==="learn"&&!r.ok?" · it will come back in this round":""}</div>
+      <div class="btns"><button type="button" class="linkbtn" id="ovr">${r.ok?"Mark wrong (see it sooner)":"I was right (override)"}</button></div>
+      ${!r.ok&&S.L.retype&&run.mode==="learn"?`<div class="stack" style="gap:6px"><label for="rt" class="hint">Retype the right answer to continue:</label><input type="text" id="rt" autocomplete="off" spellcheck="false"></div>`:""}
+    </div>`;
+    const nb=$("#check");nb.textContent=run.i+1<run.qs.length?"Next":run.mode==="learn"?"Finish round":"See results";
+    const rt=$("#rt");
+    if(rt){nb.disabled=true;rt.oninput=()=>{const v=rt.value;const target=norm(answerText(q)).replace(/\s/g,""),u=norm(v).replace(/\s/g,"");
+        const okk=u===target||(q.k==="fill"&&q.a.some(a=>norm(a).replace(/\s/g,"")===u))||(q.k==="num"&&v.replace(/,/g,"").match(/-?\d*\.?\d+/)&&Math.abs(parseFloat(v.replace(/,/g,"").match(/-?\d*\.?\d+/)[0])-q.a)<=q.tol+1e-9)||(target.length>12&&lev(target,u)<=3);
+        nb.disabled=!okk;rt.classList.toggle("good",!!okk);};rt.focus();}
+    else{nb.disabled=false;nb.focus();}
+    $("#ovr").onclick=()=>{undo(q,info);const nok=!run.results[ri].ok;run.results[ri].ok=nok;info=record(q,nok);smart=false;spell=false;paint();};
+  };
+  paint();
+}
+
+function next(){run.i++;if(run.i<run.qs.length)show();else if(run.mode==="learn")learnDone();else results();}
+function tilesHTML(c){return `<div class="tiles">${["new","learning","almost","mastered","completed"].map(k=>`<div class="tile lv-${k}"><b>${c[k]}</b><span>${LVN[k]}</span></div>`).join("")}</div>`;}
+function topicBars(){let h="";for(const t in TOPICS){const qs=Q.filter(q=>q.t===t),c=counts(qs);h+=`<div class="tb"><span>${TOPICS[t]}</span>${sbar(c,qs.length)}<span class="pct">${c.mastered+c.completed}/${qs.length}</span></div>`;}return h;}
+
+/* ---------- group sessions (same code = same questions) ---------- */
+function parseCode(c){const m=/^([A-Z]+)-(\d{4})-(\d{1,3})$/.exec(c);if(!m)return null;const n=+m[3];return n>=1&&n<=100?{n}:null;}
+function startGroup(code){
+  const p=parseCode(code);RNG=seeded(hashStr(code));
+  try{
+    const base=Q.filter(q=>!q.rv),by={};base.forEach(q=>{(by[q.t]=by[q.t]||[]).push(q);});
+    const tops=rshuffle(Object.keys(by).sort());tops.forEach(t=>{by[t]=rshuffle(by[t]);});
+    const list=[];let k=0;while(list.length<p.n&&tops.some(t=>by[t].length)){const t=tops[k%tops.length];if(by[t].length)list.push(by[t].shift());k++;}
+    const qs=list.map(q=>{const x=Object.assign({},inst(q));if(x.k==="mc"||x.k==="spd"||x.k==="multi")x._order=rshuffle(x.o.map((_,i)=>i));return x;});
+    confirmReset=false;run=newRun("group",qs,{code});
+  }finally{RNG=Math.random;}
+  show();
+}
+function learnDone(){
+  run.all=run.all.concat(run.results);
+  const first={};run.results.forEach(x=>{if(!(x.q.id in first))first[x.q.id]=x.ok;});
+  const ids=Object.keys(first),firstRight=ids.filter(i=>first[i]).length;
+  $("#app").innerHTML=`
+  <header class="head"><div><div class="eyebrow">Learn · round ${run.set} done</div><h1>Round complete</h1></div></header>
+  <section class="card stack">
+    <div class="score">${ids.length}<span class="muted" style="font-size:.45em">/${ids.length} right at least once</span></div>
+    <p style="margin:0"><b>${firstRight}</b> right on the first try (moved up a level), <b>${ids.length-firstRight}</b> went to <b>Learning</b> and will show up more in the next rounds.</p>
+    <div class="btns"><button class="btn" id="more">Continue (next ${S.L.size})</button><button class="btn ghost" id="rep">📊 What I know</button><button class="btn ghost" id="home">Done</button></div>
+  </section>
+  <section class="card stack"><h2>Overall</h2>${tilesHTML(counts(Q))}</section>`;
+  const n=run.set;$("#more").onclick=()=>startLearn(n+1);$("#rep").onclick=()=>report(run.all);$("#home").onclick=home;window.scrollTo(0,0);
+}
+
+/* ---------- progress report ---------- */
+function termHTML(q){return `<div class="term"><div><span class="tag">${TOPICS[q.t]}</span>${S.star[q.id]?' <span class="tag">★</span>':""}</div><div>${esc(q.q)}</div><div class="ans">${esc(answerText(q))}</div></div>`;}
+function report(sess){
+  const c=counts(Q);let sessHTML="";
+  if(sess&&sess.length){const ids={};sess.forEach(x=>{ids[x.q.id]=x;});const seen=Object.values(ids).map(x=>x.q),sc=counts(seen),right=sess.filter(x=>x.ok).length;
+    sessHTML=`<section class="card stack"><h2>This session</h2><p style="margin:0"><b>${right}</b> right out of <b>${sess.length}</b> answers on <b>${seen.length}</b> questions. Where they stand now:</p>${tilesHTML(sc)}
+    ${["learning","almost","mastered","completed"].map(k=>{const L=seen.filter(q=>lvl(q)===k);return L.length?`<details class="cat lv-${k}" ${k==="learning"?"open":""}><summary>${LVN[k]} from this session (${L.length})</summary>${L.map(termHTML).join("")}</details>`:"";}).join("")}</section>`;}
+  $("#app").innerHTML=`
+  <header class="head"><div><div class="eyebrow">Final exam · progress report</div><h1>What I know</h1></div><button class="btn ghost" id="home">Back</button></header>
+  ${sessHTML}
+  <section class="card stack"><h2>All ${Q.length} questions</h2>${tilesHTML(c)}
+    <div class="legend">${LV.map(k=>`<span class="lv-${k}"><b>${LVN[k]}</b>: ${LVD[k].toLowerCase()}</span>`).join("")}</div>
+    <div class="bars">${topicBars()}</div>
+    <div class="btns"><button class="btn" id="learn">Keep learning (${S.L.size})</button></div></section>
+  <section class="card stack"><h2>The questions</h2><p class="hint" style="margin:0">Open a group to see each question and its answer.</p>
+    ${["learning","new","almost","mastered","completed"].map(k=>{const L=Q.filter(q=>lvl(q)===k);return `<details class="cat lv-${k}"><summary>${LVN[k]} (${L.length})</summary>${L.length?L.map(termHTML).join(""):'<p class="hint">None yet.</p>'}</details>`;}).join("")}
+  </section>`;
+  run=null;$("#home").onclick=home;$("#learn").onclick=()=>startLearn(1);window.scrollTo(0,0);
+}
+
+function results(){
+  const r=run.results,score=r.filter(x=>x.ok).length,total=r.length,pct=Math.round(score/total*100);
+  if(run.mode==="attempt"){S.attempts.push({score,total,date:new Date().toISOString()});save();}
+  let byT="";for(const t in TOPICS){const x=r.filter(y=>y.q.t===t);if(!x.length)continue;const s=x.filter(y=>y.ok).length,p=Math.round(s/x.length*100);
+    byT+=`<div class="bar"><span>${TOPICS[t]}</span><div class="track"><div class="fill" style="width:${p}%"></div></div><span class="pct">${s}/${x.length}</span></div>`;}
+  const missed=r.filter(x=>!x.ok);
+  const verdict=pct>=90?"Exam ready on this set.":pct>=75?"Solid. Keep learning your misses, then take the next one.":"Review the misses below, then go again.";
+  $("#app").innerHTML=`
+  <header class="head"><div><div class="eyebrow">${run.mode==="group"?`Group session ${run.code}`:run.mode==="attempt"?`Practice exam ${S.attempts.length} of 7`:run.mode==="miss"?"Learning round":"All questions"}</div><h1>Results</h1></div></header>
+  <section class="card stack">
+    <div class="score">${score}<span class="muted" style="font-size:.45em">/${total}</span></div>
+    <p style="margin:0"><b>${pct}%</b>. ${verdict}</p>
+    <div class="bars">${byT}</div>
+    <div class="btns"><button class="btn" id="home">Back</button><button class="btn ghost" id="rep">📊 What I know</button></div>
+  </section>
+  ${missed.length?`<section class="card stack"><h2>What you missed (${missed.length})</h2>
+    ${missed.map(x=>`<div class="miss"><div><span class="tag">${TOPICS[x.q.t]}</span></div><div>${esc(x.q.q)}</div>
+      <div class="you">You: ${esc(x.given)}</div><div class="ans">Answer: ${esc(answerText(x.q))}</div><div class="hint">${esc(x.q.e)}</div></div>`).join("")}
+  </section>`:""}`;
+  $("#home").onclick=home;const rr=r;$("#rep").onclick=()=>report(rr);
+  window.scrollTo(0,0);
+}
+
+document.addEventListener("keydown",e=>{
+  if(!run||e.key!=="Enter")return;
+  const b=$("#check");if(b&&!b.hidden&&!b.disabled){e.preventDefault();b.click();}
+});
+home();
+</script>

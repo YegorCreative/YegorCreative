@@ -131,8 +131,8 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <header class="intro">
 <span class="eyebrow">Exam 2 · Oct 30 · Lecture notes</span>
 <h1>Lecture Notes</h1>
-<p>Every PHPS-106 lecture for Exam 2, redesigned with diagrams you can play with and checked against the lecture slides. Each section ends with a quick check.</p>
-<div class="seg lecs" role="tablist" aria-label="Lectures" id="lecs"><button role="tab" class="pkt" aria-selected="false" aria-pressed="false" data-l="LP">★ Her test picks</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L0">Sep 21 · Digital sensors</button><button role="tab" aria-selected="true" aria-pressed="true" data-l="L1">Sep 28 · Sensors &amp; noise</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L2">Oct 2 · RAW &amp; files</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L3">Oct 5 · Formats &amp; compression</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L4">Oct 16 · Lenses</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L5">Oct 19 · Lens types</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L6">Oct 23 · Aberrations &amp; DOF</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L7">Oct 26 · Autofocus &amp; perspective</button></div>
+<p>Every PHPS-106 lecture since Sep 21, redesigned with diagrams you can play with and checked against the lecture slides. The last tab is Nov 2, for the final. Each section ends with a quick check.</p>
+<div class="seg lecs" role="tablist" aria-label="Lectures" id="lecs"><button role="tab" class="pkt" aria-selected="false" aria-pressed="false" data-l="LP">★ Her test picks</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L0">Sep 21 · Digital sensors</button><button role="tab" aria-selected="true" aria-pressed="true" data-l="L1">Sep 28 · Sensors &amp; noise</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L2">Oct 2 · RAW &amp; files</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L3">Oct 5 · Formats &amp; compression</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L4">Oct 16 · Lenses</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L5">Oct 19 · Lens types</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L6">Oct 23 · Aberrations &amp; DOF</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L7">Oct 26 · Autofocus &amp; perspective</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L8">Nov 2 · Perspective &amp; depth cues</button></div>
 </header>
 <!-- ================= TEST PICKS ================= -->
 <div class="lec" id="LP" hidden>
@@ -1116,7 +1116,111 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 </section>
 </div>
 
-<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures (Sep 21 – Oct 26, 2026), for study use.</p>
+<!-- ================= LECTURE 8 · NOV 2 ================= -->
+<div class="lec" id="L8" hidden>
+<nav class="toc" aria-label="Nov 2 sections"><a href="#w1">Focal length with distance</a><a href="#w2">Weak and strong</a><a href="#w3">Viewing distance</a><a href="#w4">Depth cues</a><a href="#w5">Holography</a><a href="#w6">DOF and vignetting</a><a href="#w7">Lab 4 rules</a></nav>
+<div class="beyond" style="margin:0"><b>No test-pick sentence</b>She did not say “this is a good test question” on Nov 2. The ideas still belong on the final, and Lab 4 is this week. Thanksgiving week: lecture Monday, no lab.</div>
+
+<section class="topic" id="w1" aria-labelledby="wh1">
+<div class="th"><span class="num">01</span><div><h2 id="wh1">Focal length and distance together</h2><p>The near object stays the same size</p></div></div>
+<p>Image size follows <b>focal length ÷ distance</b>. Change both by the same factor and the near subject does not change size. The background, which you did <b>not</b> scale the same way, gets bigger and looks closer.</p>
+<div class="box">
+<div class="seg" role="group" aria-label="Boot pairs" id="wpair">
+<button type="button" aria-pressed="true" data-f="50" data-d="5">50 mm at 5 ft</button>
+<button type="button" aria-pressed="false" data-f="100" data-d="10">100 mm at 10 ft</button>
+<button type="button" aria-pressed="false" data-f="200" data-d="20">200 mm at 20 ft</button>
+</div>
+<svg class="v" id="wsvg" viewBox="0 0 460 200" role="img" aria-label="Near boot stays the same height while the background grows"></svg>
+<p class="cap" id="wcap"></p>
+</div>
+<ul class="clean">
+<li>Her boots: 50 mm at 5 ft, 100 mm at 10 ft, 200 mm at 20 ft. The <b>near boot matches</b>. The background grows.</li>
+<li>She showed a real-estate example for the same trick. Her line: <b>there is no truth in imagery</b>.</li>
+<li>The lens equations assume a <b>constant lens-to-sensor distance</b>. Use them to understand the picture. Do not calculate a number she did not ask for.</li>
+</ul>
+<div class="check" data-q="w1"></div>
+</section>
+
+<section class="topic" id="w2" aria-labelledby="wh2">
+<div class="th"><span class="num">02</span><div><h2 id="wh2">Weak and strong perspective</h2><p>Distance does it. The lens does not.</p></div></div>
+<div class="two">
+<div class="box"><h3>Weak</h3><ul class="clean"><li>Camera <b>farther</b> away</li><li>Scene looks <b>compressed</b></li><li>Lines stay more <b>parallel</b></li><li>The look people blame on a <b>telephoto</b></li></ul></div>
+<div class="box"><h3>Strong</h3><ul class="clean"><li>Camera <b>closer</b></li><li>Near objects <b>grow faster</b> than far ones</li><li>Lines <b>converge</b></li><li>The look people blame on a <b>wide angle</b></li></ul></div>
+</div>
+<div class="trick"><span>🔑</span><span>She repeated the warning: perspective is caused by <b>distance</b>, not by the lens. You pick the lens so the subject still fits after you move.</span></div>
+<div class="check" data-q="w2"></div>
+</section>
+
+<section class="topic" id="w3" aria-labelledby="wh3">
+<div class="th"><span class="num">03</span><div><h2 id="wh3">Viewing distance</h2><p>Where you should stand to see the print the way the lens saw it</p></div></div>
+<div class="formula">viewing distance = focal length × printing magnification</div>
+<ul class="clean">
+<li>An <b>8×10 contact print</b> from a <b>12-inch</b> lens is magnification 1, so you view it from <b>12 inches</b>.</li>
+<li>Her example: a <b>50 mm</b> lens printed at <b>×8</b>. She said about <b>10 inches</b>.</li>
+</ul>
+<div class="beyond"><b>Check with SI</b>50 mm × 8 = 400 mm. 400 ÷ 25.4 ≈ <b>15.7 inches</b>, not 10. The formula and the contact-print example agree with each other. Her spoken “about 10 inches” does not match that math. Ask in the SI session which number she wants on the final.</div>
+<div class="box">
+<label for="vf"><b>Focal length: <span id="vfv">50</span> mm</b></label>
+<input type="range" id="vf" min="24" max="300" value="50" aria-label="Focal length in millimeters">
+<label for="vm"><b>Print magnification: <span id="vmv">8</span>×</b></label>
+<input type="range" id="vm" min="1" max="20" value="8" aria-label="Printing magnification">
+<p class="formula" id="vout" style="font-size:18px"></p>
+</div>
+<div class="check" data-q="w3"></div>
+</section>
+
+<section class="topic" id="w4" aria-labelledby="wh4">
+<div class="th"><span class="num">04</span><div><h2 id="wh4">Depth cues</h2><p>How a flat picture still feels deep</p></div></div>
+<div class="tw"><table><thead><tr><th>Cue</th><th>What you see</th></tr></thead><tbody>
+<tr><td>Texture</td><td>Detail is crisp nearby and packs tighter as it recedes</td></tr>
+<tr><td>Form</td><td>Light and shade give an object volume</td></tr>
+<tr><td>Size / known size</td><td>You know how big a person or a door is, so a small one reads as far</td></tr>
+<tr><td>Size tricks</td><td>Forced perspective: a near object is scaled to look like it belongs farther back</td></tr>
+<tr><td>Aerial haze</td><td>Far things are hazier and lower in contrast</td></tr>
+<tr><td>Overlap</td><td>Whatever blocks something else is in front</td></tr>
+<tr><td>Shadows</td><td>A shadow ties an object to the ground and shows its shape</td></tr>
+<tr><td>Isolation</td><td>A sharp subject against a soft background separates near from far</td></tr>
+<tr><td>Color</td><td><b>Warm</b> colors come forward. <b>Cool</b> colors recede.</td></tr>
+</tbody></table></div>
+<div class="check" data-q="w4"></div>
+</section>
+
+<section class="topic" id="w5" aria-labelledby="wh5">
+<div class="th"><span class="num">05</span><div><h2 id="wh5">Holography and stereo</h2><p>Real parallax, not a single flat view</p></div></div>
+<ul class="clean">
+<li><b>Dennis Gabor</b>, Hungarian, Nobel Prize in physics. He was trying to improve the <b>resolving power of the electron microscope</b>.</li>
+<li>A hologram needs <b>coherent light</b>. That is what a <b>laser</b> provides.</li>
+<li>Move your head and the view changes: <b>motion parallax</b>. A normal photograph does not do that.</li>
+<li><b>Stereo images</b> are the two-picture version of the same idea: one view for each eye.</li>
+</ul>
+<div class="check" data-q="w5"></div>
+</section>
+
+<section class="topic" id="w6" aria-labelledby="wh6">
+<div class="th"><span class="num">06</span><div><h2 id="wh6">Depth of field, again, and vignetting</h2><p>A short recap from earlier weeks</p></div></div>
+<div class="formula">more DOF: smaller aperture · farther away · shorter lens</div>
+<ul class="clean">
+<li>The three controls are still <b>aperture</b>, <b>object distance</b>, and <b>focal length</b>.</li>
+<li><b>Vignetting</b> is <b>cosine falloff</b>: the corners get less light than the center.</li>
+<li>It <b>changes with f-number</b>. Stopping down usually reduces it.</li>
+<li><b>Lens profiles</b> in software brighten the corners back up.</li>
+</ul>
+<div class="check" data-q="w6"></div>
+</section>
+
+<section class="topic" id="w7" aria-labelledby="wh7">
+<div class="th"><span class="num">07</span><div><h2 id="wh7">Lab 4 rules</h2><p>Six photos, due at the end of lab</p></div></div>
+<div class="beyond"><b>Automatic zero</b>Sunglasses or a hat on the model. A frame that is badly exposed or out of focus.</div>
+<ul class="clean">
+<li><b>Six photos</b>, turned in at the end of lab.</li>
+<li>The model is <b>seated</b> and fills about <b>half the frame, top to bottom</b>.</li>
+<li><b>Rename the folder before you zip it.</b></li>
+<li>About <b>85 mm</b> is her favorite portrait lens.</li>
+</ul>
+</section>
+</div>
+
+<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures (Sep 21 – Nov 2, 2026), for study use.</p>
 </div>
 
 <script>
@@ -1235,6 +1339,12 @@ v2:["Faraway mountains look hazy and low in contrast. Which depth cue is that?",
 v3:["Beyond about 20 ft, how does your brain judge depth?",["Shadows and relative motion","Binocular disparity","Your dominant eye","It can't at all"],"Binocular vision works within about 18–20 ft; past that, disparity is too small."],
 v4:["In one-point perspective, the receding (orthogonal) lines meet at the…",["Vanishing point on the horizon line","Bottom of the frame","Optical axis","Focal point"],"Horizon line + vanishing point + orthogonal lines."],
 v5:["You double the focal length without moving. The image of everything in the scene…",["Doubles in size, so the size ratios (perspective) stay the same","Gets half as big","Changes perspective","Doesn't change"],"Image size ∝ focal length. Only moving the camera changes perspective."],
+w1:["50 mm at 5 ft, 100 mm at 10 ft, and 200 mm at 20 ft. What stays the same?",["The near subject's size","The background's size","The perspective","The aperture"],"f ÷ d is the same, so the near subject matches. The background grows."],
+w2:["What causes strong perspective?",["Standing closer to the subject","Switching to a wide-angle lens without moving","Stopping down","Raising the ISO"],"She repeated it: distance causes perspective, not the lens."],
+w3:["Viewing distance of a print equals…",["Focal length × printing magnification","Focal length ÷ magnification","Aperture × ISO","Always 10 inches"],"An 8×10 contact print from a 12-inch lens is viewed from 12 inches. Her 50 mm × 8 figure does not match 400 mm; check that one with SI."],
+w4:["Warm colors in a picture tend to…",["Come forward (approaching)","Recede","Show aerial haze","Remove overlap"],"Approaching colors are warm. Receding colors are cool."],
+w5:["A hologram needs coherent light. In practice that means a…",["Laser","Softbox","On-camera flash","A north-facing window"],"Dennis Gabor (Hungarian, Nobel in physics) needed coherent light. A laser supplies it. Moving your head shows motion parallax."],
+w6:["Vignetting in this lecture is…",["Cosine falloff, and it changes with f-number","Grain in the corners","Chromatic aberration","A dirty sensor"],"Corners get less light. Lens profiles brighten them back. Stopping down changes it."],
 d1:["On the camera it's a photosite. In the file it's a…",["Pixel","Photodiode","Bit","Voxel"],"Photosite = on the sensor. Pixel = in the file."],
 d2:["What turns the photosite's analog voltage into a digital count?",["The A/D (analog-to-digital) converter","The Bayer filter","The microlens","The shutter"],"The A/D converter. The number of possible counts is limited by bit depth."],
 d3:["How many colors can a 24-bit image show?",["About 16.7 million","256","65,536","4,096"],"2²⁴ ≈ 16.7 million (8 bits each for R, G and B)."],
@@ -1615,6 +1725,32 @@ function seg(id,cb){var g=document.getElementById(id);if(!g)return;g.querySelect
   else g+='<text x="220" y="250" text-anchor="middle" font-size="12" fill="#1F8A70" font-weight="800">verticals stay parallel ✓</text>';
   svg.innerHTML=g;document.getElementById('tscap').innerHTML=shift?'Camera kept <b>level</b>, lens <b>shifted up</b>: the whole building fits and the verticals stay straight. Great for architecture and real estate.':'Tilting the camera up to fit the building makes the top look narrower and the bottom "fat" (keystone distortion).';}
  draw('0');seg('tsv',draw);})();
+/* Nov 2 · same-size boots and viewing distance */
+(function(){
+ var svg=document.getElementById('wsvg');
+ if(svg){
+  function boot(f,d){
+   var bg=Math.round(28*(f/50));
+   svg.innerHTML='<rect width="460" height="200" fill="#D7E7F6"/><rect y="150" width="460" height="50" fill="#C9B79A"/>'+
+    '<rect x="36" y="'+(150-bg)+'" width="54" height="'+bg+'" rx="4" fill="#8FA0B4"/>'+
+    '<rect x="300" y="'+(150-Math.round(bg*1.4))+'" width="70" height="'+Math.round(bg*1.4)+'" rx="4" fill="#7A8FA3"/>'+
+    '<rect x="210" y="78" width="36" height="72" rx="8" fill="#3F6CC9"/><circle cx="228" cy="64" r="16" fill="#F2C9A5"/>'+
+    '<text x="14" y="24" font-size="15" font-weight="800" fill="#15131C" font-family="Inter,sans-serif">'+f+' mm · '+d+' ft</text>';
+   var cap=document.getElementById('wcap');
+   if(cap)cap.textContent='Near figure stays the same height. Background is '+(f===50?'small.':f===100?'larger.':'much larger and looks closer.');
+  }
+  document.querySelectorAll('#wpair button').forEach(function(b){b.addEventListener('click',function(){
+   document.querySelectorAll('#wpair button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+   boot(+b.dataset.f,+b.dataset.d);
+  });});
+  boot(50,5);
+ }
+ var vf=document.getElementById('vf'),vm=document.getElementById('vm');
+ function view(){if(!vf)return;var f=+vf.value,m=+vm.value;document.getElementById('vfv').textContent=f;document.getElementById('vmv').textContent=m;
+  var mm=f*m, inn=mm/25.4;
+  document.getElementById('vout').textContent=f+' mm × '+m+' = '+mm+' mm ≈ '+inn.toFixed(1)+' in';}
+ if(vf){vf.addEventListener('input',view);vm.addEventListener('input',view);view();}
+})();
 })();
 
 })();
