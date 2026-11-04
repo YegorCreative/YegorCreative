@@ -145,7 +145,7 @@ details.cat.lv-new,details.cat.lv-learning,details.cat.lv-almost,details.cat.lv-
 <div class="wrap" id="app"></div>
 
 <script>
-const TOPICS={expo:"Exam 1: stops & equivalent exposure",light:"Light: RATS",files:"Files: RAW, bits, JPEG & TIFF",lenses:"Lenses & lens designs",persp:"Framing, perspective & image size",dof:"Circle of confusion & depth of field"};
+const TOPICS={expo:"Exam 1: stops & equivalent exposure",dens:"Exam 1: transmittance, opacity, density & ND",lmath:"Exam 1: inverse square, luminance ratio & mired",light:"Light: RATS",files:"Files: RAW, bits, JPEG & TIFF",lenses:"Lenses & lens designs",persp:"Framing, perspective & image size",dof:"Circle of confusion & depth of field"};
 const ISO=["100","200","400","800","1600","3200","6400"];
 const SHUT=["1","1/2","1/4","1/8","1/15","1/30","1/60","1/125","1/250","1/500","1/1000"];
 const APER=["1.4","2","2.8","4","5.6","8","11","16","22","32"];
@@ -206,6 +206,38 @@ const Q=[
 {id:"FP23",t:"dof",k:"tf",q:"Moving farther from your subject increases depth of field.",a:true,e:"True. Object distance is one of the three controls."},
 {id:"FP24",t:"dof",k:"tf",q:"At the same distance and f-number, a longer focal length gives MORE depth of field.",a:false,e:"False. A longer lens gives LESS depth of field."},
 {id:"FP25",t:"dof",k:"mc",q:"Changing which setting does NOT change depth of field?",o:["ISO","Aperture","Focal length","Object distance"],e:"The three controls are aperture, object distance and focal length."},
+{id:"XD1",t:"dens",k:"mc",q:"Transmittance equals…",o:["Transmitted light ÷ incident light","Incident light ÷ transmitted light","log(opacity)","1 ÷ density"],e:"T = transmitted ÷ incident. How much got Through."},
+{id:"XD2",t:"dens",k:"mc",q:"Opacity equals…",o:["Incident light ÷ transmitted light","Transmitted light ÷ incident light","log(transmittance)","Transmittance × 2"],e:"O = incident ÷ transmitted, which is also 1 ÷ transmittance."},
+{id:"XD3",t:"dens",k:"mc",q:"Density equals…",o:["log(opacity)","log(transmittance)","1 ÷ opacity","Opacity ÷ transmittance"],e:"D = log(opacity), which is also log(1 ÷ transmittance)."},
+{id:"XD4",t:"dens",k:"mc",q:"The higher the density, the ______ the transmittance and the ______ the opacity.",o:["lower, higher","higher, higher","higher, lower","lower, lower"],e:"Higher density → lower transmittance, higher opacity."},
+{id:"XD5",t:"dens",k:"tf",q:"Density is linear and additive.",a:true,e:"True. Stack a 0.3 and a 0.6 and you get 0.9."},
+{id:"XD6",t:"dens",k:"tf",q:"Transmittance is the easiest to read because it is linear and additive.",a:false,e:"False. DENSITY is easiest to read because it is linear and additive."},
+{id:"XD7",t:"dens",k:"num",q:"Incident light is 100 lux, transmitted light is 50 lux. What is the transmittance?",a:0.5,tol:0.01,d:"0.5",e:"50 ÷ 100 = 0.5"},
+{id:"XD8",t:"dens",k:"num",q:"Incident light is 100 lux, transmitted light is 50 lux. What is the opacity?",a:2,tol:0.01,d:"2",e:"100 ÷ 50 = 2"},
+{id:"XD9",t:"dens",k:"num",q:"Incident light is 100 lux, transmitted light is 50 lux. What is the density? (Hint: log 2 ≈ ?)",a:0.3,tol:0.01,d:"0.3",e:"log(100/50) = log(2) ≈ 0.3. That's exactly 1 stop."},
+{id:"XD10",t:"dens",k:"mc",q:"Incident light is 200 lux, transmitted light is 85 lux. Which is the correct setup for density?",o:["log(200 lux / 85 lux)","log(85 lux / 200 lux)","200 lux / 85 lux","85 lux / 200 lux"],e:"Density = log(opacity) = log(incident/transmitted) = log(200/85) ≈ 0.37."},
+{id:"XD11",t:"dens",k:"mc",q:"Incident light is 200 lux, transmitted light is 85 lux. Which is the correct setup for opacity?",o:["200 lux / 85 lux","85 lux / 200 lux","log(200 lux / 85 lux)","200 lux × 85 lux"],e:"Opacity = incident ÷ transmitted = 200/85 ≈ 2.35."},
+{id:"XD12",t:"dens",k:"fill",q:"A 0.3 ND filter changes exposure by ________.",a:["1 stop","one stop","1","1 stops"],e:"0.3 = 1 stop. The magic number."},
+{id:"XD13",t:"dens",k:"num",q:"You have a 0.6 ND filter. How many stops did you lose?",a:2,tol:0,d:"2 stops",e:"0.6 ÷ 0.3 = 2 stops."},
+{id:"XD14",t:"dens",k:"num",q:"You have a 0.9 ND filter. How many stops did you lose?",a:3,tol:0,d:"3 stops",e:"0.9 ÷ 0.3 = 3 stops."},
+{id:"XD15",t:"dens",k:"num",q:"You lost 2 stops. What ND filter was used?",a:0.6,tol:0.001,d:"0.6 ND",e:"2 × 0.3 = 0.6 ND."},
+{id:"XD16",t:"dens",k:"num",q:"You lost 3 stops. What ND filter was used?",a:0.9,tol:0.001,d:"0.9 ND",e:"3 × 0.3 = 0.9 ND."},
+{id:"XD17",t:"dens",k:"tf",q:"A 0.9 ND filter will alter the exposure by two stops.",a:false,e:"False. 0.9 ND = three stops."},
+{id:"XD18",t:"dens",k:"num",q:"you stack a 0.3 ND and a 0.9 ND. How many stops total?",a:4,tol:0,d:"4 stops",e:"Density adds: 0.3 + 0.9 = 1.2 → 1.2 ÷ 0.3 = 4 stops."},
+{id:"XM1",t:"lmath",k:"mc",q:"The inverse square law equation is…",o:["E = I / d²","E = I × d²","E = d / I²","E = I / d"],e:"E = I / d². E = illuminance, I = intensity, d = distance."},
+{id:"XM2",t:"lmath",k:"tf",q:"You use broad sources for the inverse square law, not point sources.",a:false,e:"False. The inverse square law only works with POINT sources."},
+{id:"XM3",t:"lmath",k:"num",q:"A light reads 100 lux at 10 ft. What does it read at 20 ft? (lux)",a:25,tol:0.01,d:"25 lux",e:"Double the distance → ¼ the light. 100 / 2² = 25 lux."},
+{id:"XM4",t:"lmath",k:"num",q:"A light reads 100 lux at 10 ft. What does it read at 30 ft? (lux, 2 decimals)",a:11.11,tol:0.05,d:"11.11 lux",e:"Triple the distance → 1/9 the light. 100 / 3² ≈ 11.11 lux."},
+{id:"XM5",t:"lmath",k:"num",q:"A light reads 85 lux at 15 ft. What does it read at 30 ft? (lux)",a:21.25,tol:0.02,d:"21.25 lux",e:"30 ft is 2× the distance: 85 / 2² = 85/4 = 21.25 lux."},
+{id:"XM6",t:"lmath",k:"mc",q:"A light reads 85 lux at 15 ft. Which is the correct setup for 45 ft?",o:["E = 85 lux / 3²","E = 85 lux / 45²","E = 85 lux / 3","E = 85 lux × 3²"],e:"45 ft is 3× the distance, so divide by 3² = 9 → ≈ 9.44 lux."},
+{id:"XM7",t:"lmath",k:"mc",q:"If you double the distance from a point source, the light becomes…",o:["¼ as bright","½ as bright","2× as bright","⅛ as bright"],e:"Inverse square: 1/2² = ¼."},
+{id:"XM15",t:"lmath",k:"num",q:"EV reading of 8 in the highlights, 4 in the shadows. What is the stop range?",a:4,tol:0,d:"4 stops",e:"8 − 4 = 4 stops."},
+{id:"XM16",t:"lmath",k:"num",q:"EV reading of 6 in the highlights, 2 in the shadows. What is the stop range?",a:4,tol:0,d:"4 stops",e:"6 − 2 = 4 stops."},
+{id:"XF4",t:"lmath",k:"mc",q:"The mired scale equation is…",o:["(1 ÷ color temperature) × 10⁶","1 ÷ (color temperature × 10⁶)","color temperature × 10⁶","color temperature ÷ 10⁶"],e:"(1/K) × 1,000,000. The SI slide's version 1/(K × 10⁶) is WRONG."},
+{id:"XF5",t:"lmath",k:"num",q:"The color temperature is 2000K. What is the mired value?",a:500,tol:0,d:"500",e:"1,000,000 ÷ 2000 = 500."},
+{id:"XF6",t:"lmath",k:"num",q:"The color temperature is 5000K. What is the mired value?",a:200,tol:0,d:"200",e:"1,000,000 ÷ 5000 = 200."},
+{id:"XF7",t:"lmath",k:"mc",q:"The color temperature is 1800K. Which is the correct setup?",o:["(1 / 1800K) × 10⁶","1 / (1800K × 10⁶)","1800K × 10⁶","1800K / 10⁶"],e:"(1/1800) × 10⁶ ≈ 555.6."},
+{id:"XF8",t:"lmath",k:"mc",q:"As color temperature (K) goes UP, the mired value goes…",o:["Down","Up","Stays the same"],e:"Mired = 1,000,000 ÷ K, so higher K → lower mired."},
 ];
 /* ---------- storage (per-viewer, best effort) ---------- */
 const KEY="final-prep-v1";
@@ -312,7 +344,7 @@ const GEN={
  rm(){const o=pk([10,15,20,24,30,40,50,60]),m=pk([0.25,0.5,1,2,3]),img=r1(o*m);
   return{k:"num",q:`${art(o)==="an"?"An":"A"} ${o} mm object is ${img} mm tall on the sensor. What is the scale of reproduction R? (2 decimals)`,a:m,tol:0.01,d:`${m} (${ratio(m)})`,e:`R = image size ÷ object size = ${img} ÷ ${o} = ${m}.`};}
 };
-const GQ=[["G17","expo","expo","Equivalent exposure, changing two settings"],["G18","expo","expo","Equivalent exposure, changing two settings"]].map(([id,t,g,name])=>({id,t,k:"gen",g,q:"🎲 "+name+" (new numbers every time)",d:"Different numbers every time",e:""}));
+const GQ=[["G17","expo","expo","Equivalent exposure, changing two settings"],["G18","expo","expo","Equivalent exposure, changing two settings"],["G16","dens","nd","ND filter density ↔ stops"]].map(([id,t,g,name])=>({id,t,k:"gen",g,q:"🎲 "+name+" (new numbers every time)",d:"Different numbers every time",e:""}));
 Q.push(...GQ);
 function inst(q){if(q.k!=="gen")return q;const tpl=q.tpl||q;const x=GEN[tpl.g]();return Object.assign({id:tpl.id,t:tpl.t,tpl,gen:true},x);}
 
