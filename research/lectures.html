@@ -70,6 +70,7 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px}
 .opts button.right{border-color:var(--ok);background:var(--okb)}
 .opts button.wrong{border-color:var(--bad);background:var(--badb)}
 .fb{font-size:14px;font-weight:600}
+.lecnav{display:grid;gap:10px}.lg{display:grid;grid-template-columns:88px minmax(0,1fr);gap:10px;align-items:center}.lgk{font-size:11.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}@media(max-width:640px){.lg{grid-template-columns:minmax(0,1fr);gap:5px}}.stops td:last-child{font-variant-numeric:tabular-nums;font-weight:600}
 .lecs{display:flex;width:100%}
 .lecs button{flex:1 1 96px;min-height:48px;font-size:13.5px;line-height:1.2;padding:6px 10px;border-bottom:1px solid var(--line)}
 .lec{display:grid;gap:22px}
@@ -129,15 +130,15 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 </style></head><body>
 <div class="w">
 <header class="intro">
-<span class="eyebrow">Exam 2 · Oct 30 · Lecture notes</span>
+<span class="eyebrow">Exam 1 · Exam 2 · Final · Lecture notes</span>
 <h1>Lecture Notes</h1>
-<p>Every PHPS-106 lecture since Sep 21, redesigned with diagrams you can play with and checked against the lecture slides. The last tab is Nov 2, for the final. Each section ends with a quick check.</p>
-<div class="seg lecs" role="tablist" aria-label="Lectures" id="lecs"><button role="tab" class="pkt" aria-selected="false" aria-pressed="false" data-l="LP">★ Her test picks</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L0">Sep 21 · Digital sensors</button><button role="tab" aria-selected="true" aria-pressed="true" data-l="L1">Sep 28 · Sensors &amp; noise</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L2">Oct 2 · RAW &amp; files</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L3">Oct 5 · Formats &amp; compression</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L4">Oct 16 · Lenses</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L5">Oct 19 · Lens types</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L6">Oct 23 · Aberrations &amp; DOF</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L7">Oct 26 · Autofocus &amp; perspective</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L8">Nov 2 · Perspective &amp; depth cues</button></div>
+<p>Every PHPS-106 lecture recording I have, from Exam 1 to the final, grouped by exam and redesigned with diagrams you can play with and checked against the lecture slides. Each section ends with a quick check.</p>
+<div class="lecnav" role="tablist" aria-label="Lectures" id="lecs"><div class="lg"><span class="lgk">Start here</span><div class="seg lecs"><button role="tab" class="pkt" aria-selected="false" aria-pressed="false" data-l="LP">★ Her test picks (Exam 1 + 2)</button></div></div><div class="lg"><span class="lgk">Exam 1</span><div class="seg lecs"><button role="tab" aria-selected="false" aria-pressed="false" data-l="LA">Sep 14 · Transmittance, opacity &amp; density</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="LB">Sep 18 · Stops, equivalent exposure &amp; histograms</button></div></div><div class="lg"><span class="lgk">Exam 2</span><div class="seg lecs"><button role="tab" aria-selected="false" aria-pressed="false" data-l="L0">Sep 21 · Digital sensors</button><button role="tab" aria-selected="true" aria-pressed="true" data-l="L1">Sep 28 · Sensors &amp; noise</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L2">Oct 2 · RAW &amp; files</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L3">Oct 5 · Formats &amp; compression</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L4">Oct 16 · Lenses</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L5">Oct 19 · Lens types</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L6">Oct 23 · Aberrations &amp; DOF</button><button role="tab" aria-selected="false" aria-pressed="false" data-l="L7">Oct 26 · Autofocus &amp; perspective</button></div></div><div class="lg"><span class="lgk">Final</span><div class="seg lecs"><button role="tab" aria-selected="false" aria-pressed="false" data-l="L8">Nov 2 · Perspective &amp; depth cues</button></div></div></div>
 </header>
 <!-- ================= TEST PICKS ================= -->
 <div class="lec" id="LP" hidden>
 <section class="topic pick" aria-labelledby="ph1">
-<div class="th"><span class="num" style="-webkit-text-stroke-color:#E9B10A">★</span><div><h2 id="ph1">Her test picks</h2><p>Every time she said “this is a good test question”</p></div></div>
+<div class="th"><span class="num" style="-webkit-text-stroke-color:#E9B10A">★</span><div><h2 id="ph1">Her test picks</h2><p>Every time she said “this is a good test question” (Exam 1 and Exam 2)</p></div></div>
 <p>Tap the card to flip it. Mark it <b>Got it</b> or <b>Again</b>; the “Again” cards come back in <b>Practice missed</b>. Once you're memorizing, turn on <b>⌨ Type my answer</b>, and try <b>↺ Flip</b> to see the answer first and recall the question. Each card links to its lecture section, highlighted in gold.</p>
 <div class="deck">
 <button type="button" class="fc" id="fc" aria-live="polite"></button>
@@ -153,6 +154,156 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 <div class="plist" id="plist"></div>
 </section>
 </div>
+<!-- ================= EXAM 1 · SEP 14 ================= -->
+<div class="lec" id="LA" hidden>
+<nav class="toc" aria-label="Sep 14 sections"><a href="#x1">Transmittance</a><a href="#x2">Opacity</a><a href="#x3">Density</a><a href="#x4">Histograms primer</a></nav>
+<div class="beyond" style="margin:0"><b>Heads-up</b>This recording is the afternoon half of Sep 14 ("from this morning"). She didn't call anything a test question, but said these three ideas "are still very important in photography". You use them in the density lab.</div>
+
+<section class="topic" id="x1" aria-labelledby="xh1">
+<div class="th"><span class="num">01</span><div><h2 id="xh1">Transmittance</h2><p>How much light gets through</p></div></div>
+<div class="formula">T = transmitted light ÷ incident light</div>
+<ul class="clean">
+<li><b>Incident</b> = the light going <b>into</b> the filter. <b>Transmitted</b> = the light coming <b>out</b>.</li>
+<li>Measure both in <b>lux</b>. The units cancel, so T has <b>no units</b>. It can be a decimal or a percent. In lab, use the <b>decimal</b>.</li>
+<li>Her table: 100 lux in. 75 out → <b>0.75</b> · 50 out → <b>0.5</b> · 25 out → <b>0.25</b>.</li>
+</ul>
+<div class="box"><h3>Try it: 100 lux goes in</h3>
+<label for="tdl"><b>Transmitted light: <span id="tdv">50</span> lux</b></label><input type="range" id="tdl" min="1" max="100" value="50" aria-label="Transmitted lux">
+<div class="tw"><table><thead><tr><th>Transmittance</th><th>Opacity</th><th>Density</th><th>Stops of light lost</th></tr></thead><tbody><tr><td id="tdT"></td><td id="tdO"></td><td id="tdD"></td><td id="tdS"></td></tr></tbody></table></div></div>
+<div class="check" data-q="x1"></div>
+</section>
+
+<section class="topic" id="x2" aria-labelledby="xh2">
+<div class="th"><span class="num">02</span><div><h2 id="xh2">Opacity</h2><p>How much a filter blocks light</p></div></div>
+<div class="formula">O = 1 ÷ T = incident ÷ transmitted</div>
+<ul class="clean">
+<li>Opacity = the <b>lack of transparency</b>. Her table: T 0.75 → O <b>1.33</b> · T 0.5 → O <b>2</b> · T 0.25 → O <b>4</b>.</li>
+<li><b>The catch:</b> opacity gets <b>very large very fast</b>. In the classic <b>ink drop experiment</b> (India ink dropped into a beaker of water), each drop doubles the opacity: 2, 4, 8… up to about <b>1,024</b> after 10 drops. That's a <b>geometric progression</b>, and hard to graph.</li>
+<li>Transmittance has the opposite problem: it gets <b>tiny</b> and crowds against zero.</li>
+</ul>
+<div class="check" data-q="x2"></div>
+</section>
+
+<section class="topic" id="x3" aria-labelledby="xh3">
+<div class="th"><span class="num">03</span><div><h2 id="xh3">Density</h2><p>The log fixes everything</p></div></div>
+<div class="formula">D = log(opacity) = log(1 ÷ T)</div>
+<ul class="clean">
+<li>Density = how much a substance <b>stops</b> light. "Log" is just a button on your calculator, or <b>=LOG()</b> in Excel.</li>
+<li>Density turns the exploding opacity into a <b>straight line</b>: 0.3 · 0.6 · 0.9 · 1.2 · 1.5 = <b>1 · 2 · 3 · 4 · 5 stops</b>.</li>
+<li><b>Density is additive.</b> Stack a 0.3 and a 0.6 ND filter and you get <b>0.9 = 3 stops</b>.</li>
+<li>Graphs: transmittance and opacity curves are almost impossible to read at one end. The density plot is <b>linear</b>, so differences are easy to see.</li>
+</ul>
+<div class="trick"><span>🔑</span><span><b>Darker filter or negative</b> → <b>higher</b> opacity, <b>lower</b> transmittance, <b>higher</b> density.</span></div>
+<div class="check" data-q="x3"></div>
+</section>
+
+<section class="topic" id="x4" aria-labelledby="xh4">
+<div class="th"><span class="num">04</span><div><h2 id="xh4">Histograms: a first look</h2><p>Just counting how often something happens</p></div></div>
+<ul class="clean">
+<li>A <b>histogram</b> shows <b>frequency</b>: how many pixels have a value of 150, how many students scored 90+, and so on.</li>
+<li>An image histogram puts <b>pixel value</b> across the bottom and <b>number of pixels</b> up the side. It tells you nothing about how <b>good</b> the image is.</li>
+<li>Her kindergarten example: favorite colors decide how many storage bins to buy.</li>
+</ul>
+<div class="box"><h3>Morning vs afternoon kindergarten</h3>
+<div class="seg" role="group" aria-label="Chart type" id="hgseg"><button type="button" aria-pressed="true" data-m="side">Side by side (compare groups)</button><button type="button" aria-pressed="false" data-m="stack">Stacked (shopping list)</button></div>
+<svg class="v" id="hgsvg" viewBox="0 0 460 230" role="img" aria-label="Bar chart of favorite colors for two kindergarten groups"></svg>
+<p class="cap" id="hgcap"></p></div>
+<ul class="clean"><li><b>Side by side</b> compares two populations. <b>Stacked</b> (cumulative) adds them up: buy <b>9 red, 8 green, 13 blue, 6 yellow</b>.</li><li>Always add a <b>legend</b>. Without one, nobody knows which group is which. Your lab plots need one.</li></ul>
+<div class="check" data-q="x4"></div>
+</section>
+</div>
+
+<!-- ================= EXAM 1 · SEP 18 ================= -->
+<div class="lec" id="LB" hidden>
+<nav class="toc" aria-label="Sep 18 sections"><a href="#y1">How her tests work</a><a class="pk" href="#y2">Full-stop table</a><a class="pk" href="#y3">Equivalent exposure</a><a href="#y4">What each setting does</a><a class="pk" href="#y5">Histograms</a><a href="#y6">N+2 / N−2 tables</a></nav>
+
+<section class="topic" id="y1" aria-labelledby="yh1">
+<div class="th"><span class="num">01</span><div><h2 id="yh1">How her tests work</h2><p>Still true for the final</p></div></div>
+<ul class="clean">
+<li><b>No calculator.</b> You won't do the arithmetic, but you <b>set up the equations</b>, so you must know them.</li>
+<li><b>Multiple choice or short answer</b>, not paragraphs. <b>Only answer the question asked.</b> If you "pontificate" and part of it is wrong, you lose points even if the right answer is in there.</li>
+<li>Fill in the blank: use the <b>right tense</b>, no extra words. If she asks for a number, give <b>only the number</b> (no units, no "f/").</li>
+<li>Read slowly. Use the whole time: "There's no bonus points for being the first one out."</li>
+<li>Bring a fully charged laptop (no plugs at the seats). Honorlock in Chrome was required for Exam 1.</li>
+</ul>
+</section>
+
+<section class="topic pick" id="y2" aria-labelledby="yh2">
+<div class="th"><span class="num">02</span><div><h2 id="yh2">Stops and the full-stop table</h2><p>"Free give-me points"</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · "You need to have this memorized for the test"</span><div class="pq">Know every full stop for aperture, shutter speed and ISO.</div><div class="pa">"I can guarantee you, you'll get a lot of points if you know this table. I guarantee you, you will miss a lot of points if you don't."</div></div>
+<p>An exposure needs three settings: <b>shutter speed</b>, <b>aperture (f-number)</b> and <b>ISO</b>. A <b>stop</b> is one full step in any of them, and it <b>halves or doubles</b> the exposure.</p>
+<div class="tw"><table class="stops"><thead><tr><th>Setting</th><th>Full stops (each step = ×2 or ÷2 the light)</th></tr></thead><tbody>
+<tr><td><b>f-number</b></td><td>1.4 · 2 · 2.8 · 4 · 5.6 · 8 · 11 · 16 · 22 · 32</td></tr>
+<tr><td><b>Shutter (s)</b></td><td>1 · 1/2 · 1/4 · 1/8 · 1/15 · 1/30 · 1/60 · 1/125 · 1/250 · 1/500 · 1/1000</td></tr>
+<tr><td><b>ISO</b></td><td>100 · 200 · 400 · 800 · 1600 · 3200 · 6400</td></tr>
+</tbody></table></div>
+<div class="trick"><span>🔑</span><span><b>f-numbers:</b> two rows that each double: <b>1, 2, 4, 8, 16, 32</b> and <b>1.4, 2.8, 5.6, 11, 22</b>. Interleave them. Bigger f-number = <b>smaller</b> opening = <b>less</b> light.</span></div>
+<div class="check" data-q="y2"></div>
+</section>
+
+<section class="topic pick" id="y3" aria-labelledby="yh3">
+<div class="th"><span class="num">03</span><div><h2 id="yh3">Equivalent exposures</h2><p>Many ways to make a dollar</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · on every test</span><div class="pq">"We will have these on every test, this semester and next semester."</div><div class="pa">"Been doing this for 22 years. I've never had a test without one."</div></div>
+<ul class="clean">
+<li>Four quarters, ten dimes, twenty nickels: all make a dollar. Many combinations of settings make the <b>same exposure</b> too.</li>
+<li>Bucket analogy: a small hose for a long time or a big hose for a short time both fill the bucket (a proper exposure).</li>
+<li><b>If you change one setting, you must change at least one other.</b></li>
+</ul>
+<div class="box"><h3>Her method</h3>
+<ol class="clean"><li>Write the base exposure <b>N</b>.</li><li>For each change, count the stops. <b>+</b> = adds light, <b>−</b> = takes light away.</li><li>The column must <b>add up to 0</b>.</li></ol></div>
+<div class="tw"><table><thead><tr><th></th><th>ISO</th><th>Shutter</th><th>f-number</th><th>Total</th></tr></thead><tbody>
+<tr><td><b>N</b></td><td>200</td><td>1/125</td><td>f/8</td><td></td></tr>
+<tr><td>Blur the bat</td><td>200 (0)</td><td>1/30 (+2)</td><td>f/16 (−2)</td><td><b>0</b></td></tr>
+<tr><td>Sun going down</td><td>800 (+2)</td><td>1/500 (−2)</td><td>f/8 (0)</td><td><b>0</b></td></tr>
+</tbody></table></div>
+<div class="box"><h3>Equivalent exposure calculator</h3>
+<div class="three"><label>ISO<select class="inp" id="eqI"></select></label><label>Shutter<select class="inp" id="eqS"></select></label><label>f-number<select class="inp" id="eqF"></select></label></div>
+<p class="note">Base exposure above. Now change one setting and pick which one should compensate:</p>
+<div class="two"><label>Change<select class="inp" id="eqC"><option value="S">Shutter speed</option><option value="F">f-number</option><option value="I">ISO</option></select></label><label>New value<select class="inp" id="eqN"></select></label></div>
+<label>Compensate with<select class="inp" id="eqK"></select></label>
+<p id="eqO" aria-live="polite" style="font-weight:800;font-size:17px"></p></div>
+<ul class="clean"><li><b>Where people go wrong:</b> not knowing the full stops, or not writing the steps out.</li><li><b>Why it matters:</b> in surgery or sports you can't ask for a redo. Adjusting by two stops has to be "an extension of your arm".</li></ul>
+<div class="check" data-q="y3"></div>
+</section>
+
+<section class="topic" id="y4" aria-labelledby="yh4">
+<div class="th"><span class="num">04</span><div><h2 id="yh4">What each setting does to the picture</h2><p>The numbers matter less than the effect</p></div></div>
+<div class="three">
+<div class="box"><h3>Shutter speed</h3><p>Freezes motion or <b>blurs motion</b> (a waterfall, a swinging bat). Motion blur ≠ a blurry image everywhere, which is camera shake.</p></div>
+<div class="box"><h3>Aperture</h3><p>Very shallow to very deep <b>depth of field</b>. Her dewdrop leaf: deep DOF shows every drop, shallow DOF picks a few.</p></div>
+<div class="box"><h3>ISO</h3><p>Higher ISO = more <b>noise</b> (digital). With film, say <b>graininess</b>. Mixing them up makes you "look uneducated".</p></div>
+</div>
+<ul class="clean"><li>With enough light, the right equipment and patience, you can get all three the way you want.</li><li>Check that the <b>exposure compensation</b> marker on your camera is in the center. If it isn't, compensation is on.</li></ul>
+<div class="check" data-q="y4"></div>
+</section>
+
+<section class="topic pick" id="y5" aria-labelledby="yh5">
+<div class="th"><span class="num">05</span><div><h2 id="yh5">Reading a histogram</h2><p>It tells you about exposure, not quality</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · "Write that down and underline it"</span><div class="pq">How many digital counts does the camera histogram have?</div><div class="pa"><b>256</b>, numbered <b>0 to 255</b>. Most people say 255, but zero counts.</div></div>
+<ul class="clean">
+<li>The in-camera histogram comes from a <b>JPEG</b>, even when you shoot RAW. It's close, but RAW software may show a slightly different histogram.</li>
+<li>0 = as dark as it gets. 255 = as bright as it gets. Split it into thirds: <b>shadows · midtones · highlights</b>.</li>
+<li>There's <b>no single correct histogram</b>. Midtones only = low dynamic range, which is right if that's the scene (her foggy Venice Beach photo) and wrong if you expected highlights and shadows.</li>
+<li><b>Clipping</b> = pixels piled at 0 or 255. <b>Clipped detail is gone</b>, RAW or JPEG. <b>Specular highlights</b> (sparkles on raindrops or tomatoes) <b>should</b> clip, or they look cloudy.</li>
+<li>Full dynamic range = values from end to end (her rose). A bright moon over a dark ski slope clips both ends: a perfect candidate for <b>HDR</b>.</li>
+<li>Photoshop and Lightroom: hold <b>Option/Alt</b> while dragging a Levels slider to see which pixels clip.</li>
+<li>Too bright with flash up close? Back up (inverse square law). That's what she did at the Monkey Jungle.</li>
+</ul>
+<div class="check" data-q="y5"></div>
+</section>
+
+<section class="topic" id="y6" aria-labelledby="yh6">
+<div class="th"><span class="num">06</span><div><h2 id="yh6">ETTR and N+2 / N−2 tables</h2><p>Purposely over- and underexposing</p></div></div>
+<ul class="clean">
+<li><b>Exposure to the right (ETTR)</b>: for a dark, low-dynamic-range subject (her black dog), overexpose without clipping, then pull it back in post for more shadow detail. More on this in the Sep 21 and Sep 28 tabs.</li>
+<li>Lab tables say <b>N + 2</b> or <b>N − 2</b>: always count from the <b>base exposure on the top row</b>, never from the row above.</li>
+<li>These are <b>not</b> equivalent exposures. N + 2 is deliberately 2 stops <b>over</b>, N − 2 is 2 stops <b>under</b>.</li>
+<li>Labs use <b>JPEG</b> so you see your mistakes (like a "daylight" LED panel that's really about 5,200 K). Switch back to <b>RAW</b> for Photo 1.</li>
+</ul>
+<div class="check" data-q="y6"></div>
+</section>
+</div>
+
 <!-- ================= LECTURE 0 · SEP 21 ================= -->
 <div class="lec" id="L0" hidden>
 <nav class="toc" aria-label="Sep 21 sections"><a href="#d1">Photosite → pixel</a><a href="#d2">Analog → digital</a><a href="#d3">Bit depth</a><a href="#d4">Histograms</a><a href="#d5">CCD vs CMOS</a><a href="#d6">Bayer history</a></nav>
@@ -1118,109 +1269,105 @@ ol.steps li.last{background:var(--soft);font-weight:700}
 
 <!-- ================= LECTURE 8 · NOV 2 ================= -->
 <div class="lec" id="L8" hidden>
-<nav class="toc" aria-label="Nov 2 sections"><a href="#w1">Focal length with distance</a><a href="#w2">Weak and strong</a><a href="#w3">Viewing distance</a><a href="#w4">Depth cues</a><a href="#w5">Holography</a><a href="#w6">DOF and vignetting</a><a href="#w7">Lab 4 rules</a></nav>
-<div class="beyond" style="margin:0"><b>No test-pick sentence</b>She did not say “this is a good test question” on Nov 2. The ideas still belong on the final, and Lab 4 is this week. Thanksgiving week: lecture Monday, no lab.</div>
+<nav class="toc" aria-label="Nov 2 sections"><a href="#w1">Focal length + distance</a><a href="#w2">Weak vs strong</a><a href="#w3">Viewing distance</a><a href="#w4">Depth cues</a><a href="#w5">Holography &amp; stereo</a><a href="#w6">DOF &amp; vignetting</a><a href="#w7">Lab 4 rules</a></nav>
+<div class="beyond" style="margin:0"><b>Heads-up</b>Final-exam material (Exam 2 is done). She didn't call anything here a "test question" this time, but she repeated one warning twice: <b>perspective comes from distance, not from the lens</b>.</div>
 
 <section class="topic" id="w1" aria-labelledby="wh1">
-<div class="th"><span class="num">01</span><div><h2 id="wh1">Focal length and distance together</h2><p>The near object stays the same size</p></div></div>
-<p>Image size follows <b>focal length ÷ distance</b>. Change both by the same factor and the near subject does not change size. The background, which you did <b>not</b> scale the same way, gets bigger and looks closer.</p>
-<div class="box">
-<div class="seg" role="group" aria-label="Boot pairs" id="wpair">
-<button type="button" aria-pressed="true" data-f="50" data-d="5">50 mm at 5 ft</button>
-<button type="button" aria-pressed="false" data-f="100" data-d="10">100 mm at 10 ft</button>
-<button type="button" aria-pressed="false" data-f="200" data-d="20">200 mm at 20 ft</button>
-</div>
-<svg class="v" id="wsvg" viewBox="0 0 460 200" role="img" aria-label="Near boot stays the same height while the background grows"></svg>
-<p class="cap" id="wcap"></p>
-</div>
+<div class="th"><span class="num">01</span><div><h2 id="wh1">Change focal length AND distance together</h2><p>Keep the near object the same size and watch the background</p></div></div>
+<p>Her boots again. This time she kept the <b>near boot the same size</b>: double the focal length, double the distance.</p>
+<div class="box"><h3>Her boot series</h3>
+<div class="seg" role="group" aria-label="Lens and distance" id="wb"><button type="button" aria-pressed="true" data-i="0">50 mm · 5 ft</button><button type="button" aria-pressed="false" data-i="1">100 mm · 10 ft</button><button type="button" aria-pressed="false" data-i="2">200 mm · 20 ft</button></div>
+<svg class="v" id="wbsvg" viewBox="0 50 460 162" role="img" aria-label="The near boot stays the same size; the far boot grows as you back up with a longer lens"></svg>
+<p class="cap" id="wbcap"></p></div>
 <ul class="clean">
-<li>Her boots: 50 mm at 5 ft, 100 mm at 10 ft, 200 mm at 20 ft. The <b>near boot matches</b>. The background grows.</li>
-<li>She showed a real-estate example for the same trick. Her line: <b>there is no truth in imagery</b>.</li>
-<li>The lens equations assume a <b>constant lens-to-sensor distance</b>. Use them to understand the picture. Do not calculate a number she did not ask for.</li>
+<li>The boots <b>never moved</b>, but with the longer lens from farther away they look <b>closer in size</b> and <b>closer together</b>.</li>
+<li>Long lens from far away = background looks <b>big and close</b> (emphasized). Wide lens up close = background looks <b>small and far</b> (de-emphasized).</li>
+<li>Real-world use: a <b>real-estate</b> shot can shrink the run-down house behind, or make a park 2 miles away look next door. A TV reporter's hotel looked right next to the Capitol (it isn't). Her lesson: <b>"There's no truth in imagery."</b> Check Google Earth before you book.</li>
+<li><b>Words of caution:</b> the exact equations assume the lens-to-sensor distance stays constant. It doesn't (you refocus, zoom lenses change), so she cares that you <b>understand what happens</b>, not that you calculate it.</li>
 </ul>
 <div class="check" data-q="w1"></div>
 </section>
 
 <section class="topic" id="w2" aria-labelledby="wh2">
-<div class="th"><span class="num">02</span><div><h2 id="wh2">Weak and strong perspective</h2><p>Distance does it. The lens does not.</p></div></div>
+<div class="th"><span class="num">02</span><div><h2 id="wh2">Weak vs strong (linear) perspective</h2><p>It's the distance, not the lens</p></div></div>
 <div class="two">
-<div class="box"><h3>Weak</h3><ul class="clean"><li>Camera <b>farther</b> away</li><li>Scene looks <b>compressed</b></li><li>Lines stay more <b>parallel</b></li><li>The look people blame on a <b>telephoto</b></li></ul></div>
-<div class="box"><h3>Strong</h3><ul class="clean"><li>Camera <b>closer</b></li><li>Near objects <b>grow faster</b> than far ones</li><li>Lines <b>converge</b></li><li>The look people blame on a <b>wide angle</b></li></ul></div>
+<div class="box"><h3>Weak perspective</h3><ul class="clean"><li>Camera <b>farther away</b></li><li>Space looks <b>compressed</b></li><li>Parallel lines stay <b>close to parallel</b></li><li>Size drops <b>slowly</b> with distance</li><li>Usually linked to a <b>telephoto</b></li></ul></div>
+<div class="box"><h3>Strong perspective</h3><ul class="clean"><li>Camera <b>closer</b></li><li>Near object grows <b>faster</b> than the far one</li><li>Space between them looks <b>bigger</b></li><li>Parallel lines <b>converge</b></li><li>Usually linked to a <b>wide angle</b></li></ul></div>
 </div>
-<div class="trick"><span>🔑</span><span>She repeated the warning: perspective is caused by <b>distance</b>, not by the lens. You pick the lens so the subject still fits after you move.</span></div>
+<div class="trick"><span>⚠️</span><span><b>The trap:</b> strong perspective isn't caused by the wide-angle lens. You use a wide angle <b>because you're close</b>, and being close causes it. Same for telephoto: you're far away. "It's not a function of the lens, it's a function of that distance."</span></div>
 <div class="check" data-q="w2"></div>
 </section>
 
 <section class="topic" id="w3" aria-labelledby="wh3">
-<div class="th"><span class="num">03</span><div><h2 id="wh3">Viewing distance</h2><p>Where you should stand to see the print the way the lens saw it</p></div></div>
+<div class="th"><span class="num">03</span><div><h2 id="wh3">Viewing distance</h2><p>How far away to look at a print so the perspective looks normal</p></div></div>
 <div class="formula">viewing distance = focal length × printing magnification</div>
+<div class="box"><h3>Try it</h3>
+<div class="two"><label>Focal length (mm)<input class="inp" id="vdf" type="number" inputmode="decimal" value="50" min="1"></label><label>Magnification (×)<input class="inp" id="vdm" type="number" inputmode="decimal" value="8" min="0.1" step="0.1"></label></div>
+<p id="vdo" aria-live="polite" style="font-weight:800;font-size:18px"></p></div>
 <ul class="clean">
-<li>An <b>8×10 contact print</b> from a <b>12-inch</b> lens is magnification 1, so you view it from <b>12 inches</b>.</li>
-<li>Her example: a <b>50 mm</b> lens printed at <b>×8</b>. She said about <b>10 inches</b>.</li>
+<li><b>8×10 camera, 12-inch lens, contact print</b> (no enlargement, ×1) → view from <b>12 in</b>. Nobody holds a print that close.</li>
+<li><b>Full frame, 50 mm lens, 8× enlargement</b> → 50 × 8 = 400 mm ≈ <b>16 in</b>. (In class she said "about 10 inches". The math gives about 16 in. 10 in would be a 5× enlargement. Ask her or SI which answer she wants.)</li>
+<li>People usually stand about <b>3–4 ft</b> from a print on a gallery wall.</li>
+<li>The velvet rope in museums is <b>not</b> about viewing distance. It keeps your "grubby paws" off the art.</li>
 </ul>
-<div class="beyond"><b>Check with SI</b>50 mm × 8 = 400 mm. 400 ÷ 25.4 ≈ <b>15.7 inches</b>, not 10. The formula and the contact-print example agree with each other. Her spoken “about 10 inches” does not match that math. Ask in the SI session which number she wants on the final.</div>
-<div class="box">
-<label for="vf"><b>Focal length: <span id="vfv">50</span> mm</b></label>
-<input type="range" id="vf" min="24" max="300" value="50" aria-label="Focal length in millimeters">
-<label for="vm"><b>Print magnification: <span id="vmv">8</span>×</b></label>
-<input type="range" id="vm" min="1" max="20" value="8" aria-label="Printing magnification">
-<p class="formula" id="vout" style="font-size:18px"></p>
-</div>
 <div class="check" data-q="w3"></div>
 </section>
 
 <section class="topic" id="w4" aria-labelledby="wh4">
-<div class="th"><span class="num">04</span><div><h2 id="wh4">Depth cues</h2><p>How a flat picture still feels deep</p></div></div>
-<div class="tw"><table><thead><tr><th>Cue</th><th>What you see</th></tr></thead><tbody>
-<tr><td>Texture</td><td>Detail is crisp nearby and packs tighter as it recedes</td></tr>
-<tr><td>Form</td><td>Light and shade give an object volume</td></tr>
-<tr><td>Size / known size</td><td>You know how big a person or a door is, so a small one reads as far</td></tr>
-<tr><td>Size tricks</td><td>Forced perspective: a near object is scaled to look like it belongs farther back</td></tr>
-<tr><td>Aerial haze</td><td>Far things are hazier and lower in contrast</td></tr>
-<tr><td>Overlap</td><td>Whatever blocks something else is in front</td></tr>
-<tr><td>Shadows</td><td>A shadow ties an object to the ground and shows its shape</td></tr>
-<tr><td>Isolation</td><td>A sharp subject against a soft background separates near from far</td></tr>
-<tr><td>Color</td><td><b>Warm</b> colors come forward. <b>Cool</b> colors recede.</td></tr>
+<div class="th"><span class="num">04</span><div><h2 id="wh4">More depth cues</h2><p>How a flat photo still shows depth</p></div></div>
+<div class="tw"><table class="cmp"><thead><tr><th>Cue</th><th>Her example and what it tells you</th></tr></thead><tbody>
+<tr><td>Texture</td><td>Sand-dune ripples from above, a palm-tree trunk. Texture gets finer with distance.</td></tr>
+<tr><td>Form</td><td>Hot-air balloons: you know they're 3-D and roughly how big, so a smaller one must be farther.</td></tr>
+<tr><td>Size (known objects)</td><td>A person next to pillars tells you how tall the pillars are. The moon looks huge near the horizon next to a mountain.</td></tr>
+<tr><td>Size tricks</td><td>Her cathedral: windows get smaller going up, so the building looks taller. Disney and movie sets use this.</td></tr>
+<tr><td>Aerial haze</td><td>Haze <b>lowers saturation and contrast</b> and <b>raises brightness</b> with distance.</td></tr>
+<tr><td>Overlap</td><td>Marching soldiers get smaller down the line. The camels look bigger than the pyramids.</td></tr>
+<tr><td>Shadows</td><td>Jewelry with no shadow is hard to size. A little shadow gives shape and scale.</td></tr>
+<tr><td>Isolation</td><td>An object alone (a bowl or a contact lens? a marble or a bowling ball?) has no scale. Add a known object and you can tell.</td></tr>
+<tr><td>Approaching vs receding colors</td><td><b>Warm colors</b> (reds) seem to come <b>forward</b>. <b>Cool colors</b> (blues, deep greens) seem to <b>recede</b>. In advertising, don't put the star in a receding color surrounded by approaching colors.</td></tr>
 </tbody></table></div>
+<p class="note">Why warm colors come forward is biology (eye anatomy), which she'll explain next semester.</p>
 <div class="check" data-q="w4"></div>
 </section>
 
 <section class="topic" id="w5" aria-labelledby="wh5">
-<div class="th"><span class="num">05</span><div><h2 id="wh5">Holography and stereo</h2><p>Real parallax, not a single flat view</p></div></div>
+<div class="th"><span class="num">05</span><div><h2 id="wh5">Holography &amp; stereo images</h2><p>"Cheating" ways to show 3-D</p></div></div>
 <ul class="clean">
-<li><b>Dennis Gabor</b>, Hungarian, Nobel Prize in physics. He was trying to improve the <b>resolving power of the electron microscope</b>.</li>
-<li>A hologram needs <b>coherent light</b>. That is what a <b>laser</b> provides.</li>
-<li>Move your head and the view changes: <b>motion parallax</b>. A normal photograph does not do that.</li>
-<li><b>Stereo images</b> are the two-picture version of the same idea: one view for each eye.</li>
+<li><b>Holography</b> was invented by <b>Dennis Gabor</b>, a Hungarian physicist who won the <b>Nobel Prize in Physics</b>. He wasn't trying to make holograms. He was trying to <b>improve the resolving power of electron microscopes</b>, and by accident invented electron holography.</li>
+<li>His early holograms had flaws because a good hologram needs a <b>coherent light source</b>: a <b>laser</b>.</li>
+<li><b>Hologram</b> = one high-resolution photograph that shows <b>different images to the left and right eye</b> (like a stereo pair). Move it sideways and you get <b>motion parallax</b>, so the image seems to move.</li>
+<li><b>Stereo images</b>: two side-by-side views. Relax your eyes until you see three blurry images, then let the middle one come into focus to see 3-D. Image analysts in intelligence read stereo pairs all day.</li>
+<li>Sit near the center in lecture: the screen is <b>retroreflective</b>, so the image gets dimmer off-axis.</li>
 </ul>
 <div class="check" data-q="w5"></div>
 </section>
 
 <section class="topic" id="w6" aria-labelledby="wh6">
-<div class="th"><span class="num">06</span><div><h2 id="wh6">Depth of field, again, and vignetting</h2><p>A short recap from earlier weeks</p></div></div>
-<div class="formula">more DOF: smaller aperture · farther away · shorter lens</div>
+<div class="th"><span class="num">06</span><div><h2 id="wh6">Depth of field again, plus vignetting</h2><p>Recap and a student question</p></div></div>
 <ul class="clean">
-<li>The three controls are still <b>aperture</b>, <b>object distance</b>, and <b>focal length</b>.</li>
-<li><b>Vignetting</b> is <b>cosine falloff</b>: the corners get less light than the center.</li>
-<li>It <b>changes with f-number</b>. Stopping down usually reduces it.</li>
-<li><b>Lens profiles</b> in software brighten the corners back up.</li>
+<li><b>Depth of field</b> = the range of distances that look <b>acceptably sharp</b>. Only one plane is truly in focus. Points nearby make tiny <b>circles of confusion</b> your eye can't tell from dots.</li>
+<li>Her examples: f/1.8 vs f/5.6, and focusing on the foreground, middle ground or background. Her armadillo photo used very shallow depth of field to hide the bleachers behind it.</li>
+<li><b>Vignetting</b> (darker corners) follows <b>cosine falloff</b> and <b>changes with f-number</b>. Test it: photograph a transparency illuminator and change the f-number. Software can remove it with a <b>lens profile</b>. Some photographers even add it on purpose.</li>
 </ul>
 <div class="check" data-q="w6"></div>
 </section>
 
 <section class="topic" id="w7" aria-labelledby="wh7">
-<div class="th"><span class="num">07</span><div><h2 id="wh7">Lab 4 rules</h2><p>Six photos, due at the end of lab</p></div></div>
-<div class="beyond"><b>Automatic zero</b>Sunglasses or a hat on the model. A frame that is badly exposed or out of focus.</div>
+<div class="th"><span class="num">07</span><div><h2 id="wh7">Lab 4 rules and dates</h2><p>What earns a zero</p></div></div>
 <ul class="clean">
-<li><b>Six photos</b>, turned in at the end of lab.</li>
-<li>The model is <b>seated</b> and fills about <b>half the frame, top to bottom</b>.</li>
-<li><b>Rename the folder before you zip it.</b></li>
-<li>About <b>85 mm</b> is her favorite portrait lens.</li>
+<li>Hand in your <b>6 photos at the end of lab</b>. You'll be paired up.</li>
+<li>Headshots: <b>no sunglasses, no hat</b>, or that part is 0. The head must be the <b>same size</b> in all three.</li>
+<li><b>Bad exposure or focus = 0</b>, no partial credit.</li>
+<li>Part I: the model <b>sits</b> and fills <b>half the frame, top to bottom</b>, with real distance to the background.</li>
+<li>No tape measure? <b>Measure your foot × count steps</b>.</li>
+<li>Rename the folder to your <b>last name</b>, <b>then</b> zip it. Wrong order = 0. "Inability to read instructions is no longer acceptable."</li>
+<li>Her favorite portrait lens: <b>about 85 mm</b>. Never a wide angle for portraits. Rain? Use a big window for soft side light.</li>
+<li><b>Final exam:</b> in person, no exceptions. Check the time in <b>SIS</b> before booking flights. <b>Thanksgiving week:</b> lecture Monday, no lab.</li>
 </ul>
 </section>
 </div>
 
-<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures (Sep 21 – Nov 2, 2026), for study use.</p>
+<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures (Sep 14 – Nov 2, 2026), for study use.</p>
 </div>
 
 <script>
@@ -1339,12 +1486,6 @@ v2:["Faraway mountains look hazy and low in contrast. Which depth cue is that?",
 v3:["Beyond about 20 ft, how does your brain judge depth?",["Shadows and relative motion","Binocular disparity","Your dominant eye","It can't at all"],"Binocular vision works within about 18–20 ft; past that, disparity is too small."],
 v4:["In one-point perspective, the receding (orthogonal) lines meet at the…",["Vanishing point on the horizon line","Bottom of the frame","Optical axis","Focal point"],"Horizon line + vanishing point + orthogonal lines."],
 v5:["You double the focal length without moving. The image of everything in the scene…",["Doubles in size, so the size ratios (perspective) stay the same","Gets half as big","Changes perspective","Doesn't change"],"Image size ∝ focal length. Only moving the camera changes perspective."],
-w1:["50 mm at 5 ft, 100 mm at 10 ft, and 200 mm at 20 ft. What stays the same?",["The near subject's size","The background's size","The perspective","The aperture"],"f ÷ d is the same, so the near subject matches. The background grows."],
-w2:["What causes strong perspective?",["Standing closer to the subject","Switching to a wide-angle lens without moving","Stopping down","Raising the ISO"],"She repeated it: distance causes perspective, not the lens."],
-w3:["Viewing distance of a print equals…",["Focal length × printing magnification","Focal length ÷ magnification","Aperture × ISO","Always 10 inches"],"An 8×10 contact print from a 12-inch lens is viewed from 12 inches. Her 50 mm × 8 figure does not match 400 mm; check that one with SI."],
-w4:["Warm colors in a picture tend to…",["Come forward (approaching)","Recede","Show aerial haze","Remove overlap"],"Approaching colors are warm. Receding colors are cool."],
-w5:["A hologram needs coherent light. In practice that means a…",["Laser","Softbox","On-camera flash","A north-facing window"],"Dennis Gabor (Hungarian, Nobel in physics) needed coherent light. A laser supplies it. Moving your head shows motion parallax."],
-w6:["Vignetting in this lecture is…",["Cosine falloff, and it changes with f-number","Grain in the corners","Chromatic aberration","A dirty sensor"],"Corners get less light. Lens profiles brighten them back. Stopping down changes it."],
 d1:["On the camera it's a photosite. In the file it's a…",["Pixel","Photodiode","Bit","Voxel"],"Photosite = on the sensor. Pixel = in the file."],
 d2:["What turns the photosite's analog voltage into a digital count?",["The A/D (analog-to-digital) converter","The Bayer filter","The microlens","The shutter"],"The A/D converter. The number of possible counts is limited by bit depth."],
 d3:["How many colors can a 24-bit image show?",["About 16.7 million","256","65,536","4,096"],"2²⁴ ≈ 16.7 million (8 bits each for R, G and B)."],
@@ -1372,7 +1513,22 @@ o4:["Which lens can form a real image by itself?",["Positive (thicker in the cen
 o5:["Focal length is measured from the back nodal point to the focal plane with the object at…",["Infinity","1 meter","The front nodal point","Twice the focal length"],"Light from infinity enters parallel and comes to focus at the focal plane."],
 o6:["f = 100 mm, R = 3. What is v?",["400 mm","300 mm","133 mm","33 mm"],"v = f(R + 1) = 100 × 4 = 400 mm. Then u = v ÷ R ≈ 133.3 mm."],
 o7:["Which focal length bends light more sharply (more distortion)?",["Short (wide angle)","Long (telephoto)","They bend the same","Only zoom lenses"],"Short focal lengths bend rays more, so wide angles distort more."],
-o8:["What controls perspective?",["Camera-to-subject distance","Focal length","Aperture","Sensor size"],"Focal length changes the angle of view and image scale. Distance changes perspective."]});
+o8:["What controls perspective?",["Camera-to-subject distance","Focal length","Aperture","Sensor size"],"Focal length changes the angle of view and image scale. Distance changes perspective."],
+w1:["You keep the near subject the same size while switching from a 50 mm to a 200 mm lens. The background…",["Looks bigger and closer to the subject","Looks smaller and farther away","Doesn't change at all","Gets more depth of field"],"Backing up with a longer lens compresses space: the background looks big and close (emphasized)."],
+w2:["Strong perspective (converging lines, big near objects) is really caused by…",["Being close to the subject","The wide-angle lens itself","A high f-number","The sensor size"],"It's a function of distance. You just tend to use a wide angle when you're close."],
+w3:["Full-frame camera, 100 mm lens, print enlarged 4×. Normal viewing distance?",["400 mm (about 16 in)","25 mm","104 mm","100 mm"],"Viewing distance = focal length × magnification = 100 × 4 = 400 mm."],
+w4:["Which colors seem to come forward (approach) in a photo?",["Warm colors, like reds","Cool colors, like blues","Deep greens","Neutral grays"],"Warm = approaching. Cool blues and deep greens = receding."],
+w5:["Who invented holography, and what was he trying to do?",["Dennis Gabor, improving electron microscope resolving power","Bryce Bayer, making color sensors","Dennis Gabor, making 3-D movies","Thomas Sutton, making panoramas"],"Gabor (Nobel Prize in Physics) invented it by accident. Good holograms need coherent light: a laser."],
+w6:["Vignetting (darker corners)…",["Changes with f-number and can be removed with a lens profile","Never changes with f-number","Only happens with film","Is a type of noise"],"It follows cosine falloff and changes with the f-number."],
+x1:["100 lux goes into a filter and 25 lux comes out. Transmittance?",["0.25","4","0.6","25"],"T = transmitted ÷ incident = 25 ÷ 100 = 0.25 (no units)."],
+x2:["Transmittance is 0.25. Opacity?",["4","0.25","0.6","25"],"O = 1 ÷ T = 1 ÷ 0.25 = 4."],
+x3:["You stack a 0.3 and a 0.6 ND filter. Total?",["0.9 density = 3 stops","0.18 density = 2 stops","0.9 density = 9 stops","0.6 density = 2 stops"],"Density is additive: 0.3 + 0.6 = 0.9, and every 0.3 is one stop."],
+x4:["What does a histogram show?",["How often each value occurs (frequency)","Whether the photo is good","The color temperature","The focal length"],"Frequency of values. It says nothing about image quality."],
+y2:["Which list is all FULL f-stops in order?",["2.8, 4, 5.6, 8, 11","2.8, 3.5, 4, 5.6, 8","2, 3, 4, 5, 6","4, 5.6, 6.3, 8, 11"],"1.4 · 2 · 2.8 · 4 · 5.6 · 8 · 11 · 16 · 22 · 32."],
+y3:["Base: ISO 400, 1/60, f/5.6. You change to f/11 and keep ISO. Equivalent shutter speed?",["1/15","1/250","1/30","1/8"],"f/5.6 → 8 → 11 = −2 stops, so the shutter adds 2: 1/60 → 1/30 → 1/15."],
+y4:["On a DIGITAL camera, the speckle from high ISO is called…",["Noise","Grain","Bokeh","Flare"],"Digital = noise. Film = graininess."],
+y5:["How many digital counts are in an 8-bit (JPEG) histogram?",["256 (0 to 255)","255","100","1,024"],"0 counts too, so 0–255 is 256 values."],
+y6:["Base N: 1/125, f/8. The N − 2 row (change shutter only) is…",["1/500","1/30","1/250","1/60"],"Count 2 stops LESS light from the base: 1/125 → 1/250 → 1/500."]});
 document.querySelectorAll('.check').forEach(function(el){if(el.innerHTML)return;var q=Q[el.dataset.q];if(!q)return;var order=[0,1,2,3].sort(function(){return Math.random()-.5;});
  el.innerHTML='<span class="tag">Quick check</span><div class="q">'+q[0]+'</div><div class="opts">'+order.map(function(i){return '<button type="button" data-i="'+i+'">'+q[1][i]+'</button>';}).join('')+'</div><div class="fb" aria-live="polite"></div>';
  el.querySelectorAll('.opts button').forEach(function(b){b.addEventListener('click',function(){var ok=b.dataset.i==='0';b.classList.add(ok?'right':'wrong');if(!ok)el.querySelector('[data-i="0"]').classList.add('right');el.querySelectorAll('.opts button').forEach(function(x){x.disabled=true;});el.querySelector('.fb').innerHTML=(ok?'✅ Correct. ':'❌ Not quite. ')+q[2];});});});
@@ -1391,7 +1547,7 @@ try{var saved=localStorage.getItem('e2-lec');if(saved&&document.getElementById(s
 
 
 /* ===== her test picks ===== */
-(function(){var P=[{"l": "L4", "s": "o2", "d": "Oct 16", "said": "“Excellent test question”", "q": "What 4 things can happen to light when it hits something?", "a": "<b>RATS</b>: <b>R</b>eflected · <b>A</b>bsorbed · <b>T</b>ransmitted · <b>S</b>cattered", "x": "Reflected: angle in = angle out. Absorbed: turns into heat (a black shirt in the sun). Transmitted: passes through. Scattered: redirected by dust or water (fog + headlights)."}, {"l": "L2", "s": "r5", "d": "Oct 2", "said": "“A really good test question”", "q": "Compared with a JPEG, a RAW file has…", "a": "<b>Higher</b> dynamic range, <b>lower</b> contrast, <b>less</b> sharp, and it's <b>not ready for output</b>.", "x": "Less sharp because the anti-aliasing filter blurs a little and sharpening is only added in processing."}, {"l": "L2", "s": "r5", "d": "Oct 2", "said": "Test question", "q": "Which file is bigger: the RAW file or the demosaiced image?", "a": "The <b>demosaiced</b> image.", "x": "RAW = 1 value per photosite (1 channel). Demosaiced = red, green and blue at every pixel (3 channels)."}, {"l": "L2", "s": "r6", "d": "Oct 2", "said": "Test question", "q": "What values can one channel of an 8-bit image hold?", "a": "<b>0 to 255</b> (256 levels)", "x": "2⁸ = 256. Counting starts at 0, so the top value is 255. 12-bit = 4,096 levels, 16-bit = 65,536."}, {"l": "L3", "s": "f4", "d": "Oct 5", "said": "Test question", "q": "What happens when you edit and re-save a JPEG over and over?", "a": "<b>Generational degradation</b>: it's compressed again every save, so artifacts build up.", "x": "Fix: convert to TIFF or PSD before you edit."}, {"l": "L3", "s": "f4", "d": "Oct 5", "said": "Test question (the chart)", "q": "TIFF vs JPEG: which is better for repeated editing, and which allows transparency?", "a": "<b>TIFF</b> for both. JPEG degrades every save and has no transparency.", "x": "TIFF: lossless or lossy, 8/16/32 bits, layers, large files. JPEG: lossy, 8 bits only, small files."}, {"l": "L4", "s": "o4", "d": "Oct 16", "said": "Test question", "q": "Positive vs negative lens: what does each one do?", "a": "<b>Positive (convex)</b>: thicker in the center, <b>converges</b> light, forms a <b>real image</b>.<br><b>Negative (concave)</b>: thinner in the center, <b>diverges</b> light, <b>can't</b> form a real image alone.", "x": "Every camera lens uses both, e.g. an achromatic doublet."}, {"l": "L4", "s": "o6", "d": "Oct 16", "said": "Calculator trap", "q": "1/u + 1/v = 0.02 on your calculator. What is the focal length?", "a": "Press <b>1/x</b>: f = 1 ÷ 0.02 = <b>50 mm</b>", "x": "1/u + 1/v gives 1/f, not f. A 0.02 mm focal length makes no sense, so always flip it."}, {"l": "L5", "s": "n4", "d": "Oct 19", "said": "“A very good test question”", "q": "Telephoto vs reverse telephoto (retrofocus): how are the elements arranged?", "a": "<b>Telephoto</b>: positive element in <b>front</b>, negative behind → rear nodal point falls <b>in front of</b> the lens.<br><b>Retrofocus</b>: negative in front, positive behind → rear nodal point falls <b>behind</b> the lens, so a wide angle clears the DSLR mirror.", "x": "Her slide calls it “Reverse Telephoto Wide Angle Lens”."}, {"l": "L5", "s": "n5", "d": "Oct 19", "said": "She “can't impose upon that enough”", "q": "What does changing the focal length change, and what does moving the camera change?", "a": "Focal length → <b>framing</b>.<br>Camera position → <b>perspective</b>.", "x": "Zooming never changes perspective. Only distance does."},{"l": "L6", "s": "a8", "d": "Oct 23", "said": "“Beautiful test question”", "q": "What affects your circle of confusion?", "a": "<b>Eyesight</b> · <b>contrast</b> (circle vs background) · <b>level of illumination</b> · the viewer's <b>opinion</b> of sharpness", "x": "Memory hook: Every Coffee Looks Okay."},{"l": "L6", "s": "a9", "d": "Oct 23", "said": "“Also a beautiful test question”", "q": "What are the three depth of field controls?", "a": "<b>Aperture</b> · <b>object distance</b> (camera to subject) · <b>focal length</b>", "x": "Smaller aperture, farther away, shorter lens = more depth of field."},{"l": "L7", "s": "v5", "d": "Oct 26", "said": "In blue on her slide (“probably on a test”)", "q": "How do focal length and object distance affect image size?", "a": "Image size is <b>directly proportional to focal length</b> and <b>inversely proportional to object distance</b>.", "x": "Double the focal length → everything twice as big. Twice as far away → half as big."}];
+(function(){var P=[{"l": "L4", "s": "o2", "d": "Oct 16", "said": "“Excellent test question”", "q": "What 4 things can happen to light when it hits something?", "a": "<b>RATS</b>: <b>R</b>eflected · <b>A</b>bsorbed · <b>T</b>ransmitted · <b>S</b>cattered", "x": "Reflected: angle in = angle out. Absorbed: turns into heat (a black shirt in the sun). Transmitted: passes through. Scattered: redirected by dust or water (fog + headlights)."}, {"l": "L2", "s": "r5", "d": "Oct 2", "said": "“A really good test question”", "q": "Compared with a JPEG, a RAW file has…", "a": "<b>Higher</b> dynamic range, <b>lower</b> contrast, <b>less</b> sharp, and it's <b>not ready for output</b>.", "x": "Less sharp because the anti-aliasing filter blurs a little and sharpening is only added in processing."}, {"l": "L2", "s": "r5", "d": "Oct 2", "said": "Test question", "q": "Which file is bigger: the RAW file or the demosaiced image?", "a": "The <b>demosaiced</b> image.", "x": "RAW = 1 value per photosite (1 channel). Demosaiced = red, green and blue at every pixel (3 channels)."}, {"l": "L2", "s": "r6", "d": "Oct 2", "said": "Test question", "q": "What values can one channel of an 8-bit image hold?", "a": "<b>0 to 255</b> (256 levels)", "x": "2⁸ = 256. Counting starts at 0, so the top value is 255. 12-bit = 4,096 levels, 16-bit = 65,536."}, {"l": "L3", "s": "f4", "d": "Oct 5", "said": "Test question", "q": "What happens when you edit and re-save a JPEG over and over?", "a": "<b>Generational degradation</b>: it's compressed again every save, so artifacts build up.", "x": "Fix: convert to TIFF or PSD before you edit."}, {"l": "L3", "s": "f4", "d": "Oct 5", "said": "Test question (the chart)", "q": "TIFF vs JPEG: which is better for repeated editing, and which allows transparency?", "a": "<b>TIFF</b> for both. JPEG degrades every save and has no transparency.", "x": "TIFF: lossless or lossy, 8/16/32 bits, layers, large files. JPEG: lossy, 8 bits only, small files."}, {"l": "L4", "s": "o4", "d": "Oct 16", "said": "Test question", "q": "Positive vs negative lens: what does each one do?", "a": "<b>Positive (convex)</b>: thicker in the center, <b>converges</b> light, forms a <b>real image</b>.<br><b>Negative (concave)</b>: thinner in the center, <b>diverges</b> light, <b>can't</b> form a real image alone.", "x": "Every camera lens uses both, e.g. an achromatic doublet."}, {"l": "L4", "s": "o6", "d": "Oct 16", "said": "Calculator trap", "q": "1/u + 1/v = 0.02 on your calculator. What is the focal length?", "a": "Press <b>1/x</b>: f = 1 ÷ 0.02 = <b>50 mm</b>", "x": "1/u + 1/v gives 1/f, not f. A 0.02 mm focal length makes no sense, so always flip it."}, {"l": "L5", "s": "n4", "d": "Oct 19", "said": "“A very good test question”", "q": "Telephoto vs reverse telephoto (retrofocus): how are the elements arranged?", "a": "<b>Telephoto</b>: positive element in <b>front</b>, negative behind → rear nodal point falls <b>in front of</b> the lens.<br><b>Retrofocus</b>: negative in front, positive behind → rear nodal point falls <b>behind</b> the lens, so a wide angle clears the DSLR mirror.", "x": "Her slide calls it “Reverse Telephoto Wide Angle Lens”."}, {"l": "L5", "s": "n5", "d": "Oct 19", "said": "She “can't impose upon that enough”", "q": "What does changing the focal length change, and what does moving the camera change?", "a": "Focal length → <b>framing</b>.<br>Camera position → <b>perspective</b>.", "x": "Zooming never changes perspective. Only distance does."},{"l": "L6", "s": "a8", "d": "Oct 23", "said": "“Beautiful test question”", "q": "What affects your circle of confusion?", "a": "<b>Eyesight</b> · <b>contrast</b> (circle vs background) · <b>level of illumination</b> · the viewer's <b>opinion</b> of sharpness", "x": "Memory hook: Every Coffee Looks Okay."},{"l": "L6", "s": "a9", "d": "Oct 23", "said": "“Also a beautiful test question”", "q": "What are the three depth of field controls?", "a": "<b>Aperture</b> · <b>object distance</b> (camera to subject) · <b>focal length</b>", "x": "Smaller aperture, farther away, shorter lens = more depth of field."},{"l": "L7", "s": "v5", "d": "Oct 26", "said": "In blue on her slide (“probably on a test”)", "q": "How do focal length and object distance affect image size?", "a": "Image size is <b>directly proportional to focal length</b> and <b>inversely proportional to object distance</b>.", "x": "Double the focal length → everything twice as big. Twice as far away → half as big."}, {"l": "LB", "s": "y2", "d": "Sep 18", "said": "“You need to have this memorized for the test”", "q": "What are the full stops for f-number, shutter speed and ISO?", "a": "f/ <b>1.4 · 2 · 2.8 · 4 · 5.6 · 8 · 11 · 16 · 22 · 32</b><br>Shutter <b>1 · 1/2 · 1/4 · 1/8 · 1/15 · 1/30 · 1/60 · 1/125 · 1/250 · 1/500 · 1/1000</b><br>ISO <b>100 · 200 · 400 · 800 · 1600 · 3200 · 6400</b>", "x": "Each full stop halves or doubles the light. She calls these free points."}, {"l": "LB", "s": "y3", "d": "Sep 18", "said": "On every test (“never had a test without one”)", "q": "Base: ISO 200, 1/125, f/8. You keep ISO 200 and change to 1/30. What f-number keeps the exposure equivalent?", "a": "<b>f/16</b>. 1/125 → 1/30 adds 2 stops (+2), so f/8 → f/11 → f/16 takes 2 away (−2). The column adds to 0.", "x": "Her second example: ISO 200 → 800 (+2), keep f/8, so 1/125 → 1/500 (−2)."}, {"l": "LB", "s": "y5", "d": "Sep 18", "said": "“Write that down and underline it”", "q": "How many digital counts does the camera histogram have?", "a": "<b>256</b>, numbered <b>0 to 255</b>.", "x": "Most students say 255. Zero counts too."}];
 var fc=document.getElementById('fc');if(!fc)return;
 var order=P.map(function(_,i){return i;}),i=0,back=false,mark={};
 try{mark=JSON.parse(localStorage.getItem('e2-picks')||'{}')||{};}catch(e){}
@@ -1725,34 +1881,57 @@ function seg(id,cb){var g=document.getElementById(id);if(!g)return;g.querySelect
   else g+='<text x="220" y="250" text-anchor="middle" font-size="12" fill="#1F8A70" font-weight="800">verticals stay parallel ✓</text>';
   svg.innerHTML=g;document.getElementById('tscap').innerHTML=shift?'Camera kept <b>level</b>, lens <b>shifted up</b>: the whole building fits and the verticals stay straight. Great for architecture and real estate.':'Tilting the camera up to fit the building makes the top look narrower and the bottom "fat" (keystone distortion).';}
  draw('0');seg('tsv',draw);})();
-/* Nov 2 · same-size boots and viewing distance */
-(function(){
- var svg=document.getElementById('wsvg');
- if(svg){
-  function boot(f,d){
-   var bg=Math.round(28*(f/50));
-   svg.innerHTML='<rect width="460" height="200" fill="#D7E7F6"/><rect y="150" width="460" height="50" fill="#C9B79A"/>'+
-    '<rect x="36" y="'+(150-bg)+'" width="54" height="'+bg+'" rx="4" fill="#8FA0B4"/>'+
-    '<rect x="300" y="'+(150-Math.round(bg*1.4))+'" width="70" height="'+Math.round(bg*1.4)+'" rx="4" fill="#7A8FA3"/>'+
-    '<rect x="210" y="78" width="36" height="72" rx="8" fill="#3F6CC9"/><circle cx="228" cy="64" r="16" fill="#F2C9A5"/>'+
-    '<text x="14" y="24" font-size="15" font-weight="800" fill="#15131C" font-family="Inter,sans-serif">'+f+' mm · '+d+' ft</text>';
-   var cap=document.getElementById('wcap');
-   if(cap)cap.textContent='Near figure stays the same height. Background is '+(f===50?'small.':f===100?'larger.':'much larger and looks closer.');
-  }
-  document.querySelectorAll('#wpair button').forEach(function(b){b.addEventListener('click',function(){
-   document.querySelectorAll('#wpair button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
-   boot(+b.dataset.f,+b.dataset.d);
-  });});
-  boot(50,5);
- }
- var vf=document.getElementById('vf'),vm=document.getElementById('vm');
- function view(){if(!vf)return;var f=+vf.value,m=+vm.value;document.getElementById('vfv').textContent=f;document.getElementById('vmv').textContent=m;
-  var mm=f*m, inn=mm/25.4;
-  document.getElementById('vout').textContent=f+' mm × '+m+' = '+mm+' mm ≈ '+inn.toFixed(1)+' in';}
- if(vf){vf.addEventListener('input',view);vm.addEventListener('input',view);view();}
-})();
 })();
 
+})();
+</script>
+<script>
+(function(){
+var W=[{f:50,d:5},{f:100,d:10},{f:200,d:20}],GAP=5,svg=document.getElementById('wbsvg');if(!svg)return;
+function boot(x,base,h,col){var w=h*.62;return '<g fill="'+col+'"><rect x="'+(x-w*.32)+'" y="'+(base-h)+'" width="'+(w*.5)+'" height="'+(h*.85)+'" rx="'+(h*.06)+'"/><rect x="'+(x-w*.32)+'" y="'+(base-h*.28)+'" width="'+w+'" height="'+(h*.28)+'" rx="'+(h*.1)+'"/></g>';}
+function draw(i){var s=W[i],near=120,far=near*s.d/(s.d+GAP),gap=170*(GAP/(s.d+GAP))*2;
+ var x1=130,x2=Math.min(x1+40+gap*1.6,400),g='<line x1="10" y1="190" x2="450" y2="190" stroke="#9A95A8" stroke-dasharray="4 4"/>';
+ g+=boot(x2,190-near*0.12,far,'#3F6CC9')+boot(x1,190,near,'#6D4AD9');
+ g+='<text x="'+x1+'" y="205" text-anchor="middle" font-size="12" fill="#5E5A6B">near boot</text><text x="'+x2+'" y="205" text-anchor="middle" font-size="12" fill="#5E5A6B">far boot ('+GAP+' ft behind)</text>';
+ svg.innerHTML=g;
+ document.getElementById('wbcap').textContent=s.f+' mm from '+s.d+' ft: the far boot looks '+Math.round(100*s.d/(s.d+GAP))+'% as tall as the near one.';
+ document.querySelectorAll('#wb button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.i==String(i));});}
+document.querySelectorAll('#wb button').forEach(function(b){b.addEventListener('click',function(){draw(+b.dataset.i);});});draw(0);
+var f=document.getElementById('vdf'),m=document.getElementById('vdm'),o=document.getElementById('vdo');
+function vd(){var v=(+f.value)*(+m.value);o.textContent=v>0?('View from '+Math.round(v)+' mm ≈ '+(v/25.4).toFixed(1)+' in'):'Enter both numbers';}
+f.addEventListener('input',vd);m.addEventListener('input',vd);vd();
+})();
+</script>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i);};
+/* transmittance slider */
+var tl=$('tdl');if(tl){var tf=function(){var t=+tl.value/100,o=1/t,d=Math.log10(o);$('tdv').textContent=tl.value;$('tdT').textContent=t.toFixed(2);$('tdO').textContent=o.toFixed(2);$('tdD').textContent=d.toFixed(2);$('tdS').textContent=(d/0.3).toFixed(1);};tl.addEventListener('input',tf);tf();}
+/* kindergarten histogram */
+var hs=$('hgsvg');if(hs){var C=['Red','Green','Blue','Yellow'],AM=[5,4,5,4],PM=[4,4,8,2],COL=['#E0473C','#3FA34D','#3F6CC9','#E0A21E'],mode='side';
+ function hg(){var g='<line x1="50" y1="190" x2="450" y2="190" stroke="#9A95A8"/><line x1="50" y1="20" x2="50" y2="190" stroke="#9A95A8"/>',sc=12;
+  for(var v=0;v<=14;v+=2)g+='<text x="42" y="'+(194-v*sc)+'" text-anchor="end" font-size="11" fill="#5E5A6B">'+v+'</text>';
+  C.forEach(function(c,i){var x=75+i*95;
+   if(mode==='side'){g+='<rect x="'+x+'" y="'+(190-AM[i]*sc)+'" width="30" height="'+AM[i]*sc+'" fill="#6D4AD9"/><rect x="'+(x+32)+'" y="'+(190-PM[i]*sc)+'" width="30" height="'+PM[i]*sc+'" fill="#3FA34D"/>';}
+   else{g+='<rect x="'+(x+8)+'" y="'+(190-AM[i]*sc)+'" width="46" height="'+AM[i]*sc+'" fill="#6D4AD9"/><rect x="'+(x+8)+'" y="'+(190-(AM[i]+PM[i])*sc)+'" width="46" height="'+PM[i]*sc+'" fill="#3FA34D"/><text x="'+(x+31)+'" y="'+(184-(AM[i]+PM[i])*sc)+'" text-anchor="middle" font-size="12" font-weight="800" fill="#15131C">'+(AM[i]+PM[i])+'</text>';}
+   g+='<text x="'+(x+31)+'" y="207" text-anchor="middle" font-size="12" font-weight="700" fill="'+COL[i]+'">'+c+'</text>';});
+  g+='<rect x="300" y="14" width="12" height="12" fill="#6D4AD9"/><text x="317" y="25" font-size="12" fill="#15131C">Group 1 (morning)</text><rect x="300" y="32" width="12" height="12" fill="#3FA34D"/><text x="317" y="43" font-size="12" fill="#15131C">Group 2 (afternoon)</text>';
+  hs.innerHTML=g;$('hgcap').textContent=mode==='side'?'Side by side: compare the two classes color by color.':'Stacked: the totals are your shopping list (9 · 8 · 13 · 6).';
+  document.querySelectorAll('#hgseg button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.m===mode);});}
+ document.querySelectorAll('#hgseg button').forEach(function(b){b.onclick=function(){mode=b.dataset.m;hg();};});hg();}
+/* equivalent exposure calculator */
+var I=['100','200','400','800','1600','3200','6400'],S=['1','1/2','1/4','1/8','1/15','1/30','1/60','1/125','1/250','1/500','1/1000'],F=['1.4','2','2.8','4','5.6','8','11','16','22','32'];
+var L={I:I,S:S,F:F},NM={I:'ISO',S:'Shutter',F:'f-number'},SG={I:1,S:-1,F:-1};
+function fill(el,arr,sel){el.innerHTML=arr.map(function(v,i){return '<option value="'+i+'"'+(i===sel?' selected':'')+'>'+(el.id==='eqF'||(el.id==='eqN'&&arr===F)?'f/':'')+v+'</option>';}).join('');}
+if($('eqI')){fill($('eqI'),I,1);fill($('eqS'),S,7);fill($('eqF'),F,5);
+ function base(k){return +$({I:'eqI',S:'eqS',F:'eqF'}[k]).value;}
+ function opts(){var c=$('eqC').value;fill($('eqN'),L[c],base(c));$('eqK').innerHTML=['F','S','I'].filter(function(k){return k!==c;}).map(function(k){return '<option value="'+k+'">'+NM[k]+'</option>';}).join('');calc();}
+ function calc(){var c=$('eqC').value,k=$('eqK').value,d=(+$('eqN').value-base(c))*SG[c],ni=base(k)-d*SG[k],o=$('eqO');
+  if(!d){o.textContent='Pick a new value to see the equivalent exposure.';return;}
+  var fmt=function(key,i){return key==='F'?'f/'+F[i]:key==='S'?S[i]+' s':'ISO '+I[i];};
+  if(ni<0||ni>=L[k].length){o.textContent=NM[c]+' '+(d>0?'+':'')+d+' stops. '+NM[k]+' would need '+(-d>0?'+':'')+(-d)+' stops, which is off the scale. Compensate with the other setting.';return;}
+  o.innerHTML=NM[c]+': <b>'+(d>0?'+':'')+d+'</b> · '+NM[k]+': <b>'+(-d>0?'+':'')+(-d)+'</b> → use <b>'+fmt(k,ni)+'</b>. Total = 0.';}
+ ['eqI','eqS','eqF','eqC'].forEach(function(id){$(id).addEventListener('change',opts);});$('eqN').addEventListener('change',calc);$('eqK').addEventListener('change',calc);opts();}
 })();
 </script>
 </body></html>

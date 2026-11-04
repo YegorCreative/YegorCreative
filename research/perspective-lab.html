@@ -3,7 +3,7 @@
 <title>Perspective Lab</title>
 <style>
 body *{min-width:0}
-:root{--bg:#F6F5FA;--card:#FFFFFF;--ink:#15131C;--muted:#5E5A6B;--line:#E2DEEE;--accent:#6D4AD9;--soft:#EFEAFD;--ok:#1F8A70;--okb:#E1F4EE;--bad:#C0392B;--badb:#FBE3E0;--warm:#D9822B;--warmb:#FCEFE0}
+:root{--bg:#F6F5FA;--card:#FFFFFF;--ink:#15131C;--muted:#5E5A6B;--line:#E2DEEE;--accent:#6D4AD9;--soft:#EFEAFD;--ok:#1F8A70;--okb:#E1F4EE;--bad:#C0392B;--badb:#FBE3E0;--warm:#D9822B;--warmb:#FCEFE0;--R:#E0473C;--G:#3FA34D;--B:#3F6CC9}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{overflow-x:hidden}
@@ -15,7 +15,7 @@ h3{font-size:17px}
 p{margin:0}
 .eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
 .intro{display:grid;gap:8px}
-.intro p{color:var(--muted);max-width:72ch}
+.intro p{color:var(--muted);max-width:68ch}
 button,input,select{font:inherit}
 :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 .toc{display:flex;gap:8px;flex-wrap:wrap}
@@ -42,16 +42,27 @@ button,input,select{font:inherit}
 .seg button{border:0;border-right:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:700;font-size:13.5px;padding:0 12px;min-height:44px;cursor:pointer}
 .seg button:last-child{border-right:0}
 .seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
-svg.v{display:block;width:100%;height:auto;border-radius:12px;background:#fff}
+canvas,svg.v{display:block;width:100%;height:auto;border-radius:12px}
+.pix{image-rendering:pixelated}
+.stage{background:#0F0D16;border-radius:14px;padding:10px}
 .cap{font-size:13.5px;color:var(--muted);text-align:center}
+.cfa{display:grid;gap:2px;width:100%;max-width:190px;aspect-ratio:1;margin:0 auto}
+.cfa i{border-radius:3px;display:grid;place-items:center;font:800 11px/1 Inter,system-ui,sans-serif;color:#fff;font-style:normal}
+.stat{display:flex;justify-content:space-between;gap:8px;font-size:13.5px;border-top:1px solid var(--line);padding-top:6px}
+.stat b{font-variant-numeric:tabular-nums}
 input[type=range]{width:100%;accent-color:var(--accent);min-height:36px}
-.inp{width:100%;min-height:44px;font-size:16px;padding:6px 10px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
-label.f{display:grid;gap:4px;font-size:14px;font-weight:700}
-ul.clean{margin:0;padding-left:18px;display:grid;gap:4px}
+.meter{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:14px}
+.meter b{font-variant-numeric:tabular-nums}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-weight:800;font-size:12.5px}
+.pill.ok{background:var(--okb);color:var(--ok)}.pill.bad{background:var(--badb);color:var(--bad)}
 table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:14px}
 td,th{border-bottom:1px solid var(--line);padding:7px 6px;text-align:left}
 th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .tw{overflow-x:auto}
+.spell{display:flex;flex-wrap:wrap;gap:8px}
+.spell span{background:var(--okb);color:var(--ok);font-weight:800;padding:6px 10px;border-radius:10px}
+.spell s{background:var(--badb);color:var(--bad);font-weight:700;padding:6px 10px;border-radius:10px}
+ul.clean{margin:0;padding-left:18px;display:grid;gap:4px}
 .check{border:1.5px dashed var(--accent);border-radius:14px;padding:14px;display:grid;gap:10px}
 .check .q{font-weight:700}
 .opts{display:grid;gap:8px}
@@ -59,271 +70,172 @@ th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mu
 .opts button.right{border-color:var(--ok);background:var(--okb)}
 .opts button.wrong{border-color:var(--bad);background:var(--badb)}
 .fb{font-size:14px;font-weight:600}
-.shot{display:flex;gap:12px;align-items:flex-start;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;min-height:44px}
-.shot input{width:22px;height:22px;margin-top:2px;accent-color:var(--accent);flex:none}
-.shot.on{border-color:var(--ok);background:var(--okb)}
-.zero{background:var(--badb);border-radius:12px;padding:12px 14px}
-.zero b{color:var(--bad)}
+.lecs{display:flex;width:100%}
+.lecs button{flex:1 1 140px;min-height:48px;font-size:13.5px;line-height:1.2;padding:6px 10px;border-bottom:1px solid var(--line)}
+.lec{display:grid;gap:22px}
+.inp{width:100%;min-height:44px;font-size:16px;padding:6px 10px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);margin-top:4px}
+.btn{font-weight:700;border:1.5px solid var(--accent);background:var(--card);color:var(--accent);border-radius:10px;padding:0 14px;min-height:44px;cursor:pointer}
+.btn:hover{background:var(--soft)}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chain span{background:var(--soft);color:var(--accent);font-weight:800;font-size:13px;padding:7px 10px;border-radius:10px}
+.chain span.alt{background:var(--warmb);color:var(--warm)}
+.chain i{font-style:normal;color:var(--muted);font-weight:800}
+.qe{display:grid;gap:8px}.qerow{display:grid;grid-template-columns:90px 1fr 54px;gap:8px;align-items:center;font-size:14px}.qetrack{height:14px;background:var(--line);border-radius:7px;overflow:hidden}.qetrack i{display:block;height:100%;border-radius:7px}
+@media(max-width:600px){.cmp thead{display:none}.cmp tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-bottom:1px solid var(--line)}.cmp td{border:0}.cmp td:first-child{grid-column:1/-1;font-weight:800;background:var(--soft);border-radius:8px;margin-top:8px}.cmp td:nth-child(2)::before{content:"CCD";display:block;font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--accent)}.cmp td:nth-child(3)::before{content:"CMOS";display:block;font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--warm)}}
+@media(max-width:600px){.cmp.tele td:nth-child(2)::before{content:"TELEPHOTO"}.cmp.tele td:nth-child(3)::before{content:"WIDE ANGLE"}}
+.rle{display:flex;flex-wrap:wrap;gap:2px}
+.rle b{width:16px;height:16px;border-radius:3px;display:inline-block}
+ol.steps{margin:0;padding:0;list-style:none;display:grid;gap:6px;counter-reset:s}
+ol.steps li{counter-increment:s;display:flex;gap:10px;align-items:baseline;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14.5px;background:var(--bg);border-radius:10px;padding:9px 12px}
+ol.steps li::before{content:counter(s);flex:none;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font:700 12px/22px system-ui,sans-serif;text-align:center}
+ol.steps li.last{background:var(--soft);font-weight:700}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
-</style></head><body>
+</style>
+<style>#shots button[aria-pressed="true"]{border-color:var(--ok);background:var(--okb)}.cmp.pl td:nth-child(2)::before{content:""}@media(max-width:600px){#p5 .cmp td:nth-child(2)::before{content:"USUALLY"}}</style>
+</head>
+<body>
 <div class="w">
 <header class="intro">
-<span class="eyebrow">Lab 4 · Perspective</span>
+<span class="eyebrow">Final · Lab 4 · Perspective</span>
 <h1>Perspective Lab</h1>
-<p>Keep the subject the same size with three lenses. The near person stays put. The background grows and looks closer. Perspective comes from <b>how far you stand</b>, not from the lens name.</p>
+<p>The Perspective Shooting lab, made interactive. You'll see why backing up with a longer lens makes the background look <b>bigger and closer</b>, and why a wide angle up close <b>distorts a face</b>. Use the planner and the shot list while you shoot. The numbers here are <b>models</b>, so measure your own distances for Table 1.</p>
+<nav class="toc" aria-label="Sections"><a href="#p1">Subject + background</a><a href="#p2">Distance planner</a><a href="#p3">Headshot distortion</a><a href="#p4">Shot list</a><a href="#p5">What to look for</a></nav>
 </header>
-<nav class="toc" aria-label="Lab sections"><a href="#s1">Same size</a><a href="#s2">Distance planner</a><a href="#s3">Foot-steps</a><a href="#s4">Headshot</a><a href="#s5">What to look for</a><a href="#s6">Shot list</a><a href="#s7">Quick checks</a></nav>
 
-<section class="topic" id="rules">
-<div class="th"><span class="num">!</span><div><h2>Before you shoot</h2><p>Six photos, due at the end of lab</p></div></div>
-<div class="zero"><b>Automatic zero:</b> sunglasses or a hat on the model, or a frame that is badly exposed or out of focus.</div>
+<section class="topic" id="p1" aria-labelledby="ph1">
+<div class="th"><span class="num">01</span><div><h2 id="ph1">Same subject size, different lens</h2><p>Part I: your partner fills half the frame, a tree sits behind them</p></div></div>
+<div class="box"><h3>Change the lens. The camera backs up to keep the subject the same size.</h3>
+<div class="seg" role="group" aria-label="Focal length" id="fseg"></div>
+<label for="bgd"><b>Tree is <span id="bgdv">10 m</span> behind your partner</b></label><input type="range" id="bgd" min="3" max="40" step="1" value="15">
+<div class="stage"><svg class="v" id="scene" viewBox="0 0 360 240" role="img" aria-label="Camera view: seated subject on the left half, a tree in the background on the right half"></svg></div>
+<div class="meter"><span>Camera to subject: <b id="m1"></b></span><span>Tree height in frame: <b id="m2"></b></span><span>Background width you see: <b id="m3"></b></span></div>
+<p class="cap" id="scap"></p></div>
+<div class="trick"><span>🔑</span><span><b>Image size ∝ focal length ÷ object distance.</b> Double the lens and double the distance, and your partner stays the same size. Going from 50 mm to 100 mm doubles your distance to your partner (2.7 → 5.4 m), but the tree only goes from 17.7 to 20.4 m away. It isn't twice as far, so it <b>grows</b>.</span></div>
+<div class="check" data-q="p1"></div>
+</section>
+
+<section class="topic" id="p2" aria-labelledby="ph2">
+<div class="th"><span class="num">02</span><div><h2 id="ph2">Distance planner &amp; Table 1</h2><p>Know where to stand before you switch lenses</p></div></div>
+<div class="formula">new distance = old distance × new focal length ÷ old focal length</div>
+<div class="box"><h3>Your first shot</h3>
+<div class="two"><label>Short lens (mm)<input class="inp" id="pf" type="number" inputmode="decimal" value="24"></label><label>Your measured distance (ft)<input class="inp" id="pd" type="number" inputmode="decimal" value="5" step="0.1"></label></div>
+<div class="two"><label>Normal lens (mm)<input class="inp" id="pf2" type="number" inputmode="decimal" value="50"></label><label>Long lens (mm)<input class="inp" id="pf3" type="number" inputmode="decimal" value="200"></label></div>
+<div class="tw"><table><thead><tr><th>Lens</th><th>Stand about</th><th>Measured (Table 1)</th></tr></thead><tbody id="ptab"></tbody></table></div>
+<p class="note">Your Table 1 entries save on this device only. The planner is a starting point: refocusing changes the lens-to-sensor distance a little, so always match the size in Live View.</p></div>
+<div class="box"><h3>No tape measure? Use your feet</h3>
+<div class="two"><label>Your foot (heel to toe, inches)<input class="inp" id="ft" type="number" inputmode="decimal" value="11" step="0.1"></label><label>Heel-to-toe steps<input class="inp" id="st" type="number" inputmode="numeric" value="10"></label></div>
+<p id="fto" aria-live="polite" style="font-weight:800;font-size:18px"></p></div>
+<div class="check" data-q="p2"></div>
+</section>
+
+<section class="topic" id="p3" aria-labelledby="ph3">
+<div class="th"><span class="num">03</span><div><h2 id="ph3">Headshot distortion</h2><p>Part II: same head size, three lenses</p></div></div>
+<div class="box"><h3>Pick a lens. The camera moves until the head fills the frame.</h3>
+<div class="seg" role="group" aria-label="Portrait focal length" id="hseg"></div>
+<svg class="v" id="face" viewBox="0 0 360 260" role="img" aria-label="Cartoon face whose nose and chin grow and face narrows as the camera gets closer"></svg>
+<div class="meter"><span>Camera to eyes: <b id="h1"></b></span><span>Nose tip magnified: <b id="h2"></b></span><span>Ears / face width: <b id="h3"></b></span></div>
+<p class="cap" id="hcap"></p></div>
 <ul class="clean">
-<li>Model is <b>seated</b>. The person fills about <b>half the frame, top to bottom</b>.</li>
-<li><b>Rename the folder before you zip it.</b></li>
-<li>Her favorite portrait lens is about <b>85 mm</b>.</li>
+<li>The nose is about <b>10 cm closer</b> to you than the eyes, and the ears about <b>8 cm farther</b>. Up close, 10 cm is a big share of the distance, so the nose gets magnified much more than the ears.</li>
+<li>From far away, those few centimeters barely matter, so the face looks <b>flatter</b> and <b>wider</b>, which is closer to how we see people in conversation.</li>
+<li>Her pick: about <b>85 mm</b>. "You would never shoot a portrait with a wide-angle lens."</li>
 </ul>
+<div class="check" data-q="p3"></div>
 </section>
 
-<section class="topic" id="s1">
-<div class="th"><span class="num">01</span><div><h2>Same-size subject</h2><p>Image size follows f ÷ d</p></div></div>
-<div class="formula">subject size stays the same when f ÷ d stays the same</div>
-<p>Her boot example: 50 mm at 5 ft, 100 mm at 10 ft, 200 mm at 20 ft. The near boot is the same size in all three. The background gets bigger and looks closer. She used a real-estate photo for the same idea: <b>there is no truth in imagery</b>. The equations assume a constant lens-to-sensor distance, so use them to understand the picture, not to grind out a number she did not ask for.</p>
-<div class="box">
-<div class="seg" role="group" aria-label="Matched focal length and distance" id="pair">
-<button type="button" aria-pressed="true" data-f="50" data-d="5">50 mm · 5 ft</button>
-<button type="button" aria-pressed="false" data-f="100" data-d="10">100 mm · 10 ft</button>
-<button type="button" aria-pressed="false" data-f="200" data-d="20">200 mm · 20 ft</button>
-</div>
-<svg class="v" id="sim" viewBox="0 0 460 220" role="img" aria-label="A person stays the same height while the background tree grows as focal length and distance increase together"></svg>
-<p class="cap" id="simcap"></p>
-</div>
-<div class="trick"><span>🔑</span><span><b>Weak perspective</b> = farther away, compressed, lines stay more parallel, the look people call telephoto. <b>Strong perspective</b> = closer, near objects grow faster, lines converge, the look people call wide angle. The cause is <b>distance</b>.</span></div>
+<section class="topic" id="p4" aria-labelledby="ph4">
+<div class="th"><span class="num">04</span><div><h2 id="ph4">Shot list</h2><p>Tick as you go. All 6 photos are due at the end of lab.</p></div></div>
+<div class="opts" id="shots"></div>
+<button type="button" class="btn" id="sreset" style="justify-self:start">Clear checklist</button>
+<div class="beyond"><b>What gets a zero</b>Sunglasses or a hat in the headshots · bad exposure or focus (no partial credit) · zipping the folder before renaming it to your last name · wrong file names.</div>
 </section>
 
-<section class="topic" id="s2">
-<div class="th"><span class="num">02</span><div><h2>Distance planner</h2><p>Table 1 stays in this browser</p></div></div>
-<p>Pick the distance that keeps the subject the same size, then write what you actually measured.</p>
-<div class="two">
-<div class="box">
-<h3>Match a known pair</h3>
-<label class="f">Known focal length (mm)<input class="inp" id="rf" type="number" min="1" step="1" value="50" inputmode="decimal"></label>
-<label class="f">Known distance (ft)<input class="inp" id="rd" type="number" min="0.1" step="0.1" value="5" inputmode="decimal"></label>
-<label class="f">New focal length (mm)<input class="inp" id="nf" type="number" min="1" step="1" value="85" inputmode="decimal"></label>
-<p class="formula" id="planout" style="font-size:18px"></p>
-<p class="note">new distance = known distance × (new f ÷ known f). Same f ÷ d, same subject size.</p>
-</div>
-<div class="box">
-<h3>Why the background changes</h3>
-<p>The person is at the planned distance, so f ÷ d is constant and they stay the same size. A tree farther back is <b>not</b> scaled by that same step. Longer lens + farther camera = a bigger chunk of the background in the frame, and it looks closer.</p>
-</div>
-</div>
-<div class="tw">
-<table>
-<thead><tr><th>Shot</th><th>Lens (mm)</th><th>Plan (ft)</th><th>Measured (ft)</th><th>Steps</th></tr></thead>
-<tbody id="t1"></tbody>
-</table>
-</div>
-<p class="note">Measured distances and step counts are saved on this device (Table 1).</p>
-</section>
-
-<section class="topic" id="s3">
-<div class="th"><span class="num">03</span><div><h2>Foot-steps</h2><p>Pace the distance when you cannot use a tape</p></div></div>
-<div class="two">
-<label class="f">Your step length (inches)<input class="inp" id="stepin" type="number" min="6" step="0.5" value="30" inputmode="decimal"></label>
-<label class="f">Distance to walk (feet)<input class="inp" id="stepft" type="number" min="0" step="0.1" value="10" inputmode="decimal"></label>
-</div>
-<p class="formula" id="stepout" style="font-size:18px"></p>
-<p class="note">Steps = (feet × 12) ÷ step length. Walk it twice. Heel-to-toe of the same foot is one step.</p>
-</section>
-
-<section class="topic" id="s4">
-<div class="th"><span class="num">04</span><div><h2>Headshot distortion</h2><p>The nose grows faster than the ears</p></div></div>
-<p>A close camera makes the nose, which is nearer, grow faster than the ears. That is strong perspective. Step back and the face looks more even. About <b>85 mm</b> is her favorite portrait lens because you are usually far enough that the face is not stretched.</p>
-<div class="box">
-<label for="hd"><b>Camera distance: <span id="hdv">3 ft</span></b></label>
-<input type="range" id="hd" min="2" max="15" step="0.5" value="3" aria-label="Headshot camera distance in feet">
-<svg class="v" id="face" viewBox="0 0 460 240" role="img" aria-label="A face whose nose grows when the camera moves closer"></svg>
-<p class="cap" id="facecap"></p>
-</div>
-</section>
-
-<section class="topic" id="s5">
-<div class="th"><span class="num">05</span><div><h2>What to look for</h2><p>Compare the three same-size frames</p></div></div>
+<section class="topic" id="p5" aria-labelledby="ph5">
+<div class="th"><span class="num">05</span><div><h2 id="ph5">What to look for in your photos</h2><p>The ideas behind the lab questions. Answer from your own pictures.</p></div></div>
+<div class="tw"><table class="cmp"><thead><tr><th>Going from long lens → short lens</th><th>What usually happens</th></tr></thead><tbody>
+<tr><td>Gap between subject and background</td><td>Looks <b>bigger</b>: the background seems to move away</td></tr>
+<tr><td>Size of the background objects</td><td>They look <b>smaller</b></td></tr>
+<tr><td>How much background you see</td><td><b>More</b> of it (wider angle of view)</td></tr>
+<tr><td>Which lens emphasizes the background</td><td>The <b>long</b> lens (background looks largest)</td></tr>
+<tr><td>Which lens minimizes it</td><td>The <b>short</b> lens</td></tr>
+<tr><td>Nose and chin (portraits)</td><td>Look <b>bigger</b> and stick out more with the short lens</td></tr>
+<tr><td>Eyes, forehead, ears (portraits)</td><td>Look <b>smaller</b>, set back. Ears can disappear and the face looks <b>narrower</b>.</td></tr>
+</tbody></table></div>
 <ul class="clean">
-<li>The <b>seated person</b> is about the same size in the short, middle, and long shots.</li>
-<li>The <b>background</b> is smallest and “farther” in the close / short-lens frame, and biggest and “closer” in the far / long-lens frame.</li>
-<li>Lines in the room (table edges, wall corners) <b>converge more</b> when you are close, and stay <b>more parallel</b> when you are far.</li>
-<li>The close headshot shows a <b>larger nose</b> relative to the ears. The ~85 mm headshot does not.</li>
-<li>Nothing about the room changed. Only <b>where the camera stood</b> changed.</li>
+<li><b>Shooting at f/4 instead of f/11–16</b> would give <b>less depth of field</b>: the background would blur, and blur most with the long lens. That would hide the size comparison the lab is about.</li>
+<li><b>From the lecture notes:</b> image size is <b>directly proportional to focal length</b> and <b>inversely proportional to object distance</b>.</li>
+<li>Remember: the lens doesn't cause any of this. <b>Your distance</b> does. The lens just lets you keep the subject the same size from that distance.</li>
 </ul>
+<div class="check" data-q="p5"></div>
 </section>
 
-<section class="topic" id="s6">
-<div class="th"><span class="num">06</span><div><h2>Shot list</h2><p>Six frames. Tick them off as you shoot.</p></div></div>
-<div id="shots"></div>
-<p class="note" id="shotnote"></p>
-</section>
-
-<section class="topic" id="s7">
-<div class="th"><span class="num">07</span><div><h2>Quick checks</h2><p>Four questions from the lab</p></div></div>
-<div class="check" data-q="0"></div>
-<div class="check" data-q="1"></div>
-<div class="check" data-q="2"></div>
-<div class="check" data-q="3"></div>
-</section>
-<p class="note" style="text-align:center">Lab 4 study page for PHPS-106. Notes in my own words from the Nov 2 lecture.</p>
+<p class="note" style="text-align:center">Built from the PHPS-106 Perspective Shooting lab and the Nov 2, 2026 lecture, for study use.</p>
 </div>
 <script>
 (function(){
-var ROWS=[
- {id:"a",shot:"Short lens, close",f:50,plan:"5"},
- {id:"b",shot:"Middle lens",f:85,plan:"8.5"},
- {id:"c",shot:"Long lens, far",f:200,plan:"20"}
-];
-var SHOTS=[
- "Short lens, close. Subject about half the frame, top to bottom.",
- "Middle lens, farther. Same subject size.",
- "Long lens, farthest. Same subject size. Background looks closer.",
- "Headshot, close. You should see the nose grow.",
- "Headshot around 85 mm, her favorite portrait distance.",
- "Headshot with the long lens, far enough that the head matches shot 5."
-];
-function load(k,fb){try{var v=JSON.parse(localStorage.getItem(k));if(v)return v;}catch(e){}return fb;}
-var meas=load("plab-meas",{rf:50,rd:5,nf:85,stepin:30,stepft:10,rows:{}});
-var ticks=load("plab-shots",SHOTS.map(function(){return false;}));
-if(!Array.isArray(ticks)||ticks.length!==SHOTS.length)ticks=SHOTS.map(function(){return false;});
-function saveM(){try{localStorage.setItem("plab-meas",JSON.stringify(meas));}catch(e){}}
-function saveS(){try{localStorage.setItem("plab-shots",JSON.stringify(ticks));}catch(e){}}
-
-function drawSim(f,d){
- var bg=Math.round(36*(f/50));
- var svg=document.getElementById("sim");
- svg.innerHTML=
-  '<rect width="460" height="220" fill="#D7E7F6"/>'+
-  '<rect y="150" width="460" height="70" fill="#C8B89A"/>'+
-  '<rect x="'+(40)+'" y="'+(150-bg)+'" width="70" height="'+bg+'" fill="#7A8FA3"/>'+
-  '<rect x="'+(200)+'" y="'+(150-bg*1.35)+'" width="90" height="'+(bg*1.35)+'" fill="#8FA0B4"/>'+
-  '<rect x="'+(330)+'" y="'+(150-bg*0.8)+'" width="50" height="'+(bg*0.8)+'" fill="#6E8498"/>'+
-  '<circle cx="250" cy="78" r="16" fill="#F2C9A5"/>'+
-  '<path d="M232 150 L232 108 Q250 100 268 108 L268 150Z" fill="#3F6CC9"/>'+
-  '<text x="16" y="24" font-size="14" font-weight="800" fill="#15131C">'+f+' mm at '+d+' ft</text>'+
-  '<text x="16" y="44" font-size="13" fill="#5E5A6B">f ÷ d = '+(f/d).toFixed(0)+' mm/ft · person stays the same</text>';
- document.getElementById("simcap").textContent="Near person: same height. Background blocks: "+(f===50?"small, looks far.":f===100?"bigger.":"much bigger, looks closer.");
-}
-document.querySelectorAll("#pair button").forEach(function(b){
- b.addEventListener("click",function(){
-  document.querySelectorAll("#pair button").forEach(function(x){x.setAttribute("aria-pressed",x===b);});
-  drawSim(+b.dataset.f,+b.dataset.d);
- });
-});
-drawSim(50,5);
-
-function plan(){
- var rf=+document.getElementById("rf").value, rd=+document.getElementById("rd").value, nf=+document.getElementById("nf").value;
- meas.rf=rf; meas.rd=rd; meas.nf=nf; saveM();
- var el=document.getElementById("planout");
- if(!(rf>0&&rd>0&&nf>0)){el.textContent="Enter focal lengths and a distance above 0.";return;}
- var nd=rd*(nf/rf);
- el.textContent=nf+" mm at "+nd.toFixed(1)+" ft  ·  f ÷ d = "+(nf/nd).toFixed(2);
-}
-["rf","rd","nf"].forEach(function(id){
- var el=document.getElementById(id); if(meas[id]!=null)el.value=meas[id];
- el.addEventListener("input",plan);
-});
-plan();
-
-var tb=document.getElementById("t1");
-tb.innerHTML=ROWS.map(function(r){
- var m=(meas.rows&&meas.rows[r.id])||{ft:"",steps:""};
- return '<tr><td>'+r.shot+'</td><td>'+r.f+'</td><td>'+r.plan+'</td>'+
-  '<td><input class="inp" data-row="'+r.id+'" data-k="ft" value="'+m.ft+'" inputmode="decimal" aria-label="Measured feet for '+r.shot+'"></td>'+
-  '<td><input class="inp" data-row="'+r.id+'" data-k="steps" value="'+m.steps+'" inputmode="decimal" aria-label="Steps for '+r.shot+'"></td></tr>';
-}).join("");
-tb.querySelectorAll("input").forEach(function(inp){
- inp.addEventListener("input",function(){
-  if(!meas.rows)meas.rows={};
-  if(!meas.rows[inp.dataset.row])meas.rows[inp.dataset.row]={ft:"",steps:""};
-  meas.rows[inp.dataset.row][inp.dataset.k]=inp.value;
-  saveM();
- });
-});
-
-function steps(){
- var inches=+document.getElementById("stepin").value, ft=+document.getElementById("stepft").value;
- meas.stepin=inches; meas.stepft=ft; saveM();
- var el=document.getElementById("stepout");
- if(!(inches>0)||!(ft>=0)){el.textContent="Enter a step length above 0.";return;}
- var n=(ft*12)/inches;
- el.textContent=ft+" ft ≈ "+n.toFixed(1)+" steps  ("+inches+" in each)";
-}
-["stepin","stepft"].forEach(function(id){
- var el=document.getElementById(id); if(meas[id]!=null)el.value=meas[id];
- el.addEventListener("input",steps);
-});
-steps();
-
-function face(){
- var d=+document.getElementById("hd").value;
- document.getElementById("hdv").textContent=d+" ft";
- var nose=1+(3.2/d);
- var ear=1-(0.7/d);
- var svg=document.getElementById("face");
- var nw=28*nose, nh=36*nose;
- svg.innerHTML=
-  '<rect width="460" height="240" fill="#F6F5FA"/>'+
-  '<ellipse cx="230" cy="120" rx="78" ry="100" fill="#F2C9A5"/>'+
-  '<ellipse cx="'+(230-92)+'" cy="120" rx="'+(16*ear)+'" ry="'+(28*ear)+'" fill="#E7B898"/>'+
-  '<ellipse cx="'+(230+92)+'" cy="120" rx="'+(16*ear)+'" ry="'+(28*ear)+'" fill="#E7B898"/>'+
-  '<ellipse cx="205" cy="108" rx="8" ry="6" fill="#15131C"/>'+
-  '<ellipse cx="255" cy="108" rx="8" ry="6" fill="#15131C"/>'+
-  '<ellipse cx="230" cy="'+(128)+'" rx="'+(nw/2)+'" ry="'+(nh/2)+'" fill="#E0A888"/>'+
-  '<path d="M210 168 Q230 184 250 168" fill="none" stroke="#15131C" stroke-width="3"/>'+
-  '<text x="16" y="28" font-size="14" font-weight="800" fill="#15131C">'+(d<5?"Strong · close":d<9?"Calmer":"Weak · far")+'</text>';
- document.getElementById("facecap").textContent=d<5?"Close camera: the nose (nearer) grows faster than the ears.":(d<9?"Around a normal portrait distance the face looks more even. ~85 mm usually puts you here.":"Far camera: features stay in proportion. This is the compressed, weak-perspective look.");
-}
-document.getElementById("hd").addEventListener("input",face);face();
-
-var box=document.getElementById("shots");
-function drawShots(){
- var n=ticks.filter(Boolean).length;
- box.innerHTML=SHOTS.map(function(t,i){
-  return '<label class="shot'+(ticks[i]?" on":"")+'"><input type="checkbox" data-i="'+i+'"'+(ticks[i]?" checked":"")+'><span><b>'+(i+1)+'.</b> '+t+'</span></label>';
- }).join("");
- document.getElementById("shotnote").textContent=n+" of 6 ticked. Seated model, no sunglasses, no hat, sharp and well exposed. Rename the folder before you zip.";
- box.querySelectorAll("input").forEach(function(c){
-  c.addEventListener("change",function(){ticks[+c.dataset.i]=c.checked;saveS();drawShots();});
- });
-}
-drawShots();
-
-var Q=[
- ["To keep the subject the same size, you double the focal length. What else do you double?",["The camera-to-subject distance","The aperture","The ISO","The shutter speed"],"Size follows f ÷ d. Double f and double d, and the subject stays the same size."],
- ["Strong perspective (near objects big, lines converging) is caused by…",["Standing close","Using a wide-angle lens by itself","A small aperture","A high ISO"],"She repeated it: distance causes it. The wide lens is what you use so the subject still fits."],
- ["Which of these is an automatic zero on this lab?",["Sunglasses or a hat, or a badly exposed or soft frame","Shooting at 50 mm","A seated model","Renaming the folder"],"No sunglasses, no hat, and the exposure and focus have to be right."],
- ["What does she want you to do before you zip the folder?",["Rename the folder","Delete the RAWs","Convert everything to JPEG","Add a soundtrack"],"Rename the folder before you zip it. Six photos are due at the end of lab."]
-];
-document.querySelectorAll(".check").forEach(function(el){
- var q=Q[+el.dataset.q];
- var order=[0,1,2,3].sort(function(){return Math.random()-.5;});
- el.innerHTML='<span class="tag">Quick check</span><div class="q">'+q[0]+'</div><div class="opts">'+order.map(function(i){return '<button type="button" data-i="'+i+'">'+q[1][i]+'</button>';}).join("")+'</div><div class="fb" aria-live="polite"></div>';
- el.querySelectorAll("button").forEach(function(b){
-  b.addEventListener("click",function(){
-   var ok=b.dataset.i==="0";
-   b.classList.add(ok?"right":"wrong");
-   if(!ok)el.querySelector('[data-i="0"]').classList.add("right");
-   el.querySelectorAll("button").forEach(function(x){x.disabled=true;});
-   el.querySelector(".fb").textContent=(ok?"Correct. ":"Not quite. ")+q[2];
-  });
- });
-});
-document.querySelectorAll(".toc a").forEach(function(a){
- a.addEventListener("click",function(e){
-  var t=document.querySelector(a.getAttribute("href")); if(!t)return;
-  e.preventDefault();
-  try{if(window.frameElement&&window.parent!==window){var fr=window.frameElement.getBoundingClientRect();window.parent.scrollTo({top:window.parent.scrollY+fr.top+t.getBoundingClientRect().top-12,behavior:"smooth"});return;}}catch(err){}
-  t.scrollIntoView({behavior:"smooth",block:"start"});
- });
-});
+var LS=function(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}};
+var $=function(i){return document.getElementById(i);};
+/* ---- 1. scene ---- */
+var FL=[18,24,35,50,85,135,200],cur=50,H=1.3,T=5,CAM=1.0,FW=36,FHt=24,K=10;
+FL.forEach(function(f){var b=document.createElement('button');b.type='button';b.textContent=f+' mm';b.dataset.f=f;b.setAttribute('aria-pressed',f===cur);b.onclick=function(){cur=f;scene();};$('fseg').appendChild(b);});
+function person(){return '<g fill="#6D4AD9"><circle cx="90" cy="40" r="26"/><path d="M50 82 Q90 60 130 82 L138 170 L42 170 Z"/><path d="M40 160 H150 L165 240 H128 L120 192 H62 L58 240 H24 Z" fill="#4E33A8"/></g>';}
+function tree(x,base,h){var tw=h*.12;return '<g><rect x="'+(x-tw/2)+'" y="'+(base-h*.42)+'" width="'+tw+'" height="'+(h*.42)+'" fill="#7A5230"/><ellipse cx="'+x+'" cy="'+(base-h*.62)+'" rx="'+(h*.3)+'" ry="'+(h*.38)+'" fill="#3FA34D"/></g>';}
+function scene(){var B=+$('bgd').value,d=cur*H/FHt,D=d+B,tImg=cur*T/D,base=120+K*cur*CAM/D,th=tImg*K;
+ $('bgdv').textContent=B+' m';
+ var g='<rect width="360" height="240" fill="#BFD9F2"/><rect y="'+Math.min(base,240)+'" width="360" height="'+Math.max(0,240-base)+'" fill="#CFE3B5"/><line x1="0" y1="120" x2="360" y2="120" stroke="#9AB7D3" stroke-dasharray="3 4"/>';
+ g+=tree(260,base,th)+person();
+ g+='<rect x="1" y="1" width="358" height="238" fill="none" stroke="#fff" stroke-width="2"/><line x1="180" y1="0" x2="180" y2="240" stroke="#fff" stroke-opacity=".5" stroke-dasharray="5 5"/>';
+ $('scene').innerHTML=g;
+ $('m1').textContent=d.toFixed(1)+' m ('+(d*3.281).toFixed(1)+' ft)';
+ $('m2').textContent=Math.round(100*tImg/FHt)+'% of the frame';
+ $('m3').textContent=(FW*D/cur).toFixed(1)+' m';
+ $('scap').textContent=cur<=35?'Wide angle up close: the tree looks small and far away (background de-emphasized).':cur>=135?'Long lens from far back: the tree looks huge and right behind your partner (background emphasized).':'Normal lens: the background looks about how your eye sees it.';
+ document.querySelectorAll('#fseg button').forEach(function(b){b.setAttribute('aria-pressed',+b.dataset.f===cur);});}
+$('bgd').addEventListener('input',scene);scene();
+/* ---- 2. planner ---- */
+var meas=LS('plab-meas')||{};
+function plan(){var f1=+$('pf').value,d1=+$('pd').value,rows=[f1,+$('pf2').value,+$('pf3').value],h='';
+ rows.forEach(function(f,i){var d=f1>0&&d1>0&&f>0?d1*f/f1:0;h+='<tr><td><b>'+(f||'?')+' mm</b></td><td>'+(d?d.toFixed(1)+' ft':'–')+'</td><td><input class="inp" style="margin:0;max-width:130px" data-i="'+i+'" type="text" inputmode="decimal" placeholder="ft" aria-label="Measured distance for lens '+(i+1)+'" value="'+(meas[i]||'')+'"></td></tr>';});
+ $('ptab').innerHTML=h;
+ $('ptab').querySelectorAll('input').forEach(function(x){x.addEventListener('input',function(){meas[x.dataset.i]=x.value;LS('plab-meas',meas);});});}
+['pf','pd','pf2','pf3'].forEach(function(i){$(i).addEventListener('input',plan);});plan();
+function feet(){var t=(+$('ft').value)*(+$('st').value);$('fto').textContent=t>0?(t/12).toFixed(1)+' ft ('+(t*0.0254).toFixed(2)+' m)':'Enter both numbers';}
+$('ft').addEventListener('input',feet);$('st').addEventListener('input',feet);feet();
+/* ---- 3. face ---- */
+var HL=[24,50,85,200],hc=24,HEAD=0.25;
+HL.forEach(function(f){var b=document.createElement('button');b.type='button';b.textContent=f+' mm';b.dataset.f=f;b.onclick=function(){hc=f;face();};$('hseg').appendChild(b);});
+function face(){var d=hc*HEAD/24*1.15,n=d/(d-0.10),c=d/(d-0.05),e=d/(d+0.08),cx=180;
+ var fw=95*e,ny=150,nw=22*n,nl=46*n;
+ var g='<rect width="360" height="260" fill="#F6F5FA"/>';
+ g+='<ellipse cx="'+(cx-fw-6)+'" cy="128" rx="'+(12*e)+'" ry="'+(22*e)+'" fill="#E8B48A"/><ellipse cx="'+(cx+fw+6)+'" cy="128" rx="'+(12*e)+'" ry="'+(22*e)+'" fill="#E8B48A"/>';
+ g+='<path d="M'+(cx-fw)+' 110 Q'+(cx-fw)+' '+(18+40*(1-e))+' '+cx+' '+(18+40*(1-e))+' Q'+(cx+fw)+' '+(18+40*(1-e))+' '+(cx+fw)+' 110 L'+(cx+fw*.86)+' 190 Q'+cx+' '+(232+12*(c-1))+' '+(cx-fw*.86)+' 190 Z" fill="#F2C49B"/>';
+ g+='<ellipse cx="'+(cx-34)+'" cy="118" rx="13" ry="8" fill="#fff"/><ellipse cx="'+(cx+34)+'" cy="118" rx="13" ry="8" fill="#fff"/><circle cx="'+(cx-34)+'" cy="118" r="5" fill="#2B1D12"/><circle cx="'+(cx+34)+'" cy="118" r="5" fill="#2B1D12"/>';
+ g+='<path d="M'+cx+' '+(ny-nl*.7)+' L'+(cx+nw/2)+' '+(ny+nl*.3)+' Q'+cx+' '+(ny+nl*.42)+' '+(cx-nw/2)+' '+(ny+nl*.3)+' Z" fill="#E3A77C"/>';
+ g+='<path d="M'+(cx-24*c)+' '+(200+6*(c-1))+' Q'+cx+' '+(212+10*(c-1))+' '+(cx+24*c)+' '+(200+6*(c-1))+'" stroke="#B5523A" stroke-width="4" fill="none" stroke-linecap="round"/>';
+ $('face').innerHTML=g;
+ $('h1').textContent=d.toFixed(2)+' m ('+(d*3.281).toFixed(1)+' ft)';
+ $('h2').textContent='×'+n.toFixed(2);$('h3').textContent='×'+e.toFixed(2);
+ $('hcap').textContent=hc<=24?'Way too close: big nose and chin, narrow face, ears disappear. Unflattering.':hc<=50?'Still a bit close: the nose is slightly enlarged.':hc<=85?'Flattering: her favorite range.':'Very flat and natural, but you need a lot of room.';
+ document.querySelectorAll('#hseg button').forEach(function(b){b.setAttribute('aria-pressed',+b.dataset.f===hc);});}
+face();
+/* ---- 4. shot list ---- */
+var SH=['Gear: camera, tripod, tape measure, short (18–24 mm), 50 mm and long (150–200 mm) lens','Settings: JPEG, white balance set, f/11 or f/16, Live View on','Spot: partner sits, something big behind them (tree or car), real distance between them','1 · Part I, short lens: partner fills half the frame, top to bottom. Measure distance.','2 · Part I, 50 mm: back up, same size and spot. Measure distance.','3 · Part I, long lens: back up, same size and spot. Measure distance.','4 · Headshot, short lens: head fills the frame, no hat, no sunglasses, looking at camera','5 · Headshot, 50 mm: same head size and pose','6 · Headshot, long lens: same head size and pose','Check every shot: proper exposure and sharp focus (zoom in!)','Rename: LastName_XXmm_P1.jpg and LastName_XXmm_Portrait.jpg','Folder named with your last name → THEN zip → upload. Lab writeup uploaded separately.'];
+var done=LS('plab-shots')||{};
+function shots(){$('shots').innerHTML=SH.map(function(t,i){return '<button type="button" data-i="'+i+'" aria-pressed="'+!!done[i]+'" class="'+(done[i]?'right':'')+'">'+(done[i]?'✅ ':'⬜ ')+t+'</button>';}).join('');
+ $('shots').querySelectorAll('button').forEach(function(b){b.onclick=function(){var i=b.dataset.i;done[i]=!done[i];LS('plab-shots',done);shots();};});}
+$('sreset').onclick=function(){done={};LS('plab-shots',done);shots();};shots();
+/* ---- quick checks ---- */
+var Q={
+p1:["You switch from 24 mm to 200 mm and back up so your partner stays the same size. The tree behind them…",["Looks bigger and closer to them","Looks smaller and farther away","Stays exactly the same","Disappears"],"The subject distance went up about 8×, but the tree's distance went up much less, so the tree grows in the frame."],
+p2:["At 24 mm you stood 4 ft away. About where do you stand with a 96 mm lens for the same subject size?",["16 ft","4 ft","1 ft","96 ft"],"4 × 96 ÷ 24 = 16 ft. Distance scales with focal length."],
+p3:["Why does a 24 mm headshot make the nose look huge?",["The camera is so close that the nose is much closer than the eyes and ears","Wide-angle lenses have barrel distortion only in the center","The f-number is too high","The sensor is too small"],"It's the distance. The lens just lets you fill the frame from that close."],
+p5:["Which lens emphasizes (enlarges) the background in this lab?",["The long lens","The short lens","The 50 mm","They all look the same"],"Long lens from far away = background looks big and close."]};
+document.querySelectorAll('.check').forEach(function(el){var q=Q[el.dataset.q];if(!q)return;var order=[0,1,2,3].sort(function(){return Math.random()-.5;});
+ el.innerHTML='<span class="tag">Quick check</span><div class="q">'+q[0]+'</div><div class="opts">'+order.map(function(i){return '<button type="button" data-i="'+i+'">'+q[1][i]+'</button>';}).join('')+'</div><div class="fb" aria-live="polite"></div>';
+ el.querySelectorAll('.opts button').forEach(function(b){b.addEventListener('click',function(){var ok=b.dataset.i==='0';b.classList.add(ok?'right':'wrong');if(!ok)el.querySelector('[data-i="0"]').classList.add('right');el.querySelectorAll('.opts button').forEach(function(x){x.disabled=true;});el.querySelector('.fb').innerHTML=(ok?'✅ Correct. ':'❌ Not quite. ')+q[2];});});});
+document.querySelectorAll('.toc a').forEach(function(a){a.addEventListener('click',function(e){var t=document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();
+ try{if(window.frameElement&&window.parent!==window){var fr=window.frameElement.getBoundingClientRect();window.parent.scrollTo({top:window.parent.scrollY+fr.top+t.getBoundingClientRect().top-12,behavior:'smooth'});return;}}catch(err){}
+ t.scrollIntoView({behavior:'smooth',block:'start'});});});
 })();
 </script>
 </body></html>

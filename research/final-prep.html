@@ -138,6 +138,7 @@ input.good{border-color:var(--good)!important;background:var(--good-bg)!importan
 .tile.lv-new,.tile.lv-learning,.tile.lv-almost,.tile.lv-mastered,.tile.lv-completed{border-left:6px solid var(--c)}
 details.cat.lv-new,details.cat.lv-learning,details.cat.lv-almost,details.cat.lv-mastered,details.cat.lv-completed{border-left:6px solid var(--c)}
 .legend span{display:block}
+.tclock{font-family:var(--mono);font-weight:700;font-size:1.05rem;padding:4px 10px;border-radius:999px;background:var(--accent-soft);color:var(--ink)}.tclock.low{background:var(--bad-bg);color:var(--bad)}.timedcard{border:2px solid var(--accent)}
 </style>
 </head><body>
 
@@ -407,7 +408,7 @@ function formatFor(q){
 
 /* ---------- screens ---------- */
 function chk(id,label,on,hint){return `<label class="tog"><input type="checkbox" id="${id}" ${on?"checked":""}><span><b>${label}</b>${hint?`<small>${hint}</small>`:""}</span></label>`;}
-function home(){
+function home(){stopTimer();
   run=null;
   const n=S.attempts.length;
   let dots="";for(let i=0;i<7;i++){const a=S.attempts[i];
@@ -462,14 +463,22 @@ function home(){
       <button class="btn ghost" id="all">All ${Q.length} questions</button>
     </div>
   </section>
+  <section class="card stack timedcard">
+    <div class="qmeta"><h2>⏱ Timed exam</h2><span class="muted">${(S.timed||[]).length} taken</span></div>
+    <p class="muted" style="margin:0">Like the real thing: a countdown, <b>no feedback until the end</b>, questions mixed from every topic. When time runs out, unanswered questions count as wrong.</p>
+    <div class="szrow"><label class="hint">Questions <input type="number" id="tq" min="1" max="${Q.length}" value="${Math.min(S.tq||22,Q.length)}" inputmode="numeric" style="width:84px"></label><label class="hint">Minutes <input type="number" id="tm" min="1" max="180" value="${S.tmin||45}" inputmode="numeric" style="width:84px"></label></div>
+    ${(S.timed||[]).length?`<p class="hint" style="margin:0">Last: <b>${S.timed[S.timed.length-1].score}/${S.timed[S.timed.length-1].total}</b> in ${fmtT(S.timed[S.timed.length-1].secs)} · Best: <b>${Math.max(...S.timed.map(t=>Math.round(t.score/t.total*100)))}%</b></p>`:""}
+    <div class="btns"><button class="btn" id="tgo">Start timed exam</button></div>
+  </section>
   <section class="card stack">
     <h2>Exam day rules</h2>
     <ul class="rules">
-      <li><b>Covered so far:</b> Labs 1–3, the lectures of Sep 21 through Oct 26, and the SI review sheets.</li>
-      <li><b>Know the SNR setup:</b> 20 × log(mean ÷ std dev). log(10) = 1, log(100) = 2.</li>
-      <li><b>Include units</b> (dB, stops, µm).</li>
-      <li><b>Spelling matters.</b> This quiz marks misspellings wrong too (unless you turn on Smart grading).</li>
-      <li>Charge your laptop to 100% and bring it.</li>
+      <li><b>The final is in person.</b> Check the time in SIS before you book travel.</li>
+      <li><b>No calculator:</b> you set up the equations, so know them.</li>
+      <li><b>Only answer the question asked.</b> Extra wrong words lose points.</li>
+      <li><b>Numbers only when she asks for a number:</b> 16, not f/16. No units unless she asks.</li>
+      <li><b>Spelling counts.</b> This quiz marks misspellings wrong too (unless you turn on Smart grading).</li>
+      <li>Read every question slowly and use the whole time. Charge your laptop to 100%.</li>
     </ul>
     <div class="btns"><button class="btn ghost" id="reset">${confirmReset?"Tap again to erase all progress":"Reset all progress"}</button></div>
   </section>`;
@@ -489,13 +498,26 @@ function home(){
   $("#gnew").onclick=()=>{let n=Math.round(+$("#gcount").value);if(!(n>=1))n=15;n=Math.min(n,100);S.gcount=n;save();const c=pk(["LENS","PIXEL","FOCUS","NOISE","STOP","BOKEH","PRISM","SHUTTER","APERTURE","RAW"])+"-"+(1000+Math.floor(Math.random()*9000))+"-"+n;$("#gcode").value=c;$("#gmsg").innerHTML=`Your code: <b style="font-size:1.3rem">${c}</b> · share it, then tap Join.`;};
   $("#report").onclick=()=>report(null);$("#report2").onclick=()=>report(null);
   $("#go").onclick=()=>start("attempt");
+  $("#tgo").onclick=()=>{let n=Math.round(+$("#tq").value),m=+$("#tm").value;if(!(n>=1))n=22;n=Math.min(n,Q.length);if(!(m>0))m=45;S.tq=n;S.tmin=m;save();startTimed(n,m);};
   $("#miss").onclick=()=>start("miss");
   $("#all").onclick=()=>start("all");
   $("#reset").onclick=()=>{if(confirmReset){S={attempts:[],stats:{},star:{},mode:S.mode,L:S.L};save();confirmReset=false;}else confirmReset=true;home();};
 }
 
 function newRun(mode,qs,extra){return Object.assign({mode,qs,i:0,results:[],first:new Set()},extra||{});}
-function start(mode){confirmReset=false;run=newRun(mode,pick(mode));show();}
+function start(mode){confirmReset=false;stopTimer();run=newRun(mode,pick(mode));show();}
+let TIMER=null;
+function stopTimer(){if(TIMER){clearInterval(TIMER);TIMER=null;}}
+function fmtT(sec){sec=Math.max(0,Math.round(sec));return Math.floor(sec/60)+":"+String(sec%60).padStart(2,"0");}
+function pickTimed(n){const pools={};for(const t in TOPICS)pools[t]=shuffle(Q.filter(q=>q.t===t&&!q.rv));const keys=shuffle(Object.keys(TOPICS));const out=[];
+  while(out.length<n&&keys.some(k=>pools[k].length))for(const k of keys){if(out.length>=n)break;if(pools[k].length)out.push(pools[k].pop());}
+  return shuffle(out);}
+function startTimed(n,m){confirmReset=false;stopTimer();run=newRun("timed",pickTimed(n),{start:Date.now(),end:Date.now()+m*60000,mins:m});
+  TIMER=setInterval(()=>{if(!run||run.mode!=="timed"){stopTimer();return;}const left=(run.end-Date.now())/1000,el=document.getElementById("tclock");
+    if(el){el.textContent="⏱ "+fmtT(left);el.classList.toggle("low",left<=60);}
+    if(left<=0){stopTimer();timeUp();}},250);
+  show();}
+function timeUp(){if(!run||run.mode!=="timed")return;run.timeout=true;for(let k=run.results.length;k<run.qs.length;k++){let q=run.qs[k];if(q.k==="gen")q=run.qs[k]=inst(q);run.results.push({q,ok:false,given:"(no answer: time ran out)"});}results();}
 function startLearn(n){
   confirmReset=false;const qs=learnPick(),prev=run&&run.mode==="learn"?run.all:[];
   if(!qs.length){run=null;$("#app").innerHTML=`<section class="card stack"><h2>Nothing to study</h2><p style="margin:0">${S.L.starred?"You haven't starred any questions yet. Tap ☆ on a question to star it, or turn off “Only starred items”.":"No questions match these settings."}</p><div class="btns"><button class="btn" id="home">Back</button></div></section>`;$("#home").onclick=home;return;}
@@ -518,19 +540,19 @@ function show(){
     body=`<div class="opts">${run.order.map((oi,j)=>`<button class="opt" data-i="${oi}"><span class="key">${j+1}</span><span>${esc(q.o[oi])}</span></button>`).join("")}</div><p class="hint" style="margin:0">Select all that apply.</p>`;}
   else{const hint=q.k==="seq"?"Separate with commas, e.g. 100, 200, 400 (the f/ is optional)":q.k==="num"?"Type the number. You can add units.":"Type your answer. Spelling counts.";
     body=`<input type="text" id="ans" autocomplete="off" spellcheck="false" aria-label="Your answer"><p class="hint" style="margin:0">${hint}</p>`;}
-  const L=lvl(q),where=run.mode==="group"?`Group ${run.code} · Q ${run.i+1} / ${N}`:run.mode==="learn"?`Round ${run.set} · ${run.left.size} to go`:`${run.mode==="attempt"?`Practice exam ${Math.min(S.attempts.length+1,99)}`:run.mode==="miss"?"Learning":"All questions"} · ${run.i+1} / ${N}`;
+  const L=lvl(q),where=run.mode==="group"?`Group ${run.code} · Q ${run.i+1} / ${N}`:run.mode==="learn"?`Round ${run.set} · ${run.left.size} to go`:`${run.mode==="attempt"?`Practice exam ${Math.min(S.attempts.length+1,99)}`:run.mode==="timed"?"Timed exam":run.mode==="miss"?"Learning":"All questions"} · ${run.i+1} / ${N}`;
   const prog=run.mode==="learn"?(1-run.left.size/run.size)*100:run.i/N*100;
   $("#app").innerHTML=`
-  <div class="qmeta"><button class="btn ghost" id="quit">Quit</button><span class="eyebrow">${where}</span></div>
+  <div class="qmeta"><button class="btn ghost" id="quit">Quit</button>${run.mode==="timed"?`<span class="tclock" id="tclock" aria-live="off">⏱ ${fmtT((run.end-Date.now())/1000)}</span>`:""}<span class="eyebrow">${where}</span></div>
   <div class="progress"><div style="width:${prog}%"></div></div>
   <section class="card stack">
     <div class="qmeta"><div><span class="tag">${TOPICS[q.t]}</span>${q.rv?'<span class="tag flip">↺ Flipped</span>':""}${q.gen?'<span class="tag flip">🎲 New numbers</span>':""}<span class="tag lv lv-${L}">${LVN[L]}</span></div><button type="button" class="star" id="star" aria-pressed="${!!S.star[q.id]}" aria-label="Star this question">${S.star[q.id]?"★":"☆"}</button></div>
     <div class="qtext">${esc(q.q)}</div>
     ${body}
     <div id="fb"></div>
-    <div class="btns"><button class="btn" id="check" ${f==="flash"?"hidden":""}>Check</button></div>
+    <div class="btns"><button class="btn" id="check" ${f==="flash"?"hidden":""}>${run.mode==="timed"?(run.i+1<N?"Next →":"Finish"):"Check"}</button></div>
   </section>`;
-  $("#quit").onclick=()=>{const r=run.mode==="learn"?run.all.concat(run.results):run.results;if(r.length)report(r);else home();};
+  $("#quit").onclick=()=>{stopTimer();const r=run.mode==="learn"?run.all.concat(run.results):run.results;if(r.length)report(r);else home();};
   $("#star").onclick=e=>{S.star[q.id]=!S.star[q.id];if(!S.star[q.id])delete S.star[q.id];save();e.currentTarget.textContent=S.star[q.id]?"★":"☆";e.currentTarget.setAttribute("aria-pressed",!!S.star[q.id]);};
   document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
     if(run.done)return;
@@ -606,6 +628,7 @@ function finish(q,ok,given,spell,smart){
     if(correct)b.classList.add("right");else if(b.classList.contains("sel"))b.classList.add("wrong");});
   let info=record(q,ok);
   run.results.push({q,ok,given});const ri=run.results.length-1;
+  if(run.mode==="timed"){next();return;}
   const paint=()=>{const r=run.results[ri],L=lvl(q),moved=info.first&&L!==info.from;
     $("#fb").innerHTML=`<div class="fb ${r.ok?"ok":"no"}"><strong>${r.ok?"Correct":"Not quite"}</strong>
       ${smart&&r.ok?`<div class="spell">Accepted with a small typo (Smart grading). On the exam this would be wrong: spell it “${esc(answerText(q))}”.</div>`:""}
@@ -681,16 +704,19 @@ function report(sess){
 
 function results(){
   const r=run.results,score=r.filter(x=>x.ok).length,total=r.length,pct=Math.round(score/total*100);
+  stopTimer();
   if(run.mode==="attempt"){S.attempts.push({score,total,date:new Date().toISOString()});save();}
+  let tline="";if(run.mode==="timed"){const used=run.timeout?(run.end-run.start)/1000:Math.min((Date.now()-run.start)/1000,run.mins*60);S.timed=(S.timed||[]).concat([{score,total,secs:used,date:new Date().toISOString()}]);save();
+    tline=`<p style="margin:0">${run.timeout?"⏰ <b>Time ran out.</b> ":""}Time used: <b>${fmtT(used)}</b> of ${run.mins}:00 · about ${Math.round(used/total)} s per question.</p>`;}
   let byT="";for(const t in TOPICS){const x=r.filter(y=>y.q.t===t);if(!x.length)continue;const s=x.filter(y=>y.ok).length,p=Math.round(s/x.length*100);
     byT+=`<div class="bar"><span>${TOPICS[t]}</span><div class="track"><div class="fill" style="width:${p}%"></div></div><span class="pct">${s}/${x.length}</span></div>`;}
   const missed=r.filter(x=>!x.ok);
   const verdict=pct>=90?"Exam ready on this set.":pct>=75?"Solid. Keep learning your misses, then take the next one.":"Review the misses below, then go again.";
   $("#app").innerHTML=`
-  <header class="head"><div><div class="eyebrow">${run.mode==="group"?`Group session ${run.code}`:run.mode==="attempt"?`Practice exam ${S.attempts.length} of 7`:run.mode==="miss"?"Learning round":"All questions"}</div><h1>Results</h1></div></header>
+  <header class="head"><div><div class="eyebrow">${run.mode==="group"?`Group session ${run.code}`:run.mode==="attempt"?`Practice exam ${S.attempts.length} of 7`:run.mode==="timed"?`Timed exam · ${total} questions`:run.mode==="miss"?"Learning round":"All questions"}</div><h1>Results</h1></div></header>
   <section class="card stack">
     <div class="score">${score}<span class="muted" style="font-size:.45em">/${total}</span></div>
-    <p style="margin:0"><b>${pct}%</b>. ${verdict}</p>
+    <p style="margin:0"><b>${pct}%</b>. ${verdict}</p>${tline}
     <div class="bars">${byT}</div>
     <div class="btns"><button class="btn" id="home">Back</button><button class="btn ghost" id="rep">📊 What I know</button></div>
   </section>
