@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Calculators</title>
+<style>
+body *{min-width:0}
+:root{--bg:#F6F5FA;--card:#FFFFFF;--ink:#15131C;--muted:#5E5A6B;--line:#E2DEEE;--accent:#6D4AD9;--soft:#EFEAFD;--ok:#1F8A70;--okb:#E1F4EE;--bad:#C0392B;--badb:#FBE3E0;--warm:#D9822B;--warmb:#FCEFE0;--R:#E0473C;--G:#3FA34D;--B:#3F6CC9}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55;padding:24px 16px 56px}
+.w{max-width:980px;margin:0 auto;display:grid;gap:22px}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(28px,6vw,40px);font-weight:900}
+h3{font-size:17px}
+p{margin:0}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.intro{display:grid;gap:8px}
+.intro p{color:var(--muted);max-width:68ch}
+button,input,select{font:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.toc{display:flex;gap:8px;flex-wrap:wrap}
+.toc a{display:inline-flex;align-items:center;min-height:40px;padding:0 13px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:13.5px}
+.toc a:hover{border-color:var(--accent)}
+.topic{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 18px;display:grid;gap:16px;scroll-margin-top:12px}
+.th{display:flex;gap:14px;align-items:center}
+.num{font-size:40px;font-weight:900;line-height:1;color:transparent;-webkit-text-stroke:2px var(--accent);flex:none}
+.th h2{font-size:clamp(21px,4vw,28px)}
+.th p{margin-top:2px;color:var(--muted);font-weight:600;font-size:14px}
+.trick{display:flex;gap:10px;background:var(--bg);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:10px 12px}
+.trick b{color:var(--accent)}
+.beyond{background:var(--warmb);border-radius:12px;padding:12px 14px;font-size:14.5px}
+.beyond b:first-child{color:var(--warm);display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.formula{border:2px solid var(--accent);border-radius:14px;padding:14px;text-align:center;font-weight:800;font-size:clamp(16px,3.2vw,22px);font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--soft)}
+.note{font-size:13px;color:var(--muted)}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media(max-width:700px){.two,.three{grid-template-columns:minmax(0,1fr)}}
+.box{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:8px;align-content:start}
+.box h3{display:flex;gap:8px;align-items:center}
+.tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--soft);color:var(--accent)}
+.seg{display:inline-flex;flex-wrap:wrap;border:1.5px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+.seg button{border:0;border-right:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:700;font-size:13.5px;padding:0 12px;min-height:44px;cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+canvas,svg.v{display:block;width:100%;height:auto;border-radius:12px}
+.pix{image-rendering:pixelated}
+.stage{background:#0F0D16;border-radius:14px;padding:10px}
+.cap{font-size:13.5px;color:var(--muted);text-align:center}
+.cfa{display:grid;gap:2px;width:100%;max-width:190px;aspect-ratio:1;margin:0 auto}
+.cfa i{border-radius:3px;display:grid;place-items:center;font:800 11px/1 Inter,system-ui,sans-serif;color:#fff;font-style:normal}
+.stat{display:flex;justify-content:space-between;gap:8px;font-size:13.5px;border-top:1px solid var(--line);padding-top:6px}
+.stat b{font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--accent);min-height:36px}
+.meter{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:14px}
+.meter b{font-variant-numeric:tabular-nums}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-weight:800;font-size:12.5px}
+.pill.ok{background:var(--okb);color:var(--ok)}.pill.bad{background:var(--badb);color:var(--bad)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:14px}
+td,th{border-bottom:1px solid var(--line);padding:7px 6px;text-align:left}
+th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tw{overflow-x:auto}
+.spell{display:flex;flex-wrap:wrap;gap:8px}
+.spell span{background:var(--okb);color:var(--ok);font-weight:800;padding:6px 10px;border-radius:10px}
+.spell s{background:var(--badb);color:var(--bad);font-weight:700;padding:6px 10px;border-radius:10px}
+ul.clean{margin:0;padding-left:18px;display:grid;gap:4px}
+.check{border:1.5px dashed var(--accent);border-radius:14px;padding:14px;display:grid;gap:10px}
+.check .q{font-weight:700}
+.opts{display:grid;gap:8px}
+.opts button{text-align:left;border:1.5px solid var(--line);background:var(--card);border-radius:10px;padding:10px 12px;min-height:44px;cursor:pointer;font-weight:600;color:var(--ink)}
+.opts button.right{border-color:var(--ok);background:var(--okb)}
+.opts button.wrong{border-color:var(--bad);background:var(--badb)}
+.fb{font-size:14px;font-weight:600}
+.lecs{display:flex;width:100%}
+.lecs button{flex:1 1 140px;min-height:48px;font-size:13.5px;line-height:1.2;padding:6px 10px;border-bottom:1px solid var(--line)}
+.lec{display:grid;gap:22px}
+.inp{width:100%;min-height:44px;font-size:16px;padding:6px 10px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);margin-top:4px}
+.btn{font-weight:700;border:1.5px solid var(--accent);background:var(--card);color:var(--accent);border-radius:10px;padding:0 14px;min-height:44px;cursor:pointer}
+.btn:hover{background:var(--soft)}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chain span{background:var(--soft);color:var(--accent);font-weight:800;font-size:13px;padding:7px 10px;border-radius:10px}
+.chain span.alt{background:var(--warmb);color:var(--warm)}
+.chain i{font-style:normal;color:var(--muted);font-weight:800}
+.qe{display:grid;gap:8px}.qerow{display:grid;grid-template-columns:90px 1fr 54px;gap:8px;align-items:center;font-size:14px}.qetrack{height:14px;background:var(--line);border-radius:7px;overflow:hidden}.qetrack i{display:block;height:100%;border-radius:7px}
+@media(max-width:600px){.cmp thead{display:none}.cmp tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-bottom:1px solid var(--line)}.cmp td{border:0}.cmp td:first-child{grid-column:1/-1;font-weight:800;background:var(--soft);border-radius:8px;margin-top:8px}.cmp td:nth-child(2)::before{content:"CCD";display:block;font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--accent)}.cmp td:nth-child(3)::before{content:"CMOS";display:block;font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--warm)}}
+@media(max-width:600px){.cmp.tele td:nth-child(2)::before{content:"TELEPHOTO"}.cmp.tele td:nth-child(3)::before{content:"WIDE ANGLE"}}
+.rle{display:flex;flex-wrap:wrap;gap:2px}
+.rle b{width:16px;height:16px;border-radius:3px;display:inline-block}
+ol.steps{margin:0;padding:0;list-style:none;display:grid;gap:6px;counter-reset:s}
+ol.steps li{counter-increment:s;display:flex;gap:10px;align-items:baseline;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14.5px;background:var(--bg);border-radius:10px;padding:9px 12px}
+ol.steps li::before{content:counter(s);flex:none;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font:700 12px/22px system-ui,sans-serif;text-align:center}
+ol.steps li.last{background:var(--soft);font-weight:700}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+<style>
+.cgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media(max-width:760px){.cgrid{grid-template-columns:minmax(0,1fr)}}
+.calc{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:10px;align-content:start}
+.calc h3{font-size:16px}
+.cfx{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;font-weight:700;color:var(--accent);background:var(--soft);border-radius:8px;padding:8px 10px}
+.cin{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.cin label{font-size:13px;font-weight:600;color:var(--muted)}
+.cres{font-size:17px;min-height:26px}
+.cres b{color:var(--ink)}
+.cset summary{cursor:pointer;font-weight:700;font-size:13.5px;color:var(--accent);min-height:32px;display:flex;align-items:center}
+.cset div,.steps{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;overflow-wrap:anywhere}
+.steps:empty{display:none}
+.find{display:block;max-width:520px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.ta{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;resize:vertical;min-height:0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn.sm{min-height:36px;font-size:13px;padding:0 10px}
+.chk{display:inline-flex;gap:6px;align-items:center;font-weight:600;font-size:14px;min-height:44px}
+table.fout{width:auto}
+table.fout td,table.fout th{text-align:center;padding:3px}
+table.fout td button{min-width:46px;min-height:36px;border:1.5px solid var(--line);border-radius:8px;background:var(--card);font:700 13px ui-monospace,Menlo,monospace;color:var(--ink);cursor:pointer}
+table.fout td button:hover{border-color:var(--accent)}
+table.fout td.edge{color:var(--muted)}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="w">
+<header class="intro">
+<span class="eyebrow">Exam 1 · Exam 2 · Final · Calculators</span>
+<h1>Calculators</h1>
+<p>Every formula from the course in one place. Each calculator also shows the <b>setup</b>: the equation with your numbers in it, which is what she wants on tests. For <b>studying and labs only</b>: her exams have no calculator and run in Honorlock.</p>
+<label class="find"><span class="sr">Find a calculator</span><input class="inp" id="cfind" type="search" placeholder="Search: density, mired, lens, SNR, filter…" autocomplete="off"></label>
+<nav class="toc" aria-label="Groups"><a href="#g-e1">Exam 1</a><a href="#g-e2">Exam 2</a><a href="#g-fin">Final</a><a href="#g-filter">Filter math checker</a></nav>
+</header>
+<div id="calcs"></div>
+
+<section class="topic" id="g-filter" aria-labelledby="fh">
+<div class="th"><span class="num">⊞</span><div><h2 id="fh">Filter math checker</h2><p>Nov 6 lab: check your Excel numbers</p></div></div>
+<p>Paste your image numbers (one row per line, separated by spaces, tabs or commas, straight from Excel) and your 3 × 3 filter. Fractions like <b>1/9</b> work. Edge pixels are left blank, like in class. Do the lab in Excel first, then compare.</p>
+<div class="two">
+<label>Image (pixel values)<textarea class="inp ta" id="fimg" rows="7" spellcheck="false">255 255 255 255 255
+255 255 255 255 255
+255 255 0 255 255
+255 255 0 255 255
+255 255 0 255 255</textarea></label>
+<label>Filter (3 × 3)<textarea class="inp ta" id="fker" rows="3" spellcheck="false">1/9 1/9 1/9
+1/9 1/9 1/9
+1/9 1/9 1/9</textarea>
+<span class="row" style="margin-top:8px"><button type="button" class="btn sm" data-ker="blur">Blur 1/9</button><button type="button" class="btn sm" data-ker="sharp">Sharpen</button><button type="button" class="btn sm" data-ker="id">Identity</button></span></label>
+</div>
+<div class="row"><label class="chk"><input type="checkbox" id="fclip" checked> Clip to 0–255</label><button type="button" class="btn" id="fcopy">Copy result for Excel</button><span class="note" id="fmsg" aria-live="polite"></span></div>
+<div class="tw"><table class="fout" id="fout"></table></div>
+<p class="note">Tap a result to see its math.</p>
+<div id="fstep" class="steps" aria-live="polite"></div>
+<div class="beyond"><b>Rounding</b>This uses normal rounding (.5 goes up), the same as Excel's ROUND. Kernel sum: <span id="fsum"></span>. A blur kernel's values are all positive and add up to 1.</div>
+</section>
+<p class="note" style="text-align:center">Built from PHPS-106 lectures and labs, Fall 2026, for study use.</p>
+</div>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i);};
+function f(x,d){if(!isFinite(x))return '—';d=d==null?2:d;var r=Math.round(x*Math.pow(10,d))/Math.pow(10,d);return String(r);}
+function num(s){s=String(s).trim().replace(/[−–]/g,'-');if(!s)return NaN;var m=s.match(/^(-?\d*\.?\d+)\s*\/\s*(-?\d*\.?\d+)$/);if(m)return +m[1]/+m[2];return +s;}
+var SH=['1','1/2','1/4','1/8','1/15','1/30','1/60','1/125','1/250','1/500','1/1000','1/2000','1/4000'],SHV=[1,1/2,1/4,1/8,1/15,1/30,1/60,1/125,1/250,1/500,1/1000,1/2000,1/4000];
+var AP=['1.4','2','2.8','4','5.6','8','11','16','22','32'],ISO=['100','200','400','800','1600','3200','6400'];
+/* Each calculator: inputs [key,label,default,(options)], run(v) -> {r: result html, s: setup html} */
+var C=[
+{g:'e1',id:'tod',t:'Transmittance → opacity → density',k:'transmittance opacity density stops incident transmitted lux',fx:'T = transmitted ÷ incident · O = 1 ÷ T · D = log(O)',
+ in:[['inc','Incident light (lux)',100],['tr','Transmitted light (lux)',25]],
+ run:function(v){var T=v.tr/v.inc,O=1/T,D=Math.log10(O);return{r:'T = <b>'+f(T,3)+'</b> · O = <b>'+f(O,2)+'</b> · D = <b>'+f(D,2)+'</b> ≈ <b>'+f(D/0.3,1)+'</b> stops',s:'T = '+v.tr+' ÷ '+v.inc+' = '+f(T,3)+'<br>O = '+v.inc+' ÷ '+v.tr+' = '+f(O,2)+'<br>D = log('+f(O,2)+') = '+f(D,2)};}},
+{g:'e1',id:'nd',t:'ND filters: density ↔ stops',k:'nd neutral density filter stops stack additive',fx:'stops = density ÷ 0.3 · densities add when stacked',
+ in:[['d1','Filter 1 density',0.3],['d2','Filter 2 density (0 if none)',0.6]],
+ run:function(v){var D=v.d1+v.d2;return{r:'Total <b>'+f(D,2)+'</b> = <b>'+f(D/0.3,2)+'</b> stops · lets through <b>1/'+f(Math.pow(10,D),1)+'</b> of the light',s:v.d1+' + '+v.d2+' = '+f(D,2)+'<br>'+f(D,2)+' ÷ 0.3 = '+f(D/0.3,2)+' stops'};}},
+{g:'e1',id:'isl',t:'Inverse square law',k:'inverse square law distance lux falloff point source',fx:'E = I ÷ d² · new E = old E × (old d ÷ new d)²',
+ in:[['e1','Light at first distance (lux)',100],['d1','First distance',10],['d2','New distance (same units)',20]],
+ run:function(v){var r=v.d1/v.d2,E=v.e1*r*r;return{r:'<b>'+f(E,2)+' lux</b> ('+(v.d2>v.d1?f(v.d2/v.d1,2)+'× farther':f(v.d1/v.d2,2)+'× closer')+')',s:v.e1+' × ('+v.d1+' ÷ '+v.d2+')² = '+v.e1+' × '+f(r*r,4)+' = '+f(E,2)+'<br>Only works for a point source.'};}},
+{g:'e1',id:'mired',t:'Mired scale',k:'mired color temperature kelvin',fx:'mired = 1,000,000 ÷ K',
+ in:[['k1','Color temperature (K)',3200],['k2','Target color temp (K, 0 to skip)',5500]],
+ run:function(v){var m1=1e6/v.k1,m2=1e6/v.k2,s='mired = 1,000,000 ÷ '+v.k1+' = '+f(m1,1);var r='<b>'+f(m1,1)+'</b> mireds';
+  if(v.k2>0){r+=' · target <b>'+f(m2,1)+'</b>';s+='<br>1,000,000 ÷ '+v.k2+' = '+f(m2,1)+'<br><i>Beyond class:</i> filter shift = '+f(m2,1)+' − '+f(m1,1)+' = '+f(m2-m1,1)+(m2<m1?' (negative = blue, raises K)':' (positive = amber, lowers K)');}
+  return{r:r+'<br><span class="note">Higher K → lower mired.</span>',s:s};}},
+{g:'e1',id:'lr',t:'Luminance ratio (stop range)',k:'luminance ratio ev highlight shadow stop range contrast',fx:'stops = highlight EV − shadow EV',
+ in:[['h','Highlight EV',8],['s','Shadow EV',4]],
+ run:function(v){var st=v.h-v.s;return{r:'<b>'+f(st,1)+' stops</b> (<span class="note">ratio about '+f(Math.pow(2,st),0)+':1</span>)',s:v.h+' − '+v.s+' = '+f(st,1)+' stops'};}},
+{g:'e1',id:'fn',t:'f-number and aperture diameter',k:'f-number aperture diameter focal length',fx:'N = focal length ÷ aperture diameter',
+ in:[['fl','Focal length (mm)',100],['dia','Aperture diameter (mm)',10]],
+ run:function(v){var N=v.fl/v.dia;return{r:'f/<b>'+f(N,2)+'</b>',s:'N = '+v.fl+' ÷ '+v.dia+' = '+f(N,2)+'<br>Other way: diameter = focal length ÷ N'};}},
+{g:'e1',id:'eq',t:'Equivalent exposure solver',k:'equivalent exposure stops shutter aperture iso n+2 base',fx:'the + and − stops must add up to 0',special:'eq'},
+{g:'e2',id:'bits',t:'Bit depth ↔ tones',k:'bit depth tones levels 2^bits 8-bit 256',fx:'tones = 2^bits',
+ in:[['b','Bits per channel',8]],
+ run:function(v){var t=Math.pow(2,v.b);return{r:'<b>'+t.toLocaleString()+'</b> tones (0 to '+(t-1).toLocaleString()+')'+(v.b===8?' · 24-bit color = 16.7 million':''),s:'2^'+v.b+' = '+t.toLocaleString()};}},
+{g:'e2',id:'snr',t:'Signal-to-noise ratio (SNR)',k:'snr signal noise mean standard deviation db',fx:'SNR = 20 × log(mean ÷ standard deviation)',
+ in:[['m','Mean',10],['sd','Standard deviation',5]],
+ run:function(v){var r=v.m/v.sd,d=20*Math.log10(r);return{r:'<b>'+f(d,2)+' dB</b> (higher = cleaner)',s:'20 × log('+v.m+' ÷ '+v.sd+') = 20 × log('+f(r,3)+') = 20 × '+f(Math.log10(r),4)+' = '+f(d,2)+' dB'};}},
+{g:'e2',id:'crop',t:'Crop factor & equivalent focal length',k:'crop factor sensor diagonal equivalent focal length full frame',fx:'diagonal = √(w² + h²) · crop = 43.3 ÷ diagonal · equivalent = f × crop',
+ in:[['w','Sensor width (mm)',23.5],['h','Sensor height (mm)',15.6],['fl','Lens focal length (mm)',50]],
+ run:function(v){var d=Math.sqrt(v.w*v.w+v.h*v.h),c=43.3/d;return{r:'crop <b>'+f(c,2)+'</b> · a '+v.fl+' mm acts like <b>'+f(v.fl*c,1)+' mm</b>',s:'√('+v.w+'² + '+v.h+'²) = '+f(d,2)+' mm<br>43.3 ÷ '+f(d,2)+' = '+f(c,2)+'<br>'+v.fl+' × '+f(c,2)+' = '+f(v.fl*c,1)+' mm<br>Normal lens ≈ diagonal = '+f(d,1)+' mm'};}},
+{g:'e2',id:'lens',t:'Lens equation',k:'lens equation 1/f 1/u 1/v focal length object image distance 1/x',fx:'1/f = 1/u + 1/v (press 1/x at the end!)',
+ in:[['solve','Solve for','f',[['f','f (focal length)'],['u','u (object distance)'],['v','v (image distance)']]],['a','f (mm)',50],['b','u (mm)',200],['c','v (mm)',66.67]],
+ run:function(v){var o;if(v.solve==='f'){o=1/v.b+1/v.c;return{r:'f = <b>'+f(1/o,2)+' mm</b>',s:'1/'+v.b+' + 1/'+v.c+' = '+f(o,5)+' → 1/x → '+f(1/o,2)+' mm'};}
+  if(v.solve==='u'){o=1/v.a-1/v.c;return{r:'u = <b>'+f(1/o,2)+' mm</b>',s:'1/u = 1/'+v.a+' − 1/'+v.c+' = '+f(o,5)+' → 1/x → '+f(1/o,2)+' mm'};}
+  o=1/v.a-1/v.b;return{r:'v = <b>'+f(1/o,2)+' mm</b>',s:'1/v = 1/'+v.a+' − 1/'+v.b+' = '+f(o,5)+' → 1/x → '+f(1/o,2)+' mm'};},note:'Fill in the two you know. The one you solve for is ignored.'},
+{g:'e2',id:'repro',t:'Scale of reproduction',k:'scale of reproduction magnification r 1:1 2:1 macro image object distance',fx:'R = v ÷ u · v = f(R + 1) · u = v ÷ R',
+ in:[['fl','Focal length (mm)',50],['R','R (e.g. 1 for 1:1, 2 for 2:1, 0.25 for 1:4)',1]],
+ run:function(v){var vv=v.fl*(v.R+1),u=vv/v.R;return{r:'v = <b>'+f(vv,2)+' mm</b> · u = <b>'+f(u,2)+' mm</b>',s:'v = '+v.fl+' × ('+v.R+' + 1) = '+f(vv,2)+'<br>u = '+f(vv,2)+' ÷ '+v.R+' = '+f(u,2)+(v.R===1?'<br>1:1 → u = v = 2f':'')};}},
+{g:'e2',id:'comb',t:'Combined lenses',k:'combined lenses two lenses focal length 1/fc',fx:'1/fc = 1/f1 + 1/f2',
+ in:[['f1','Lens 1 (mm)',85],['f2','Lens 2 (mm)',200]],
+ run:function(v){var o=1/v.f1+1/v.f2;return{r:'fc = <b>'+f(1/o,2)+' mm</b>',s:'1/'+v.f1+' + 1/'+v.f2+' = '+f(o,5)+' → 1/x → '+f(1/o,2)+' mm'};}},
+{g:'e2',id:'diop',t:'Diopters & close-up lenses',k:'diopter close-up lens focal length meters',fx:'D = 1 ÷ f (in meters) · subject sharp at 1 ÷ D meters (lens at ∞)',
+ in:[['d1','Close-up lens 1 (diopters)',1],['d2','Close-up lens 2 (0 if none)',3]],
+ run:function(v){var D=v.d1+v.d2,fm=1/D;return{r:'+<b>'+f(D,2)+'</b> D → f = <b>'+f(fm*1000,1)+' mm</b> → subject at <b>'+f(fm*1000,1)+' mm</b>',s:v.d1+' + '+v.d2+' = '+f(D,2)+' D<br>f = 1 ÷ '+f(D,2)+' = '+f(fm,4)+' m = '+f(fm*1000,1)+' mm<br>Other way: 50 mm = 0.05 m → 1 ÷ 0.05 = 20 D'};}},
+{g:'e2',id:'hand',t:'Handheld shutter rule & IS',k:'handheld rule shutter speed image stabilization is crop',fx:'slowest = 1 ÷ (f × crop), rounded to the next FASTER full speed',
+ in:[['fl','Focal length (mm)',100],['c','Crop factor (1 = full frame)',1],['is','Image stabilization stops (0 if none)',0]],
+ run:function(v){var t=1/(v.fl*v.c),i=0;while(i<SHV.length-1&&SHV[i]>t)i++;var j=Math.max(0,i-v.is);return{r:'slowest <b>'+SH[i]+' s</b>'+(v.is?' · with IS: <b>'+SH[j]+' s</b>':''),s:'1 ÷ ('+v.fl+' × '+v.c+') = 1/'+f(v.fl*v.c,1)+' → next faster full stop: '+SH[i]+(v.is?'<br>IS: '+v.is+' stops slower → '+SH[j]+' (turn IS off on a tripod)':'')};}},
+{g:'e2',id:'pin',t:'Optimum pinhole diameter',k:'pinhole diameter',fx:'mm: D = √f ÷ 28 · inches: D = √f ÷ 141',
+ in:[['fl','Pinhole-to-film distance',150],['u','Units','mm',[['mm','millimeters'],['in','inches']]]],
+ run:function(v){var k=v.u==='mm'?28:141,D=Math.sqrt(v.fl)/k;return{r:'D = <b>'+f(D,v.u==='mm'?3:4)+' '+v.u+'</b>',s:'√'+v.fl+' ÷ '+k+' = '+f(Math.sqrt(v.fl),3)+' ÷ '+k+' = '+f(D,4)};}},
+{g:'e2',id:'hyp',t:'Hyperfocal distance',k:'hyperfocal depth of field focus infinity',fx:'focus at H → sharp from H ÷ 2 to ∞',
+ in:[['H','Hyperfocal distance (ft or m)',30]],
+ run:function(v){return{r:'sharp from <b>'+f(v.H/2,2)+'</b> to <b>∞</b>',s:v.H+' ÷ 2 = '+f(v.H/2,2)};}},
+{g:'e2',id:'isz',t:'Image size: focal length & distance',k:'image size focal length object distance proportional perspective',fx:'size ∝ focal length · size ∝ 1 ÷ object distance',
+ in:[['s1','Image size now (mm)',10],['f1','Focal length now (mm)',50],['f2','New focal length (mm)',100],['d1','Distance now',10],['d2','New distance',10]],
+ run:function(v){var s=v.s1*(v.f2/v.f1)*(v.d1/v.d2);return{r:'new size <b>'+f(s,2)+' mm</b>',s:v.s1+' × ('+v.f2+' ÷ '+v.f1+') × ('+v.d1+' ÷ '+v.d2+') = '+f(s,2)+'<br>Focal length: directly. Distance: inversely.'};}},
+{g:'fin',id:'vd',t:'Viewing distance',k:'viewing distance print magnification perspective',fx:'viewing distance = focal length × printing magnification',
+ in:[['fl','Focal length (mm)',50],['m','Print magnification (×)',8]],
+ run:function(v){var d=v.fl*v.m;return{r:'<b>'+f(d,0)+' mm</b> ≈ <b>'+f(d/25.4,1)+' in</b>',s:v.fl+' × '+v.m+' = '+f(d,0)+' mm'};}},
+{g:'fin',id:'pd',t:'Same subject size, new lens',k:'perspective distance planner lab 4 same size focal length',fx:'new distance = old distance × new f ÷ old f',
+ in:[['f1','Lens now (mm)',24],['d1','Distance now',5],['f2','New lens (mm)',200]],
+ run:function(v){var d=v.d1*v.f2/v.f1;return{r:'stand about <b>'+f(d,1)+'</b> away',s:v.d1+' × '+v.f2+' ÷ '+v.f1+' = '+f(d,1)};}}
+];
+var G={e1:['g-e1','Exam 1'],e2:['g-e2','Exam 2'],fin:['g-fin','Final']},h='';
+['e1','e2','fin'].forEach(function(g){h+='<section class="topic" id="'+G[g][0]+'"><div class="th"><span class="num">'+(g==='e1'?'1':g==='e2'?'2':'F')+'</span><div><h2>'+G[g][1]+'</h2><p>'+C.filter(function(c){return c.g===g;}).length+' calculators</p></div></div><div class="cgrid">';
+ C.filter(function(c){return c.g===g;}).forEach(function(c){h+='<div class="calc" id="c-'+c.id+'" data-k="'+(c.t+' '+c.k).toLowerCase()+'"><h3>'+c.t+'</h3><div class="cfx">'+c.fx+'</div>';
+  if(c.special==='eq'){h+='<div class="cin"><label>Base ISO<select class="inp" id="eqI"></select></label><label>Base shutter<select class="inp" id="eqS"></select></label><label>Base f-number<select class="inp" id="eqF"></select></label><label>Change<select class="inp" id="eqC"><option value="S">Shutter speed</option><option value="F">f-number</option><option value="I">ISO</option></select></label><label>To<select class="inp" id="eqN"></select></label><label>Compensate with<select class="inp" id="eqK"></select></label></div><div class="cres" id="eqO" aria-live="polite"></div>';}
+  else{h+='<div class="cin">'+c.in.map(function(i){return '<label>'+i[1]+(i[3]?'<select class="inp" data-c="'+c.id+'" data-i="'+i[0]+'">'+i[3].map(function(o){return '<option value="'+o[0]+'"'+(o[0]===i[2]?' selected':'')+'>'+o[1]+'</option>';}).join('')+'</select>':'<input class="inp" data-c="'+c.id+'" data-i="'+i[0]+'" type="text" inputmode="decimal" value="'+i[2]+'">')+'</label>';}).join('')+'</div>'+(c.note?'<p class="note">'+c.note+'</p>':'')+'<div class="cres" id="r-'+c.id+'" aria-live="polite"></div><details class="cset"><summary>Show the setup</summary><div id="s-'+c.id+'"></div></details>';}
+  h+='</div>';});h+='</div></section>';});
+$('calcs').innerHTML=h;
+function calc(c){var v={},bad=false;c.in.forEach(function(i){var el=document.querySelector('[data-c="'+c.id+'"][data-i="'+i[0]+'"]');if(i[3])v[i[0]]=el.value;else{v[i[0]]=num(el.value);if(!isFinite(v[i[0]]))bad=true;}});
+ if(bad){$('r-'+c.id).innerHTML='<span class="note">Enter numbers in every box.</span>';$('s-'+c.id).innerHTML='';return;}
+ var o=c.run(v);$('r-'+c.id).innerHTML=o.r;$('s-'+c.id).innerHTML=o.s;}
+C.forEach(function(c){if(c.special)return;document.querySelectorAll('[data-c="'+c.id+'"]').forEach(function(el){el.addEventListener('input',function(){calc(c);});el.addEventListener('change',function(){calc(c);});});calc(c);});
+/* equivalent exposure */
+var L={I:ISO,S:SH,F:AP},NM={I:'ISO',S:'Shutter',F:'f-number'},SG={I:1,S:-1,F:-1};
+function fill(el,arr,sel,pre,suf){el.innerHTML=arr.map(function(x,i){return '<option value="'+i+'"'+(i===sel?' selected':'')+'>'+(pre||'')+x+(suf||'')+'</option>';}).join('');}
+function lab(k){return k==='F'?['f/','']:k==='S'?['',' s']:['ISO ',''];}
+fill($('eqI'),ISO,1,'ISO ');fill($('eqS'),SH,7,'',' s');fill($('eqF'),AP,5,'f/');
+function base(k){return +$({I:'eqI',S:'eqS',F:'eqF'}[k]).value;}
+function eopts(){var c=$('eqC').value,p=lab(c);fill($('eqN'),L[c],base(c),p[0],p[1]);$('eqK').innerHTML=['F','S','I'].filter(function(k){return k!==c;}).map(function(k){return '<option value="'+k+'">'+NM[k]+'</option>';}).join('');ecalc();}
+function ecalc(){var c=$('eqC').value,k=$('eqK').value,d=(+$('eqN').value-base(c))*SG[c],ni=base(k)-d*SG[k],o=$('eqO'),p=lab(k);
+ if(!d){o.innerHTML='<span class="note">Pick a new value to see the equivalent exposure.</span>';return;}
+ if(ni<0||ni>=L[k].length){o.innerHTML=NM[c]+' '+(d>0?'+':'')+d+'. '+NM[k]+' would need '+(-d>0?'+':'')+(-d)+' stops: off the scale. Compensate with the other setting.';return;}
+ o.innerHTML=NM[c]+' <b>'+(d>0?'+':'')+d+'</b> · '+NM[k]+' <b>'+(-d>0?'+':'')+(-d)+'</b> → use <b>'+p[0]+L[k][ni]+p[1]+'</b>. Total = 0.';}
+['eqI','eqS','eqF','eqC'].forEach(function(id){$(id).addEventListener('change',eopts);});$('eqN').addEventListener('change',ecalc);$('eqK').addEventListener('change',ecalc);eopts();$('eqN').value='5';ecalc();
+/* search */
+$('cfind').addEventListener('input',function(){var q=this.value.trim().toLowerCase();document.querySelectorAll('.calc').forEach(function(el){el.hidden=q&&el.dataset.k.indexOf(q)<0;});
+ document.querySelectorAll('#calcs .topic').forEach(function(s){s.hidden=!s.querySelector('.calc:not([hidden])');});});
+/* filter checker */
+var KER={blur:'1/9 1/9 1/9\n1/9 1/9 1/9\n1/9 1/9 1/9',sharp:'0 -1 0\n-1 5 -1\n0 -1 0',id:'0 0 0\n0 1 0\n0 0 0'};
+function grid(t){return t.trim().split(/\n+/).map(function(r){return r.trim().split(/[\s,;]+/).filter(Boolean).map(num);}).filter(function(r){return r.length;});}
+function xround(x){return x<0?-Math.floor(-x+0.5):Math.floor(x+0.5);}
+var RES=null,P=null,K=null;
+function frun(){P=grid($('fimg').value);K=grid($('fker').value);var msg=$('fmsg');$('fstep').innerHTML='';
+ if(K.length!==3||K.some(function(r){return r.length!==3;})||K.some(function(r){return r.some(function(x){return !isFinite(x);});})){msg.textContent='The filter must be 3 rows of 3 numbers.';$('fout').innerHTML='';return;}
+ var w=P[0]?P[0].length:0;if(P.length<3||P.some(function(r){return r.length!==w;})||P.some(function(r){return r.some(function(x){return !isFinite(x);});})){msg.textContent='The image must be at least 3 × 3, with the same number of values in every row.';$('fout').innerHTML='';return;}
+ msg.textContent='';var ks=K.reduce(function(a,r){return a+r.reduce(function(b,x){return b+x;},0);},0);$('fsum').textContent=f(ks,4);
+ RES=P.map(function(r,i){return r.map(function(_,j){if(i===0||j===0||i===P.length-1||j===w-1)return null;var s=0;for(var a=-1;a<=1;a++)for(var b=-1;b<=1;b++)s+=K[a+1][b+1]*P[i+a][j+b];var v=xround(s);if($('fclip').checked)v=Math.max(0,Math.min(255,v));return {raw:s,v:v};});});
+ var h='<thead><tr><th></th>'+P[0].map(function(_,j){return '<th>'+(j+1)+'</th>';}).join('')+'</tr></thead><tbody>';
+ RES.forEach(function(r,i){h+='<tr><th>'+(i+1)+'</th>'+r.map(function(c,j){return c?'<td><button type="button" data-r="'+i+'" data-c="'+j+'">'+c.v+'</button></td>':'<td class="edge">—</td>';}).join('')+'</tr>';});
+ $('fout').innerHTML=h+'</tbody>';
+ $('fout').querySelectorAll('button').forEach(function(b){b.onclick=function(){var i=+b.dataset.r,j=+b.dataset.c,parts=[];for(var a=-1;a<=1;a++)for(var c2=-1;c2<=1;c2++)parts.push(f(K[a+1][c2+1],4)+'×'+P[i+a][j+c2]);var c=RES[i][j];
+  $('fstep').innerHTML='<b>Row '+(i+1)+', column '+(j+1)+'</b> (was '+P[i][j]+')<br>'+parts.join(' + ')+'<br>= '+f(c.raw,4)+' → round → <b>'+xround(c.raw)+'</b>'+(c.v!==xround(c.raw)?' → clipped to <b>'+c.v+'</b>':'');};});}
+['fimg','fker'].forEach(function(id){$(id).addEventListener('input',frun);});$('fclip').addEventListener('change',frun);
+document.querySelectorAll('[data-ker]').forEach(function(b){b.onclick=function(){$('fker').value=KER[b.dataset.ker];frun();};});
+$('fcopy').onclick=function(){if(!RES)return;var t=RES.map(function(r){return r.map(function(c){return c?c.v:'';}).join('\t');}).join('\n');
+ var done=function(){$('fmsg').textContent='Copied. Paste into Excel.';},fail=function(){$('fmsg').textContent='Copy blocked here. Select the table and copy it instead.';};
+ try{navigator.clipboard.writeText(t).then(done,fail);}catch(e){fail();}};
+frun();
+document.querySelectorAll('.toc a').forEach(function(a){a.addEventListener('click',function(e){var t=document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();
+ try{if(window.frameElement&&window.parent!==window){var fr=window.frameElement.getBoundingClientRect();window.parent.scrollTo({top:window.parent.scrollY+fr.top+t.getBoundingClientRect().top-12,behavior:'smooth'});return;}}catch(err){}
+ t.scrollIntoView({behavior:'smooth',block:'start'});});});
+})();
+</script>
+</body></html>
