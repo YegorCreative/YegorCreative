@@ -145,7 +145,7 @@ details.cat.lv-new,details.cat.lv-learning,details.cat.lv-almost,details.cat.lv-
 <div class="wrap" id="app"></div>
 
 <script>
-const TOPICS={expo:"Exam 1: stops & equivalent exposure",dens:"Exam 1: transmittance, opacity, density & ND",lmath:"Exam 1: inverse square, luminance ratio & mired",light:"Light: RATS",files:"Files: RAW, bits, JPEG & TIFF",lenses:"Lenses & lens designs",persp:"Framing, perspective & image size",dof:"Circle of confusion & depth of field"};
+const TOPICS={expo:"Exam 1: stops & equivalent exposure",dens:"Exam 1: transmittance, opacity, density & ND",lmath:"Exam 1: inverse square, luminance ratio & mired",light:"Light: RATS",files:"Files: RAW, bits, JPEG & TIFF",lenses:"Lenses & lens designs",persp:"Framing, perspective & image size",dof:"Circle of confusion & depth of field",filt:"Nov 6: digital filters"};
 const ISO=["100","200","400","800","1600","3200","6400"];
 const SHUT=["1","1/2","1/4","1/8","1/15","1/30","1/60","1/125","1/250","1/500","1/1000"];
 const APER=["1.4","2","2.8","4","5.6","8","11","16","22","32"];
@@ -166,6 +166,14 @@ const Q=[
 {id:"TP15",t:"persp",k:"mc",q:"Her blue-slide rule: image size is…",o:["Directly proportional to focal length and inversely proportional to object distance","Inversely proportional to focal length","Directly proportional to object distance","Unrelated to focal length"],e:"Double f → double size. Double the distance → half the size."},
 {id:"TP13",t:"dof",k:"mc",q:"Which list gives the four things that affect the circle of confusion?",o:["Eyesight, contrast, level of illumination, the viewer's opinion","Aperture, focal length, distance, ISO","Sensor size, bit depth, ISO, contrast","Eyesight, shutter speed, focal length, color"],e:"Her \"beautiful test question\". Hook: Every Coffee Looks Okay."},
 {id:"TP14",t:"dof",k:"mc",q:"What are the three depth of field controls?",o:["Aperture, object distance, focal length","Aperture, shutter speed, ISO","Focal length, ISO, white balance","Object distance, file format, sensor size"],e:"Her other \"beautiful test question\"."},
+{id:"DF1",t:"filt",k:"mc",q:"Pixel point processing…",o:["Changes one pixel without looking at its neighbors","Changes the center pixel using the pixels around it","Resizes the whole image","Demosaics the RAW data"],e:"Her \"guarantee\" test definition. Point = one pixel alone (fixing a hot pixel)."},
+{id:"DF2",t:"filt",k:"mc",q:"Pixel group processing…",o:["Changes the center pixel using the pixels around it","Changes one pixel without looking at its neighbors","Only works on RAW files","Changes the bit depth"],e:"Group = the pixel and its neighbors (blurring, sharpening, scaling)."},
+{id:"DF3",t:"filt",k:"fill",q:"Fixing a single hot pixel by hand, without looking at its neighbors, is pixel ________ processing.",a:["point"],e:"Point processing: one pixel alone."},
+{id:"DF4",t:"filt",k:"fill",q:"Blurring, sharpening and scaling use the surrounding pixels, so they are pixel ________ processing.",a:["group"],e:"Group processing: the neighbors decide the new value."},
+{id:"DF5",t:"filt",k:"mc",q:"A green bad pixel landed in the highlight of an eye. Which processing fixes it best?",o:["Pixel point processing: change just that pixel","Pixel group processing: blur it with its neighbors","Bicubic resizing","Nearest neighbor"],e:"Her example: group processing would turn it gray. Fix that one pixel."},
+{id:"DF6",t:"filt",k:"tf",q:"A blurring kernel has all positive coefficients that add up to 1.",a:true,e:"True. Her 3 × 3 blur is 1/9 in every cell: 9 × 1/9 = 1."},
+{id:"DF7",t:"filt",k:"num",q:"A 1/9 blur filter covers eight pixels of 255 and one of 0. New center value? (whole number)",a:227,tol:0,d:"227",e:"(8 × 255 + 0) ÷ 9 = 226.67 → round to 227. Off by one = wrong, so let Excel round."},
+{id:"DF8",t:"filt",k:"mc",q:"Spatial filter kernels are always…",o:["An odd size (3 × 3, 5 × 5, 9 × 9) so there is a center pixel","An even size (2 × 2, 4 × 4)","The same size as the image","1 × 1"],e:"Odd sizes have a true center pixel to change."},
 {id:"EX1",t:"expo",k:"mc",q:"Which three settings make an exposure?",o:["Shutter speed, aperture (f-number) and ISO","Shutter speed, white balance and ISO","Aperture, focal length and ISO","Shutter speed, aperture and white balance"],e:"Shutter speed, f-number, ISO. Every exposure needs all three."},
 {id:"EX2",t:"expo",k:"mc",q:"A change of one full stop…",o:["Halves or doubles the exposure","Changes the exposure by 10%","Triples the exposure","Changes only the depth of field"],e:"One stop = ×2 or ÷2 the light."},
 {id:"EX3",t:"expo",k:"fill",q:"Full f-stops: 2.8, 4, 5.6, ___, 11 (number only).",a:["8"],e:"1.4 · 2 · 2.8 · 4 · 5.6 · 8 · 11 · 16 · 22 · 32. Memorize the table: she said it's free points."},
