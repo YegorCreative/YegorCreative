@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sep 28 · Sensors & noise · Lecture Notes</title>
+<link rel="stylesheet" href="lectures.css">
+</head><body>
+<div class="w">
+<header class="intro">
+<span class="eyebrow">Exam 2 · Lecture notes</span>
+<h1>Sep 28 · Sensors &amp; noise</h1>
+</header>
+<nav class="lnav" aria-label="Lectures"><a href="lecture-sep21.html">← Sep 21</a><a href="lectures.html">All lectures</a><a href="lecture-oct02.html">Oct 2 →</a></nav>
+<div class="lec" id="L1">
+<nav class="toc" aria-label="Sep 28 sections"><a href="#s1">Bayer &amp; demosaicing</a><a href="#s2">Other color filters</a><a href="#s3">ISO &amp; grain</a><a href="#s4">3 noise types</a><a href="#s5">SNR</a><a href="#s6">Sensor size</a><a href="#s7">Expose to the right</a><a href="#s8">HDR</a><a href="#s9">Exam rules</a></nav>
+
+
+<!-- 1 BAYER -->
+<section class="topic" id="s1" aria-labelledby="h1">
+<div class="th"><span class="num">01</span><div><h2 id="h1">Bayer pattern &amp; demosaicing</h2><p>Each photosite sees only one color</p></div></div>
+<p>A sensor only measures <b>brightness</b>. To get color, a <b>Bayer filter</b> (color filter array, CFA) puts a red, green or blue filter over each photosite: <b>50% green, 25% red, 25% blue</b>. So every pixel is missing <b>two thirds</b> of its color data. <b>Demosaicing</b> is the processing that fills in the missing colors from the neighbors.</p>
+<div class="seg" role="group" aria-label="Demosaicing view" id="dmv"><button aria-pressed="true" data-v="0">1 · Sensor sees</button><button aria-pressed="false" data-v="1">2 · Filter colors</button><button aria-pressed="false" data-v="2">3 · Demosaiced</button><button aria-pressed="false" data-v="3">Original</button></div>
+<div class="stage"><canvas id="dm" class="pix" width="96" height="64" aria-label="Demosaicing demo"></canvas></div>
+<p class="cap" id="dmcap"></p>
+<div class="two">
+<div class="box"><h3>How the standard method works</h3><ul class="clean"><li><b>Green first:</b> most data (50%) and where we're most sensitive, so it builds the <b>luminance</b> (brightness) image.</li><li><b>Then red and blue</b> become the <b>chrominance</b> (color) images. Blue gets the biggest boost, so blue has the <b>most noise</b>.</li><li>Good algorithms look for <b>edges</b> and weight pixels along the edge more.</li></ul></div>
+<div class="box"><h3>Why white needs all three</h3><p>On white areas, the red, green and blue photosites are all "on". White = all colors of light together.</p><p class="note">Armenian: demosaicing ≈ գույների վերականգնում (rebuilding colors), photosite = լուսազգայուն բջիջ.</p></div>
+</div>
+<div class="check" data-q="1"></div>
+</section>
+
+<!-- 2 CFAs -->
+<section class="topic" id="s2" aria-labelledby="h2">
+<div class="th"><span class="num">02</span><div><h2 id="h2">Other color filter arrays</h2><p>Bayer isn't the only pattern</p></div></div>
+<div class="three" id="cfas"></div>
+<div class="box"><h3><span class="tag">No filter</span> Foveon X3 (Sigma)</h3>
+<svg class="v" viewBox="0 0 440 150" role="img" aria-label="Foveon layers: blue absorbed near the top, green in the middle, red deepest">
+<rect x="150" y="20" width="270" height="36" fill="#3F6CC9" fill-opacity=".85"/><rect x="150" y="58" width="270" height="36" fill="#3FA34D" fill-opacity=".85"/><rect x="150" y="96" width="270" height="36" fill="#E0473C" fill-opacity=".85"/>
+<text x="285" y="43" text-anchor="middle" fill="#fff" font-weight="800" font-size="14">blue layer (shallow)</text><text x="285" y="81" text-anchor="middle" fill="#fff" font-weight="800" font-size="14">green layer</text><text x="285" y="119" text-anchor="middle" fill="#fff" font-weight="800" font-size="14">red layer (deepest)</text>
+<g stroke-width="4" stroke-linecap="round"><path d="M40 6 L40 40" stroke="#3F6CC9"/><path d="M80 6 L80 78" stroke="#3FA34D"/><path d="M120 6 L120 116" stroke="#E0473C"/></g>
+<text x="6" y="146" font-size="12" fill="#5E5A6B">light goes deeper into silicon</text></svg>
+<ul class="clean"><li>A <b>direct image sensor</b>: records red, green and blue at <b>every</b> photosite, using how deep each color goes into the silicon. Like color film's 3 layers.</li><li><b>Pros:</b> no demosaicing (no interpolation), sharper still lifes, less processing.</li><li><b>Cons:</b> <b>blur on moving subjects</b>, and "funky" colors under some lights.</li><li>Sigma bought Foveon in <b>2008</b>, and it's the only company using it. No camera currently in production.</li></ul></div>
+<div class="check" data-q="2"></div>
+</section>
+
+<!-- 3 ISO -->
+<section class="topic" id="s3" aria-labelledby="h3">
+<div class="th"><span class="num">03</span><div><h2 id="h3">ISO is gain, and noise is not grain</h2><p>You can't change how sensitive the sensor is</p></div></div>
+<p>The photodiode's sensitivity is fixed. Raising ISO just <b>amplifies the signal</b> (more <b>gain</b>), and the noise gets amplified with it.</p>
+<div class="box">
+<label for="iso"><b>ISO <span id="isov">100</span></b> · gain ×<span id="gainv">1</span></label>
+<input type="range" id="iso" min="0" max="6" value="0" aria-label="ISO">
+<canvas id="isoc" width="440" height="120" aria-label="Signal and noise bars amplified by ISO"></canvas>
+<p class="cap" id="isocap"></p>
+</div>
+<div class="two">
+<div class="box"><h3>Low ISO</h3><p>Longer exposure time for the same light, <b>less noise</b>.</p></div>
+<div class="box"><h3>High ISO</h3><p>Shorter exposure time, <b>more noise</b>. Having a high ISO available doesn't mean you'll like using it.</p></div>
+</div>
+<div class="two">
+<div class="box"><h3><span class="tag">Film</span> Grain</h3><p>Real <b>silver halide crystals</b> (or dye particles). Faster film = bigger crystals = a bigger target for photons = visible grain.</p></div>
+<div class="box"><h3><span class="tag">Digital</span> Noise</h3><p><b>Electronic</b> noise. It has nothing to do with crystals. Don't call digital noise "grain".</p></div>
+</div>
+<div class="beyond"><b>Beyond the lecture</b>The professor says ISO = "International Standards Organization", so use her wording on the exam. The official English name is the <b>International Organization for Standardization</b>, and "ISO" comes from Greek <i>isos</i> = equal.</div>
+<div class="check" data-q="3"></div>
+</section>
+
+<!-- 4 NOISE TYPES -->
+<section class="topic" id="s4" aria-labelledby="h4">
+<div class="th"><span class="num">04</span><div><h2 id="h4">Three types of noise</h2><p>Noise = a mismatch between the light that hits the sensor and the electronic signal</p></div></div>
+<p class="note">Her slide quotes Galer &amp; Horvat (<i>Digital Imaging Essential Skills</i>): noise comes from random electrical activity on the sensor, and <b>the lower the light, the greater the inconsistency</b>.</p>
+<div class="three">
+<div class="box"><h3><span class="tag">Most common</span></h3><h3>Photon noise</h3><p>Light itself isn't perfectly even. Photons arrive <b>randomly</b>, so the <b>input</b> is already noisy.</p><p class="note">Like rain: even steady rain doesn't drop the same number of drops in every cup.</p></div>
+<div class="box"><h3><span class="tag">Heat</span></h3><h3>Thermal noise</h3><p><b>Heat</b> from the camera's electronics makes the photosite "see" fake photons. Fix: <b>cooled sensors</b> (used for IR and science cameras).</p><p class="note">Hotter camera, long exposures → more thermal noise.</p></div>
+<div class="box"><h3><span class="tag">Readout</span></h3><h3>Transfer noise</h3><p>Happens during <b>readout</b>: some charge gets left behind, or neighboring photosites interfere (like blooming).</p><p class="note">Like pouring syrup from a can: you need a scraper to get the rest.</p></div>
+</div>
+<div class="trick"><span>💡</span><span><b>P-T-T: "Please Turn on the Tripod."</b> Photon, Thermal, Transfer. Photon noise comes from the light, thermal from heat, transfer from readout.</span></div>
+<div class="check" data-q="4"></div>
+</section>
+
+<!-- 5 SNR -->
+<section class="topic" id="s5" aria-labelledby="h5">
+<div class="th"><span class="num">05</span><div><h2 id="h5">Signal-to-noise ratio</h2><p>How strong the signal is compared to the noise</p></div></div>
+<div class="formula">SNR = 20 × log₁₀(Mean ÷ Std Dev)</div>
+<ul class="clean"><li><b>Higher SNR = better</b> (cleaner). A <b>low standard deviation</b> is what you want: less spread around the mean.</li><li>Units are <b>dB</b> (decibels: small d, capital B), borrowed from audio. On a lab answer the dB is often left off, but it is a dB.</li><li>SNR doesn't depend on amplification: if the mean and std dev are both multiplied by the same gain, the ratio stays the same.</li></ul>
+<div class="box"><div class="two"><label>Mean <input type="number" id="sm" value="120" min="0" step="any" style="width:100%;min-height:44px;font-size:16px;padding:6px 10px;border:1.5px solid var(--line);border-radius:10px"></label><label>Std Dev <input type="number" id="ss" value="4" min="0.01" step="any" style="width:100%;min-height:44px;font-size:16px;padding:6px 10px;border:1.5px solid var(--line);border-radius:10px"></label></div><p id="sout" class="formula" style="font-size:17px"></p></div>
+<p class="note">For practice with real patches and graphs, open the <b>Noise &amp; SNR Lab</b> and <b>Patch Meter</b> tiles.</p>
+<div class="check" data-q="5"></div>
+</section>
+
+<!-- 6 SENSOR SIZE -->
+<section class="topic" id="s6" aria-labelledby="h6">
+<div class="th"><span class="num">06</span><div><h2 id="h6">Sensor size</h2><p>Bigger photosite = bigger target for photons</p></div></div>
+<svg class="v" viewBox="0 0 440 200" role="img" aria-label="Sensor sizes drawn to scale: full frame, APS-C, Micro Four Thirds, phone">
+<g transform="translate(14 14)"><rect width="201.6" height="134.4" fill="#6D4AD9" fill-opacity=".12" stroke="#6D4AD9" stroke-width="2.5"/><rect y="47" width="131.6" height="87.4" fill="#D9822B" fill-opacity=".15" stroke="#D9822B" stroke-width="2.5"/><rect y="61.6" width="96.9" height="72.8" fill="#1F8A70" fill-opacity=".18" stroke="#1F8A70" stroke-width="2.5"/><rect y="113" width="32" height="21.4" fill="#C0392B" fill-opacity=".25" stroke="#C0392B" stroke-width="2.5"/></g>
+<g font-size="13.5"><rect x="240" y="20" width="12" height="12" rx="3" fill="#6D4AD9"/><text x="258" y="31" font-weight="800">Full frame 36 × 24 mm</text><text x="258" y="48" fill="#5E5A6B">= 35 mm film · pros · $$$</text>
+<rect x="240" y="62" width="12" height="12" rx="3" fill="#D9822B"/><text x="258" y="73" font-weight="800">APS-C ≈ 23.5 × 15.6 mm</text><text x="258" y="90" fill="#5E5A6B">crop sensor · "prosumer"</text>
+<rect x="240" y="104" width="12" height="12" rx="3" fill="#1F8A70"/><text x="258" y="115" font-weight="800">Micro Four Thirds 17.3 × 13</text><text x="258" y="132" fill="#5E5A6B">smaller, lighter lenses</text>
+<rect x="240" y="146" width="12" height="12" rx="3" fill="#C0392B"/><text x="258" y="157" font-weight="800">Phone / compact</text><text x="258" y="174" fill="#5E5A6B">tiny photosites · consumer</text></g>
+<text x="14" y="190" font-size="12" fill="#5E5A6B">drawn to scale</text></svg>
+<ul class="clean"><li><b>Larger photosite → more light-gathering ability</b> → less amplification needed → <b>less noise</b>. Crop sensors tend to have more noise.</li><li>More photosites (a larger array) → <b>higher resolution</b>.</li><li>A bigger sensor needs <b>bigger, heavier, pricier lenses</b>, and only a few full-frame sensors fit on one silicon wafer, so they cost more.</li><li><b>Pixel density is not tied to ISO.</b></li><li>Her target users: full frame → <b>professionals</b>; APS-C → professionals and <b>"prosumers"</b>; Four Thirds → "???"; anything smaller → <b>consumer</b>.</li></ul>
+<div class="trick"><span>🏓</span><span><b>Ping-pong ball test:</b> throw it at a small bucket or a big barrel. You hit the barrel more often. Bigger photosite = more photons caught.</span></div>
+<div class="beyond"><b>Beyond the lecture</b>In class, Four Thirds was called "about 30–40% smaller" than full frame. Measured by area it's actually about <b>74% smaller</b> (crop factor 2 → ¼ the area). If the exam asks, use the class answer, but now you know the real math: area shrinks by the crop factor squared.</div>
+<div class="check" data-q="6"></div>
+</section>
+
+<!-- 7 ETTR -->
+<section class="topic" id="s7" aria-labelledby="h7">
+<div class="th"><span class="num">07</span><div><h2 id="h7">Expose to the right (ETTR)</h2><p>Move dark tones up, away from the noise</p></div></div>
+<p>A raw sensor responds <b>linearly</b>: the brightest stop gets <b>half</b> of all the levels, the next stop half of what's left, and so on. Shadows get very few levels <b>and</b> sit close to the noise. ETTR means exposing brighter so the histogram moves <b>right</b> (without clipping), then darkening it again in post.</p>
+<div class="box">
+<label for="ev"><b>Exposure: <span id="evv">+0</span> stops</b></label>
+<input type="range" id="ev" min="0" max="4" step="1" value="0" aria-label="Exposure in stops">
+<canvas id="ettr" width="460" height="230" aria-label="12-bit levels per stop with a low-key histogram"></canvas>
+<div class="meter"><span>Shadow levels: <b id="lv">–</b></span><span>Clipping: <b id="clip">–</b></span></div>
+<p class="cap" id="ettrcap"></p>
+</div>
+<div class="tw"><table><thead><tr><th>Stop (12-bit raw)</th><th>Levels</th></tr></thead><tbody id="ltab"></tbody></table></div>
+<div class="two">
+<div class="box"><h3>✅ Works for</h3><p><b>Low-key</b> and mid-to-dark scenes that don't fill the whole dynamic range.</p></div>
+<div class="box"><h3>❌ Not for</h3><p>Scenes with bright highlights <b>and</b> dark shadows: a white cat and a black cat, a bride and a groom, a bright day with clouds. The bright parts would clip.</p></div>
+</div>
+<div class="trick"><span>📸</span><span><b>Rules:</b> shoot <b>raw</b> (JPEGs aren't linear and throw data away), watch the <b>luminance histogram</b>, and never clip what matters.</span></div>
+<div class="check" data-q="7"></div>
+</section>
+
+<!-- 8 HDR -->
+<section class="topic" id="s8" aria-labelledby="h8">
+<div class="th"><span class="num">08</span><div><h2 id="h8">HDR (high dynamic range)</h2><p>When the scene is too contrasty for one shot</p></div></div>
+<svg class="v" viewBox="0 0 440 150" role="img" aria-label="Dark exposure for highlights plus bright exposure for shadows merge into one HDR image">
+<defs><linearGradient id="win" x1="0" x2="1"><stop offset="0" stop-color="#9CC9F0"/><stop offset="1" stop-color="#E9F3FB"/></linearGradient></defs>
+<g><rect x="6" y="20" width="110" height="78" rx="6" fill="#151320"/><rect x="40" y="32" width="64" height="46" fill="url(#win)"/><text x="61" y="116" text-anchor="middle" font-size="12.5" font-weight="800">dark shot</text><text x="61" y="132" text-anchor="middle" font-size="11.5" fill="#5E5A6B">keeps highlights</text></g>
+<text x="132" y="64" font-size="22" font-weight="900" fill="#6D4AD9">+</text>
+<g><rect x="152" y="20" width="110" height="78" rx="6" fill="#B79670"/><rect x="186" y="32" width="64" height="46" fill="#fff"/><text x="207" y="116" text-anchor="middle" font-size="12.5" font-weight="800">bright shot</text><text x="207" y="132" text-anchor="middle" font-size="11.5" fill="#5E5A6B">keeps shadows</text></g>
+<text x="276" y="64" font-size="22" font-weight="900" fill="#6D4AD9">=</text>
+<g><rect x="300" y="20" width="132" height="78" rx="6" fill="#B79670"/><rect x="340" y="32" width="76" height="46" fill="url(#win)"/><text x="366" y="116" text-anchor="middle" font-size="12.5" font-weight="800">HDR merge</text><text x="366" y="132" text-anchor="middle" font-size="11.5" fill="#5E5A6B">room + view outside</text></g></svg>
+<ul class="clean"><li>Camera on a <b>sturdy tripod</b> (if it moves, the merge fails). Shoot <b>several exposures</b>: one for the highlights, one for the shadows, maybe more in between.</li><li>Merge in <b>Photoshop or Lightroom</b> (or dedicated tools). Don't "overbake" it.</li><li>Used for: <b>architecture and real estate</b> (a room plus the view through the windows), <b>night</b> venues with bright lights, sunny scenes with deep shadows.</li></ul>
+<div class="trick"><span>⚖️</span><span><b>ETTR vs HDR:</b> ETTR = <b>one</b> shot, for scenes that <i>fit</i> the sensor. HDR = <b>many</b> shots, for scenes that <i>don't fit</i>.</span></div>
+<div class="check" data-q="8"></div>
+</section>
+
+<!-- 9 EXAM RULES -->
+<section class="topic" id="s9" aria-labelledby="h9">
+<div class="th"><span class="num">09</span><div><h2 id="h9">How the professor grades</h2><p>Easy points people lost on Exam 1</p></div></div>
+<div class="box"><h3>Spelling counts, with no credit if it's wrong</h3><div class="spell"><span>aperture</span><s>apperture</s><s>aperature</s><span>shutter speed</span><s>shudder speed</s><span>demosaicing</span><span>Bayer</span><span>panchromatic</span><span>photosite</span></div><p class="note">No "d" in shutter, no "rat" in aperture.</p></div>
+<div class="three">
+<div class="box"><h3>"Number only"</h3><p>Write <b>4.5</b>, not f/4.5. Write <b>1/2</b> or <b>2</b>, not "1/2 seconds".</p></div>
+<div class="box"><h3>Don't over-answer</h3><p>Extra wrong information next to the right answer <b>loses points</b>. Answer only what's asked.</p></div>
+<div class="box"><h3>Whole stops of ISO</h3><p>Just keep doubling: <b>100, 200, 400, 800, 1600…</b></p></div>
+</div>
+<div class="box"><h3>Her "see it 5 times" method</h3><p><b>1</b> lab reading · <b>2</b> lecture · <b>3</b> lab · <b>4</b> SI session · <b>5</b> your own review. Re-read old notes before each new lecture, like a song you know by heart.</p></div>
+</section>
+</div>
+
+<nav class="lnav" aria-label="Lectures"><a href="lecture-sep21.html">← Sep 21</a><a href="lectures.html">All lectures</a><a href="lecture-oct02.html">Oct 2 →</a></nav>
+<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures, for study use.</p>
+</div>
+<script src="lectures.js"></script>
+<script src="back-bar.js" data-back="lectures.html" data-label="Lecture Notes" defer></script>
+</body></html>

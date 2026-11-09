@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Oct 19 · Lens types · Lecture Notes</title>
+<link rel="stylesheet" href="lectures.css">
+</head><body>
+<div class="w">
+<header class="intro">
+<span class="eyebrow">Exam 2 · Lecture notes</span>
+<h1>Oct 19 · Lens types</h1>
+</header>
+<nav class="lnav" aria-label="Lectures"><a href="lecture-oct16.html">← Oct 16</a><a href="lectures.html">All lectures</a><a href="lecture-oct23.html">Oct 23 →</a></nav>
+<div class="lec" id="L5">
+<nav class="toc" aria-label="Oct 19 sections"><a href="#n1">Normal lens &amp; crop factor</a><a href="#n2">FF vs crop lenses</a><a href="#n3">Telephoto vs wide</a><a class="pk" href="#n4">Retrofocus</a><a class="pk" href="#n5">Framing vs perspective</a><a href="#n6">Prime vs zoom</a><a href="#n7">Macro 1:1</a><a href="#n8">Diopters</a><a href="#n9">Specialty lenses</a></nav>
+
+<section class="topic" id="n1" aria-labelledby="nh1">
+<div class="th"><span class="num">01</span><div><h2 id="nh1">Normal lens &amp; crop factor</h2><p>"Normal" depends on the sensor size</p></div></div>
+<ul class="clean"><li>A <b>normal lens</b> reproduces a field of view that looks <b>natural</b> to a human: about <b>47°</b>, measured on the <b>diagonal</b>.</li><li>Normal focal length ≈ the <b>diagonal of the film or sensor</b>: about <b>50 mm</b> for 35 mm/full frame and about <b>150 mm</b> for 4×5. For digital, it <b>depends on the size of the chip</b>.</li></ul>
+<div class="formula">crop factor = 43.3 mm ÷ sensor diagonal<br>diagonal = √(width² + height²)</div>
+<div class="box"><h3>Crop factor calculator</h3>
+<div class="three"><label>Sensor width (mm)<input type="number" id="cw" value="17.3" step="any" min="1" class="inp"></label><label>Sensor height (mm)<input type="number" id="ch" value="13" step="any" min="1" class="inp"></label><label>Lens focal length (mm)<input type="number" id="cf" value="50" step="any" min="1" class="inp"></label></div>
+<ol class="steps" id="csteps"></ol>
+<div class="row" style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn" data-s="36,24">Full frame</button><button type="button" class="btn" data-s="23.5,15.6">APS-C (Nikon/Sony)</button><button type="button" class="btn" data-s="22.3,14.9">APS-C (Canon)</button><button type="button" class="btn" data-s="17.3,13">Four Thirds</button></div></div>
+<div class="tw"><table><thead><tr><th>Full frame</th><th>Same view on 1.6×</th><th>Same view on 2× (MFT)</th><th>Angle</th></tr></thead><tbody><tr><td>20 mm</td><td>13 mm</td><td>10 mm</td><td>94°</td></tr><tr><td>50 mm</td><td>31 mm</td><td>25 mm</td><td>47°</td></tr><tr><td>100 mm</td><td>62 mm</td><td>50 mm</td><td>24°</td></tr></tbody></table></div>
+<div class="check" data-q="n1"></div>
+</section>
+
+<section class="topic" id="n2" aria-labelledby="nh2">
+<div class="th"><span class="num">02</span><div><h2 id="nh2">Full-frame lens vs crop lens</h2><p>Will the image circle cover the sensor?</p></div></div>
+<svg class="v" viewBox="0 0 440 200" role="img" aria-label="Four cases of lens image circles on full-frame and crop sensors">
+<g font-size="11" text-anchor="middle" fill="#15131C">
+<g transform="translate(60 60)"><circle r="52" fill="#6D4AD9" fill-opacity=".12" stroke="#6D4AD9" stroke-width="2"/><rect x="-43" y="-29" width="86" height="58" fill="#D9822B" fill-opacity=".8"/><text y="74">FF lens · FF sensor ✅</text></g>
+<g transform="translate(170 60)"><circle r="52" fill="#6D4AD9" fill-opacity=".12" stroke="#6D4AD9" stroke-width="2"/><rect x="-28" y="-19" width="56" height="38" fill="#D9822B" fill-opacity=".8"/><text y="74">FF lens · crop sensor ✅</text></g>
+<g transform="translate(280 60)"><rect x="-43" y="-29" width="86" height="58" fill="#D9822B" fill-opacity=".8"/><circle r="34" fill="none" stroke="#C0392B" stroke-width="2.5"/><text y="74" fill="#C0392B" font-weight="800">crop lens · FF sensor ❌</text></g>
+<g transform="translate(385 60)"><circle r="34" fill="#6D4AD9" fill-opacity=".12" stroke="#6D4AD9" stroke-width="2"/><rect x="-28" y="-19" width="56" height="38" fill="#D9822B" fill-opacity=".8"/><text y="74">crop lens · crop ✅</text></g></g>
+<text x="220" y="170" text-anchor="middle" font-size="12" fill="#5E5A6B">circle = what the lens projects · orange = sensor</text></svg>
+<ul class="clean"><li>A <b>full-frame lens works on a crop body</b> (same mount or with an adapter), and it acts longer: a 50 mm on a 2× body looks like <b>100 mm</b>.</li><li>A <b>crop lens on a full-frame body ❌</b>: its image circle is too small, so the corners go dark. Upgrade to full frame later and you have to <b>rebuy your lenses</b>.</li><li>Her advice: <i>"If you buy cheap, you buy twice."</i> Borrow good gear from the cage.</li></ul>
+<div class="check" data-q="n2"></div>
+</section>
+
+<section class="topic" id="n3" aria-labelledby="nh3">
+<div class="th"><span class="num">03</span><div><h2 id="nh3">Telephoto vs wide angle</h2><p>Longer or shorter than normal</p></div></div>
+<div class="tw"><table class="cmp tele"><thead><tr><th></th><th>Telephoto (long)</th><th>Wide angle (short)</th></tr></thead><tbody>
+<tr><td>Focal length</td><td><b>Longer</b> than normal (e.g. 150 mm on FF; normal on 4×5!)</td><td><b>Shorter</b> than normal (&lt;50 mm FF, &lt;150 mm 4×5)</td></tr>
+<tr><td>Magnification</td><td>Increased</td><td>Decreased</td></tr>
+<tr><td>Field of view</td><td>Narrower</td><td>Wider (door peephole)</td></tr>
+<tr><td>Depth of field</td><td>Less</td><td>Great amount (most of the image sharp)</td></tr>
+<tr><td>Perspective look</td><td>"Compressed"</td><td>Can be distorted: perspective and <b>barrel</b> distortion</td></tr>
+<tr><td>Good for</td><td>Subjects you can't or shouldn't get close to (a grizzly bear), <b>portraits</b> (she loves an 85 mm)</td><td>Spaces, landscapes. Extreme wide = <b>fisheye</b> (always use its hood)</td></tr></tbody></table></div>
+<div class="trick"><span>🛡️</span><span>Put a good <b>UV or clear protective filter</b> on expensive lenses. A cheap one causes ghosting.</span></div>
+<div class="box"><h3>Same spot, different focal lengths</h3><label for="zf"><b>Focal length: <span id="zfv">18</span> mm</b> <span class="note" id="zfa"></span></label><input type="range" id="zf" min="18" max="200" value="18" aria-label="Focal length">
+<canvas id="zoomc" width="600" height="400" aria-label="A shoreline scene that gets cropped tighter as focal length increases"></canvas>
+<p class="cap">The camera never moves: only the <b>framing</b> changes. At 18 mm you see the whole shore. At 200 mm the far ships fill the frame. Her slide used 18, 24, 35, 55, 70, 85, 100, 135 and 200 mm.</p></div>
+<div class="check" data-q="n3"></div>
+</section>
+
+<section class="topic pick" id="n4" aria-labelledby="nh4">
+<div class="th"><span class="num">04</span><div><h2 id="nh4">Telephoto vs reverse telephoto (retrofocus)</h2><p>"A very good test question"</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · “A very good test question”</span><div class="pq">Telephoto vs reverse telephoto (retrofocus): how are the elements arranged?</div><div class="pa"><b>Telephoto</b>: positive element in <b>front</b>, negative behind → rear nodal point falls <b>in front of</b> the lens.<br><b>Retrofocus</b>: negative in front, positive behind → rear nodal point falls <b>behind</b> the lens, so a wide angle clears the DSLR mirror.</div></div>
+<svg class="v" viewBox="0 0 440 190" role="img" aria-label="Normal telephoto: positive then negative element, back nodal plane in front. Retrofocus: negative then positive, back nodal plane behind the lens">
+<g font-size="12" fill="#15131C"><text x="105" y="16" text-anchor="middle" font-weight="800">Normal telephoto</text><text x="330" y="16" text-anchor="middle" font-weight="800">Reverse telephoto (retrofocus)</text></g>
+<g transform="translate(0 30)"><line x1="10" y1="60" x2="210" y2="60" stroke="#9A95A8" stroke-dasharray="3 3"/>
+<path d="M80 15 Q92 60 80 105 Q68 60 80 15Z" fill="#6D4AD9" fill-opacity=".25" stroke="#6D4AD9" stroke-width="2"/><text x="80" y="122" font-size="11" text-anchor="middle" fill="#6D4AD9">+ front</text>
+<path d="M112 20 H122 Q114 60 122 100 H112 Q120 60 112 20Z" fill="#D9822B" fill-opacity=".25" stroke="#D9822B" stroke-width="2"/><text x="117" y="122" font-size="11" text-anchor="middle" fill="#D9822B">− rear</text>
+<line x1="45" y1="10" x2="45" y2="110" stroke="#C0392B" stroke-width="2" stroke-dasharray="4 3"/><text x="45" y="140" font-size="10.5" text-anchor="middle" fill="#C0392B">back nodal plane</text><text x="45" y="153" font-size="10.5" text-anchor="middle" fill="#C0392B">IN FRONT of lens</text>
+<path d="M10 30 H80 L117 45 L200 60 M10 90 H80 L117 75 L200 60" stroke="#15131C" fill="none" stroke-width="1.5"/></g>
+<g transform="translate(225 30)"><line x1="10" y1="60" x2="210" y2="60" stroke="#9A95A8" stroke-dasharray="3 3"/>
+<path d="M60 20 H70 Q62 60 70 100 H60 Q68 60 60 20Z" fill="#D9822B" fill-opacity=".25" stroke="#D9822B" stroke-width="2"/><text x="65" y="122" font-size="11" text-anchor="middle" fill="#D9822B">− front</text>
+<path d="M100 10 Q114 60 100 110 Q86 60 100 10Z" fill="#6D4AD9" fill-opacity=".25" stroke="#6D4AD9" stroke-width="2"/><text x="100" y="122" font-size="11" text-anchor="middle" fill="#6D4AD9">+ rear</text>
+<line x1="150" y1="10" x2="150" y2="110" stroke="#C0392B" stroke-width="2" stroke-dasharray="4 3"/><text x="155" y="140" font-size="10.5" text-anchor="middle" fill="#C0392B">back nodal plane</text><text x="155" y="153" font-size="10.5" text-anchor="middle" fill="#C0392B">BEHIND the lens</text>
+<path d="M10 40 H65 L100 32 L200 60 M10 80 H65 L100 88 L200 60" stroke="#15131C" fill="none" stroke-width="1.5"/></g></svg>
+<div class="two">
+<div class="box"><h3>Normal telephoto</h3><p><b>Positive</b> element in front, <b>negative</b> behind. The <b>back nodal point falls in front</b> of the lens, so a long focal length fits in a shorter barrel. The lens sits close to the sensor and mirror.</p></div>
+<div class="box"><h3>Reverse telephoto = retrofocus</h3><p>Elements <b>swapped</b>: negative in front, positive behind. The <b>back nodal point moves behind</b> the lens group, so the lens sits <b>farther from the mirror</b> and doesn't hit it. Her slide calls it the <b>"Reverse Telephoto <i>Wide Angle</i> Lens"</b>.</p></div>
+</div>
+<div class="beyond"><b>Beyond the lecture</b>Retrofocus is <b>how wide-angle lenses for DSLRs are built</b>. A plain 20 mm lens would have to sit 20 mm from the sensor, inside the mirror's swing. Retrofocus gives a short focal length with a long back-focus distance. Telephotos do the opposite: a long focal length in a short lens.</div>
+<div class="check" data-q="n4"></div>
+</section>
+
+<section class="topic pick" id="n5" aria-labelledby="nh5">
+<div class="th"><span class="num">05</span><div><h2 id="nh5">Framing vs perspective</h2><p>She "can't impose upon that enough"</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · She “can't impose upon that enough”</span><div class="pq">What does changing the focal length change, and what does moving the camera change?</div><div class="pa">Focal length → <b>framing</b>.<br>Camera position → <b>perspective</b>.</div></div>
+<div class="formula" style="font-size:16px">Change the LENS → change FRAMING<br>Move the CAMERA → change PERSPECTIVE</div>
+<ul class="clean"><li><b>Perspective</b> = the relative size of objects in a scene, and it's controlled by <b>camera position</b> (distance).</li><li>Move closer and foreground objects become relatively larger. Everything at the same distance scales together.</li><li>Why people think lenses change perspective: with a telephoto you usually stand <b>far away</b>, and with a wide angle <b>close</b>. The <b>distance</b> is what changes the look.</li></ul>
+<div class="check" data-q="n5"></div>
+</section>
+
+<section class="topic" id="n6" aria-labelledby="nh6">
+<div class="th"><span class="num">06</span><div><h2 id="nh6">Prime vs zoom</h2><p>One focal length or many</p></div></div>
+<div class="two">
+<div class="box"><h3>Prime</h3><p><b>Fixed</b> focal length, often a large maximum aperture (<b>"fast"</b>), optimized for that one focal length.</p></div>
+<div class="box"><h3>Zoom (variable focal length)</h3><p>Moves lens groups inside to change the angle of view. Flexible framing, no lens swaps, but a <b>more complex optical design</b>. It <i>may</i> be less well corrected for aberrations, slower (smaller max aperture), and less sharp than a prime.</p></div>
+</div>
+<p class="note">Her slide: image quality, maximum aperture, size and cost depend on the specific lens design.</p>
+<div class="check" data-q="n6"></div>
+</section>
+
+<section class="topic" id="n7" aria-labelledby="nh7">
+<div class="th"><span class="num">07</span><div><h2 id="nh7">Macro lenses &amp; reproduction ratio</h2><p>True macro = 1:1 or more</p></div></div>
+<svg class="v" viewBox="0 0 440 150" role="img" aria-label="A 20 mm object rendered at 1:2, 1:1 and 2:1 on the sensor">
+<g font-size="12" text-anchor="middle"><rect x="30" y="60" width="40" height="40" rx="6" fill="#9A95A8"/><text x="50" y="120">object</text><text x="50" y="136" fill="#5E5A6B">20 mm</text>
+<rect x="140" y="70" width="20" height="20" rx="4" fill="#D9822B"/><text x="150" y="120" font-weight="800">1:2</text><text x="150" y="136" fill="#5E5A6B">10 mm · half size</text>
+<rect x="230" y="60" width="40" height="40" rx="6" fill="#6D4AD9"/><text x="250" y="120" font-weight="800">1:1</text><text x="250" y="136" fill="#5E5A6B">20 mm · life size</text>
+<rect x="330" y="40" width="80" height="80" rx="8" fill="#1F8A70"/><text x="370" y="136" font-weight="800">2:1 · 40 mm</text></g></svg>
+<ul class="clean"><li>A <b>macro lens</b> focuses at very short distances for high magnification, and it's built to minimize <b>distortion</b> and correct <b>flatness of field</b> up close.</li><li><b>1:1 (life size)</b>: a 15 mm ladybug is 15 mm on the sensor. Only lenses that reach <b>1:1 or more</b> are true macro lenses.</li><li><b>1:2</b>: half life size. <b>2:1</b>: twice life size.</li><li>The macro scale on the lens barrel shows 1:1, 1:2 and so on.</li></ul>
+<div class="check" data-q="n7"></div>
+</section>
+
+<section class="topic" id="n8" aria-labelledby="nh8">
+<div class="th"><span class="num">08</span><div><h2 id="nh8">Supplemental lenses &amp; diopters</h2><p>A cheap way to get closer</p></div></div>
+<div class="formula">D = 1 / f (f in METERS) · f = 1 / D<br>diopters add: D<sub>c</sub> = D + D<sub>s</sub></div>
+<div class="box"><h3>Diopter calculator</h3><div class="row" style="display:flex;gap:8px;flex-wrap:wrap" id="dbtns"></div><p id="dout" class="formula" style="font-size:16px"></p></div>
+<ul class="clean"><li>A <b>supplemental (close-up) lens</b> screws onto the front of a lens. Its power is given in <b>diopters</b>, which are defined in <b>meters</b>.</li><li>Examples from her slide: 2 diopters → f = ½ m = <b>500 mm</b>. 4 diopters → ¼ m = <b>250 mm</b>.</li><li>A cheap, light option (great for travel), but its distortion correction is limited, and quality depends on the glass.</li><li>The number on the ring (e.g. <b>49 mm</b>) is the <b>thread diameter</b>, not the focal length.</li><li>Lab: with one added you must move the camera <b>closer</b> to focus (her floor tiles are 1 ft each!).</li></ul>
+<div class="beyond"><b>Beyond the lecture</b>Her slide says a supplemental lens is a "cheap way of increasing focal length". Use her words on the exam. Strictly, a <b>+ diopter</b> adds power, so the combined focal length gets <b>shorter</b>. That's what lets you focus closer, and the result is <b>more magnification</b>.</div>
+<div class="check" data-q="n8"></div>
+</section>
+
+<section class="topic" id="n9" aria-labelledby="nh9">
+<div class="th"><span class="num">09</span><div><h2 id="nh9">Specialty lenses</h2><p>Tilt-shift, mirror and soft focus</p></div></div>
+<div class="three" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+<div class="box"><h3>Tilt-shift (perspective control)</h3><p>Shifts up and down or side to side to <b>prevent converging lines</b> (tall buildings leaning in). It's like a small piece of a 4×5 camera's movements, great for <b>architecture and real estate</b>. It can also fake "miniature" scenes in camera.</p></div>
+<div class="box"><h3>Catadioptric (mirror, folded optics)</h3><p>Curved <b>mirrors</b> plus glass fold the light path, so you get a <b>long focal length in a short, light lens</b> (like telescopes). Drawbacks: usually <b>one fixed f-stop</b> (no depth-of-field control), the f-number ignores the light lost to the center mirror, so metering can be off, and you may need ND filters.</p></div>
+<div class="box"><h3>Soft focus (portrait)</h3><p>Made by <b>under-correcting spherical aberration</b>. The softness is only around the <b>edges</b>; the <b>center stays sharp</b>. The effect shrinks as you <b>stop down</b>. It's <b>not</b> the same as defocusing (that's just blur).</p></div>
+</div>
+<div class="trick"><span>👁️</span><span>Portraits: <b>the eyes must be sharp.</b> The rest can fall off.</span></div>
+<div class="box"><h3>Tilt-shift: fix converging lines</h3>
+<div class="seg" role="group" aria-label="Perspective control" id="tsv"><button type="button" aria-pressed="true" data-v="0">Camera tilted up</button><button type="button" aria-pressed="false" data-v="1">Shift lens (camera level)</button></div>
+<svg class="v" id="tssvg" viewBox="0 0 440 260" role="img" aria-label="A tall building whose sides lean inward when the camera tilts up, and stay straight with a shift lens" style="max-width:420px;margin:0 auto"></svg>
+<p class="cap" id="tscap"></p></div>
+<div class="box"><h3>Catadioptric (mirror) lens: folded light path</h3>
+<svg class="v" viewBox="0 0 460 190" role="img" aria-label="Light enters a ring opening, bounces off a large rear mirror to a small front mirror, then back through a center hole to the sensor">
+<line x1="10" y1="95" x2="450" y2="95" stroke="#9A95A8" stroke-dasharray="4 4"/>
+<rect x="60" y="20" width="10" height="150" rx="3" fill="#9CC9F0" stroke="#3F6CC9"/><text x="65" y="186" text-anchor="middle" font-size="10.5">corrector plate</text>
+<rect x="60" y="75" width="14" height="40" fill="#15131C"/><text x="67" y="70" text-anchor="middle" font-size="10.5" fill="#15131C">secondary mirror</text>
+<path d="M300 20 Q285 95 300 170" fill="none" stroke="#15131C" stroke-width="6"/><rect x="290" y="85" width="16" height="20" fill="#fff"/><text x="305" y="186" text-anchor="middle" font-size="10.5">primary mirror (hole in center)</text>
+<g stroke="#E0A21E" stroke-width="2.5" fill="none"><path d="M10 35 H292 L74 85 L420 95"/><path d="M10 155 H292 L74 105 L420 95"/></g>
+<rect x="420" y="70" width="6" height="50" fill="#D9822B"/><text x="423" y="62" text-anchor="middle" font-size="10.5" fill="#D9822B">sensor</text>
+<text x="190" y="128" text-anchor="middle" font-size="11" fill="#5E5A6B">light travels the tube 3 times → long focal length, short lens</text></svg>
+<p class="cap">The dark secondary mirror blocks the <b>center</b>. That's why there's only one fixed f-stop, why the f-number doesn't account for the lost light, and why out-of-focus highlights look like little <b>donuts</b>.</p></div>
+<div class="check" data-q="n9"></div>
+</section>
+</div>
+
+<nav class="lnav" aria-label="Lectures"><a href="lecture-oct16.html">← Oct 16</a><a href="lectures.html">All lectures</a><a href="lecture-oct23.html">Oct 23 →</a></nav>
+<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures, for study use.</p>
+</div>
+<script src="lectures.js"></script>
+<script src="back-bar.js" data-back="lectures.html" data-label="Lecture Notes" defer></script>
+</body></html>

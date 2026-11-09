@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Oct 16 · Lenses · Lecture Notes</title>
+<link rel="stylesheet" href="lectures.css">
+</head><body>
+<div class="w">
+<header class="intro">
+<span class="eyebrow">Exam 2 · Lecture notes</span>
+<h1>Oct 16 · Lenses</h1>
+</header>
+<nav class="lnav" aria-label="Lectures"><a href="lecture-oct05.html">← Oct 5</a><a href="lectures.html">All lectures</a><a href="lecture-oct19.html">Oct 19 →</a></nav>
+<div class="lec" id="L4">
+<nav class="toc" aria-label="Oct 16 sections"><a href="#o1">What you need</a><a class="pk" href="#o2">RATS</a><a href="#o3">Pinhole vs lens</a><a class="pk" href="#o4">Positive &amp; negative</a><a href="#o5">u, v, f &amp; nodal points</a><a class="pk" href="#o6">Scale of reproduction</a><a href="#o7">Refraction</a><a href="#o8">Angle of view</a></nav>
+
+<section class="topic" id="o1" aria-labelledby="oh1">
+<div class="th"><span class="num">01</span><div><h2 id="oh1">What you need to make an image</h2><p>Four ingredients</p></div></div>
+<div class="three" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+<div class="box"><h3>1 · Subject</h3><p>Anything from microscopic to a volcano.</p></div>
+<div class="box"><h3>2 · Light</h3><p>No light, no photograph.</p></div>
+<div class="box"><h3>3 · Image-forming system</h3><p>A compound lens, a simple lens, or a <b>pinhole</b>.</p></div>
+<div class="box"><h3>4 · Detector</h3><p>Ground glass, focusing screen, film or a digital sensor.</p></div>
+</div>
+</section>
+
+<section class="topic pick" id="o2" aria-labelledby="oh2">
+<div class="th"><span class="num">02</span><div><h2 id="oh2">RATS: what happens to light</h2><p>"Excellent test question" 🎆</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · “Excellent test question”</span><div class="pq">What 4 things can happen to light when it hits something?</div><div class="pa"><b>RATS</b>: <b>R</b>eflected · <b>A</b>bsorbed · <b>T</b>ransmitted · <b>S</b>cattered</div></div>
+<svg class="v" viewBox="0 0 440 210" role="img" aria-label="Incident light on a glass: reflected, absorbed, transmitted and scattered">
+<rect x="190" y="30" width="44" height="150" rx="6" fill="#6D4AD9" fill-opacity=".15" stroke="#6D4AD9" stroke-width="2"/>
+<path d="M20 50 L190 105" stroke="#E0A21E" stroke-width="5" stroke-linecap="round"/><text x="20" y="40" font-size="13" font-weight="800">incident light</text>
+<path d="M190 105 L40 165" stroke="#E0473C" stroke-width="4" stroke-dasharray="7 5"/><text x="20" y="190" font-size="14" font-weight="900" fill="#E0473C">R · reflected</text>
+<path d="M234 112 L420 140" stroke="#3FA34D" stroke-width="4"/><text x="300" y="160" font-size="14" font-weight="900" fill="#3FA34D">T · transmitted</text>
+<g stroke="#3F6CC9" stroke-width="3" stroke-linecap="round"><path d="M234 100 L300 60"/><path d="M234 100 L320 90"/><path d="M234 100 L280 40"/></g><text x="300" y="40" font-size="14" font-weight="900" fill="#3F6CC9">S · scattered</text>
+<circle cx="212" cy="140" r="9" fill="#D9822B"/><text x="212" y="205" text-anchor="middle" font-size="14" font-weight="900" fill="#D9822B">A · absorbed → heat</text></svg>
+<div class="three" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
+<div class="box"><h3>R · Reflected</h3><p><b>Specular</b> reflection: bounces off at the same angle the other way, like a flashlight on a mirror. Even matte surfaces reflect a little.</p></div>
+<div class="box"><h3>A · Absorbed</h3><p>Taken in and turned into <b>heat</b>. A black shirt gets hotter than a white one.</p></div>
+<div class="box"><h3>T · Transmitted</h3><p>Whatever actually <b>passes through</b>.</p></div>
+<div class="box"><h3>S · Scattered</h3><p>Redirected by dust or water in the air (headlights in fog, wildfire smoke). Causes <b>flare</b> and forms no image.</p></div>
+</div>
+<div class="check" data-q="o2"></div>
+</section>
+
+<section class="topic" id="o3" aria-labelledby="oh3">
+<div class="th"><span class="num">03</span><div><h2 id="oh3">Pinhole vs lens</h2><p>Without focusing, every pixel gets the same light, so there's no image</p></div></div>
+<div class="two">
+<div class="box"><h3>Pinhole</h3><ul class="clean"><li>Can be very sharp, but only at <b>one exact image distance</b> for that pinhole size.</li><li>Tiny opening, so <b>very long exposures</b>.</li><li>See pinhole.org.</li></ul></div>
+<div class="box"><h3>Lens</h3><ul class="clean"><li><b>Collects light</b> much more efficiently.</li><li>Brings the image to a <b>point of focus</b>.</li><li>Lets you <b>control depth of field</b>.</li></ul></div>
+</div>
+<div class="box"><h3>The image is upside down and backwards</h3><p>Every real lens image is <b>inverted</b>. A DSLR flips it back with a mirror and <b>pentaprism</b>. A mirrorless camera flips it in <b>software</b>. A 4×5 camera's ground glass shows it upside down and backwards, so to move the image left you move right.</p></div>
+<div class="box"><h3>Pinhole camera: size of the hole</h3><label for="ph"><b>Pinhole: <span id="phv">medium</span></b></label><input type="range" id="ph" min="1" max="5" value="2" aria-label="Pinhole size">
+<svg class="v" id="phsvg" viewBox="0 0 460 200" role="img" aria-label="Rays from an upright arrow pass through a pinhole and form an upside-down image"></svg>
+<p class="cap" id="phcap"></p></div>
+<div class="box"><h3>How a DSLR shows the image right-side up</h3>
+<svg class="v" viewBox="0 0 460 210" role="img" aria-label="Light through the lens hits a mirror, goes up into a pentaprism and out to the eyepiece">
+<rect x="150" y="120" width="160" height="70" rx="6" fill="#F4F5F7" stroke="#9A95A8"/><text x="230" y="205" text-anchor="middle" font-size="11" fill="#5E5A6B">camera body</text>
+<path d="M40 115 Q60 145 40 175 Q20 145 40 115Z" fill="#6D4AD9" fill-opacity=".25" stroke="#6D4AD9" stroke-width="2"/><text x="40" y="198" text-anchor="middle" font-size="11">lens</text>
+<line x1="210" y1="175" x2="250" y2="130" stroke="#15131C" stroke-width="3"/><text x="262" y="168" font-size="11">mirror</text>
+<rect x="296" y="125" width="4" height="60" fill="#D9822B"/><text x="326" y="160" font-size="11" fill="#D9822B">sensor</text>
+<path d="M180 40 L280 40 L300 70 L230 110 L160 70 Z" fill="#9CC9F0" fill-opacity=".45" stroke="#3F6CC9" stroke-width="2"/><text x="230" y="30" text-anchor="middle" font-size="11" fill="#3F6CC9" font-weight="800">pentaprism</text>
+<rect x="160" y="108" width="140" height="6" fill="#C9C3DA"/><text x="370" y="114" font-size="10.5" fill="#5E5A6B">focusing screen</text>
+<path d="M0 145 H230 L230 115 L230 80 L170 60 L130 60 L90 60" fill="none" stroke="#E0A21E" stroke-width="3"/><circle cx="80" cy="60" r="10" fill="#fff" stroke="#15131C" stroke-width="2"/><circle cx="80" cy="60" r="4" fill="#15131C"/><text x="80" y="88" text-anchor="middle" font-size="11">eyepiece 👁</text></svg>
+<p class="cap">The lens image is upside down and backwards. The <b>mirror</b> sends it up, and the <b>pentaprism</b> flips it right-side up for the optical viewfinder. When you press the shutter, the mirror swings up and light reaches the sensor. Mirrorless cameras flip the image in software instead.</p></div>
+<div class="check" data-q="o3"></div>
+</section>
+
+<section class="topic pick" id="o4" aria-labelledby="oh4">
+<div class="th"><span class="num">04</span><div><h2 id="oh4">Positive vs negative lenses</h2><p>Converge or diverge</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · Test question</span><div class="pq">Positive vs negative lens: what does each one do?</div><div class="pa"><b>Positive (convex)</b>: thicker in the center, <b>converges</b> light, forms a <b>real image</b>.<br><b>Negative (concave)</b>: thinner in the center, <b>diverges</b> light, <b>can't</b> form a real image alone.</div></div>
+<svg class="v" viewBox="0 0 440 170" role="img" aria-label="Positive lens converges parallel rays to a point; negative lens spreads them apart">
+<g transform="translate(0 10)"><path d="M100 10 Q125 75 100 140 Q75 75 100 10Z" fill="#6D4AD9" fill-opacity=".2" stroke="#6D4AD9" stroke-width="2"/>
+<g stroke-width="2.5" fill="none"><path d="M10 40 H100 L190 75" stroke="#E0473C"/><path d="M10 75 H190" stroke="#3FA34D"/><path d="M10 110 H100 L190 75" stroke="#E0473C"/></g><circle cx="190" cy="75" r="4" fill="#15131C"/><text x="100" y="160" text-anchor="middle" font-size="13" font-weight="800">positive: converges</text></g>
+<g transform="translate(220 10)"><path d="M90 10 H110 Q98 75 110 140 H90 Q102 75 90 10Z" fill="#D9822B" fill-opacity=".2" stroke="#D9822B" stroke-width="2"/>
+<g stroke-width="2.5" fill="none"><path d="M10 40 H100 L210 10" stroke="#E0473C"/><path d="M10 75 H210" stroke="#3FA34D"/><path d="M10 110 H100 L210 140" stroke="#E0473C"/></g><text x="100" y="160" text-anchor="middle" font-size="13" font-weight="800">negative: diverges</text></g></svg>
+<div class="two">
+<div class="box"><h3>➕ Positive (convex)</h3><ul class="clean"><li><b>Thicker in the center</b> than at the edges, with at least one <b>convex</b> (outward-curved) side.</li><li>Makes light <b>converge</b> and <b>forms a real image by itself</b>. It can start a fire with sunlight.</li><li>Types: double convex, plano-convex (one flat side).</li></ul></div>
+<div class="box"><h3>➖ Negative (concave)</h3><ul class="clean"><li><b>Thinner in the center</b>, with concave sides.</li><li>Makes light <b>diverge</b> and <b>cannot form a real image alone</b>.</li><li>Used <b>with</b> positive lenses. Every camera lens has some, for example the <b>achromatic doublet</b> (a positive and a negative cemented together).</li></ul></div>
+</div>
+<p>The green ray goes through the <b>optical axis</b> (the center of the lens) <b>undeviated</b>. Rays parallel to it come "from infinity". In the lab, a table's length is far enough.</p>
+<div class="check" data-q="o4"></div>
+</section>
+
+<section class="topic" id="o5" aria-labelledby="oh5">
+<div class="th"><span class="num">05</span><div><h2 id="oh5">u, v, f and nodal points</h2><p>The vocabulary of a lens</p></div></div>
+<svg class="v" viewBox="0 0 440 170" role="img" aria-label="Object at distance u from the lens, image at distance v behind it, upside down">
+<line x1="10" y1="90" x2="430" y2="90" stroke="#9A95A8" stroke-dasharray="4 4"/>
+<path d="M60 90 V40" stroke="#6D4AD9" stroke-width="5"/><path d="M52 50 L60 36 L68 50" fill="#6D4AD9"/><text x="60" y="110" text-anchor="middle" font-size="12">object</text>
+<path d="M200 25 Q215 90 200 155 Q185 90 200 25Z" fill="#6D4AD9" fill-opacity=".18" stroke="#6D4AD9" stroke-width="2"/>
+<path d="M60 40 L340 136" stroke="#E0473C" stroke-width="2"/><path d="M60 40 H200 L340 136" stroke="#3F6CC9" stroke-width="2" fill="none"/>
+<path d="M340 90 V136" stroke="#6D4AD9" stroke-width="5"/><path d="M332 126 L340 140 L348 126" fill="#6D4AD9"/><text x="340" y="160" text-anchor="middle" font-size="12">image (inverted)</text>
+<line x1="340" y1="20" x2="340" y2="80" stroke="#15131C" stroke-dasharray="3 3"/><text x="340" y="16" text-anchor="middle" font-size="11">focal plane</text>
+<path d="M60 70 H198" stroke="#15131C"/><text x="130" y="64" text-anchor="middle" font-size="15" font-weight="900">u</text>
+<path d="M202 70 H340" stroke="#15131C"/><text x="270" y="64" text-anchor="middle" font-size="15" font-weight="900">v</text></svg>
+<div class="formula">1/f = 1/u + 1/v</div>
+<ul class="clean"><li><b>u</b> = object distance (subject → lens). <b>v</b> = image distance (lens → image). The <b>focal plane</b> is where the sensor goes.</li><li><b>Focal length</b> = the distance from the <b>back nodal point</b> to the focal plane when the object is at <b>infinity</b>.</li><li>Parallel rays meet at the <b>principal focal point</b>. Light through the front gives the <b>back</b> focal point. Turn the lens around to find the <b>front</b> one.</li><li><b>Nodal points:</b> a ray that leaves the lens parallel to how it entered; extend it to the axis to find the front and back nodal points. In a thin simple lens they sit together at the center. In compound lenses they're apart.</li></ul>
+<div class="trick"><span>🔤</span><span><b>U → O:</b> close the top of the <b>U</b> and it becomes an <b>O</b> for <b>O</b>bject distance. That leaves <b>V</b> for image distance.</span></div>
+<div class="box"><h3>Nodal slide (lab)</h3><p>Focus a distant bare bulb, then pivot the lens slightly. If the point of light <b>doesn't move</b>, you're on the nodal point, so measure the focal length. If it moves, slide the lens and try again.</p><p><b>Why it matters:</b> for <b>panoramas</b>, rotate the camera on the lens's nodal point (panoramic head) for less distortion when stitching.</p></div>
+<div class="beyond"><b>Not on the test</b>Two lenses touching: 1/f = 1/f₁ + 1/f₂. With air between them it gets more complicated.</div>
+<div class="box"><h3>Nodal points: in parallel, out parallel</h3>
+<svg class="v" viewBox="0 0 460 220" role="img" aria-label="A ray enters a thick lens, passes through the optical center and leaves parallel to its original direction; extended to the axis it marks the front and back nodal points">
+<line x1="10" y1="110" x2="450" y2="110" stroke="#9A95A8" stroke-dasharray="4 4"/><text x="18" y="102" font-size="10.5" fill="#5E5A6B">optical axis</text>
+<path d="M190 20 Q250 110 190 200 L270 200 Q210 110 270 20 Z" fill="#6D4AD9" fill-opacity=".14" stroke="#6D4AD9" stroke-width="2"/>
+<path d="M20 30 L205 95" stroke="#E0A21E" stroke-width="3"/><path d="M205 95 L255 125" stroke="#E0A21E" stroke-width="3"/><path d="M255 125 L440 190" stroke="#E0A21E" stroke-width="3"/>
+<path d="M205 95 L162 110" stroke="#E0A21E" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M255 125 L298 110" stroke="#E0A21E" stroke-width="1.5" stroke-dasharray="4 3"/>
+<circle cx="162" cy="110" r="5" fill="#C0392B"/><circle cx="298" cy="110" r="5" fill="#C0392B"/><circle cx="230" cy="110" r="4" fill="#15131C"/>
+<g font-size="11" text-anchor="middle"><text x="150" y="132" fill="#C0392B" font-weight="800">front nodal</text><text x="310" y="132" fill="#C0392B" font-weight="800">back nodal</text><text x="230" y="150">optical center</text></g></svg>
+<p class="cap">A ray aimed at the <b>front nodal point</b> leaves as if from the <b>back nodal point</b>, parallel to how it came in. On her nodal slide: pivot the lens, and if the image doesn't move, you're on the nodal point.</p></div>
+<div class="box"><h3>Measuring focal length: convex, concave, mirror</h3>
+<svg class="v" viewBox="0 0 470 170" role="img" aria-label="Three diagrams: convex lens focuses parallel rays behind it; concave lens rays traced back to a virtual focus in front; concave mirror focuses rays in front of the mirror">
+<g font-size="11" text-anchor="middle">
+<g><line x1="5" y1="70" x2="150" y2="70" stroke="#9A95A8" stroke-dasharray="3 3"/><path d="M50 30 Q60 70 50 110 Q40 70 50 30Z" fill="#6D4AD9" fill-opacity=".25" stroke="#6D4AD9"/><path d="M5 45 H50 L120 70 M5 95 H50 L120 70" stroke="#E0473C" stroke-width="2" fill="none"/><circle cx="120" cy="70" r="4" fill="#15131C"/><text x="120" y="60">F</text><path d="M50 125 H120" stroke="#15131C"/><text x="85" y="140">f</text><text x="75" y="162" font-weight="800">Convex (positive)</text></g>
+<g transform="translate(160 0)"><line x1="5" y1="70" x2="150" y2="70" stroke="#9A95A8" stroke-dasharray="3 3"/><path d="M80 30 H90 Q82 70 90 110 H80 Q88 70 80 30Z" fill="#D9822B" fill-opacity=".25" stroke="#D9822B"/><path d="M5 50 H85 L145 30 M5 90 H85 L145 110" stroke="#E0473C" stroke-width="2" fill="none"/><path d="M85 50 L30 70 M85 90 L30 70" stroke="#E0473C" stroke-dasharray="3 3"/><circle cx="30" cy="70" r="4" fill="#15131C"/><text x="30" y="60">F</text><path d="M30 125 H85" stroke="#15131C"/><text x="57" y="140">f (traced back)</text><text x="75" y="162" font-weight="800">Concave (negative)</text></g>
+<g transform="translate(320 0)"><line x1="5" y1="70" x2="145" y2="70" stroke="#9A95A8" stroke-dasharray="3 3"/><path d="M125 25 Q105 70 125 115" fill="none" stroke="#15131C" stroke-width="4"/><path d="M5 45 H118 L55 70 M5 95 H118 L55 70" stroke="#E0473C" stroke-width="2" fill="none"/><circle cx="55" cy="70" r="4" fill="#15131C"/><text x="55" y="60">F</text><path d="M55 125 H118" stroke="#15131C"/><text x="86" y="140">f</text><text x="75" y="162" font-weight="800">Concave mirror</text></g></g></svg>
+<p class="cap"><b>F</b> = principal focal point, where parallel rays come into focus. For a negative lens you trace the spreading rays <b>backward</b>. Concave mirrors are used in <b>catadioptric</b> lenses.</p></div>
+<div class="check" data-q="o5"></div>
+</section>
+
+<section class="topic pick" id="o6" aria-labelledby="oh6">
+<div class="th"><span class="num">06</span><div><h2 id="oh6">Scale of reproduction (R or M)</h2><p>The 5 formulas from myCourses</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · Calculator trap</span><div class="pq">1/u + 1/v = 0.02 on your calculator. What is the focal length?</div><div class="pa">Press <b>1/x</b>: f = 1 ÷ 0.02 = <b>50 mm</b></div></div>
+<div class="tw"><table><thead><tr><th>#</th><th>Formula</th><th>Use when you know</th></tr></thead><tbody>
+<tr><td>1</td><td><b>1/f = 1/u + 1/v</b></td><td>two of f, u, v</td></tr>
+<tr><td>2</td><td><b>R = v / u</b></td><td>both distances (or image size ÷ object size)</td></tr>
+<tr><td>3</td><td><b>R = (v − f) / f</b></td><td>v and f</td></tr>
+<tr><td>4</td><td><b>v = f (R + 1)</b></td><td>f and R → find v</td></tr>
+<tr><td>5</td><td><b>R = f / (u − f)</b></td><td>u and f</td></tr></tbody></table></div>
+<div class="box"><h3>Lens calculator</h3>
+<div class="two"><label>Focal length f (mm)<input type="number" id="lf" value="100" min="1" step="any" class="inp"></label><label>Scale of reproduction R (e.g. 3 = 3:1)<input type="number" id="lr" value="3" min="0.01" step="any" class="inp"></label></div>
+<ol class="steps" id="lsteps"></ol></div>
+<div class="box" style="border-color:var(--bad)"><h3>⚠️ Calculator trap</h3><p>1/u + 1/v gives <b>1/f</b> (like 0.02), not f. Press <b>1/x</b> to flip it: 1/0.02 = <b>50 mm</b>. A focal length of 0.02 mm makes no sense, so always check that your answer is logical.</p></div>
+<div class="box"><h3>Find f from u and v</h3><div class="two"><label>u (mm)<input type="number" id="fu" value="150" min="1" step="any" class="inp"></label><label>v (mm)<input type="number" id="fv" value="300" min="1" step="any" class="inp"></label></div><p id="fout" class="formula" style="font-size:16px"></p></div>
+<p class="note">R = 3 (written 3:1) means the image is <b>3× life size</b>. 1:1 means life size: v = u = 2f.</p>
+<div class="check" data-q="o6"></div>
+</section>
+
+<section class="topic" id="o7" aria-labelledby="oh7">
+<div class="th"><span class="num">07</span><div><h2 id="oh7">Refraction</h2><p>Without it, lenses wouldn't work</p></div></div>
+<svg class="v" viewBox="0 0 440 160" role="img" aria-label="A straw looks bent where it enters the water">
+<rect x="120" y="70" width="200" height="80" fill="#3F6CC9" fill-opacity=".18"/><line x1="120" y1="70" x2="320" y2="70" stroke="#3F6CC9" stroke-width="2"/>
+<path d="M150 10 L215 70" stroke="#D9822B" stroke-width="8" stroke-linecap="round"/><path d="M215 70 L250 140" stroke="#D9822B" stroke-width="8" stroke-linecap="round" opacity=".85"/><path d="M215 70 L280 130" stroke="#D9822B" stroke-width="3" stroke-dasharray="5 5" opacity=".6"/>
+<text x="330" y="66" font-size="12" fill="#5E5A6B">air</text><text x="436" y="100" text-anchor="end" font-size="12" fill="#3F6CC9">water (higher index)</text><text x="285" y="148" font-size="11" fill="#5E5A6B">where it really is</text></svg>
+<ul class="clean"><li><b>Refraction</b> = light <b>bending</b> as it passes from one medium into another (unless it hits perpendicular, like on the optical axis).</li><li>The <b>refractive index</b> says how much a material bends light. Water's is higher than air's, so a straw looks broken.</li><li>Glass bends light, so lenses can focus. <b>Different wavelengths bend differently</b> (chromatic aberration, next lecture).</li><li><b>Short focal length</b> → rays bend sharply → <b>more distortion</b> (wide angle). <b>Long focal length</b> → gentle bending → more magnification, <b>less distortion</b>.</li></ul>
+<div class="check" data-q="o7"></div>
+</section>
+
+<section class="topic" id="o8" aria-labelledby="oh8">
+<div class="th"><span class="num">08</span><div><h2 id="oh8">Angle of view &amp; perspective</h2><p>Focal length vs camera position</p></div></div>
+<div class="box"><label for="fl"><b>Focal length: <span id="flv">50</span> mm</b> · sensor: <select id="sens" class="inp" style="width:auto;display:inline-block;min-height:40px"><option value="43.27">Full frame</option><option value="28.2">APS-C (1.5×)</option><option value="21.6">Micro Four Thirds (2×)</option></select></label><input type="range" id="fl" min="14" max="400" value="50" aria-label="Focal length"><canvas id="aov" width="460" height="190" aria-label="Angle of view cone"></canvas><p class="cap" id="aovcap"></p></div>
+<div class="tw"><table><thead><tr><th>Full-frame lens</th><th>Angle of view (diagonal)</th></tr></thead><tbody><tr><td>20 mm</td><td>≈ 94°</td></tr><tr><td>50 mm</td><td>≈ 47°</td></tr><tr><td>300 mm</td><td>≈ 8°</td></tr></tbody></table></div>
+<div class="box"><h3>Her slide: focal length controls…</h3><p><b>1. Magnification</b> (longer = bigger subject) · <b>2. Angle of view</b> (shorter = wider) · <b>3. Perspective</b> (relative size of objects). Note: focal length controls angle of view and image scale, but <b>camera position controls perspective</b>.</p></div>
+<ul class="clean"><li><b>Focal length controls magnification and angle of view</b> (how much of the scene you see, usually measured on the diagonal). Longer lens = bigger subject, less scene.</li><li><b>Perspective is controlled by camera-to-subject distance</b>, not by focal length.</li><li>The lens's <b>image circle</b> must cover the sensor: full frame is 24 × 36 mm, APS-C about 15 × 22.5 mm. Bigger glass = pricier lens. A full-frame lens on a crop body uses the sharp center ("sweet spot").</li></ul>
+<div class="beyond"><b>Beyond the lecture</b>The math behind the table: angle of view = 2 × arctan(sensor diagonal ÷ (2 × focal length)). The slider above uses it.</div>
+<div class="check" data-q="o8"></div>
+</section>
+</div>
+
+<nav class="lnav" aria-label="Lectures"><a href="lecture-oct05.html">← Oct 5</a><a href="lectures.html">All lectures</a><a href="lecture-oct19.html">Oct 19 →</a></nav>
+<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures, for study use.</p>
+</div>
+<script src="lectures.js"></script>
+<script src="back-bar.js" data-back="lectures.html" data-label="Lecture Notes" defer></script>
+</body></html>

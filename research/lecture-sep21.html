@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sep 21 · Digital sensors · Lecture Notes</title>
+<link rel="stylesheet" href="lectures.css">
+</head><body>
+<div class="w">
+<header class="intro">
+<span class="eyebrow">Exam 2 · Lecture notes</span>
+<h1>Sep 21 · Digital sensors</h1>
+</header>
+<nav class="lnav" aria-label="Lectures"><a href="lecture-sep18.html">← Sep 18</a><a href="lectures.html">All lectures</a><a href="lecture-sep28.html">Sep 28 →</a></nav>
+<div class="lec" id="L0">
+<nav class="toc" aria-label="Sep 21 sections"><a href="#d1">Photosite → pixel</a><a href="#d2">Analog → digital</a><a href="#d3">Bit depth</a><a href="#d4">Histograms</a><a href="#d5">CCD vs CMOS</a><a href="#d6">Bayer history</a></nav>
+
+<section class="topic" id="d1" aria-labelledby="dh1">
+<div class="th"><span class="num">01</span><div><h2 id="dh1">How a digital camera works</h2><p>A film camera with a sensor where the film was</p></div></div>
+<ul class="clean"><li>Same lens, shutter and aperture as a film camera. The <b>sensor replaced the film</b> and translates the <b>optical image into an electrical signal</b>.</li><li>The <b>⦶ mark</b> on top of your camera (a circle with a line through it) shows where the sensor (film plane) sits. It's handy for measuring image distance.</li><li>A sensor is a <b>2-D array of photodiodes (photosites)</b>. Each one collects photons and builds up a <b>charge</b>.</li></ul>
+<div class="two">
+<div class="box"><h3>Photosite</h3><p>On the <b>sensor</b>. It catches light.</p></div>
+<div class="box"><h3>Pixel</h3><p>In the <b>file</b>. It's the number the photosite becomes after processing.</p></div>
+</div>
+<div class="trick"><span>🎨</span><span><b>Photosites are colorblind.</b> A photon is a photon. They only "see" brightness, which is why we need a color filter array.</span></div>
+<div class="check" data-q="d1"></div>
+</section>
+
+<section class="topic" id="d2" aria-labelledby="dh2">
+<div class="th"><span class="num">02</span><div><h2 id="dh2">Analog → digital (A/D conversion)</h2><p>Smooth voltage becomes steps</p></div></div>
+<div class="chain" id="adchain"></div>
+<svg class="v" viewBox="0 0 440 170" role="img" aria-label="A smooth voltage line next to stepped digital counts">
+<g fill="#6D4AD9" fill-opacity=".18" stroke="#6D4AD9" stroke-opacity=".5">
+<rect x="40" y="130" width="45" height="20"/><rect x="85" y="110" width="45" height="40"/><rect x="130" y="90" width="45" height="60"/><rect x="175" y="70" width="45" height="80"/><rect x="220" y="50" width="45" height="100"/><rect x="265" y="30" width="45" height="120"/><rect x="310" y="10" width="45" height="140"/></g>
+<path d="M40 150 L355 10" stroke="#E0473C" stroke-width="3"/>
+<text x="436" y="30" text-anchor="end" font-size="12" fill="#E0473C" font-weight="800">voltage (analog)</text><text x="436" y="48" text-anchor="end" font-size="12" fill="#6D4AD9" font-weight="800">digital counts</text><text x="40" y="166" font-size="11" fill="#5E5A6B">more light → more voltage → higher count</text></svg>
+<ul class="clean"><li>More light → more <b>voltage</b>. Voltage is <b>analog</b>: unlimited levels (1.375647 V is fine).</li><li>The <b>analog-to-digital (A/D) converter</b> sorts each voltage into a <b>digital count</b>. The number of counts is limited by the <b>bit depth</b>.</li><li>Every voltage in a range gets the same count. That's where <b>stair-steps</b> on smooth edges come from (you don't see them with enough pixels).</li></ul>
+<div class="check" data-q="d2"></div>
+</section>
+
+<section class="topic" id="d3" aria-labelledby="dh3">
+<div class="th"><span class="num">03</span><div><h2 id="dh3">Bit depth: how many tones?</h2><p>Each extra bit doubles the tones</p></div></div>
+<div class="tw"><table><thead><tr><th>Bits</th><th>Tones</th><th>Notes</th></tr></thead><tbody>
+<tr><td>1 (2¹)</td><td>2</td><td>black or white (bitonal: 0 = black, 1 = white)</td></tr><tr><td>2 (2²)</td><td>4</td><td></td></tr><tr><td>3 (2³)</td><td>8</td><td></td></tr><tr><td>4 (2⁴)</td><td>16</td><td>OK on busy (high-frequency) subjects</td></tr><tr><td>5 (2⁵)</td><td>32</td><td>looks fine to most people on a photo</td></tr><tr><td><b>8 (2⁸)</b></td><td><b>256</b></td><td>per channel; room for processing</td></tr><tr><td>16 (2¹⁶)</td><td>65,536</td><td></td></tr><tr><td><b>24 (2²⁴)</b></td><td><b>16.7 million</b></td><td>color: 8 bits × R, G, B</td></tr></tbody></table></div>
+<div class="two">
+<div class="box"><h3>Low-frequency areas show problems</h3><p>Smooth, flat areas (a plain wall, sky) change slowly, so too few bits shows as <b>banding</b>.</p></div>
+<div class="box"><h3>High-frequency areas hide problems</h3><p>Busy detail (hair, lace, grass, fur) changes a lot from pixel to pixel, so a low bit depth is hard to notice.</p></div>
+</div>
+<ul class="clean"><li><b>Dithering</b> mixes black and white dots to fake gray tones (newspaper style).</li><li>Why 8 bits if 5 looks OK? <b>Editing</b> a low-bit image shows artifacts right away. Fewer bits only make sense for small web or phone images where <b>bandwidth</b> matters.</li></ul>
+<div class="beyond"><b>Spotted on the slides</b>One slide says "8 bits – <b>265</b> levels per channel". That's a typo: 2⁸ = <b>256</b>. Write 256 on the exam.</div>
+<div class="box"><h3>A bitonal image is just 0s and 1s</h3>
+<div class="seg" role="group" aria-label="Bitonal view" id="btv"><button type="button" aria-pressed="true" data-v="img">Image</button><button type="button" aria-pressed="false" data-v="num">Numbers</button></div>
+<svg class="v" id="bitonal" viewBox="0 0 330 330" role="img" aria-label="An 11 by 11 bitonal grid forming the letter H, 0 = black, 1 = white" style="max-width:300px;margin:0 auto"></svg>
+<p class="cap">1 bit per pixel: <b>0 = black</b>, <b>1 = white</b>. Fine for black-and-white text, tiny files.</p></div>
+<div class="box"><h3>Gray levels per number of bits</h3><canvas id="bitbars" width="560" height="260" aria-label="Bar chart: gray levels explode as bits increase, 256 at 8 bits, 65,536 at 16 bits"></canvas><p class="cap">Each extra bit <b>doubles</b> the levels, so the bars barely show until about 12 bits, then they explode: 4,096 → 65,536.</p></div>
+<div class="box"><h3>Where you notice too few bits</h3><label for="lfb"><b><span id="lfbv">3</span> bits = <span id="lfbl">8</span> levels</b></label><input type="range" id="lfb" min="1" max="8" value="3" aria-label="Bits">
+<div class="two"><div><canvas id="lfa" class="pix" width="160" height="110" aria-label="Smooth wall"></canvas><p class="cap"><b>Low frequency</b> (smooth wall): bands show</p></div><div><canvas id="lfc" class="pix" width="160" height="110" aria-label="Busy grass texture"></canvas><p class="cap"><b>High frequency</b> (grass, fur): steps hide</p></div></div></div>
+<div class="check" data-q="d3"></div>
+</section>
+
+<section class="topic" id="d4" aria-labelledby="dh4">
+<div class="th"><span class="num">04</span><div><h2 id="dh4">Histograms: check all four</h2><p>Luminance + red, green and blue</p></div></div>
+<p>Cameras show a <b>luminance (composite)</b> histogram, and often the separate <b>R, G and B</b> histograms. The in-camera histogram is based on the <b>JPEG</b>, even when you shoot raw.</p>
+<div class="trick"><span>📊</span><span><b>Look at all of them.</b> The combined brightness can look fine while one color channel is clipped.</span></div>
+<div class="box"><h3>Expose to the right (her slide)</h3><ul class="clean"><li>Applies specifically to <b>digital raw capture</b></li><li>Base proper exposure on the <b>highlights</b></li><li>Get the histogram snug against the right (255) <b>without going over</b></li><li>It may look bright, but that's solved in editing</li><li>A raw sensor has a <b>linear response</b> (not true for JPEG): less visible noise in the highlights, more in the shadows</li></ul></div>
+<div class="check" data-q="d4"></div>
+</section>
+
+<section class="topic" id="d5" aria-labelledby="dh5">
+<div class="th"><span class="num">05</span><div><h2 id="dh5">CCD vs CMOS</h2><p>Two ways to build a sensor (plus Foveon X3)</p></div></div>
+<div class="tw"><table class="cmp"><thead><tr><th></th><th>CCD<br><span class="note">Charge-Coupled Device</span></th><th>CMOS<br><span class="note">Complementary Metal-Oxide Semiconductor</span></th></tr></thead><tbody>
+<tr><td>Invented</td><td><b>1969</b>, Willard Boyle &amp; George Smith, AT&amp;T Bell Labs (Nobel Prize 2009)</td><td><b>1963</b>, Frank Wanlass, Fairchild (patented 1967), before CCD</td></tr>
+<tr><td>Readout</td><td><b>Shift register</b>: rows shift down and are read one pixel at a time, like a conveyor belt → <b>slow</b></td><td><b>A/D converter at every photosite</b> → instant readout</td></tr>
+<tr><td>Power</td><td>High</td><td>Low (up to <b>100× less</b>) → better battery life</td></tr>
+<tr><td>Cost</td><td>Higher</td><td>Lower</td></tr>
+<tr><td>Quality</td><td>High uniformity, low fixed-pattern noise, excellent dynamic range (~10⁵ electrons/pixel), linear (scientific)</td><td>Early versions had <b>large fixed-pattern noise</b>; now matches CCD. Needs more calibration</td></tr>
+<tr><td>Light area</td><td>Whole photosite is a "bucket"</td><td>Circuitry takes space → <b>microlenses</b> funnel light into each photosite</td></tr>
+<tr><td>Other</td><td>Sensitive to <b>infrared</b> (IR-blocking filter); heat → <b>dark current</b>, so often cooled; <b>blooming</b> when a photosite overflows</td><td>Works from <b>−55 °C to +125 °C</b> (−67 °F to 257 °F)</td></tr>
+<tr><td>Used in</td><td>Early low-end point-and-shoots, high-end digital backs (<b>Phase One, Leaf, Hasselblad</b>), astronomy</td><td>Almost every camera today, including pro DSLRs and mirrorless</td></tr>
+</tbody></table></div>
+<div class="box"><h3>Quantum efficiency: how much light becomes signal</h3><div class="qe" id="qe"></div><p class="note">That's why <b>astronomers</b> adopted CCDs so fast.</p></div>
+<p class="note">Fun facts: 1970 = the first digital image (the photoelectric effect). 1974: Fairchild's first 2-D device was only 100 × 100 pixels. Sensors are made on silicon <b>wafers</b> in clean rooms; one piece of lint ruins one.</p>
+<div class="box"><h3>Readout race: CCD conveyor belt vs CMOS</h3>
+<div class="row" style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn" id="rdccd">▶ Read out CCD</button><button type="button" class="btn" id="rdcmos">▶ Read out CMOS</button><button type="button" class="btn" id="rdreset">Reset</button></div>
+<canvas id="readout" width="560" height="250" aria-label="Animated readout: CCD shifts rows down and reads one pixel at a time; CMOS reads every photosite at once"></canvas>
+<p class="cap" id="rdcap">Each square is one photosite's charge. Press a button.</p></div>
+<div class="box"><h3>Why CMOS needs microlenses</h3>
+<svg class="v" viewBox="0 0 440 200" role="img" aria-label="Without a microlens, light hitting the circuitry is lost; with a microlens, it is bent into the light-sensitive area">
+<g font-size="12" text-anchor="middle">
+<g transform="translate(0 0)"><text x="110" y="16" font-weight="800">Without microlens</text>
+<rect x="40" y="130" width="140" height="40" fill="#E2DEEE"/><rect x="40" y="130" width="40" height="40" fill="#9A95A8"/><rect x="140" y="130" width="40" height="40" fill="#9A95A8"/><rect x="80" y="130" width="60" height="40" fill="#F6C453"/>
+<text x="60" y="190" font-size="10">circuitry</text><text x="110" y="190" font-size="10">light-sensitive</text>
+<g stroke="#E0A21E" stroke-width="2.5"><path d="M55 30 V128"/><path d="M85 30 V128"/><path d="M110 30 V128"/><path d="M135 30 V128"/><path d="M165 30 V128"/></g>
+<g fill="#C0392B" font-size="16" font-weight="900"><text x="55" y="124">✕</text><text x="165" y="124">✕</text></g></g>
+<g transform="translate(220 0)"><text x="110" y="16" font-weight="800">With microlens</text>
+<rect x="40" y="130" width="140" height="40" fill="#E2DEEE"/><rect x="40" y="130" width="40" height="40" fill="#9A95A8"/><rect x="140" y="130" width="40" height="40" fill="#9A95A8"/><rect x="80" y="130" width="60" height="40" fill="#F6C453"/>
+<path d="M40 100 Q110 50 180 100 Z" fill="#6D4AD9" fill-opacity=".25" stroke="#6D4AD9" stroke-width="2"/>
+<g stroke="#E0A21E" stroke-width="2.5" fill="none"><path d="M55 30 V88 L95 128"/><path d="M85 30 V76 L102 128"/><path d="M110 30 V128"/><path d="M135 30 V76 L118 128"/><path d="M165 30 V88 L125 128"/></g>
+<text x="110" y="190" font-size="10" fill="#1F8A70" font-weight="800">all light collected ✓</text></g></g></svg>
+<p class="cap">CMOS puts an A/D converter at each photosite, and that circuitry takes up space. A tiny lens on top funnels the light into the sensitive part.</p></div>
+<div class="check" data-q="d5"></div>
+</section>
+
+<section class="topic" id="d6" aria-labelledby="dh6">
+<div class="th"><span class="num">06</span><div><h2 id="dh6">The Bayer pattern: where it came from</h2><p>Kodak, 1976</p></div></div>
+<ul class="clean"><li>Invented by <b>Bryce Bayer</b> of <b>Kodak</b> (patent <b>1976</b>). Say "BUY-er", not "bear".</li><li>A <b>color filter array (CFA)</b> of red, green and blue filters over the photosites, with <b>twice as many green</b> to match the eye's sensitivity.</li><li>Won an <b>Emmy</b> in <b>2001</b> (National Academy of Television Arts and Sciences).</li><li>Each filter throws away about 2/3 of the light, so <b>2/3 of every color image is made-up data</b> → demosaicing (see the Sep 28 tab).</li></ul>
+<div class="beyond"><b>Kodak story</b>Kodak led early digital imaging but held onto film (about 800% markup). Its sensor division even made Leica's sensors.</div>
+<div class="check" data-q="d6"></div>
+</section>
+</div>
+
+
+<nav class="lnav" aria-label="Lectures"><a href="lecture-sep18.html">← Sep 18</a><a href="lectures.html">All lectures</a><a href="lecture-sep28.html">Sep 28 →</a></nav>
+<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures, for study use.</p>
+</div>
+<script src="lectures.js"></script>
+<script src="back-bar.js" data-back="lectures.html" data-label="Lecture Notes" defer></script>
+</body></html>

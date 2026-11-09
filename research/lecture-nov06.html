@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nov 6 · Digital filters · Lecture Notes</title>
+<link rel="stylesheet" href="lectures.css">
+</head><body>
+<div class="w">
+<header class="intro">
+<span class="eyebrow">Final · Lecture notes</span>
+<h1>Nov 6 · Digital filters</h1>
+</header>
+<nav class="lnav" aria-label="Lectures"><a href="lecture-nov02.html">← Nov 2</a><a href="lectures.html">All lectures</a></nav>
+<div class="lec" id="L9">
+<nav class="toc" aria-label="Nov 6 sections"><a href="#z1">Review terms</a><a href="#z2">Pixel address</a><a href="#z3">Resizing &amp; interpolation</a><a class="pk" href="#z4">Point vs group</a><a href="#z5">Spatial filters</a><a href="#z6">Filter math</a></nav>
+<div class="beyond" style="margin:0"><b>Heads-up</b>This week's lab is filter math in Excel. "If you're off by one digital count, you're wrong. There's no partial credit." Let Excel do the rounding: "It never makes a mistake rounding. You do."</div>
+
+<section class="topic" id="z1" aria-labelledby="zh1">
+<div class="th"><span class="num">01</span><div><h2 id="zh1">Review terms</h2><p>Words you need for filter math</p></div></div>
+<div class="tw"><table class="cmp"><thead><tr><th>Term</th><th>Meaning</th></tr></thead><tbody>
+<tr><td>Pixel value</td><td>How bright a pixel is. In a color file, how bright its red, green or blue is.</td></tr>
+<tr><td>Bit depth</td><td>The number of bits needed for all the possible brightness levels (8-bit = 256 levels).</td></tr>
+<tr><td>Pixel address</td><td>The row and column where a pixel sits.</td></tr>
+<tr><td>Integer</td><td>A whole number: 1, 2, 3… Image files are made of <b>integers</b>.</td></tr>
+<tr><td>Floating point</td><td>A number with a decimal part: 0.175, 23.726. Filter math makes these, so you <b>round</b> back to an integer.</td></tr>
+</tbody></table></div>
+<ul class="clean"><li>A digital image is a 2-D array of numbers. The sensor is <b>linear</b> (more light = more voltage), but the voltage must be <b>binned</b> into whole pixel values, which is why digital edges stair-step and film edges are smooth.</li></ul>
+<div class="check" data-q="z1"></div>
+</section>
+
+<section class="topic" id="z2" aria-labelledby="zh2">
+<div class="th"><span class="num">02</span><div><h2 id="zh2">Pixel address</h2><p>Row and column, but which comes first?</p></div></div>
+<ul class="clean">
+<li>Her example pixel is in the <b>9th row</b> and <b>16th column</b>.</li>
+<li><b>Row major</b> writes the row first: <b>(9, 16)</b>. <b>Column major</b> writes the column first: <b>(16, 9)</b>.</li>
+<li>Where (0, 0) is, and whether counting starts at 0 or 1, is <b>software dependent</b>: it's whatever the programmers chose. In her software, (0, 0) is the top left.</li>
+</ul>
+<div class="check" data-q="z2"></div>
+</section>
+
+<section class="topic" id="z3" aria-labelledby="zh3">
+<div class="th"><span class="num">03</span><div><h2 id="zh3">Resizing &amp; interpolation</h2><p>Making up pixels that weren't there</p></div></div>
+<ul class="clean">
+<li><b>Downsizing:</b> throw pixels away. <b>Upsizing:</b> copy pixels, or create new in-between values.</li>
+<li><b>Interpolation</b> = using known data to estimate unknown data. You've seen it before in <b>demosaicing</b> (RAW → full RGB), and it's used for resizing in both directions.</li>
+<li>Straight-line data is easy to interpolate. Curved data needs a <b>higher-order</b> (squared or cubed) equation.</li>
+</ul>
+<div class="tw"><table class="cmp"><thead><tr><th>Method</th><th>How it works and when it fails</th></tr></thead><tbody>
+<tr><td>Nearest neighbor</td><td>The simplest. Halving throws out every other pixel in every other row, so a checkerboard can turn into a <b>solid color</b>. Doubling makes each pixel 2, so it just gets blocky. "Not the one we really ever use."</td></tr>
+<tr><td>Bilinear</td><td>Linear in <b>both</b> directions, using the pixel above, below, left and right. Good for photos, but black text turns <b>gray</b> (less contrast and sharpness).</td></tr>
+<tr><td>Bicubic</td><td>Uses a <b>cubic</b> (third-power) equation and many more neighbors. Best for pictorial images. <b>Bicubic smoother</b> for enlarging, <b>bicubic sharper</b> for reducing.</td></tr>
+</tbody></table></div>
+<p class="note">She said bicubic uses "15 of the closest neighbors". Most references say 16 (a 4 × 4 block). If it shows up on a test, ask her which number she wants.</p>
+<div class="check" data-q="z3"></div>
+</section>
+
+<section class="topic pick" id="z4" aria-labelledby="zh4">
+<div class="th"><span class="num">04</span><div><h2 id="zh4">Pixel point vs pixel group processing</h2><p>"I can guarantee you're going to have to define these on a test"</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · "Guarantee" you'll define these</span><div class="pq">What is pixel point processing, and what is pixel group processing?</div><div class="pa"><b>Point:</b> changes <b>one pixel</b> without looking at its neighbors.<br><b>Group:</b> changes the <b>center pixel</b> using the pixels <b>around it</b>.</div></div>
+<div class="two">
+<div class="box"><h3>Point</h3><ul class="clean"><li>Fixing a <b>hot or bad pixel</b> by hand</li><li>A dust speck</li><li>Her example: a green bad pixel in a pupil's highlight. Group processing would turn it gray, so fix just that pixel.</li></ul></div>
+<div class="box"><h3>Group</h3><ul class="clean"><li><b>Scaling</b> (resizing)</li><li>Altering scene details</li><li>All <b>spatial filters</b>: blur, sharpen, edge finding</li></ul></div>
+</div>
+<div class="trick"><span>🔑</span><span><b>Point = one pixel alone. Group = the pixel and its neighbors.</b></span></div>
+<div class="check" data-q="z4"></div>
+</section>
+
+<section class="topic" id="z5" aria-labelledby="zh5">
+<div class="th"><span class="num">05</span><div><h2 id="zh5">Spatial filters</h2><p>A small kernel slides over the image</p></div></div>
+<ul class="clean">
+<li>A <b>spatial filter</b> (kernel) works on the <b>center pixel</b> and uses its neighbors to calculate the new value.</li>
+<li>Kernels are small and <b>always odd</b>: 3 × 3, 5 × 5, 9 × 9, so there's a true center.</li>
+<li>Filters always change <b>brightness trends</b>. They can <b>blur</b>, <b>sharpen</b> (really an illusion of sharpness), <b>find features</b> (like "select sky") and make <b>special effects</b>. All of it comes down to finding <b>edges</b>.</li>
+<li><b>Blurring</b> = making the difference between neighboring pixels <b>smaller</b> (255 next to 128 → both move toward each other). A big difference looks sharp. Use it to soften a background, or on scans of old halftone magazines.</li>
+<li>Real software works in the <b>frequency domain</b> (Fourier transform). She teaches the <b>spatial</b> way, which gives the same result.</li>
+</ul>
+<div class="check" data-q="z5"></div>
+</section>
+
+<section class="topic" id="z6" aria-labelledby="zh6">
+<div class="th"><span class="num">06</span><div><h2 id="zh6">Filter math</h2><p>Multiply, add, round, slide</p></div></div>
+<ol class="clean"><li>Lay the 3 × 3 filter (F) on top of the image (P), centered on the pixel you want.</li><li><b>Multiply</b> each filter value by the pixel under it: F1 × P1, F2 × P2… F9 × P9.</li><li><b>Add</b> all nine products.</li><li><b>Round</b> to a whole number. That's the new center value.</li><li><b>Slide</b> one pixel over and repeat. The filter values never change. Skip the edge pixels for now.</li></ol>
+<div class="box"><h3>Try it: tap a pixel</h3>
+<div class="seg" role="group" aria-label="Filter" id="kseg"><button type="button" aria-pressed="true" data-k="blur">Blur (all 1/9)</button><button type="button" aria-pressed="false" data-k="sharp">Sharpen</button></div>
+<div class="kwrap"><div><p class="note" style="margin:0 0 4px">Image (her letter T)</p><div class="kgrid" id="kimg"></div></div><div><p class="note" style="margin:0 0 4px">Filter</p><div class="kgrid k3" id="kfil"></div></div></div>
+<p id="kout" aria-live="polite" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;margin:0"></p></div>
+<ul class="clean">
+<li><b>Blurring kernel rules:</b> all coefficients are <b>positive</b>, and they <b>add up to 1</b> (so overall brightness stays the same).</li>
+<li>Her example: eight 255s and one 0 under a 1/9 filter → (8 × 255 + 0) ÷ 9 = 226.67 → <b>227</b>. It dropped because it picked up a bit of the black.</li>
+<li><b>In Excel:</b> type the first formula with <b>cell references</b> (not numbers), then click-drag across the row and down. Use the decimal buttons to show whole numbers.</li>
+<li>Many programs skip tiny differences (e.g. less than 5 counts = texture) and only blur real edges.</li>
+</ul>
+<div class="check" data-q="z6"></div>
+</section>
+</div>
+
+
+<nav class="lnav" aria-label="Lectures"><a href="lecture-nov02.html">← Nov 2</a><a href="lectures.html">All lectures</a></nav>
+<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures, for study use.</p>
+</div>
+<script src="lectures.js"></script>
+<script src="back-bar.js" data-back="lectures.html" data-label="Lecture Notes" defer></script>
+</body></html>

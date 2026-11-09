@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Oct 23 · Aberrations & DOF · Lecture Notes</title>
+<link rel="stylesheet" href="lectures.css">
+</head><body>
+<div class="w">
+<header class="intro">
+<span class="eyebrow">Exam 2 · Lecture notes</span>
+<h1>Oct 23 · Aberrations &amp; DOF</h1>
+</header>
+<nav class="lnav" aria-label="Lectures"><a href="lecture-oct19.html">← Oct 19</a><a href="lectures.html">All lectures</a><a href="lecture-oct26.html">Oct 26 →</a></nav>
+<div class="lec" id="L6">
+<nav class="toc" aria-label="Oct 23 sections"><a href="#a1">Anamorphic lens</a><a href="#a2">Bokeh</a><a href="#a3">Chromatic aberration</a><a href="#a4">Spherical aberration</a><a href="#a5">Barrel &amp; pincushion</a><a href="#a6">Pinhole size</a><a href="#a7">Diffraction</a><a class="pk" href="#a8">Circle of confusion</a><a class="pk" href="#a9">Depth of field controls</a><a href="#a10">Hyperfocal distance</a><a href="#a11">Handheld rule &amp; IS</a></nav>
+
+<section class="topic" id="a1" aria-labelledby="ah1">
+<div class="th"><span class="num">01</span><div><h2 id="ah1">Anamorphic lenses</h2><p>A "funhouse mirror" in a lens</p></div></div>
+<p>An <b>anamorphic lens</b> squeezes a <b>wide</b> scene sideways so it fits on <b>standard</b> motion-picture film. A second anamorphic lens on the <b>projector</b> stretches it back out, so the audience sees a wide, undistorted picture.</p>
+<div class="box"><h3>Squeeze, then stretch</h3>
+<div class="seg" role="group" aria-label="Anamorphic step" id="anb"><button type="button" aria-pressed="true" data-s="0">1 · On set</button><button type="button" aria-pressed="false" data-s="1">2 · On the film</button><button type="button" aria-pressed="false" data-s="2">3 · On the screen</button></div>
+<svg class="v" id="ansvg" viewBox="0 0 460 200" role="img" aria-label="A wide scene is squeezed onto narrow film and stretched back on the screen"></svg>
+<p class="cap" id="ancap"></p></div>
+<ul class="clean"><li>The camera lens and the projector lens <b>work together</b> (one squeezes, one un-squeezes).</li><li>Motion-picture film is a <b>positive</b> film, like slide film.</li><li>Digitally, software (e.g. <b>Premiere Pro</b>) can de-squeeze the footage for you.</li><li>Why bother? It lets a wide picture use <b>standard</b> film, so it can play in any theater.</li></ul>
+<div class="trick"><span>🔑</span><span><b>Memory hook:</b> funhouse mirror. One makes you tall and skinny (on the film), the other makes you short and wide again (on the screen).</span></div>
+<div class="check" data-q="a1"></div>
+</section>
+
+<section class="topic" id="a2" aria-labelledby="ah2">
+<div class="th"><span class="num">02</span><div><h2 id="ah2">Bokeh</h2><p>The quality of the blur</p></div></div>
+<div class="formula" style="font-family:inherit">Bokeh = the quality of the blur in out-of-focus areas</div>
+<ul class="clean"><li>Determined by <b>lens aberrations</b> and the <b>aperture</b>.</li><li>Left alone, bokeh usually takes the <b>shape of your aperture</b> (the blades).</li><li>Important with lenses that give a <b>shallow depth of field</b>: <b>telephoto</b> and <b>macro</b>.</li><li>You can put a <b>cutout</b> over the lens to give bokeh a shape (hearts, stars), and even hide information in it.</li></ul>
+<div class="box"><h3>Change the aperture shape</h3>
+<div class="seg" role="group" aria-label="Aperture shape" id="bkb"><button type="button" aria-pressed="true" data-s="c">Round (wide open)</button><button type="button" aria-pressed="false" data-s="h">6 blades</button><button type="button" aria-pressed="false" data-s="v">Heart cutout</button></div>
+<svg class="v" id="bksvg" viewBox="0 0 460 170" role="img" aria-label="Out-of-focus lights take the shape of the aperture"></svg>
+<p class="cap">Out-of-focus points of light copy the shape of the opening.</p></div>
+<div class="check" data-q="a2"></div>
+</section>
+
+<section class="topic" id="a3" aria-labelledby="ah3">
+<div class="th"><span class="num">03</span><div><h2 id="ah3">Chromatic aberration</h2><p>Colors don't focus at the same point</p></div></div>
+<p>All wavelengths of light do <b>not</b> bend the same amount. <b>Short</b> wavelengths (<b style="color:var(--B)">blue</b>) bend the <b>most</b>, <b>long</b> wavelengths (<b style="color:var(--R)">red</b>) the <b>least</b>, and <b style="color:var(--G)">green</b> is in between. The result is <b>color fringing</b> around edges.</p>
+<div class="box"><h3>Single lens vs achromatic doublet</h3>
+<div class="seg" role="group" aria-label="Lens type" id="cab"><button type="button" aria-pressed="true" data-s="0">Single lens</button><button type="button" aria-pressed="false" data-s="1">Achromatic doublet</button></div>
+<svg class="v" id="casvg" viewBox="0 0 460 200" role="img" aria-label="Red, green and blue rays come to focus at different points behind a lens"></svg>
+<p class="cap" id="cacap"></p></div>
+<div class="two"><div class="box"><h3>Where does the sensor go?</h3><p>Where <b>green</b> comes to focus. Green has the most pixels (Bayer: 50%) and is where our vision is most sensitive.</p></div>
+<div class="box"><h3>How lenses fight it</h3><ul class="clean"><li><b>Achromatic doublet</b>: a positive (<b>crown glass</b>) and a negative (<b>flint glass</b>) lens <b>cemented</b> together. That's why every lens has a negative element.</li><li>The <b>aperture</b> cuts off the outer rays, which bend the most.</li><li><b>Coatings</b> on the lens.</li></ul></div></div>
+<p>Nobody wants chromatic aberration. Your <b>eyes</b> have it too, but your pupil cuts off the outer rays. With fully dilated pupils (like at the eye doctor) you can see blue fringes.</p>
+<div class="trick"><span>🔑</span><span><b>Blue Bends Best.</b> Red bends least. Green sits in the middle, and that's where the sensor goes.</span></div>
+<div class="check" data-q="a3"></div>
+</section>
+
+<section class="topic" id="a4" aria-labelledby="ah4">
+<div class="th"><span class="num">04</span><div><h2 id="ah4">Spherical aberration</h2><p>Edge rays and center rays focus in different places</p></div></div>
+<p><b>Spherical aberration</b>: the rays passing through a lens come to focus at <b>different points</b>. Rays through the <b>edge</b> of the lens focus closer than rays through the center, so the image is unsharp.</p>
+<svg class="v" id="spsvg" viewBox="0 0 460 250" role="img" aria-label="Top: a perfect lens sends every ray to one point. Bottom: a spherical lens sends edge rays to a closer point"></svg>
+<ul class="clean"><li>No lens is perfect. A perfect, affordable one doesn't exist yet.</li><li>It mostly comes down to the <b>quality of the optics</b>: you see more of it in <b>cheaper</b> lenses, and it can't really be corrected later.</li><li>A <b>soft-focus</b> lens under-corrects it on purpose (Oct 19).</li></ul>
+<div class="check" data-q="a4"></div>
+</section>
+
+<section class="topic" id="a5" aria-labelledby="ah5">
+<div class="th"><span class="num">05</span><div><h2 id="ah5">Distortion: barrel &amp; pincushion</h2><p>Straight lines that bend</p></div></div>
+<div class="box"><h3>Bend the grid</h3><label for="dk"><b id="dkv">No distortion</b></label><input type="range" id="dk" min="-4" max="4" value="0" step="1" aria-label="Distortion amount">
+<svg class="v" id="dsvg" viewBox="0 0 300 200" role="img" aria-label="A grid that bulges out (barrel) or pinches in (pincushion)" style="max-width:420px;margin:0 auto"></svg>
+<p class="cap">Left = barrel · middle = none · right = pincushion</p></div>
+<div class="two"><div class="box"><h3>Barrel</h3><ul class="clean"><li>Looks like a <b>barrel</b>: the edges <b>bulge out</b>.</li><li><b>Magnification decreases</b> with distance from the optical axis.</li><li>Seen in <b>fisheye</b> and wide-angle lenses.</li></ul></div>
+<div class="box"><h3>Pincushion</h3><ul class="clean"><li>Named after a sewing <b>pincushion</b>: lines <b>curve in</b>.</li><li>Magnification <b>increases</b> away from the axis.</li><li><b>Negative lenses</b> (glasses for nearsighted people) do this: it can look like a "chunk of the head" is missing.</li></ul></div></div>
+<ul class="clean"><li>Fix it in <b>Lightroom → Profile Corrections</b>. Your lens is in the <b>metadata</b>, and Lightroom has the manufacturer's lens models built in.</li><li>Fixing distortion means <b>creating pixels</b>, so you can get artifacts.</li><li><b>Vignetting</b> (dark corners) is easy to correct digitally.</li></ul>
+<div class="check" data-q="a5"></div>
+</section>
+
+<section class="topic" id="a6" aria-labelledby="ah6">
+<div class="th"><span class="num">06</span><div><h2 id="ah6">Image properties &amp; the perfect pinhole</h2><p>There's one best hole size</p></div></div>
+<ul class="clean"><li>The image is <b>real</b>: it can be captured on a screen, sensor or film.</li><li>Light travels in <b>straight lines</b>.</li><li>The image is <b>inverted</b> and <b>laterally reversed</b> (upside down and backwards). You'll see it on the <b>4×5</b> ground glass.</li></ul>
+<div class="formula">D = √f ÷ 141 &nbsp;(inches)<br>D = √f ÷ 28 &nbsp;(millimeters)</div>
+<p class="note" style="text-align:center">D = pinhole diameter · f = pinhole-to-sensor (or film) distance, in the same unit</p>
+<div class="box"><h3>Pinhole calculator</h3>
+<div class="two"><label>Pinhole-to-film distance<input class="inp" id="pf" type="number" min="0" step="any" value="6" inputmode="decimal"></label>
+<label>Unit<select class="inp" id="pu"><option value="in">inches</option><option value="mm">millimeters</option></select></label></div>
+<ol class="steps" id="pout"></ol></div>
+<ul class="clean"><li>Hole <b>too big</b> → more light, but a blurry image.</li><li>Hole <b>too small</b> → less light, and blur from <b>diffraction</b>.</li><li>Fun facts: pinhole.org runs a Worldwide Pinhole Photography Day. Students once turned a whole <b>dorm room</b> into a pinhole camera by measuring window → wall distance and using this formula.</li></ul>
+<div class="check" data-q="a6"></div>
+</section>
+
+<section class="topic" id="a7" aria-labelledby="ah7">
+<div class="th"><span class="num">07</span><div><h2 id="ah7">Diffraction</h2><p>Why f/22 isn't always a good idea</p></div></div>
+<p>When light passes through a <b>small hole</b> (a pinhole or a tiny aperture), it <b>disperses</b>, or <b>diffracts</b>. A point becomes a bright center with faint rings around it.</p>
+<div class="two"><div class="box"><svg class="v" viewBox="0 0 200 140" role="img" aria-label="A bright dot with rings around it: a diffraction pattern"><rect width="200" height="140" rx="10" fill="#0E0B14"/><defs><radialGradient id="airy"><stop offset="0" stop-color="#FF5A5A"/><stop offset=".18" stop-color="#FF5A5A"/><stop offset=".26" stop-color="#3A0D0D"/><stop offset=".36" stop-color="#C83C3C"/><stop offset=".44" stop-color="#2A0909"/><stop offset=".55" stop-color="#7A2424"/><stop offset=".64" stop-color="#1A0707"/><stop offset=".75" stop-color="#4A1616"/><stop offset="1" stop-color="#0E0B14"/></radialGradient></defs><circle cx="100" cy="70" r="62" fill="url(#airy)"/></svg><p class="cap">Laser through a pinhole: a bright center + rings</p></div>
+<div class="box"><ul class="clean"><li>Usually <b>negligible</b>, but it <b>increases</b> for very <b>small apertures</b>.</li><li>The dispersion <b>softens</b> the image.</li><li>When that softening cancels out the sharpness you gain from <b>stopping down</b>, you've reached the lens's <b>diffraction limit</b>.</li><li>Every lens has a <b>sweet spot</b>: learn where yours is.</li></ul></div></div>
+<div class="box"><h3>Find the sweet spot</h3><label for="dfs"><b>Aperture: <span id="dfv">f/8</span></b></label><input type="range" id="dfs" min="0" max="9" value="5" aria-label="Aperture">
+<svg class="v" id="dfsvg" viewBox="0 0 460 210" role="img" aria-label="Blur from aberrations drops as you stop down while blur from diffraction rises; total blur is lowest in the middle"></svg>
+<p class="cap" id="dfcap"></p></div>
+<p class="note">More: <a href="https://www.cambridgeincolour.com/tutorials/diffraction-photography.htm" target="_blank" rel="noopener">Cambridge in Colour: diffraction</a> (the link from her slide).</p>
+<div class="beyond"><b>Beyond the lecture</b>The curve above is a made-up lens to show the idea. On real lenses the sweet spot is often about 2–3 stops down from wide open, and sensors with <b>smaller pixels</b> show diffraction sooner.</div>
+<div class="check" data-q="a7"></div>
+</section>
+
+<section class="topic pick" id="a8" aria-labelledby="ah8">
+<div class="th"><span class="num">08</span><div><h2 id="ah8">Depth of field &amp; the circle of confusion</h2><p>"Depth of field is a lie"</p></div></div>
+<p><b>Depth of field</b> = the range of distances within which objects are imaged with <b>acceptable sharpness</b>. In theory you can only focus on <b>one</b> distance. Everything else makes a small <b>circle</b> instead of a point, but your eye has a <b>limited resolving power</b>, so small circles still look like points.</p>
+<div class="formula" style="font-family:inherit">Permissible circle of confusion = the largest circle that still appears as a point</div>
+<div class="box"><h3>Move the object and watch its blur circle</h3>
+<div class="seg" role="group" aria-label="Aperture" id="cfn"><button type="button" aria-pressed="false" data-n="2.8">f/2.8</button><button type="button" aria-pressed="true" data-n="8">f/8</button><button type="button" aria-pressed="false" data-n="22">f/22</button></div>
+<label for="cu"><b>Object distance: <span id="cuv">2 m</span></b> (focused at 2 m, 50 mm lens)</label><input type="range" id="cu" min="0" max="40" value="10" aria-label="Object distance">
+<svg class="v" id="cfsvg" viewBox="0 0 460 190" role="img" aria-label="Rays from an object form a blur circle on the sensor; it looks sharp while it is smaller than the permissible circle"></svg>
+<p class="cap" id="cfcap"></p></div>
+<div class="pickbox" style="margin-top:0"><span class="rb">★ Her test pick · "Beautiful test question"</span><div class="pq">What affects your circle of confusion?</div><div class="pa">1. Individual <b>eyesight</b><br>2. <b>Contrast</b> between the circle and the background<br>3. <b>Level of illumination</b><br>4. The viewer's <b>opinion</b> of what is sharp (subjective)</div></div>
+<div class="trick"><span>🔑</span><span><b>"Every Coffee Looks Okay"</b>: Eyesight · Contrast · Light level · Opinion.</span></div>
+<p>Low contrast and dim light make blur harder to see, so things <b>seem</b> sharper. That's why it's easier to read with the light on.</p>
+<div class="check" data-q="a8"></div>
+</section>
+
+<section class="topic pick" id="a9" aria-labelledby="ah9">
+<div class="th"><span class="num">09</span><div><h2 id="ah9">Depth of field controls &amp; relative f-stops</h2><p>Three dials for sharpness front to back</p></div></div>
+<div class="pickbox" style="margin-top:0"><span class="rb">★ Her test pick · "Also a beautiful test question"</span><div class="pq">What controls depth of field?</div><div class="pa">1. <b>Aperture</b><br>2. <b>Object distance</b> (camera to subject)<br>3. <b>Focal length</b></div></div>
+<div class="tw"><table><thead><tr><th>To get MORE depth of field</th><th>To get LESS (blurry background)</th></tr></thead><tbody><tr><td>Smaller aperture (f/22, f/32)</td><td>Wider aperture (f/2.8, f/5.6)</td></tr><tr><td>Move farther from the subject</td><td>Move closer</td></tr><tr><td>Shorter (wider) focal length</td><td>Longer (telephoto) focal length</td></tr></tbody></table></div>
+<p>Her slides: daffodils at <b>f/32</b> (background readable) vs <b>f/5.6</b> (background melts away). Her zoo <b>armadillo</b>: long lens, wide open, so the bleachers behind it turned into a soft blur. Depth of field made the photo.</p>
+<div class="box"><h3>Relative f-stops: same f-number, different hole</h3>
+<div class="formula" style="font-size:18px">f-number = focal length ÷ aperture diameter</div>
+<div class="two"><label>Focal length (mm)<input class="inp" id="rf" type="number" min="1" value="300" inputmode="decimal"></label><label>f-number<input class="inp" id="rn" type="number" min="0.7" step="any" value="5.6" inputmode="decimal"></label></div>
+<p class="formula" id="rout" style="font-size:16px"></p>
+<p>f/5.6 is a <b>different physical size</b> on a 50 mm lens than on a 300 mm lens, but lets in the same amount of light. The same f-stop doesn't give the same depth of field on every lens, so <b>learn your lenses</b>.</p></div>
+<div class="check" data-q="a9"></div>
+</section>
+
+<section class="topic" id="a10" aria-labelledby="ah10">
+<div class="th"><span class="num">10</span><div><h2 id="ah10">Hyperfocal distance</h2><p>The landscape photographer's trick</p></div></div>
+<p><b>Hyperfocal distance</b> is defined as:</p>
+<ol class="clean" style="padding-left:20px;list-style:lower-alpha"><li>the <b>closest distance that appears sharp</b> when the lens is focused at <b>infinity</b>, or</li><li>the closest distance you can focus on and still have an object at <b>infinity</b> appear sharp.</li></ol>
+<div class="formula" style="font-family:inherit">Focus at the hyperfocal distance → sharp from ½ of it to infinity</div>
+<div class="box"><h3>Try it</h3>
+<div class="seg" role="group" aria-label="Focus point" id="hfm"><button type="button" aria-pressed="true" data-m="inf">Focus at ∞</button><button type="button" aria-pressed="false" data-m="h">Focus at hyperfocal</button></div>
+<div class="seg" role="group" aria-label="Aperture" id="hfn"><button type="button" aria-pressed="false" data-n="8">f/8</button><button type="button" aria-pressed="false" data-n="16">f/16</button><button type="button" aria-pressed="true" data-n="22">f/22</button></div>
+<svg class="v" id="hfsvg" viewBox="0 0 460 170" role="img" aria-label="The sharp zone in front of the camera grows when you focus at the hyperfocal distance"></svg>
+<p class="cap" id="hfcap"></p></div>
+<div class="box"><h3>Using the depth of field scale (her slide)</h3><ul class="clean"><li>The red line = where you're focused. The pairs of numbers (4, 11, 16, 22) on either side = the depth of field at each f-stop.</li><li>At <b>f/22</b>, focused at ∞: the DOF scale shows sharp from <b>20 ft</b> to infinity. So 20 ft is the hyperfocal distance.</li><li>Turn the focus ring so <b>∞ sits on the other f/22 mark</b>: now it's sharp from about <b>13 ft</b> to infinity.</li><li>That's an <b>increase of 7 ft</b> in depth of field, for free.</li></ul></div>
+<p>Her examples: a fence and house, a cactus with mountains, ice on a shoreline with mountains. Focus on the foreground and the background blurs; focus at ∞ and the foreground blurs; focus at the <b>hyperfocal distance</b> and both are sharp.</p>
+<div class="beyond"><b>Beyond the lecture</b>The simulator uses H = f² ÷ (N × c) + f with c = 0.03 mm (full frame). Her lens scale is a different lens, so its numbers differ. In theory focusing at H gives sharpness from H ÷ 2; her scale reading gave ~13 ft. Use her numbers on the exam.</div>
+<div class="check" data-q="a10"></div>
+</section>
+
+<section class="topic" id="a11" aria-labelledby="ah11">
+<div class="th"><span class="num">11</span><div><h2 id="ah11">Handheld shutter rule &amp; image stabilization</h2><p>What you did in Lab 2</p></div></div>
+<div class="formula">slowest handheld shutter = 1 ÷ (focal length × crop factor)</div>
+<ul class="clean"><li>Full frame, 100 mm lens → <b>1/100</b> (crop factor of full frame = 1).</li><li>The rule was made <b>before image stabilization</b>. IS lets you go <b>slower</b>.</li><li>Your limit changes with <b>age</b>, <b>fatigue</b> (the end of a soccer game!) and the camera's <b>weight and balance</b>. That's why the lab had you test yours with IS off, then on.</li></ul>
+<div class="pickbox" style="margin-top:0"><span class="rb">⚠ She stressed this</span><div class="pq">Should IS be on when the camera is on a tripod?</div><div class="pa"><b>No, turn it off.</b> Mechanical stabilization (lens or body) assumes there's movement and adds motion and wobble. It can <b>damage</b> the sensor, camera or lens. Handholding → turn it <b>on</b>.</div></div>
+<p class="note">Learn where the IS switch is on your gear. Next week: 4×5 cameras. Exam 2 is Friday, Oct 30.</p>
+<div class="check" data-q="a11"></div>
+</section>
+</div>
+
+<nav class="lnav" aria-label="Lectures"><a href="lecture-oct19.html">← Oct 19</a><a href="lectures.html">All lectures</a><a href="lecture-oct26.html">Oct 26 →</a></nav>
+<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures, for study use.</p>
+</div>
+<script src="lectures.js"></script>
+<script src="back-bar.js" data-back="lectures.html" data-label="Lecture Notes" defer></script>
+</body></html>

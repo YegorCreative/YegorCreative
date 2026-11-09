@@ -73,10 +73,8 @@ TOOLS.forEach(function(t){if(t.group==='e2')delete t.group;delete t.featureSm;})
  TOOLS.forEach(function(t){if(t.id==='lectures')t.desc='Every lecture from Exam 1 to the final, grouped by exam, plus ★ Her test picks flashcards: density, stops & equivalent exposure, sensors, files, lenses, depth of field, perspective.';});})();
 var grid=document.getElementById('rhub-grid'),grid2=document.getElementById('rhub-grid-e2'),gridPj=document.getElementById('rhub-grid-pj'),tiles=[],panels={},openId=null;
 TOOLS.forEach(function(t){
- var b=document.createElement('button');b.type='button';b.className='rhub-tile'+(t.feature?' rhub-feature':'')+(t.featureSm?' rhub-feature-sm':'');b.style.setProperty('--g',t.g);
- b.setAttribute('aria-expanded','false');b.setAttribute('aria-controls','rhub-p-'+t.id);
+ var b=document.createElement('a');b.href=t.src;b.className='rhub-tile'+(t.feature?' rhub-feature':'')+(t.featureSm?' rhub-feature-sm':'');b.style.setProperty('--g',t.g);b.style.textDecoration='none';
  b.innerHTML='<div class="rhub-art" aria-hidden="true"><span class="rhub-tag">'+t.tag+'</span>'+t.art+'</div><div class="rhub-body"><div class="rhub-row"><span class="rhub-title">'+t.title+'</span><span class="rhub-go" aria-hidden="true">→</span></div><span class="rhub-desc">'+t.desc+'</span></div>';
- b.addEventListener('click',function(){openId===t.id?close():open(t,b);});
  (t.group==='e2'&&grid2?grid2:t.group==='pj'&&gridPj?gridPj:grid).appendChild(b);tiles.push({t:t,el:b});
 });
 function rowEnd(el){/* last tile in the same visual row (and same grid) as el */var top=el.offsetTop,last=el;tiles.forEach(function(x){if(x.el.parentNode===el.parentNode&&Math.abs(x.el.offsetTop-top)<4&&x.el.offsetLeft>=last.offsetLeft)last=x.el;});return last;}

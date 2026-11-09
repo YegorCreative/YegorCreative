@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Oct 2 · RAW & files · Lecture Notes</title>
+<link rel="stylesheet" href="lectures.css">
+</head><body>
+<div class="w">
+<header class="intro">
+<span class="eyebrow">Exam 2 · Lecture notes</span>
+<h1>Oct 2 · RAW &amp; files</h1>
+</header>
+<nav class="lnav" aria-label="Lectures"><a href="lecture-sep28.html">← Sep 28</a><a href="lectures.html">All lectures</a><a href="lecture-oct05.html">Oct 5 →</a></nav>
+<div class="lec" id="L2">
+<nav class="toc" aria-label="Oct 2 sections"><a href="#r1">Bits &amp; bytes</a><a href="#r2">Raster vs vector</a><a href="#r3">Captured vs rendered</a><a href="#r4">What's in a RAW</a><a class="pk" href="#r5">RAW vs JPEG</a><a class="pk" href="#r6">Bit depth</a><a href="#r7">Non-destructive &amp; XMP</a><a href="#r8">DNG</a></nav>
+
+<section class="topic" id="r1" aria-labelledby="rh1">
+<div class="th"><span class="num">01</span><div><h2 id="rh1">Bits &amp; bytes</h2><p>The smallest pieces of digital memory</p></div></div>
+<div class="three">
+<div class="box"><h3>Bit</h3><p>The smallest unit: <b>0 or 1</b> (off or on).</p></div>
+<div class="box"><h3>Byte</h3><p><b>8 bits</b> together. Most file sizes are counted in bytes.</p></div>
+<div class="box"><h3>Kilobyte</h3><p>Decimal: <b>1,000</b> bytes. Binary: <b>1,024</b> bytes.</p></div>
+</div>
+<div class="box"><label for="tb"><b>Drive size on the box: <span id="tbv">1</span> TB</b></label><input type="range" id="tb" min="1" max="8" value="1" aria-label="Drive size in TB"><p id="tbout" class="formula" style="font-size:16px"></p><p class="note">Storage makers advertise in <b>decimal</b> (1 TB = 1,000,000,000,000 bytes). Your operating system often counts in <b>binary</b> (1,024 steps), so the same drive looks "smaller". Nothing is missing.</p></div>
+<div class="tw"><table><thead><tr><th></th><th>Decimal (on the box)</th><th>Binary (computer)</th></tr></thead><tbody>
+<tr><td>1 kB</td><td>1,000 bytes</td><td>1,024 bytes</td></tr><tr><td>1 MB</td><td>1,000,000 bytes</td><td>1,024 kB</td></tr><tr><td>1 GB</td><td>1,000,000,000 bytes</td><td>1,024 MB</td></tr><tr><td>1 TB</td><td>1,000,000,000,000 bytes</td><td>1,024 GB</td></tr></tbody></table></div>
+<p class="note">Storage history: tape → cassette → floppy disk → CD → DVD → memory cards → terabyte drives.</p>
+<div class="check" data-q="r1"></div>
+</section>
+
+<section class="topic" id="r2" aria-labelledby="rh2">
+<div class="th"><span class="num">02</span><div><h2 id="rh2">Raster vs vector</h2><p>Pixels vs math</p></div></div>
+<div class="box"><label for="zoom"><b>Zoom: <span id="zv">1</span>×</b></label><input type="range" id="zoom" min="1" max="8" value="1" aria-label="Zoom">
+<div class="two"><div><canvas id="rast" class="pix" width="200" height="200" aria-label="Raster letter A zoomed"></canvas><p class="cap"><b>Raster</b>: the pixels just get bigger</p></div><div><svg class="v" id="vect" viewBox="0 0 200 200" role="img" aria-label="Vector letter A zoomed" style="background:#fff;border:1px solid var(--line)"><g id="vg"><text x="100" y="140" text-anchor="middle" font-size="120" font-weight="900" fill="#6D4AD9" font-family="Inter,Arial,sans-serif">A</text></g></svg><p class="cap"><b>Vector</b>: redrawn from math, always sharp</p></div></div></div>
+<div class="two">
+<div class="box"><h3>Raster</h3><ul class="clean"><li>Image = a grid of <b>pixel values</b> (samples).</li><li>Fixed size, so <b>resolution matters</b>: a small file can't be enlarged much.</li><li>Used for <b>photographs</b>.</li></ul></div>
+<div class="box"><h3>Vector</h3><ul class="clean"><li>Shapes, lines and curves stored as <b>geometry</b> (instructions).</li><li><b>Scales</b> to any size without changing.</li><li>Logos, illustrations, diagrams, typography, graphs. Example: <b>EPS</b> (Encapsulated PostScript).</li></ul></div>
+</div>
+<div class="check" data-q="r2"></div>
+</section>
+
+<section class="topic" id="r3" aria-labelledby="rh3">
+<div class="th"><span class="num">03</span><div><h2 id="rh3">Captured vs rendered images</h2><p>The digital image file landscape</p></div></div>
+<div class="two">
+<div class="box"><h3><span class="tag">Captured</span></h3><p><b>RAW</b> and <b>DNG</b>: sensor data straight from the camera.</p></div>
+<div class="box"><h3><span class="tag">Rendered</span></h3><p>Something was done to it before saving: <b>TIFF, JPEG, JPEG XL, HEIF, PNG, WebP, AVIF</b>.</p></div>
+</div>
+<p>Every file, captured or rendered, has a <b>bit depth</b>, a <b>color encoding</b>, maybe <b>compression</b>, <b>metadata</b>, <b>processing</b> and an <b>output</b>.</p>
+<div class="beyond"><b>WebP</b>A modern raster format made by <b>Google</b> for the web. It can be lossless or lossy, and it competes with JPEG and PNG.</div>
+</section>
+
+<section class="topic" id="r4" aria-labelledby="rh4">
+<div class="th"><span class="num">04</span><div><h2 id="rh4">What's inside a RAW file</h2><p>Sensor data plus metadata, and not one single format</p></div></div>
+<div class="two">
+<div class="box"><h3>A RAW file can contain</h3><ul class="clean"><li>Mosaic (Bayer) sensor data</li><li>Image dimensions (rows × columns) and the <b>CFA pattern</b></li><li>Black level and white level</li><li>Camera, exposure and lens metadata</li><li>The <b>white balance setting</b></li><li>Calibration and profile info</li><li>An <b>embedded JPEG preview</b></li><li>Possibly compressed data</li></ul></div>
+<div class="box"><h3>Proprietary extensions</h3><div class="tw"><table><thead><tr><th>Maker</th><th>RAW</th></tr></thead><tbody><tr><td>Canon</td><td>.CR2, .CR3</td></tr><tr><td>Nikon</td><td>.NEF, .NRW</td></tr><tr><td>Sony</td><td>.ARW</td></tr><tr><td>Fujifilm</td><td>.RAF</td></tr><tr><td>OM System / Olympus</td><td>.ORF</td></tr><tr><td>Panasonic</td><td>.RW2</td></tr><tr><td>Pentax</td><td>.PEF</td></tr><tr><td>Leica</td><td>.RWL, .DNG</td></tr><tr><td>Hasselblad</td><td>.3FR</td></tr><tr><td>Phase One</td><td>.IIQ</td></tr><tr><td>Sigma</td><td>.X3F</td></tr><tr><td>Adobe (open)</td><td>.DNG</td></tr></tbody></table></div></div>
+</div>
+<div class="box"><h3>Which settings change the RAW data?</h3><div class="tw"><table><thead><tr><th>Setting</th><th>Effect on RAW</th></tr></thead><tbody><tr><td>Aperture, shutter speed, exposure</td><td><span class="pill ok">changes the data</span></td></tr><tr><td>ISO</td><td><span class="pill ok">changes it</span> (how depends on the camera)</td></tr><tr><td>White balance</td><td>just <b>metadata</b> (interpretation)</td></tr><tr><td>Picture style, saturation, contrast, sharpening</td><td><span class="pill bad">no</span>: only the JPEG and preview</td></tr></tbody></table></div></div>
+<div class="beyond"><b>RAW does NOT guarantee</b>Uncompressed data (some cameras have compressed or even <b>lossy</b> raw), all of the sensor's information, the maximum dynamic range, or the same look in every converter. Photoshop/ACR, Capture One Pro and DxO each demosaic differently.</div>
+<div class="check" data-q="r4"></div>
+</section>
+
+<section class="topic pick" id="r5" aria-labelledby="rh5">
+<div class="th"><span class="num">05</span><div><h2 id="rh5">RAW vs JPEG</h2><p>"A really good test question"</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · “A really good test question”</span><div class="pq">Compared with a JPEG, a RAW file has…</div><div class="pa"><b>Higher</b> dynamic range, <b>lower</b> contrast, <b>less</b> sharp, and it's <b>not ready for output</b>.</div></div><div class="pickbox"><span class="rb">★ Her test pick · Test question</span><div class="pq">Which file is bigger: the RAW file or the demosaiced image?</div><div class="pa">The <b>demosaiced</b> image.</div></div>
+<div class="tw"><table><thead><tr><th></th><th>RAW (before processing)</th><th>JPEG</th></tr></thead><tbody>
+<tr><td>Dynamic range</td><td><b>Higher</b></td><td>Lower</td></tr>
+<tr><td>Contrast</td><td><b>Lower</b></td><td>Higher (added in processing)</td></tr>
+<tr><td>Sharpness</td><td><b>Less sharp</b></td><td>Sharpened</td></tr>
+<tr><td>Ready for output?</td><td><b>No</b></td><td>Yes</td></tr>
+<tr><td>Bit depth</td><td>16-bit container, about <b>12 bits</b> used</td><td><b>8 bits</b></td></tr>
+<tr><td>Editing room</td><td>Lots: fewer artifacts</td><td>Little: settings are baked in</td></tr>
+</tbody></table></div>
+<div class="box"><h3>Why is RAW less sharp?</h3><p>Many cameras have an <b>anti-aliasing filter</b>, which is really a <b>blur filter</b>. It softens edges to prevent aliasing (stair-stepping), and processing sharpens the image back. Some very high-resolution cameras leave the filter out.</p></div>
+<div class="box"><h3>Which file is bigger: RAW or demosaiced?</h3><p>The <b>demosaiced</b> image. RAW has <b>1 channel</b> (one gray value per photosite), and a demosaiced image has <b>3 channels</b> (red, green and blue at every pixel).</p></div>
+<div class="box"><h3>Raw processing <i>may</i> include (her slide)</h3><p>Black-level correction · bad-pixel correction · white-level normalization · demosaicing · noise reduction · white balance · color correction · tone mapping · color-space encoding · sharpening · output encoding. <b>The exact sequence varies among cameras and software.</b></p><p class="note">Default slider settings come from psychophysics studies: experts and regular people adjust many images, and the average becomes the preset.</p></div>
+<div class="check" data-q="r5"></div>
+</section>
+
+<section class="topic pick" id="r6" aria-labelledby="rh6">
+<div class="th"><span class="num">06</span><div><h2 id="rh6">Bit depth ≠ dynamic range</h2><p>Levels vs the useful range</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · Test question</span><div class="pq">What values can one channel of an 8-bit image hold?</div><div class="pa"><b>0 to 255</b> (256 levels)</div></div>
+<div class="formula">gray levels = 2<sup>bits</sup></div>
+<div class="box"><label for="bits"><b><span id="bv">8</span> bits → <span id="blv">256</span> levels</b> <span class="note" id="brange"></span></label><input type="range" id="bits" min="1" max="16" value="8" aria-label="Bit depth"><canvas id="bitc" width="480" height="70" aria-label="Gradient at the chosen bit depth"></canvas><p class="cap" id="bcap"></p></div>
+<div class="tw"><table><thead><tr><th>Bits</th><th>Levels</th><th>Values</th></tr></thead><tbody><tr><td>1</td><td>2</td><td>0–1</td></tr><tr><td><b>8 (JPEG)</b></td><td><b>256</b></td><td><b>0–255</b></td></tr><tr><td>12 (raw)</td><td>4,096</td><td>0–4,095</td></tr><tr><td>14</td><td>16,384</td><td>0–16,383</td></tr><tr><td>16</td><td>65,536</td><td>0–65,535</td></tr></tbody></table></div>
+<ul class="clean"><li><b>Bit depth</b> = how many levels are available to describe the tones.</li><li><b>Dynamic range</b> = the range between the smallest and largest <b>useful</b> values: max − min, or from the brightest detailed highlight to the darkest detailed shadow (a specular highlight isn't useful detail).</li><li>Printing is done at <b>8 bits</b> because the eye can't tell more levels apart. <b>Edit at more bits</b> to avoid artifacts.</li></ul>
+<div class="check" data-q="r6"></div>
+</section>
+
+<section class="topic" id="r7" aria-labelledby="rh7">
+<div class="th"><span class="num">07</span><div><h2 id="rh7">Non-destructive editing &amp; the .xmp sidecar</h2><p>The original pixels never change</p></div></div>
+<p><b>Non-destructive</b> means the original image data stays available, and edits are stored <b>separately as instructions</b>. The image is rendered when it's displayed or exported.</p>
+<p class="note">Her slide lists: raw adjustments · XMP instructions · catalog adjustments · virtual copies · adjustment layers · masks.</p>
+<div class="three">
+<div class="box"><h3>Raw adjustments</h3><p>Exposure, contrast, color, noise reduction, sharpening, crop and masks are saved as instructions.</p></div>
+<div class="box"><h3>Catalog &amp; virtual copies</h3><p>Lightroom keeps instructions in its catalog. A virtual copy = another set of instructions on the same file.</p></div>
+<div class="box"><h3>Photoshop layers</h3><p>Turn a layer off and the base image is untouched.</p></div>
+</div>
+<div class="box"><h3>.xmp sidecar file</h3><p>Created next to a proprietary RAW when you edit in Adobe Camera Raw. It holds the <b>metadata and edit instructions</b>. Delete it and your edits are gone. Always keep the RAW and its .xmp <b>together</b>.</p></div>
+<div class="trick"><span>💾</span><span><b>Back up!</b> A senior lost three months of capstone work to one failed hard drive with no backup. Remember 3-2-1 from Exam 1.</span></div>
+<div class="check" data-q="r7"></div>
+</section>
+
+<section class="topic" id="r8" aria-labelledby="rh8">
+<div class="th"><span class="num">08</span><div><h2 id="rh8">DNG (Digital Negative)</h2><p>Adobe's open raw format</p></div></div>
+<ul class="clean"><li>Introduced by <b>Adobe in 2004</b>, based on the <b>TIFF 6.0</b> structure, current spec <b>1.7.1</b>, <b>publicly documented</b> and open (royalty-free). Only a few cameras write it natively.</li><li><b>Legacy and versionable:</b> Adobe guarantees an old DNG will still open years from now. No camera maker promises that for their own raw format.</li><li>About <b>10–15% smaller</b> than the original raw, and works best in Adobe software.</li><li>After edits, a DNG <b>updates its embedded preview</b>. The original raw keeps the preview from capture.</li><li>Makers keep their "secret sauce" in <b>private maker notes</b>.</li></ul>
+<div class="two">
+<div class="box"><h3>✅ Advantages</h3><p>Public spec · broad software support · one consistent format · archival · simpler workflow</p></div>
+<div class="box"><h3>⚖️ Trade-offs</h3><p>Converting takes time · maker-specific info may not transfer identically · you may still want the original raw · size depends on the settings</p></div>
+</div>
+<p class="note">Convert with the <b>Adobe DNG Converter</b> (it can batch a whole folder), Lightroom or Bridge.</p>
+<div class="check" data-q="r8"></div>
+</section>
+</div>
+
+<nav class="lnav" aria-label="Lectures"><a href="lecture-sep28.html">← Sep 28</a><a href="lectures.html">All lectures</a><a href="lecture-oct05.html">Oct 5 →</a></nav>
+<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures, for study use.</p>
+</div>
+<script src="lectures.js"></script>
+<script src="back-bar.js" data-back="lectures.html" data-label="Lecture Notes" defer></script>
+</body></html>

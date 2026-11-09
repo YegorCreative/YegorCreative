@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sep 18 · Stops, equivalent exposure & histograms · Lecture Notes</title>
+<link rel="stylesheet" href="lectures.css">
+</head><body>
+<div class="w">
+<header class="intro">
+<span class="eyebrow">Exam 1 · Lecture notes</span>
+<h1>Sep 18 · Stops, equivalent exposure &amp; histograms</h1>
+</header>
+<nav class="lnav" aria-label="Lectures"><a href="lecture-sep14.html">← Sep 14</a><a href="lectures.html">All lectures</a><a href="lecture-sep21.html">Sep 21 →</a></nav>
+<div class="lec" id="LB">
+<nav class="toc" aria-label="Sep 18 sections"><a href="#y1">How her tests work</a><a class="pk" href="#y2">Full-stop table</a><a class="pk" href="#y3">Equivalent exposure</a><a href="#y4">What each setting does</a><a class="pk" href="#y5">Histograms</a><a href="#y6">N+2 / N−2 tables</a></nav>
+
+<section class="topic" id="y1" aria-labelledby="yh1">
+<div class="th"><span class="num">01</span><div><h2 id="yh1">How her tests work</h2><p>Still true for the final</p></div></div>
+<ul class="clean">
+<li><b>No calculator.</b> You won't do the arithmetic, but you <b>set up the equations</b>, so you must know them.</li>
+<li><b>Multiple choice or short answer</b>, not paragraphs. <b>Only answer the question asked.</b> If you "pontificate" and part of it is wrong, you lose points even if the right answer is in there.</li>
+<li>Fill in the blank: use the <b>right tense</b>, no extra words. If she asks for a number, give <b>only the number</b> (no units, no "f/").</li>
+<li>Read slowly. Use the whole time: "There's no bonus points for being the first one out."</li>
+<li>Bring a fully charged laptop (no plugs at the seats). Honorlock in Chrome was required for Exam 1.</li>
+</ul>
+</section>
+
+<section class="topic pick" id="y2" aria-labelledby="yh2">
+<div class="th"><span class="num">02</span><div><h2 id="yh2">Stops and the full-stop table</h2><p>"Free give-me points"</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · "You need to have this memorized for the test"</span><div class="pq">Know every full stop for aperture, shutter speed and ISO.</div><div class="pa">"I can guarantee you, you'll get a lot of points if you know this table. I guarantee you, you will miss a lot of points if you don't."</div></div>
+<p>An exposure needs three settings: <b>shutter speed</b>, <b>aperture (f-number)</b> and <b>ISO</b>. A <b>stop</b> is one full step in any of them, and it <b>halves or doubles</b> the exposure.</p>
+<div class="tw"><table class="stops"><thead><tr><th>Setting</th><th>Full stops (each step = ×2 or ÷2 the light)</th></tr></thead><tbody>
+<tr><td><b>f-number</b></td><td>1.4 · 2 · 2.8 · 4 · 5.6 · 8 · 11 · 16 · 22 · 32</td></tr>
+<tr><td><b>Shutter (s)</b></td><td>1 · 1/2 · 1/4 · 1/8 · 1/15 · 1/30 · 1/60 · 1/125 · 1/250 · 1/500 · 1/1000</td></tr>
+<tr><td><b>ISO</b></td><td>100 · 200 · 400 · 800 · 1600 · 3200 · 6400</td></tr>
+</tbody></table></div>
+<div class="trick"><span>🔑</span><span><b>f-numbers:</b> two rows that each double: <b>1, 2, 4, 8, 16, 32</b> and <b>1.4, 2.8, 5.6, 11, 22</b>. Interleave them. Bigger f-number = <b>smaller</b> opening = <b>less</b> light.</span></div>
+<div class="check" data-q="y2"></div>
+</section>
+
+<section class="topic pick" id="y3" aria-labelledby="yh3">
+<div class="th"><span class="num">03</span><div><h2 id="yh3">Equivalent exposures</h2><p>Many ways to make a dollar</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · on every test</span><div class="pq">"We will have these on every test, this semester and next semester."</div><div class="pa">"Been doing this for 22 years. I've never had a test without one."</div></div>
+<ul class="clean">
+<li>Four quarters, ten dimes, twenty nickels: all make a dollar. Many combinations of settings make the <b>same exposure</b> too.</li>
+<li>Bucket analogy: a small hose for a long time or a big hose for a short time both fill the bucket (a proper exposure).</li>
+<li><b>If you change one setting, you must change at least one other.</b></li>
+</ul>
+<div class="box"><h3>Her method</h3>
+<ol class="clean"><li>Write the base exposure <b>N</b>.</li><li>For each change, count the stops. <b>+</b> = adds light, <b>−</b> = takes light away.</li><li>The column must <b>add up to 0</b>.</li></ol></div>
+<div class="tw"><table><thead><tr><th></th><th>ISO</th><th>Shutter</th><th>f-number</th><th>Total</th></tr></thead><tbody>
+<tr><td><b>N</b></td><td>200</td><td>1/125</td><td>f/8</td><td></td></tr>
+<tr><td>Blur the bat</td><td>200 (0)</td><td>1/30 (+2)</td><td>f/16 (−2)</td><td><b>0</b></td></tr>
+<tr><td>Sun going down</td><td>800 (+2)</td><td>1/500 (−2)</td><td>f/8 (0)</td><td><b>0</b></td></tr>
+</tbody></table></div>
+<div class="box"><h3>Equivalent exposure calculator</h3>
+<div class="three"><label>ISO<select class="inp" id="eqI"></select></label><label>Shutter<select class="inp" id="eqS"></select></label><label>f-number<select class="inp" id="eqF"></select></label></div>
+<p class="note">Base exposure above. Now change one setting and pick which one should compensate:</p>
+<div class="two"><label>Change<select class="inp" id="eqC"><option value="S">Shutter speed</option><option value="F">f-number</option><option value="I">ISO</option></select></label><label>New value<select class="inp" id="eqN"></select></label></div>
+<label>Compensate with<select class="inp" id="eqK"></select></label>
+<p id="eqO" aria-live="polite" style="font-weight:800;font-size:17px"></p></div>
+<ul class="clean"><li><b>Where people go wrong:</b> not knowing the full stops, or not writing the steps out.</li><li><b>Why it matters:</b> in surgery or sports you can't ask for a redo. Adjusting by two stops has to be "an extension of your arm".</li></ul>
+<div class="check" data-q="y3"></div>
+</section>
+
+<section class="topic" id="y4" aria-labelledby="yh4">
+<div class="th"><span class="num">04</span><div><h2 id="yh4">What each setting does to the picture</h2><p>The numbers matter less than the effect</p></div></div>
+<div class="three">
+<div class="box"><h3>Shutter speed</h3><p>Freezes motion or <b>blurs motion</b> (a waterfall, a swinging bat). Motion blur ≠ a blurry image everywhere, which is camera shake.</p></div>
+<div class="box"><h3>Aperture</h3><p>Very shallow to very deep <b>depth of field</b>. Her dewdrop leaf: deep DOF shows every drop, shallow DOF picks a few.</p></div>
+<div class="box"><h3>ISO</h3><p>Higher ISO = more <b>noise</b> (digital). With film, say <b>graininess</b>. Mixing them up makes you "look uneducated".</p></div>
+</div>
+<ul class="clean"><li>With enough light, the right equipment and patience, you can get all three the way you want.</li><li>Check that the <b>exposure compensation</b> marker on your camera is in the center. If it isn't, compensation is on.</li></ul>
+<div class="check" data-q="y4"></div>
+</section>
+
+<section class="topic pick" id="y5" aria-labelledby="yh5">
+<div class="th"><span class="num">05</span><div><h2 id="yh5">Reading a histogram</h2><p>It tells you about exposure, not quality</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · "Write that down and underline it"</span><div class="pq">How many digital counts does the camera histogram have?</div><div class="pa"><b>256</b>, numbered <b>0 to 255</b>. Most people say 255, but zero counts.</div></div>
+<ul class="clean">
+<li>The in-camera histogram comes from a <b>JPEG</b>, even when you shoot RAW. It's close, but RAW software may show a slightly different histogram.</li>
+<li>0 = as dark as it gets. 255 = as bright as it gets. Split it into thirds: <b>shadows · midtones · highlights</b>.</li>
+<li>There's <b>no single correct histogram</b>. Midtones only = low dynamic range, which is right if that's the scene (her foggy Venice Beach photo) and wrong if you expected highlights and shadows.</li>
+<li><b>Clipping</b> = pixels piled at 0 or 255. <b>Clipped detail is gone</b>, RAW or JPEG. <b>Specular highlights</b> (sparkles on raindrops or tomatoes) <b>should</b> clip, or they look cloudy.</li>
+<li>Full dynamic range = values from end to end (her rose). A bright moon over a dark ski slope clips both ends: a perfect candidate for <b>HDR</b>.</li>
+<li>Photoshop and Lightroom: hold <b>Option/Alt</b> while dragging a Levels slider to see which pixels clip.</li>
+<li>Too bright with flash up close? Back up (inverse square law). That's what she did at the Monkey Jungle.</li>
+</ul>
+<div class="check" data-q="y5"></div>
+</section>
+
+<section class="topic" id="y6" aria-labelledby="yh6">
+<div class="th"><span class="num">06</span><div><h2 id="yh6">ETTR and N+2 / N−2 tables</h2><p>Purposely over- and underexposing</p></div></div>
+<ul class="clean">
+<li><b>Exposure to the right (ETTR)</b>: for a dark, low-dynamic-range subject (her black dog), overexpose without clipping, then pull it back in post for more shadow detail. More on this in the Sep 21 and Sep 28 tabs.</li>
+<li>Lab tables say <b>N + 2</b> or <b>N − 2</b>: always count from the <b>base exposure on the top row</b>, never from the row above.</li>
+<li>These are <b>not</b> equivalent exposures. N + 2 is deliberately 2 stops <b>over</b>, N − 2 is 2 stops <b>under</b>.</li>
+<li>Labs use <b>JPEG</b> so you see your mistakes (like a "daylight" LED panel that's really about 5,200 K). Switch back to <b>RAW</b> for Photo 1.</li>
+</ul>
+<div class="check" data-q="y6"></div>
+</section>
+</div>
+
+<nav class="lnav" aria-label="Lectures"><a href="lecture-sep14.html">← Sep 14</a><a href="lectures.html">All lectures</a><a href="lecture-sep21.html">Sep 21 →</a></nav>
+<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures, for study use.</p>
+</div>
+<script src="lectures.js"></script>
+<script src="back-bar.js" data-back="lectures.html" data-label="Lecture Notes" defer></script>
+</body></html>

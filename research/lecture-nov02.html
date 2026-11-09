@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nov 2 · Perspective & depth cues · Lecture Notes</title>
+<link rel="stylesheet" href="lectures.css">
+</head><body>
+<div class="w">
+<header class="intro">
+<span class="eyebrow">Final · Lecture notes</span>
+<h1>Nov 2 · Perspective &amp; depth cues</h1>
+</header>
+<nav class="lnav" aria-label="Lectures"><a href="lecture-oct26.html">← Oct 26</a><a href="lectures.html">All lectures</a><a href="lecture-nov06.html">Nov 6 →</a></nav>
+<div class="lec" id="L8">
+<nav class="toc" aria-label="Nov 2 sections"><a href="#w1">Focal length + distance</a><a href="#w2">Weak vs strong</a><a href="#w3">Viewing distance</a><a href="#w4">Depth cues</a><a href="#w5">Holography &amp; stereo</a><a href="#w6">DOF &amp; vignetting</a><a href="#w7">Lab 4 rules</a></nav>
+<div class="beyond" style="margin:0"><b>Heads-up</b>Final-exam material (Exam 2 is done). She didn't call anything here a "test question" this time, but she repeated one warning twice: <b>perspective comes from distance, not from the lens</b>.</div>
+
+<section class="topic" id="w1" aria-labelledby="wh1">
+<div class="th"><span class="num">01</span><div><h2 id="wh1">Change focal length AND distance together</h2><p>Keep the near object the same size and watch the background</p></div></div>
+<p>Her boots again. This time she kept the <b>near boot the same size</b>: double the focal length, double the distance.</p>
+<div class="box"><h3>Her boot series</h3>
+<div class="seg" role="group" aria-label="Lens and distance" id="wb"><button type="button" aria-pressed="true" data-i="0">50 mm · 5 ft</button><button type="button" aria-pressed="false" data-i="1">100 mm · 10 ft</button><button type="button" aria-pressed="false" data-i="2">200 mm · 20 ft</button></div>
+<svg class="v" id="wbsvg" viewBox="0 50 460 162" role="img" aria-label="The near boot stays the same size; the far boot grows as you back up with a longer lens"></svg>
+<p class="cap" id="wbcap"></p></div>
+<ul class="clean">
+<li>The boots <b>never moved</b>, but with the longer lens from farther away they look <b>closer in size</b> and <b>closer together</b>.</li>
+<li>Long lens from far away = background looks <b>big and close</b> (emphasized). Wide lens up close = background looks <b>small and far</b> (de-emphasized).</li>
+<li>Real-world use: a <b>real-estate</b> shot can shrink the run-down house behind, or make a park 2 miles away look next door. A TV reporter's hotel looked right next to the Capitol (it isn't). Her lesson: <b>"There's no truth in imagery."</b> Check Google Earth before you book.</li>
+<li><b>Words of caution:</b> the exact equations assume the lens-to-sensor distance stays constant. It doesn't (you refocus, zoom lenses change), so she cares that you <b>understand what happens</b>, not that you calculate it.</li>
+</ul>
+<div class="check" data-q="w1"></div>
+</section>
+
+<section class="topic" id="w2" aria-labelledby="wh2">
+<div class="th"><span class="num">02</span><div><h2 id="wh2">Weak vs strong (linear) perspective</h2><p>It's the distance, not the lens</p></div></div>
+<div class="two">
+<div class="box"><h3>Weak perspective</h3><ul class="clean"><li>Camera <b>farther away</b></li><li>Space looks <b>compressed</b></li><li>Parallel lines stay <b>close to parallel</b></li><li>Size drops <b>slowly</b> with distance</li><li>Usually linked to a <b>telephoto</b></li></ul></div>
+<div class="box"><h3>Strong perspective</h3><ul class="clean"><li>Camera <b>closer</b></li><li>Near object grows <b>faster</b> than the far one</li><li>Space between them looks <b>bigger</b></li><li>Parallel lines <b>converge</b></li><li>Usually linked to a <b>wide angle</b></li></ul></div>
+</div>
+<div class="trick"><span>⚠️</span><span><b>The trap:</b> strong perspective isn't caused by the wide-angle lens. You use a wide angle <b>because you're close</b>, and being close causes it. Same for telephoto: you're far away. "It's not a function of the lens, it's a function of that distance."</span></div>
+<div class="check" data-q="w2"></div>
+</section>
+
+<section class="topic" id="w3" aria-labelledby="wh3">
+<div class="th"><span class="num">03</span><div><h2 id="wh3">Viewing distance</h2><p>How far away to look at a print so the perspective looks normal</p></div></div>
+<div class="formula">viewing distance = focal length × printing magnification</div>
+<div class="box"><h3>Try it</h3>
+<div class="two"><label>Focal length (mm)<input class="inp" id="vdf" type="number" inputmode="decimal" value="50" min="1"></label><label>Magnification (×)<input class="inp" id="vdm" type="number" inputmode="decimal" value="8" min="0.1" step="0.1"></label></div>
+<p id="vdo" aria-live="polite" style="font-weight:800;font-size:18px"></p></div>
+<ul class="clean">
+<li><b>8×10 camera, 12-inch lens, contact print</b> (no enlargement, ×1) → view from <b>12 in</b>. Nobody holds a print that close.</li>
+<li><b>Full frame, 50 mm lens, 8× enlargement</b> → 50 × 8 = 400 mm ≈ <b>16 in</b>. (In class she said "about 10 inches". The math gives about 16 in. 10 in would be a 5× enlargement. Ask her or SI which answer she wants.)</li>
+<li>People usually stand about <b>3–4 ft</b> from a print on a gallery wall.</li>
+<li>The velvet rope in museums is <b>not</b> about viewing distance. It keeps your "grubby paws" off the art.</li>
+</ul>
+<div class="check" data-q="w3"></div>
+</section>
+
+<section class="topic" id="w4" aria-labelledby="wh4">
+<div class="th"><span class="num">04</span><div><h2 id="wh4">More depth cues</h2><p>How a flat photo still shows depth</p></div></div>
+<div class="tw"><table class="cmp"><thead><tr><th>Cue</th><th>Her example and what it tells you</th></tr></thead><tbody>
+<tr><td>Texture</td><td>Sand-dune ripples from above, a palm-tree trunk. Texture gets finer with distance.</td></tr>
+<tr><td>Form</td><td>Hot-air balloons: you know they're 3-D and roughly how big, so a smaller one must be farther.</td></tr>
+<tr><td>Size (known objects)</td><td>A person next to pillars tells you how tall the pillars are. The moon looks huge near the horizon next to a mountain.</td></tr>
+<tr><td>Size tricks</td><td>Her cathedral: windows get smaller going up, so the building looks taller. Disney and movie sets use this.</td></tr>
+<tr><td>Aerial haze</td><td>Haze <b>lowers saturation and contrast</b> and <b>raises brightness</b> with distance.</td></tr>
+<tr><td>Overlap</td><td>Marching soldiers get smaller down the line. The camels look bigger than the pyramids.</td></tr>
+<tr><td>Shadows</td><td>Jewelry with no shadow is hard to size. A little shadow gives shape and scale.</td></tr>
+<tr><td>Isolation</td><td>An object alone (a bowl or a contact lens? a marble or a bowling ball?) has no scale. Add a known object and you can tell.</td></tr>
+<tr><td>Approaching vs receding colors</td><td><b>Warm colors</b> (reds) seem to come <b>forward</b>. <b>Cool colors</b> (blues, deep greens) seem to <b>recede</b>. In advertising, don't put the star in a receding color surrounded by approaching colors.</td></tr>
+</tbody></table></div>
+<p class="note">Why warm colors come forward is biology (eye anatomy), which she'll explain next semester.</p>
+<div class="check" data-q="w4"></div>
+</section>
+
+<section class="topic" id="w5" aria-labelledby="wh5">
+<div class="th"><span class="num">05</span><div><h2 id="wh5">Holography &amp; stereo images</h2><p>"Cheating" ways to show 3-D</p></div></div>
+<ul class="clean">
+<li><b>Holography</b> was invented by <b>Dennis Gabor</b>, a Hungarian physicist who won the <b>Nobel Prize in Physics</b>. He wasn't trying to make holograms. He was trying to <b>improve the resolving power of electron microscopes</b>, and by accident invented electron holography.</li>
+<li>His early holograms had flaws because a good hologram needs a <b>coherent light source</b>: a <b>laser</b>.</li>
+<li><b>Hologram</b> = one high-resolution photograph that shows <b>different images to the left and right eye</b> (like a stereo pair). Move it sideways and you get <b>motion parallax</b>, so the image seems to move.</li>
+<li><b>Stereo images</b>: two side-by-side views. Relax your eyes until you see three blurry images, then let the middle one come into focus to see 3-D. Image analysts in intelligence read stereo pairs all day.</li>
+<li>Sit near the center in lecture: the screen is <b>retroreflective</b>, so the image gets dimmer off-axis.</li>
+</ul>
+<div class="check" data-q="w5"></div>
+</section>
+
+<section class="topic" id="w6" aria-labelledby="wh6">
+<div class="th"><span class="num">06</span><div><h2 id="wh6">Depth of field again, plus vignetting</h2><p>Recap and a student question</p></div></div>
+<ul class="clean">
+<li><b>Depth of field</b> = the range of distances that look <b>acceptably sharp</b>. Only one plane is truly in focus. Points nearby make tiny <b>circles of confusion</b> your eye can't tell from dots.</li>
+<li>Her examples: f/1.8 vs f/5.6, and focusing on the foreground, middle ground or background. Her armadillo photo used very shallow depth of field to hide the bleachers behind it.</li>
+<li><b>Vignetting</b> (darker corners) follows <b>cosine falloff</b> and <b>changes with f-number</b>. Test it: photograph a transparency illuminator and change the f-number. Software can remove it with a <b>lens profile</b>. Some photographers even add it on purpose.</li>
+</ul>
+<div class="check" data-q="w6"></div>
+</section>
+
+<section class="topic" id="w7" aria-labelledby="wh7">
+<div class="th"><span class="num">07</span><div><h2 id="wh7">Lab 4 rules and dates</h2><p>What earns a zero</p></div></div>
+<ul class="clean">
+<li>Hand in your <b>6 photos at the end of lab</b>. You'll be paired up.</li>
+<li>Headshots: <b>no sunglasses, no hat</b>, or that part is 0. The head must be the <b>same size</b> in all three.</li>
+<li><b>Bad exposure or focus = 0</b>, no partial credit.</li>
+<li>Part I: the model <b>sits</b> and fills <b>half the frame, top to bottom</b>, with real distance to the background.</li>
+<li>No tape measure? <b>Measure your foot × count steps</b>.</li>
+<li>Rename the folder to your <b>last name</b>, <b>then</b> zip it. Wrong order = 0. "Inability to read instructions is no longer acceptable."</li>
+<li>Her favorite portrait lens: <b>about 85 mm</b>. Never a wide angle for portraits. Rain? Use a big window for soft side light.</li>
+<li><b>Final exam:</b> in person, no exceptions. Check the time in <b>SIS</b> before booking flights. <b>Thanksgiving week:</b> lecture Monday, no lab.</li>
+</ul>
+</section>
+</div>
+
+<nav class="lnav" aria-label="Lectures"><a href="lecture-oct26.html">← Oct 26</a><a href="lectures.html">All lectures</a><a href="lecture-nov06.html">Nov 6 →</a></nav>
+<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures, for study use.</p>
+</div>
+<script src="lectures.js"></script>
+<script src="back-bar.js" data-back="lectures.html" data-label="Lecture Notes" defer></script>
+</body></html>

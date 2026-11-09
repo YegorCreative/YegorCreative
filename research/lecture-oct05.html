@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Oct 5 · Formats & compression · Lecture Notes</title>
+<link rel="stylesheet" href="lectures.css">
+</head><body>
+<div class="w">
+<header class="intro">
+<span class="eyebrow">Exam 2 · Lecture notes</span>
+<h1>Oct 5 · Formats &amp; compression</h1>
+</header>
+<nav class="lnav" aria-label="Lectures"><a href="lecture-oct02.html">← Oct 2</a><a href="lectures.html">All lectures</a><a href="lecture-oct16.html">Oct 16 →</a></nav>
+<div class="lec" id="L3">
+<nav class="toc" aria-label="Oct 5 sections"><a href="#f1">Archiving</a><a href="#f2">Processing chain</a><a href="#f3">TIFF</a><a class="pk" href="#f4">JPEG</a><a href="#f5">Other formats</a><a href="#f6">How compression works</a><a href="#f7">Artifacts</a><a href="#f8">Virtual copies</a></nav>
+
+<section class="topic" id="f1" aria-labelledby="fh1">
+<div class="th"><span class="num">01</span><div><h2 id="fh1">Archiving isn't just a file format</h2><p>Should you convert to DNG?</p></div></div>
+<div class="formula">preservation = redundancy + documentation + validation + migration plan</div>
+<div class="three">
+<div class="box"><h3>Redundancy</h3><p>Several copies, for example a <b>RAID</b> (redundant array of independent disks). Put it behind a <b>surge protector</b>.</p></div>
+<div class="box"><h3>Documentation &amp; validation</h3><p>A README with your naming convention. Run a <b>checksum</b> to prove each copy matches.</p></div>
+<div class="box"><h3>Migration plan</h3><p>Move files off dying media before you can't read them (floppies, old disks, CDs).</p></div>
+</div>
+<p class="note">DNG today: version <b>1.7.1</b>. Adobe keeps the DNG <b>SDK</b> (software development kit) available. DNG was originally lossless, but <b>lossy DNG</b> has been possible since <b>Lightroom 4</b>, and DNG is popular on <b>smartphones</b> with raw capture, and it defeats much of the point of raw.</p>
+<div class="check" data-q="f1"></div>
+</section>
+
+<section class="topic" id="f2" aria-labelledby="fh2">
+<div class="th"><span class="num">02</span><div><h2 id="fh2">The processing chain</h2><p>From photons to a file</p></div></div>
+<div class="chain" id="chain"></div>
+<ul class="clean"><li><b>White balance in raw</b> is read from the metadata and applied, not baked in. Shot under fluorescent with the camera set to tungsten? Fix it in Camera Raw with no loss.</li><li><b>Tone mapping</b> ≈ the gamma curve. A sensor is <b>linear</b> (twice the photons = twice the signal), which is good for science. Our vision isn't linear, so photos get a tone curve to look natural.</li><li>You can <b>render</b> one raw many ways: TIFF, JPEG, HEIF, PSD…</li></ul>
+<div class="check" data-q="f2"></div>
+</section>
+
+<section class="topic" id="f3" aria-labelledby="fh3">
+<div class="th"><span class="num">03</span><div><h2 id="fh3">TIFF</h2><p>Tagged Image File Format</p></div></div>
+<ul class="clean"><li>Created by <b>Aldus</b> in <b>1986</b>, owned by <b>Adobe</b> since <b>1994</b>. Originally made for <b>scanners</b> and desktop publishing.</li><li>Flexible raster format: <b>grayscale, RGB, CMYK, CIELAB, indexed</b> color; <b>8, 16 or 32 bits per channel</b>; <b>layers</b>; <b>alpha channels</b>.</li><li>Compression: <b>none, lossless, or lossy</b>, your choice.</li><li>Classic TIFF uses <b>32-bit offsets</b>, so the max is <b>4 GB</b>. <b>BigTIFF</b> uses <b>64-bit offsets</b> for bigger files (scientific and medical images).</li></ul>
+<div class="beyond"><b>Beyond the lecture</b>In class: Adobe charges a licensing fee, so not every program offers TIFF (use that on the exam). For reference, the TIFF 6.0 specification itself is published openly.</div>
+<div class="check" data-q="f3"></div>
+</section>
+
+<section class="topic pick" id="f4" aria-labelledby="fh4">
+<div class="th"><span class="num">04</span><div><h2 id="fh4">JPEG</h2><p>Joint Photographic Experts Group</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · Test question</span><div class="pq">What happens when you edit and re-save a JPEG over and over?</div><div class="pa"><b>Generational degradation</b>: it's compressed again every save, so artifacts build up.</div></div><div class="pickbox"><span class="rb">★ Her test pick · Test question (the chart)</span><div class="pq">TIFF vs JPEG: which is better for repeated editing, and which allows transparency?</div><div class="pa"><b>TIFF</b> for both. JPEG degrades every save and has no transparency.</div></div>
+<ul class="clean"><li>JPEG is <b>both a file format and a lossy compression method</b>. Lossy = data thrown away is gone.</li><li><b>8 bits per channel only.</b> Can embed a color profile. Small files (about <b>500 KB – 8 MB</b>). <b>.jpg = .jpeg</b>. Designed for efficient <b>distribution</b>.</li><li><b>Generational degradation:</b> every re-save compresses an already compressed file, and artifacts pile up fast. Editing a JPEG? Save it as TIFF or PSD first.</li><li>In-camera JPEG: <b>white balance, tone, color, sharpening, noise reduction and compression are baked in</b>. Get it right in camera (custom white balance, User 1/User 2 settings).</li></ul>
+<div class="box"><label for="jq"><b>JPEG quality: <span id="jqv">50</span></b> · re-saves: <span id="jgv">1</span></label><input type="range" id="jq" min="1" max="100" value="50" aria-label="JPEG quality"><div class="row" style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" class="btn" id="jresave">Re-save again</button><button type="button" class="btn" id="jreset">Start over</button></div>
+<div class="two"><div><canvas id="jsrc" class="pix" width="96" height="96" aria-label="Original detail"></canvas><p class="cap">Original (zoomed)</p></div><div><canvas id="jout" class="pix" width="96" height="96" aria-label="JPEG result"></canvas><p class="cap" id="jcap"></p></div></div></div>
+<div class="tw"><table><thead><tr><th></th><th>TIFF</th><th>JPEG</th></tr></thead><tbody><tr><td>Typical use</td><td>Editing, printing, archiving</td><td>Sharing, web, quick delivery</td></tr><tr><td>Compression</td><td>None, lossless or lossy</td><td>Lossy</td></tr><tr><td>Bit depth</td><td>8, 16, 32 per channel</td><td>8 per channel</td></tr><tr><td>File size</td><td>Large</td><td>Small</td></tr><tr><td>Repeated editing</td><td><b>Better suited</b></td><td>Degrades each save</td></tr><tr><td>Transparency</td><td>Possible</td><td>No</td></tr></tbody></table></div>
+<div class="box"><h3>Bit depth and editing: rescue the bright moon</h3><label for="moon"><b>Pull highlights down: −<span id="moonv">0</span> stops</b></label><input type="range" id="moon" min="0" max="2" step="0.25" value="0" aria-label="Highlight recovery in stops">
+<div class="two"><div><canvas id="moonj" width="180" height="180" aria-label="Camera JPEG moon"></canvas><p class="cap"><b>Camera JPEG</b>: the bright moon clipped at 255 and the detail is gone</p></div><div><canvas id="moonr" width="180" height="180" aria-label="Raw file moon"></canvas><p class="cap"><b>Raw file</b>: more bits kept the highlight detail</p></div></div>
+<p class="note">Her slide: "More numerical precision provides more room for processing." But <b>clipped is still clipped</b>: if even the raw overflows, nothing comes back.</p></div>
+<div class="check" data-q="f4"></div>
+</section>
+
+<section class="topic" id="f5" aria-labelledby="fh5">
+<div class="th"><span class="num">05</span><div><h2 id="fh5">Other formats</h2><p>Know what each one is for</p></div></div>
+<div class="tw"><table><thead><tr><th>Format</th><th>Key facts</th><th>Best for</th></tr></thead><tbody>
+<tr><td><b>JPEG XL</b></td><td>Lossy <i>or</i> lossless, progressive, animation, alpha, high bit depth, HDR, wide gamut, <b>lossless JPEG recompression</b></td><td>Pro photography + web</td></tr>
+<tr><td><b>PNG</b><br><span class="note">Portable Network Graphics</span></td><td><b>Lossless</b>, RGB + grayscale, <b>alpha transparency</b>, 8 or 16 bits/channel, no generational loss</td><td>Screenshots, diagrams, text, sharp edges, flat color</td></tr>
+<tr><td><b>GIF</b></td><td><b>Indexed color: max 256 colors</b> picked from the image, LZW compression, <b>animation</b>, transparency</td><td>Simple web graphics, animations. Not photos</td></tr>
+<tr><td><b>BMP</b><br><span class="note">(device-independent) bitmap</span></td><td>Raster, 1–32 bit, alpha, color profiles, compressed or not; bigger than JPEG</td><td>Rarely used by photographers</td></tr>
+<tr><td><b>HEIF</b><br><span class="note">High Efficiency Image File Format</span></td><td>From <b>MPEG</b>, finalized <b>2015</b>. A <b>container</b>: single images, collections, <b>sequences</b>, metadata, auxiliary data; HDR, wide gamut, high bit depth</td><td>Phones (iPhone Live Photos), computational imaging</td></tr>
+<tr><td><b>HEIC</b></td><td>A HEIF file holding <b>HEVC</b>-encoded image data</td><td>iPhone photos</td></tr>
+</tbody></table></div>
+<div class="box"><h3>Choosing a format: ask about</h3><p>Encoding and decoding support · browser and app support · your workflow · archival needs · <b>your audience</b>. Never send a client something they can't open.</p></div>
+<div class="beyond"><b>From the slides</b>GIF = <b>Graphics Interchange Format</b> (that's how it's written on her slide). HEIF is standard ISO/IEC 23008-12. JPEG XL is ISO/IEC 18181 and uses the <b>.jxl</b> extension.</div>
+<div class="check" data-q="f5"></div>
+</section>
+
+<section class="topic" id="f6" aria-labelledby="fh6">
+<div class="th"><span class="num">06</span><div><h2 id="fh6">How compression works</h2><p>Images are full of redundancy</p></div></div>
+<div class="two">
+<div class="box"><h3><span class="tag">Lossless</span></h3><p>Smaller file, and decompressing gives back the <b>exact original</b>. Nothing wrong with it.</p></div>
+<div class="box"><h3><span class="tag">Lossy</span></h3><p>Throws away data it thinks you won't see. You get back an <b>approximation</b>, not the original.</p></div>
+</div>
+<div class="three">
+<div class="box"><h3>Statistical</h3><p>Repeated values: store <b>"red ×4, blue ×7, green ×2"</b> instead of 13 separate pixels.</p><div id="rle" class="rle"></div></div>
+<div class="box"><h3>Interpixel / spatial</h3><p>Neighbors are similar. Store 100 and then the differences: <b>100, +1, 0, +2, +1, 0</b>. Lossy: just call them all 100.</p></div>
+<div class="box"><h3>Psychovisual</h3><p>We're easy to fool. Drop what the eye barely sees: fine detail, small color changes, contrast we can't notice.</p></div>
+</div>
+<div class="box"><h3>How a JPEG is made</h3><div class="chain" id="jchain"></div><p class="note">Y = brightness, Cb = blue–yellow, Cr = red–green. We see brightness much better than color, so cutting the color channels in half already saves lots of space.</p></div>
+<div class="check" data-q="f6"></div>
+</section>
+
+<section class="topic" id="f7" aria-labelledby="fh7">
+<div class="th"><span class="num">07</span><div><h2 id="fh7">Compression artifacts</h2><p>Use the right words</p></div></div>
+<div class="formula" style="font-size:16px">Compression changes FILE SIZE, not RESOLUTION</div>
+<p class="note">Example: 600 × 800 px TIFF = 1.5 MB. Same 600 × 800 px JPEG = 119 KB.</p>
+<div class="three">
+<div class="box"><h3>Blocking</h3><p>The <b>8 × 8 blocks</b> become visible because variation inside each block was squeezed out.</p></div>
+<div class="box"><h3>Posterization / banding</h3><p>Smooth tones become steps because there are <b>too few tonal levels</b>. (Class: "exclusively a JPEG artifact".)</p></div>
+<div class="box"><h3>Ringing &amp; detail loss</h3><p>Halos next to edges, fine texture smoothed away, color errors, soft edges.</p></div>
+<div class="box"><h3>Aliasing</h3><p>A <b>sampling</b> problem: detail too fine for the pixels gives <b>moiré</b>, false detail and color artifacts. Not only JPEG: downsampling causes it too.</p></div>
+<div class="box"><h3>Stair-stepping</h3><p>Diagonal edges turn into steps. Say <b>"stair-stepping"</b>, not "jaggies" (sounds amateur).</p></div>
+<div class="box"><h3>Pixelation = NOT an artifact</h3><p>Zooming to 3200% just magnifies pixels. That's magnification, not damage.</p></div>
+</div>
+<div class="beyond"><b>Beyond the lecture</b>On the exam, use "posterization is a JPEG artifact". In practice, banding can also appear when an 8-bit image is pushed hard in editing. That's one more reason to edit at 16 bits.</div>
+<div class="box"><h3>See aliasing (moiré) happen</h3><label for="alias"><b>Pixels across: <span id="aliasv">400</span></b></label><input type="range" id="alias" min="40" max="400" step="10" value="400" aria-label="Sampling resolution">
+<canvas id="aliasc" class="pix" width="400" height="400" aria-label="Fine circular pattern that develops false moiré rings when under-sampled" style="max-width:360px;margin:0 auto"></canvas>
+<p class="cap" id="aliascap">Fine rings sampled with enough pixels look right. Lower the pixels and <b>false patterns (moiré)</b> appear that aren't really there.</p></div>
+<div class="check" data-q="f7"></div>
+</section>
+
+<section class="topic" id="f8" aria-labelledby="fh8">
+<div class="th"><span class="num">08</span><div><h2 id="fh8">Parametric editing &amp; virtual copies</h2><p>One original, many versions</p></div></div>
+<ul class="clean"><li>Edits are saved as <b>instructions</b>, so you can change your mind, try alternative looks, sync settings across many images, revisit old edits and export several versions.</li><li>A <b>virtual copy</b> is another set of instructions on the same original. You can have a black and white version, a warm version and a masked version without filling your hard drive.</li></ul>
+<div class="box"><h3>Rendering engine: one source, many interpretations</h3>
+<svg class="v" viewBox="0 0 460 210" role="img" aria-label="One raw image plus instructions renders as color, black and white, and warm versions">
+<defs><linearGradient id="rsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7FB2E5"/><stop offset="1" stop-color="#F6D7A7"/></linearGradient>
+<symbol id="rpic" viewBox="0 0 100 70"><rect width="100" height="70" fill="url(#rsky)"/><circle cx="72" cy="22" r="9" fill="#FFE59A"/><path d="M0 50 L25 32 L45 46 L65 30 L100 52 V70 H0Z" fill="#3E7B4F"/><rect x="18" y="44" width="6" height="14" fill="#6B4B2B"/></symbol>
+<filter id="rbw"><feColorMatrix type="saturate" values="0"/></filter><filter id="rwarm"><feColorMatrix type="matrix" values="1.15 0 0 0 0.05  0 1 0 0 0.02  0 0 0.75 0 0  0 0 0 1 0"/></filter></defs>
+<use href="#rpic" x="10" y="60" width="100" height="70"/><text x="60" y="150" text-anchor="middle" font-size="12" font-weight="800">Image data (raw)</text>
+<rect x="135" y="55" width="110" height="80" rx="8" fill="#EFEAFD" stroke="#6D4AD9"/><text x="190" y="80" text-anchor="middle" font-size="11">• metadata</text><text x="190" y="98" text-anchor="middle" font-size="11">• edit instructions</text><text x="190" y="116" text-anchor="middle" font-size="11">• color management</text>
+<path d="M112 95 H133" stroke="#6D4AD9" stroke-width="2"/><path d="M247 95 L300 35 M247 95 H300 M247 95 L300 160" stroke="#6D4AD9" stroke-width="2" fill="none"/>
+<use href="#rpic" x="305" y="5" width="80" height="56"/><use href="#rpic" x="305" y="70" width="80" height="56" filter="url(#rbw)"/><use href="#rpic" x="305" y="135" width="80" height="56" filter="url(#rwarm)"/>
+<g font-size="11"><text x="392" y="36">color</text><text x="392" y="101">B&amp;W</text><text x="392" y="166">warm</text></g></svg>
+<p class="cap">Her slide: <b>one source file can produce many interpretations without creating multiple RAW originals.</b> Each version is just a set of instructions (a virtual copy).</p></div>
+<div class="check" data-q="f8"></div>
+</section>
+</div>
+
+<nav class="lnav" aria-label="Lectures"><a href="lecture-oct02.html">← Oct 2</a><a href="lectures.html">All lectures</a><a href="lecture-oct16.html">Oct 16 →</a></nav>
+<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures, for study use.</p>
+</div>
+<script src="lectures.js"></script>
+<script src="back-bar.js" data-back="lectures.html" data-label="Lecture Notes" defer></script>
+</body></html>

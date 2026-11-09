@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sep 14 · Transmittance, opacity & density · Lecture Notes</title>
+<link rel="stylesheet" href="lectures.css">
+</head><body>
+<div class="w">
+<header class="intro">
+<span class="eyebrow">Exam 1 · Lecture notes</span>
+<h1>Sep 14 · Transmittance, opacity &amp; density</h1>
+</header>
+<nav class="lnav" aria-label="Lectures"><a href="lecture-test-picks.html">← ★ Her test picks (Exam 1 + 2)</a><a href="lectures.html">All lectures</a><a href="lecture-sep18.html">Sep 18 →</a></nav>
+<div class="lec" id="LA">
+<nav class="toc" aria-label="Sep 14 sections"><a href="#x1">Transmittance</a><a href="#x2">Opacity</a><a href="#x3">Density</a><a href="#x4">Histograms primer</a></nav>
+<div class="beyond" style="margin:0"><b>Heads-up</b>This recording is the afternoon half of Sep 14 ("from this morning"). She didn't call anything a test question, but said these three ideas "are still very important in photography". You use them in the density lab.</div>
+
+<section class="topic" id="x1" aria-labelledby="xh1">
+<div class="th"><span class="num">01</span><div><h2 id="xh1">Transmittance</h2><p>How much light gets through</p></div></div>
+<div class="formula">T = transmitted light ÷ incident light</div>
+<ul class="clean">
+<li><b>Incident</b> = the light going <b>into</b> the filter. <b>Transmitted</b> = the light coming <b>out</b>.</li>
+<li>Measure both in <b>lux</b>. The units cancel, so T has <b>no units</b>. It can be a decimal or a percent. In lab, use the <b>decimal</b>.</li>
+<li>Her table: 100 lux in. 75 out → <b>0.75</b> · 50 out → <b>0.5</b> · 25 out → <b>0.25</b>.</li>
+</ul>
+<div class="box"><h3>Try it: 100 lux goes in</h3>
+<label for="tdl"><b>Transmitted light: <span id="tdv">50</span> lux</b></label><input type="range" id="tdl" min="1" max="100" value="50" aria-label="Transmitted lux">
+<div class="tw"><table><thead><tr><th>Transmittance</th><th>Opacity</th><th>Density</th><th>Stops of light lost</th></tr></thead><tbody><tr><td id="tdT"></td><td id="tdO"></td><td id="tdD"></td><td id="tdS"></td></tr></tbody></table></div></div>
+<div class="check" data-q="x1"></div>
+</section>
+
+<section class="topic" id="x2" aria-labelledby="xh2">
+<div class="th"><span class="num">02</span><div><h2 id="xh2">Opacity</h2><p>How much a filter blocks light</p></div></div>
+<div class="formula">O = 1 ÷ T = incident ÷ transmitted</div>
+<ul class="clean">
+<li>Opacity = the <b>lack of transparency</b>. Her table: T 0.75 → O <b>1.33</b> · T 0.5 → O <b>2</b> · T 0.25 → O <b>4</b>.</li>
+<li><b>The catch:</b> opacity gets <b>very large very fast</b>. In the classic <b>ink drop experiment</b> (India ink dropped into a beaker of water), each drop doubles the opacity: 2, 4, 8… up to about <b>1,024</b> after 10 drops. That's a <b>geometric progression</b>, and hard to graph.</li>
+<li>Transmittance has the opposite problem: it gets <b>tiny</b> and crowds against zero.</li>
+</ul>
+<div class="check" data-q="x2"></div>
+</section>
+
+<section class="topic" id="x3" aria-labelledby="xh3">
+<div class="th"><span class="num">03</span><div><h2 id="xh3">Density</h2><p>The log fixes everything</p></div></div>
+<div class="formula">D = log(opacity) = log(1 ÷ T)</div>
+<ul class="clean">
+<li>Density = how much a substance <b>stops</b> light. "Log" is just a button on your calculator, or <b>=LOG()</b> in Excel.</li>
+<li>Density turns the exploding opacity into a <b>straight line</b>: 0.3 · 0.6 · 0.9 · 1.2 · 1.5 = <b>1 · 2 · 3 · 4 · 5 stops</b>.</li>
+<li><b>Density is additive.</b> Stack a 0.3 and a 0.6 ND filter and you get <b>0.9 = 3 stops</b>.</li>
+<li>Graphs: transmittance and opacity curves are almost impossible to read at one end. The density plot is <b>linear</b>, so differences are easy to see.</li>
+</ul>
+<div class="trick"><span>🔑</span><span><b>Darker filter or negative</b> → <b>higher</b> opacity, <b>lower</b> transmittance, <b>higher</b> density.</span></div>
+<div class="check" data-q="x3"></div>
+</section>
+
+<section class="topic" id="x4" aria-labelledby="xh4">
+<div class="th"><span class="num">04</span><div><h2 id="xh4">Histograms: a first look</h2><p>Just counting how often something happens</p></div></div>
+<ul class="clean">
+<li>A <b>histogram</b> shows <b>frequency</b>: how many pixels have a value of 150, how many students scored 90+, and so on.</li>
+<li>An image histogram puts <b>pixel value</b> across the bottom and <b>number of pixels</b> up the side. It tells you nothing about how <b>good</b> the image is.</li>
+<li>Her kindergarten example: favorite colors decide how many storage bins to buy.</li>
+</ul>
+<div class="box"><h3>Morning vs afternoon kindergarten</h3>
+<div class="seg" role="group" aria-label="Chart type" id="hgseg"><button type="button" aria-pressed="true" data-m="side">Side by side (compare groups)</button><button type="button" aria-pressed="false" data-m="stack">Stacked (shopping list)</button></div>
+<svg class="v" id="hgsvg" viewBox="0 0 460 230" role="img" aria-label="Bar chart of favorite colors for two kindergarten groups"></svg>
+<p class="cap" id="hgcap"></p></div>
+<ul class="clean"><li><b>Side by side</b> compares two populations. <b>Stacked</b> (cumulative) adds them up: buy <b>9 red, 8 green, 13 blue, 6 yellow</b>.</li><li>Always add a <b>legend</b>. Without one, nobody knows which group is which. Your lab plots need one.</li></ul>
+<div class="check" data-q="x4"></div>
+</section>
+</div>
+
+<nav class="lnav" aria-label="Lectures"><a href="lecture-test-picks.html">← ★ Her test picks (Exam 1 + 2)</a><a href="lectures.html">All lectures</a><a href="lecture-sep18.html">Sep 18 →</a></nav>
+<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures, for study use.</p>
+</div>
+<script src="lectures.js"></script>
+<script src="back-bar.js" data-back="lectures.html" data-label="Lecture Notes" defer></script>
+</body></html>

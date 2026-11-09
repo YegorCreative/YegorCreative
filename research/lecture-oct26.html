@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Oct 26 · Autofocus & perspective · Lecture Notes</title>
+<link rel="stylesheet" href="lectures.css">
+</head><body>
+<div class="w">
+<header class="intro">
+<span class="eyebrow">Exam 2 · Lecture notes</span>
+<h1>Oct 26 · Autofocus &amp; perspective</h1>
+</header>
+<nav class="lnav" aria-label="Lectures"><a href="lecture-oct23.html">← Oct 23</a><a href="lectures.html">All lectures</a><a href="lecture-nov02.html">Nov 2 →</a></nav>
+<div class="lec" id="L7">
+<nav class="toc" aria-label="Oct 26 sections"><a href="#v1">Autofocus</a><a href="#v2">Depth cues</a><a href="#v3">Binocular vision</a><a href="#v4">Linear perspective</a><a class="pk" href="#v5">Image size rules</a></nav>
+<div class="beyond" style="margin:0"><b>Heads-up</b>She taught this on Oct 26 as "next week's lecture" (Exam 2 is Friday, Oct 30). Autofocus may be on Exam 2. Perspective is for next week's lab, but she said anything in <b>blue</b> on her slides will probably be on a test at some point.</div>
+
+<section class="topic" id="v1" aria-labelledby="vh1">
+<div class="th"><span class="num">01</span><div><h2 id="vh1">Autofocus methods</h2><p>Phase detection vs contrast detection</p></div></div>
+<div class="two">
+<div class="box"><h3>Phase detection</h3><ul class="clean"><li><b>Calculates the distance</b> to the object, then moves the lens straight to that distance (and checks once more).</li><li><b>Very fast</b>, but needs a <b>separate sensor or special microlenses</b>.</li><li>If the lens is <b>miscalibrated</b>, focus can be off (front- or back-focusing).</li></ul></div>
+<div class="box"><h3>Contrast detection</h3><ul class="clean"><li>The lens <b>moves through the focus range</b> while the camera measures contrast.</li><li><b>Maximum contrast = in focus.</b></li><li><b>Slower</b>, but <b>cheaper and smaller</b> because it uses the <b>main sensor</b>.</li></ul></div>
+</div>
+<div class="box"><h3>Watch them focus</h3>
+<div class="btns" style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn" id="afc">Run contrast detection</button><button type="button" class="btn" id="afp">Run phase detection</button></div>
+<svg class="v" id="afsvg" viewBox="0 0 460 190" role="img" aria-label="Contrast versus lens position: contrast detection scans the curve to find the peak; phase detection jumps to it"></svg>
+<p class="cap" id="afcap">Contrast is highest at perfect focus.</p></div>
+<ul class="clean"><li><b>LensAlign</b> (in the lab) checks whether your camera and lens are calibrated: shoot it, zoom in, and the zero mark should be sharp. If not, the camera front- or back-focuses. Some cameras let you adjust this, but ask Dan or Nanette first.</li><li><b>Manual focus:</b> go back and forth past focus, then zero in. (Most students are out of practice because they rely on autofocus.)</li><li>Why turn autofocus <b>off</b> for the ND filter patches: a flat patch has no contrast or edges, so the lens just "hunts" back and forth. It won't break, but it's needless wear on a mechanical part.</li></ul>
+<div class="check" data-q="v1"></div>
+</section>
+
+<section class="topic" id="v2" aria-labelledby="vh2">
+<div class="th"><span class="num">02</span><div><h2 id="vh2">How do we achieve perspective?</h2><p>Showing a 3-D world on a 2-D sensor, print or screen</p></div></div>
+<p><b>Perspective</b> = the relationships between the objects we image: how we show a three-dimensional world on two-dimensional media (sensor, paper, screen). It applies to drawing and painting too.</p>
+<div class="tw"><table class="cmp"><thead><tr><th>Cue</th><th>How it shows depth</th></tr></thead><tbody>
+<tr><td>Depth of field</td><td>Sharp subject, blurred background separates near from far</td></tr>
+<tr><td>Lighting</td><td>Light and shadow give objects shape and volume</td></tr>
+<tr><td>Overlap</td><td>Whatever blocks something else is in front of it</td></tr>
+<tr><td>Aerial haze</td><td>Faraway things look hazier and lower in contrast ("incredible" for depth)</td></tr>
+<tr><td>Color</td><td>Far objects look cooler and less saturated</td></tr>
+<tr><td>Stereophotography / holography</td><td>Two views (or a hologram) give real 3-D: "a little bit of cheating"</td></tr>
+<tr><td>Linear perspective</td><td>Things get smaller and lines converge with distance (section 04)</td></tr>
+</tbody></table></div>
+<div class="trick"><span>🔑</span><span><b>"Don't Let Old Apes Cook Spaghetti Hot Lunches":</b> Depth of field · Lighting · Overlap · Aerial haze · Color · Stereo · Holography · Linear.</span></div>
+<div class="check" data-q="v2"></div>
+</section>
+
+<section class="topic" id="v3" aria-labelledby="vh3">
+<div class="th"><span class="num">03</span><div><h2 id="vh3">Binocular vision</h2><p>Two eyes, one 3-D picture</p></div></div>
+<svg class="v" viewBox="0 0 460 210" role="img" aria-label="Left and right eye fields of view overlap in the middle: that overlap is the binocular field">
+<path d="M150 170 L40 20 L300 20 Z" fill="#3F6CC9" fill-opacity=".14"/><path d="M310 170 L160 20 L420 20 Z" fill="#E0473C" fill-opacity=".14"/>
+<path d="M150 170 L160 20 L300 20 L310 170 Z" fill="#6D4AD9" fill-opacity=".18"/>
+<circle cx="150" cy="178" r="14" fill="#fff" stroke="#3F6CC9" stroke-width="3"/><circle cx="310" cy="178" r="14" fill="#fff" stroke="#E0473C" stroke-width="3"/>
+<circle cx="150" cy="178" r="5" fill="#15131C"/><circle cx="310" cy="178" r="5" fill="#15131C"/>
+<text x="230" y="60" text-anchor="middle" style="font:800 17px Inter,sans-serif" fill="#6D4AD9">binocular field</text>
+<text x="230" y="80" text-anchor="middle" style="font:600 14px Inter,sans-serif" fill="#5E5A6B">(depth perception)</text>
+<text x="70" y="45" style="font:700 14px Inter,sans-serif" fill="#3F6CC9">left eye only</text><text x="390" y="45" text-anchor="end" style="font:700 14px Inter,sans-serif" fill="#E0473C">right eye only</text>
+<text x="230" y="200" text-anchor="middle" style="font:600 13px Inter,sans-serif" fill="#5E5A6B">pupils about 2.5 in apart</text></svg>
+<ul class="clean">
+<li><b>Binocular vision</b> = using both eyes together to get a 3-D, <b>stereoscopic</b> view (length, width and depth). All animals with <b>forward-facing eyes</b> have it. A fish with eyes on the sides has no overlap, so no depth perception.</li>
+<li>You <b>see with your brain</b>: the signals cross at the <b>optic chiasm</b>, go to the <b>LGN</b> and then to the visual cortex at the back of the head, which fuses both images into one.</li>
+<li>Each eye sees from a slightly different spot. The brain <b>triangulates</b> the difference. <b>Binocular disparity</b> = the difference in where an object lands in the left vs right eye. Average pupil separation is <b>2.5 inches</b>.</li>
+<li>Disparity <b>increases as objects get closer</b>. At 450 ft the separation ratio is 2000:1: almost no disparity.</li>
+<li>Binocular vision works well within about <b>18–20 ft</b>. Beyond 20 ft the brain uses <b>shadows and relative motion</b>.</li>
+<li>If the brain can't fuse the two images: <b>binocular dysfunction</b>, no depth perception (causes include blindness, differential focus, strabismus/lazy eye, processing problems). Depth perception develops in the toddler years.</li>
+</ul>
+<div class="two">
+<div class="box"><h3>Try it: disparity</h3><p>Hold a finger out, close one eye, then the other, back and forth. The finger "jumps" against the background. That jump is binocular disparity.</p></div>
+<div class="box"><h3>Try it: dominant eye</h3><p>With both eyes open, hide a far object behind your thumb. Close one eye, then the other. The eye where the thumb <b>moves less</b> is your <b>dominant eye</b>, probably the one you put to the viewfinder.</p></div>
+</div>
+<div class="check" data-q="v3"></div>
+</section>
+
+<section class="topic" id="v4" aria-labelledby="vh4">
+<div class="th"><span class="num">04</span><div><h2 id="vh4">Linear perspective</h2><p>Horizon line · vanishing point · orthogonal lines</p></div></div>
+<p><b>Linear perspective</b> = the geometric way of showing that objects get <b>smaller and closer together</b> as they get farther away. We judge distance by how things shrink and how lines converge. The <b>object distance</b> and the <b>focal length</b> are the critical factors.</p>
+<div class="box"><h3>Draw a one-point street</h3>
+<label for="vpx"><b>Vanishing point (left ↔ right)</b></label><input type="range" id="vpx" min="120" max="340" value="230" aria-label="Vanishing point position">
+<label for="hz"><b>Horizon line (eye level)</b></label><input type="range" id="hz" min="50" max="150" value="95" aria-label="Horizon height">
+<div class="btns" style="display:flex;gap:8px"><button type="button" class="btn" id="orth" aria-pressed="true">Hide orthogonal lines</button></div>
+<svg class="v" id="lpsvg" viewBox="0 0 460 230" role="img" aria-label="Two buildings drawn in one-point perspective with lines converging on the vanishing point"></svg></div>
+<ol class="clean" style="padding-left:20px;list-style:decimal">
+<li><b>Horizon line:</b> runs across the scene, usually at the viewer's <b>eye level</b>. It can be where a wall meets the floor, not just sky and ground.</li>
+<li><b>Vanishing point:</b> for one-point perspective, a point on the horizon (often near the center) where all the receding lines meet.</li>
+<li><b>Orthogonal lines:</b> visual rays connecting the corners of shapes to the vanishing point. Draw them, build the shapes, then erase them.</li>
+</ol>
+<p><b>Two-point perspective:</b> two vanishing points, like standing on a street corner looking down both streets.</p>
+<div class="check" data-q="v4"></div>
+</section>
+
+<section class="topic pick" id="v5" aria-labelledby="vh5">
+<div class="th"><span class="num">05</span><div><h2 id="vh5">The two image-size rules</h2><p>"Anything in blue will probably be on a test"</p></div></div>
+<div class="pickbox"><span class="rb">★ Her test pick · in blue on her slide</span><div class="pq">How do focal length and object distance change image size?</div><div class="pa">Image size is <b>directly proportional to focal length</b>.<br>Image size is <b>inversely proportional to object distance</b>.</div></div>
+<p>Changes in perspective usually come from changing <b>camera position</b> (object distance) and <b>focal length</b>.</p>
+<div class="box"><h3>Her boot experiment</h3>
+<div class="seg" role="group" aria-label="Focal length" id="bf"><button type="button" aria-pressed="true" data-f="50">50 mm</button><button type="button" aria-pressed="false" data-f="100">100 mm</button><button type="button" aria-pressed="false" data-f="200">200 mm</button></div>
+<label for="bd"><b>Distance to the first boot: <span id="bdv">10 ft</span></b> (the second boot is the same distance farther again)</label><input type="range" id="bd" min="5" max="30" step="5" value="10" aria-label="Object distance">
+<svg class="v" id="bsvg" viewBox="0 0 460 200" role="img" aria-label="Two identical boots: the far one, at twice the distance, looks half as big"></svg>
+<p class="cap" id="bcap"></p></div>
+<ul class="clean"><li><b>Object ratio 1:2 → size ratio 2:1.</b> If the second object is twice as far away (10 ft, then 20 ft), it looks <b>half as big</b>. Her folding chairs: the far chair fits exactly in the gap between the near chair's seat and top.</li>
+<li><b>Doubling the focal length doubles everything</b>: her slide measured the boots at 0.75 and 0.375 in (50 mm), 1.5 and 0.75 in (100 mm), 3.0 and 1.5 in (200 mm). The ratio between them never changes, so focal length doesn't change perspective. Only moving does.</li>
+<li>Look up <b>forced perspective</b> photography: it plays with exactly this.</li></ul>
+<div class="check" data-q="v5"></div>
+</section>
+</div>
+
+<nav class="lnav" aria-label="Lectures"><a href="lecture-oct23.html">← Oct 23</a><a href="lectures.html">All lectures</a><a href="lecture-nov02.html">Nov 2 →</a></nav>
+<p class="note" style="text-align:center">Notes rewritten in my own words from PHPS-106 lectures, for study use.</p>
+</div>
+<script src="lectures.js"></script>
+<script src="back-bar.js" data-back="lectures.html" data-label="Lecture Notes" defer></script>
+</body></html>

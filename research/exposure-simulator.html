@@ -206,4 +206,5 @@ function onMove(which){
 ['a','s','i'].forEach(k=>$(k).addEventListener('input',()=>onMove(k)));
 $('tg').querySelectorAll('button').forEach(b=>b.onclick=()=>{$('tg').querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');target=+b.dataset.t;render();});
 render();
-</script></body></html>
+</script><script src="back-bar.js" defer></script>
+</body></html>
